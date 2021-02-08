@@ -1,0 +1,15 @@
+body {
+    background-color: #edf0ee !important;
+    height: 100%;
+    border: none;
+}
+
+#graph-buttons {
+    float: left;
+    margin-right: -50px;
+    margin-bottom: 25px;
+}
+
+#specific-stats {
+    margin: 20px;
+}
