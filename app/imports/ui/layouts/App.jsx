@@ -12,6 +12,7 @@ import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import AboutPage from '../pages/AboutPage';
 import FeedBack from '../pages/FeedBack';
+import CumulativePage from '../pages/CumulativePage';
 import EditStuff from '../pages/EditStuff';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
@@ -31,6 +32,7 @@ class App extends React.Component {
               <Route path="/signup" component={Signup}/>
               <Route path="/signout" component={Signout}/>
               <Route path="/about" component={AboutPage}/>
+              <Route path="/cumulative" component={CumulativePage}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
               <ProtectedRoute path="/add" component={AddStuff}/>
               <ProtectedRoute path="/feedback" component={FeedBack}/>
