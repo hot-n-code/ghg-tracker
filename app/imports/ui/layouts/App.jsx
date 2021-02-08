@@ -7,7 +7,7 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
@@ -98,13 +98,13 @@ const AdminProtectedRoute = ({ component: Component, ...rest }) => (
 /** Require a component and location to be passed to each ProtectedRoute. */
 ProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 /** Require a component and location to be passed to each AdminProtectedRoute. */
 AdminProtectedRoute.propTypes = {
   component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default App;
