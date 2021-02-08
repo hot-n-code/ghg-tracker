@@ -28,18 +28,6 @@ class CumulativePage extends React.Component {
             </Grid>
           </Grid.Column>
           <Grid relaxed columns={4}>
-            <Grid.Column>
-              <Image src='/images/1.png'/>
-            </Grid.Column>
-            <Grid.Column>
-              <Image src='/images/cumulative-greenhouse.png'/>
-            </Grid.Column>
-            <Grid.Column>
-              <Image src='/images/cumulative-greenhouse.png'/>
-            </Grid.Column>
-            <Grid.Column>
-              <Image src='/images/cumulative-greenhouse.png'/>
-            </Grid.Column>
           </Grid>
         </Container>
     );
