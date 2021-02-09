@@ -20,11 +20,9 @@ class MyVehicles extends React.Component {
   renderPage() {
     return (
       <Container>
-        <h1>NAV BAR</h1>
         <Header as='h2' textAlign='center'>
           My Vehicles
         </Header>
-        <h1>FOOTER</h1>
       </Container>
     );
   }
