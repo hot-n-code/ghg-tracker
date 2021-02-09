@@ -12,7 +12,7 @@ class CumulativePage extends React.Component {
             </div>
             <Grid>
               <Grid.Column width={8}>
-                <Image src="/images/graph.png"/>
+                <Image src="/images/cumulative-page/graph.png"/>
               </Grid.Column>
               <Grid.Column textAlign='right' width={8}>
                 <Header as='h1'>MODES OF TRAVEL COUNT</Header>
@@ -23,7 +23,7 @@ class CumulativePage extends React.Component {
                 <Header as='h1'>MODES OF TRAVEL COUNT</Header>
               </Grid.Column>
               <Grid.Column width={8}>
-                <Image src="/images/graph2.png"/>
+                <Image src="/images/cumulative-page/graph2.png"/>
               </Grid.Column>
             </Grid>
           </Grid.Column>
