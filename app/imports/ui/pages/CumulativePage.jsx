@@ -32,7 +32,7 @@ class CumulativePage extends React.Component {
               <Image src="/images/cumulative-page/car.png"/>
             </Grid.Column>
             <Grid.Column>
-              <Image src="/images/cumulative-page/c02.png"/>
+              <Image src="/images/cumulative-page/C.png"/>
             </Grid.Column>
             <Grid.Column>
               <Image src="/images/cumulative-page/gas.png"/>
