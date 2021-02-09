@@ -10,6 +10,13 @@ body {
     margin-bottom: 25px;
 }
 
-#specific-stats {
-    margin: 20px;
+.images {
+    height: 350px !important;
+    width: 600px !important;
+    display: inline;
+    padding: 30px;
+}
+
+.numbers {
+    display: inline;
 }
