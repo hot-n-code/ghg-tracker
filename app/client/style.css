@@ -1,5 +1,6 @@
+/* NAVBAR */
 .ui.attached.menu {
-  background: #919492;
+  background: #5c8d89;
   border: none !important;
   border-radius: 0 !important;
   margin-bottom: 0px;
@@ -14,5 +15,5 @@
   height: 500px;
 }
 .ghg-text {
-  font-size: 300%;
+  font-size: 400%;
 }
