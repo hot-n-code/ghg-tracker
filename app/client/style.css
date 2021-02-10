@@ -16,3 +16,32 @@
 .ghg-text {
   font-size: 300%;
 }
+
+.footer
+{
+  margin-top: 14px;
+  background-color: #5c8d89;
+}
+
+.footer-text {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#graph-buttons {
+    float: left;
+    margin-right: -50px;
+    margin-bottom: 25px;
+}
+
+.images {
+    height: 350px !important;
+    width: 600px !important;
+    display: inline;
+    padding: 30px;
+}
+
+
+
