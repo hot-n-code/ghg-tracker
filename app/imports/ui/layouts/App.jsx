@@ -17,6 +17,8 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import EditDailyData from '../pages/EditDailyData';
+import InputDailyData from '../pages/InputDailyData';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -33,8 +35,10 @@ class App extends React.Component {
               <Route path="/about" component={AboutPage}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
               <ProtectedRoute path="/add" component={AddStuff}/>
+              <ProtectedRoute path="/inputdailydata" component={InputDailyData}/>
               <ProtectedRoute path="/feedback" component={FeedBack}/>
               <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
+              <ProtectedRoute path="/editdailydata/:_id" component={EditDailyData}/>
               <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
               <Route component={NotFound}/>
             </Switch>
