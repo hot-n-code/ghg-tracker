@@ -20,6 +20,7 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import EditDailyData from '../pages/EditDailyData';
 import InputDailyData from '../pages/InputDailyData';
+import UserPage from '../pages/UserPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -35,6 +36,7 @@ class App extends React.Component {
               <Route path="/signout" component={Signout}/>
               <Route path="/about" component={AboutPage}/>
               <Route path="/cumulative" component={UsersCumulativePage}/>
+                <Route path="/userPage" component={UserPage}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
               <ProtectedRoute path="/add" component={AddStuff}/>
               <ProtectedRoute path="/inputdailydata" component={InputDailyData}/>
