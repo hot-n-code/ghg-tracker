@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { withRouter, NavLink } from 'react-router-dom';
-import { Menu, Dropdown, Header, Image } from 'semantic-ui-react';
+import { Menu, Dropdown, Image } from 'semantic-ui-react';
 import { Roles } from 'meteor/alanning:roles';
 
 const cornerLogo = '../images/hei.png';
@@ -30,7 +30,7 @@ class NavBar extends React.Component {
           {this.props.currentUser === '' ? (
               <Menu.Item position="right"> {/* zero padding!!! */}
                 <Menu secondary stackable id="right-nav-bar">
-                  <Menu.Item as={NavLink} activeClassName="active" exact to="/about" key='about' >CUMULATIVE<br />
+                  <Menu.Item as={NavLink} activeClassName="active" exact to="/cumulative" key='cumulative' >CUMULATIVE<br />
                   DATA <br />
                   </Menu.Item>
                   <Menu.Item as={NavLink} activeClassName="active" exact to="/about" key='about'>ABOUT HEI</Menu.Item>

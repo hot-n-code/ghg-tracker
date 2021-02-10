@@ -16,3 +16,16 @@
 .ghg-text {
   font-size: 300%;
 }
+
+.footer
+{
+  margin-top: 14px;
+  background-color: #5c8d89;
+}
+
+.footer-text {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
