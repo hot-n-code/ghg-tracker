@@ -20,7 +20,7 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the Page for inputting data */
-class InputData extends React.Component {
+class InputDailyData extends React.Component {
 
   /** On submit, insert data. */
   submit(data, formRef) {
@@ -59,4 +59,4 @@ class InputData extends React.Component {
   }
 }
 
-export default InputData;
+export default InputDailyData;
