@@ -8,8 +8,8 @@ class UserPage extends React.Component {
     render() {
         return (
             <Container>
-                <Grid columns={2}>
-                    <Grid.Column width={8}>
+                <Grid stackable columns={2}>
+                    <Grid.Column>
                         <h1>My Progress</h1>
                         <div id='graph-buttons'>
                             <Button size='large' color='gray'>Today</Button>
@@ -25,50 +25,39 @@ class UserPage extends React.Component {
                                alt="filler placement for eventual meter"/>
                     </Grid.Column>
                 </Grid>
-                <Grid columns={3}>
+                <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
                             My Numbers for February 9, 2021</Header>
                     </Grid.Column>
                 </Grid>
-                <Grid columns={3}>
+                <Grid stackable columns={3}>
                     <Grid.Column>
-                        {/* eslint-disable-next-line max-len */}
                         <Image className='images' src="/images/gas.png"
-                               floated='left' size='large' alt="filler placement for eventual graph"/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        {/* eslint-disable-next-line max-len */}
-                        <Image className='images' src="/images/speedometer.png"
-                               size='medium' alt="filler placement for eventual graph"/>
-                    </Grid.Column>
-                    <Grid.Column>
-                        {/* eslint-disable-next-line max-len */}
-                        <Image className='images' src="/images/co2.png"
-                               floated='right' size='medium' alt="filler placement for eventual graph"/>
-                    </Grid.Column>
-                </Grid>
-                <Grid columns={3}>
-                    <Grid.Column>
+                               floated='left' size='medium' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>Fuel Saved</Header>
                         <Header as='h2' textAlign='center'>XX gal</Header>
                     </Grid.Column>
                     <Grid.Column>
+                        <Image className='images' src="/images/speedometer.png"
+                               size='medium' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>Total Miles</Header>
                         <Header as='h2' textAlign='center'>XX mi</Header>
                     </Grid.Column>
                     <Grid.Column>
+                        <Image className='images' src="/images/co2.png"
+                               floated='right' size='medium' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>CO2 Reduced</Header>
                         <Header as='h2' textAlign='center'>XX</Header>
                     </Grid.Column>
                 </Grid>
-                <Grid columns={3}>
+                <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
                     </Grid.Column>
                 </Grid>
-                <Table striped>
+                <Table stackable striped>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Date</Table.HeaderCell>
