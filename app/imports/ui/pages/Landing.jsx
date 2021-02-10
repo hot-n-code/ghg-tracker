@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Image, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
 const menuStyle = { height: '500px' };
 
