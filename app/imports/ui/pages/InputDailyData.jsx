@@ -5,7 +5,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Data } from '../../api/data/DataCollection';
+import { DailyData } from '../../api/data/DailyDataCollection';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
@@ -19,14 +19,14 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-/** Renders the Page for inputting data */
+/** Renders the Page for inputting daily data */
 class InputDailyData extends React.Component {
 
   /** On submit, insert data. */
   submit(data, formRef) {
     const { date, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    Data.collection.insert({ date, modeOfTransportation, milesTraveled, owner },
+    DailyData.collection.insert({ date, modeOfTransportation, milesTraveled, owner },
         (error) => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -43,7 +43,7 @@ class InputDailyData extends React.Component {
     return (
         <Grid container centered>
           <Grid.Column>
-            <Header as="h2" textAlign="center">Input Data</Header>
+            <Header as="h2" textAlign="center">Input Daily Data</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
                 <Segment>
                   <DateField name='date'/>
