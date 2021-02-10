@@ -24,7 +24,6 @@ class NavBar extends React.Component {
         ) : ''}
 
         <Menu.Item as={NavLink} activeClassName="active" exact to="/about" key='about'>About</Menu.Item>
-          <Menu.Item as={NavLink} activeClassName="active" exact to="/userPage" key='about'>My Statistics</Menu.Item>
 
         {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
             <Menu.Item as={NavLink} activeClassName="active" exact to="/admin" key='admin'>Admin</Menu.Item>
@@ -38,6 +37,7 @@ class NavBar extends React.Component {
                   DATA <br />
                   </Menu.Item>
                   <Menu.Item as={NavLink} activeClassName="active" exact to="/about" key='about'>ABOUT HEI</Menu.Item>
+                    <Menu.Item as={NavLink} activeClassName="active" exact to="/userPage" key='about'>MY STATISTICS</Menu.Item>
                   <Menu.Item id="login-dropdown-sign-up" name='Join' as={NavLink} exact to="/signup" content='JOIN'/>
                   <Menu.Item id="login-dropdown-sign-in" name='Signin' as={NavLink} exact to="/signin" content='SIGN IN'/>
                 </Menu>
