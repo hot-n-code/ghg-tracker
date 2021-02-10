@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { Container, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react';
 import { Accounts } from 'meteor/accounts-base';
 
 /**
@@ -39,55 +39,91 @@ class Signup extends React.Component {
       return <Redirect to={from}/>;
     }
     return (
-      <Container id="signup-page">
-        <Grid textAlign="center" verticalAlign="middle" centered columns={2}>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">
-              Register your account
-            </Header>
-            <Form onSubmit={this.submit}>
-              <Segment stacked>
-                <Form.Input
-                  label="Email"
-                  id="signup-form-email"
-                  icon="user"
-                  iconPosition="left"
-                  name="email"
-                  type="email"
-                  placeholder="E-mail address"
-                  onChange={this.handleChange}
-                />
-                <Form.Input
-                  label="Password"
-                  id="signup-form-password"
-                  icon="lock"
-                  iconPosition="left"
-                  name="password"
-                  placeholder="Password"
-                  type="password"
-                  onChange={this.handleChange}
-                />
-                <Form.Button id="signup-form-submit" content="Submit"/>
-              </Segment>
-            </Form>
+      <Grid centered container className='signup-page'>
+        <Grid.Column>
+          <div style={{ marginRight: 'auto', marginLeft: 'auto', paddingBottom: '30px', paddingTop: '10px' }}>
+            <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
+            <Segment padded color='gray'>
+              <Form onSubmit={this.submit}>
+                <Form.Group widths='equal'>
+                  <Form.Input
+                    required
+                    label='First name'
+                    name='first name'
+                    placeholder='First name'
+                    onChange={this.handleChange}
+                    />
+                  <Form.Input
+                    required
+                    label='Last name'
+                    name='last name'
+                    placeholder='Last name'
+                    onChange={this.handleChange}
+                    />
+                </Form.Group>
+                <Form.Group widths='equal'>
+                  <Form.Input
+                      required
+                      label='Email'
+                      icon='user'
+                      iconPosition='left'
+                      name='email'
+                      type='email'
+                      placeholder='Email address'
+                      onChange={this.handleChange}
+                    />
+                  <Form.Input
+                      required
+                      label='Confirm email'
+                      placeholder='Please retype your email'
+                    />
+                </Form.Group>
+                <Form.Group widths='equal'>
+                  <Form.Input
+                    required
+                    label='Password'
+                    icon='lock'
+                    iconPosition='left'
+                    name='password'
+                    placeholder='Password'
+                    type='password'
+                    onChange={this.handleChange}
+                    />
+                  <Form.Input
+                    required
+                    label='Confirm password'
+                    placeholder='Please retype your password'
+                    type='password'
+                    />
+                </Form.Group>
+                <Form.Button primary animated content='Submit'>
+                  <Button.Content visible>Submit</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name='arrow right'/>
+                  </Button.Content>
+                </Form.Button>
+              </Form>
+            </Segment>
             <Message>
-              Already have an account? Login <Link to="/signin">here</Link>
+              <Link to='/signin'>Already have an account? Login</Link>
             </Message>
             {this.state.error === '' ? (
-              ''
+                ''
             ) : (
-              <Message
-                error
-                header="Registration was not successful"
-                content={this.state.error}
-              />
+                <Message
+                    color='red'
+                    error
+                    header='Registration was not successful'
+                    content={this.state.error}
+                />
             )}
-          </Grid.Column>
-        </Grid>
-      </Container>
+          </div>
+        </Grid.Column>
+      </Grid>
     );
   }
 }
+// todo make sure that confirming email and password actually work.
 
 /** Ensure that the React Router location object is available in case we need to redirect. */
 Signup.propTypes = {
