@@ -40,7 +40,7 @@ class InputDailyData extends React.Component {
   render() {
     let fRef = null;
     return (
-        <Grid container centered>
+        <Grid stackable container centered>
           <Grid.Column>
             <Header as="h2" textAlign="center">Input Daily Data</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
