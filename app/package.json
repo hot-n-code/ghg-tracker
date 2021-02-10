@@ -2,7 +2,7 @@
   "name": "meteor-application-template-react",
   "private": true,
   "dependencies": {
-    "@babel/runtime": "^7.12.5",
+    "@babel/runtime": "^7.12.13",
     "classnames": "^2.2.6",
     "core-js": "^3.8.3",
     "graphql": "^14.5.8",
@@ -11,7 +11,7 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router": "^5.1.2",
-    "react-router-dom": "^5.1.2",
+    "react-router-dom": "^5.2.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^1.3.1",
     "simpl-schema": "^1.10.2",
