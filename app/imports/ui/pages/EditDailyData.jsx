@@ -29,7 +29,7 @@ class EditDailyData extends React.Component {
   /** Render the form. Uses Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
     return (
-      <Grid container centered>
+      <Grid stackable container centered>
         <Grid.Column>
           <Header as="h2" textAlign="center">Edit Daily Data</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
