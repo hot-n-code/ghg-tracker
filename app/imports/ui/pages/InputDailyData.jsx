@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Segment, Header } from 'semantic-ui-react';
-import Meteor from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
@@ -26,15 +26,14 @@ class InputDailyData extends React.Component {
   submit(data, formRef) {
     const { date, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    DailyData.collection.insert({ date, modeOfTransportation, milesTraveled, owner },
-        (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Success', 'Data added successfully', 'success');
-            formRef.reset();
-          }
-        });
+    DailyData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Data added successfully', 'success');
+        formRef.reset();
+      }
+    });
   }
 
   /** Render the form. Uses Uniforms: https://github.com/vazco/uniforms */
