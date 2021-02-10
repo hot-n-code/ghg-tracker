@@ -1,11 +1,8 @@
 import React from 'react';
 import { Grid, Header, Image, Container, Segment } from 'semantic-ui-react';
 
-/** A simple static component to render some text for the landing page. */
-class CumulativePage extends React.Component {
-  render() {
-    return (
-        <div className='background' >
+const UsersCumulativePage = () => (
+        <div>
           <Container>
             <Grid.Column>
               <div>
@@ -79,7 +76,5 @@ class CumulativePage extends React.Component {
           </Container>
         </div>
     );
-  }
-}
 
-export default CumulativePage;
+export default UsersCumulativePage;
