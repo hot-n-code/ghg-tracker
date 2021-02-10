@@ -18,6 +18,8 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import AdminPage from '../pages/AdminPage';
+import DataAdminPage from '../pages/DataAdminPage';
 import EditDailyData from '../pages/EditDailyData';
 import InputDailyData from '../pages/InputDailyData';
 import UserPage from '../pages/UserPage';
@@ -35,6 +37,8 @@ class App extends React.Component {
               <Route path="/signup" component={Signup}/>
               <Route path="/signout" component={Signout}/>
               <Route path="/about" component={AboutPage}/>
+              <ProtectedRoute path="/admindata" component={DataAdminPage}/>
+              <ProtectedRoute path="/admin" component={AdminPage}/>
               <Route path="/cumulative" component={UsersCumulativePage}/>
                 <Route path="/userPage" component={UserPage}/>
               <ProtectedRoute path="/list" component={ListStuff}/>
