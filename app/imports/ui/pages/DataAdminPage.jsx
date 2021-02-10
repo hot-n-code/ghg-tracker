@@ -25,16 +25,16 @@ class DataAdminPage extends React.Component {
                 <Table.Cell>Cars</Table.Cell>
                 <Table.Cell>0.0</Table.Cell>
                 <Table.Cell>20500</Table.Cell>
-                <Table.Cell><
-                    Button fluid color='grey'>Edit</Button>
+                <Table.Cell>
+                  <Button fluid color='grey'>Edit</Button>
                 </Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Bus</Table.Cell>
                 <Table.Cell>0.0</Table.Cell>
                 <Table.Cell>11800</Table.Cell>
-                <Table.Cell><
-                  Button fluid color='grey'>Edit</Button>
+                <Table.Cell>
+                  <Button fluid color='grey'>Edit</Button>
                 </Table.Cell>
               </Table.Row>
             </Table.Body>
