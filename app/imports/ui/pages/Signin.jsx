@@ -45,8 +45,8 @@ export default class Signin extends React.Component {
         <Grid centered container className='signin-page'>
           <Grid.Column>
             <div style={{ marginRight: 'auto', marginLeft: 'auto', width: '350px', paddingBottom: '30px', paddingTop: '10px' }}>
-              <Header as='h2' textAlign='centered'>Sign-in</Header>
-              <Segment padded color='gray'>
+              <Header as='h2' textAlign='center'>Sign-in</Header>
+              <Segment padded color='grey'>
                 <Form onSubmit={this.submit}>
                   <Form.Input
                     label='Email'
@@ -66,7 +66,7 @@ export default class Signin extends React.Component {
                       type='password'
                       onChange={this.handleChange}
                     />
-                      <Form.Button primary animated content='Submit'>
+                      <Form.Button primary animated>
                         <Button.Content visible>Submit</Button.Content>
                         <Button.Content hidden>
                           <Icon name='arrow right'/>
