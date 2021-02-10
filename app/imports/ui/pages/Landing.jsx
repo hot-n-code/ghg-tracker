@@ -2,7 +2,7 @@ import React from 'react';
 import { Header } from 'semantic-ui-react';
 
 const menuStyle = { height: '500px' };
-const backgroundColor = { color: #f9f8eb };
+/* const backgroundColor = { color: #f9f8eb }; */
 
 /** A simple static component to render some text for the landing page. */
 class Landing extends React.Component {
