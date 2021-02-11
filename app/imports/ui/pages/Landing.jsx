@@ -16,7 +16,7 @@ class Landing extends React.Component {
               <Header textAlign="center" size="massive" inverted> GHG Tracker </Header>
             </div>
             <Header className="logo-description" textAlign="center" inverted> Tracking greenhouse gas emissions that are released from your every day transportation.</Header>
-            <Image src='/images/landing-page/black-trans.png' size='large' centered ></Image>
+            <Image src="/images/landing-page/black-trans.png" centered />
           </div>
           <LandingDescription/>
           <LandingCumulativeData/>

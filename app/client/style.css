@@ -15,6 +15,16 @@
   background-repeat: no-repeat;
   height: 500px;
 }
+
+.background-about {
+  background-image: url('images/honolulu.jpg');
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.44);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 500px;
+}
+
 .landing-heading {
   font-size: 250%;
 }
@@ -31,6 +41,7 @@
   background-position: center 100%;
   background-attachment: scroll;
 }
+
 
 .signin {
   height: 100vh;
