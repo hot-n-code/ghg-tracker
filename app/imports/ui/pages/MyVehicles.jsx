@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Container, Header, Loader, Search } from 'semantic-ui-react';
+import { Button, Grid, Header, Loader, Search } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
@@ -11,6 +11,8 @@ const sampleVehicleData = [
   {
     make: 'Toyota',
     model: 'Corolla',
+    logo:
+      'https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png',
     price: '22,000',
     year: '2016',
     consumption: '24 MPG',
@@ -19,6 +21,8 @@ const sampleVehicleData = [
   {
     make: 'Honda',
     model: 'Civic',
+    logo:
+      'https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png',
     price: '22,000',
     year: '2018',
     consumption: '26 MPG',
@@ -27,6 +31,7 @@ const sampleVehicleData = [
   {
     make: 'Nissan',
     model: 'Sentra',
+    logo: 'https://www.freepnglogos.com/uploads/nissan-logo-23.png',
     price: '22,000',
     year: '2019',
     consumption: '26 MPG',
@@ -45,18 +50,34 @@ class MyVehicles extends React.Component {
     );
   }
 
-  /** Render the page once subscriptions have been received. */
+  /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
     return (
-      <Container>
-        <Header as='h2' textAlign='center'>
-          My Vehicles
-        </Header>
-        <Search input={{ icon: 'search', iconPosition: 'left' }} />
-        {sampleVehicleData.map((vehicle, index) => (
-          <VehicleCard vehicle={vehicle} key={index} />
-        ))}
-      </Container>
+      <div>
+        <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+          <Grid.Column>
+            <Header as='h1' textAlign='center'>
+              My Vehicles
+            </Header>
+          </Grid.Column>
+          <Grid.Column>
+            <Search
+              input={{ icon: 'search', iconPosition: 'left' }}
+              placeholder={'Search'}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Grid stackable columns={3}>
+              {sampleVehicleData.map((vehicle, index) => (
+                <Grid.Column key={index}>
+                  <VehicleCard vehicle={vehicle} />
+                </Grid.Column>
+              ))}
+            </Grid>
+          </Grid.Column>
+        </Grid>
+        <Button circular icon='add' size='massive' />
+      </div>
     );
   }
 }

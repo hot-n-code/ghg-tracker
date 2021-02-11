@@ -5,9 +5,9 @@
   margin-bottom: 0px;
   padding: 0px;
 }
-.background-landing{
+.background-landing {
   background-image: url('images/oahu.jpeg');
-  box-shadow:inset 0 0 0 2000px rgba(0,0,0,0.44);
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.44);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,4 +15,52 @@
 }
 .ghg-text {
   font-size: 300%;
+}
+
+/* MY VEHICLES PAGE */
+
+/* Search bar */
+#root > div > div:nth-child(2) > div > div:nth-child(2) > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ui.centered.card.vehicle-card {
+  text-align: center;
+  width: 373px;
+  transition: 0.2s all ease-in;
+}
+
+.ui.centered.card.vehicle-card:hover {
+  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ui.card .content .vehicle-make-logo {
+  height: 187px;
+  width: 187px;
+}
+
+.ui.card > .content > .header:not(.ui).vehicle-card-header {
+  margin-top: 15px;
+}
+
+.ui.card > .content > .description {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.vehicle-card-label {
+  font-weight: 700;
+}
+
+#root > div > div:nth-child(2) > button {
+  background-color: rgb(55, 116, 156);
+  margin-top: 30px;
+  position: relative;
+  left: 83%;
+}
+
+#root > div > div:nth-child(2) > button > i {
+  color: rgb(255, 255, 255);
 }
