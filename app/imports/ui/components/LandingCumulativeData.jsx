@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header, Image, Grid, Segment } from 'semantic-ui-react';
+import { Header, Image, Grid, Segment, Button } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 const paddingStyle = { padding: '20px' };
 
@@ -10,10 +11,6 @@ const LandingCumulativeData = () => (
           <Grid columns={2} stackable >
             <Grid.Column>
               <Image src='/images/cumulative-page/graph.png'></Image>
-              <Header as='h1' textAlign='center'> <u>Malama I Ka `Aina</u></Header>
-              <Header as='h2' textAlign='center'> Do your part to save Hawai&apos;i and track your carbon footprint today.
-                <br/>
-                <button className="ui massive black basic button">Sign Up</button></Header>
             </Grid.Column>
             <Grid.Column>
               <Segment color='grey' > <Header as='h1'> Carbon Saved to Date: </Header>
@@ -21,6 +18,11 @@ const LandingCumulativeData = () => (
               </Segment>
             </Grid.Column>
           </Grid>
+          <Header as='h1' textAlign='center'> <u>Malama I Ka `Aina</u></Header>
+          <Header as='h2' textAlign='center'> Do your part to save Hawai&apos;i and track your carbon footprint today.
+            <br/>
+            <Button className="ui massive black basic button" as={NavLink} activeClassName="active" exact to="/signup" >Sign Up</Button>
+          </Header>
         </div>
     );
 

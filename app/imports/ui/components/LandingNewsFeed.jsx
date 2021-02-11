@@ -7,7 +7,7 @@ const paddingStyle = { padding: '20px' };
 const LandingNewsFeed = () => (
     <div style={paddingStyle}>
         <Header as='h3'>Stay in the Loop and Check Out the Latest News on Green House Gasses.. </Header>
-    <Grid relaxed columns={3}>
+    <Grid relaxed columns={3} stackable>
       <Grid.Column>
         <Segment>
         <Item>

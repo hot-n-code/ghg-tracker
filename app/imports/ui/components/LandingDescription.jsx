@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Image, Grid, Segment, Embed } from 'semantic-ui-react';
+import { Header, Grid, Embed } from 'semantic-ui-react';
 
 const paddingStyle = { padding: '20px' };
 
