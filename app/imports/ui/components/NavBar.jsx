@@ -47,6 +47,15 @@ class NavBar extends React.Component {
                 Input Data
               </Menu.Item>,
               <Menu.Item
+                  as={NavLink}
+                  activeClassName='active'
+                  exact
+                  to='/alt'
+                  key='alt'
+              >
+                Alternative Transportation
+              </Menu.Item>,
+              <Menu.Item
                 as={NavLink}
                 activeClassName='active'
                 exact
