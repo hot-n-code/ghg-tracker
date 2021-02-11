@@ -88,7 +88,7 @@ class NavBar extends React.Component {
             <Menu.Item position='right'>
               {' '}
               {/* zero padding!!! */}
-              <Menu secondary stackable id='right-nav-bar'>
+              <Menu secondary stackable>
                 <Menu.Item
                   as={NavLink}
                   activeClassName='active'
