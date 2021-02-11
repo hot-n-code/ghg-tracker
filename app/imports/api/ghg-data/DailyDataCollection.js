@@ -9,8 +9,11 @@ import { Tracker } from 'meteor/tracker';
  */
 class DailyDataCollection {
   constructor() {
+    // The name of this collection.
     this.name = 'DailyDataCollection';
+    // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
+    // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       owner: String,
       date: Date,
