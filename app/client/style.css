@@ -15,6 +15,10 @@
   height: 500px;
 }
 
+.landing-heading {
+  font-size: 250%;
+}
+
 .background-all {
   background-image: url('images/wave_transparent.png');
   background-color: #f9f8eb;
@@ -25,7 +29,9 @@
   background-position: center 100%;
   background-attachment: scroll;
 }
-
+.landing-data {
+  background-color: #A7D7C5;
+}
 .signin {
   height: 100vh;
 }
