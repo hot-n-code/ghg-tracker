@@ -29,6 +29,7 @@ import DataAdminPage from '../pages/DataAdminPage';
 import EditDailyData from '../pages/EditDailyData';
 import InputDailyData from '../pages/InputDailyData';
 import UserPage from '../pages/UserPage';
+import AltTransportation from '../pages/AltTransportation';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -47,6 +48,7 @@ class App extends React.Component {
             <ProtectedRoute path='/admin' component={AdminPage} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <Route path='/userPage' component={UserPage} />
+            <Route path="/alt" component={AltTransportation}/>
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
