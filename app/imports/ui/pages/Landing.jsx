@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Image, Header } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
 const menuStyle = { height: '500px' };
 
@@ -7,14 +7,21 @@ const menuStyle = { height: '500px' };
 class Landing extends React.Component {
   render() {
     return (
-        <div>
-          <div className='background-landing' style={menuStyle}>
-            <div className='ghg-text'>
-            <Header textAlign="center" size="massive" inverted> GHG Tracker </Header>
-            </div>
-            <Header className="logo-description" textAlign="center" inverted> Tracking greenhouse gas emissions that are emitted from your every day transportation.</Header>
+      <div>
+        <div className='background-landing' style={menuStyle}>
+          <div className='ghg-text'>
+            <Header textAlign='center' size='massive' inverted>
+              {' '}
+              GHG Tracker{' '}
+            </Header>
           </div>
+          <Header className='logo-description' textAlign='center' inverted>
+            {' '}
+            Tracking greenhouse gas emissions that are emitted from your every
+            day transportation.
+          </Header>
         </div>
+      </div>
     );
   }
 }
