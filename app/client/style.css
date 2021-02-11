@@ -1,20 +1,78 @@
+/* NAVBAR */
 .ui.attached.menu {
-  background: #919492;
+  background: #5c8d89;
   border: none !important;
   border-radius: 0 !important;
   margin-bottom: 0px;
   padding: 0px;
 }
+
 .background-landing {
-  background-image: url('images/oahu.jpeg');
+  background-image: url('images/landing-page/oahu.jpeg');
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.44);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   height: 500px;
 }
+
+.background-all {
+  background-image: url('images/wave_transparent.png');
+  background-color: #f9f8eb;
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  z-index: -999;
+  width: 100%;
+  background-position: center 100%;
+  background-attachment: scroll;
+}
+
+.signin {
+  height: 100vh;
+}
+
+.signup {
+  height: 100vh;
+}
+
+body {
+  background-color: #f9f8eb;
+  background-size: cover;
+  z-index: -999;
+  margin: 0;
+}
+
 .ghg-text {
-  font-size: 300%;
+  font-size: 400%;
+}
+
+.footer {
+  margin-top: 14px;
+  background-color: #5c8d89;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 175px;
+}
+
+.footer-text {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#graph-buttons {
+  float: left;
+  margin-right: -50px;
+  margin-bottom: 25px;
+}
+
+.images {
+  height: 350px !important;
+  width: 600px !important;
+  display: inline;
+  padding: 30px;
 }
 
 /* MY VEHICLES PAGE */

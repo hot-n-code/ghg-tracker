@@ -18,11 +18,17 @@ import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
 import AboutPage from '../pages/AboutPage';
 import FeedBack from '../pages/FeedBack';
+import UsersCumulativePage from '../pages/UsersCumulativePage';
 import EditStuff from '../pages/EditStuff';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
+import AdminPage from '../pages/AdminPage';
+import DataAdminPage from '../pages/DataAdminPage';
+import EditDailyData from '../pages/EditDailyData';
+import InputDailyData from '../pages/InputDailyData';
+import UserPage from '../pages/UserPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -37,11 +43,20 @@ class App extends React.Component {
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
             <Route path='/about' component={AboutPage} />
+            <ProtectedRoute path='/admindata' component={DataAdminPage} />
+            <ProtectedRoute path='/admin' component={AdminPage} />
+            <Route path='/cumulative' component={UsersCumulativePage} />
+            <Route path='/userPage' component={UserPage} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
+            <ProtectedRoute path='/inputdailydata' component={InputDailyData} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
+            <ProtectedRoute
+              path='/editdailydata/:_id'
+              component={EditDailyData}
+            />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />
           </Switch>

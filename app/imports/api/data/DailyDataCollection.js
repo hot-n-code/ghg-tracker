@@ -3,13 +3,13 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /**
- * Encapsulates state and variable values for Data collection.
+ * Encapsulates state and variable values for Daily Data collection.
  *
- * Data corresponds to the individual data or daily log-in by the user.
+ * Daily Data corresponds to individual data or daily log-in by the user.
  */
-class DataCollection {
+class DailyDataCollection {
   constructor() {
-    this.name = 'DataCollection';
+    this.name = 'DailyDataCollection';
     this.collection = new Mongo.Collection(this.name);
     this.schema = new SimpleSchema({
       owner: String,
@@ -28,4 +28,4 @@ class DataCollection {
   }
 }
 
-export const Data = new DataCollection();
+export const DailyData = new DailyDataCollection();
