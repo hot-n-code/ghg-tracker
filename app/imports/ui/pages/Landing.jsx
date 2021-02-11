@@ -48,6 +48,7 @@ class Landing extends React.Component {
           <LandingCumulativeData/>
           <LandingNewsFeed />
         </div>
+      </div>
     );
   }
 }
