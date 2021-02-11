@@ -42,9 +42,11 @@ export default class Signin extends React.Component {
     }
     // Otherwise return the Login form.
     return (
+        <div className='background-all'>
+          <div className='signin'>
         <Grid centered container className='signin-page'>
           <Grid.Column>
-            <div style={{ marginRight: 'auto', marginLeft: 'auto', width: '350px', paddingBottom: '30px', paddingTop: '10px' }}>
+            <div style={{ marginRight: 'auto', marginLeft: 'auto', width: '400px', paddingBottom: '40px', paddingTop: '40px' }}>
               <Header as='h2' textAlign='center'>Sign-in</Header>
               <Segment padded color='grey'>
                 <Form onSubmit={this.submit}>
@@ -90,6 +92,8 @@ export default class Signin extends React.Component {
             </div>
           </Grid.Column>
         </Grid>
+        </div>
+        </div>
     );
   }
 }

@@ -4,6 +4,7 @@ import React from 'react';
 class AboutPage extends React.Component {
   render() {
     return (
+        <div className='background-all'>
         <div className="seafoam-bg pt-5 pb-5">
           <div className="container">
             <div className="row">
@@ -47,6 +48,7 @@ class AboutPage extends React.Component {
               </div>
             </div>
           </div>
+        </div>
         </div>
     );
   }

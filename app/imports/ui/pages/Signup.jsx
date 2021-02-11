@@ -39,9 +39,11 @@ class Signup extends React.Component {
       return <Redirect to={from}/>;
     }
     return (
+        <div className='background-all'>
+          <div className='signup'>
       <Grid centered container className='signup-page'>
         <Grid.Column>
-          <div style={{ marginRight: 'auto', marginLeft: 'auto', paddingBottom: '30px', paddingTop: '10px' }}>
+          <div style={{ marginRight: 'auto', marginLeft: 'auto', paddingBottom: '40px', paddingTop: '40px', width: '800px'}}>
             <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
             <Segment padded color='gray'>
               <Form onSubmit={this.submit}>
@@ -120,6 +122,8 @@ class Signup extends React.Component {
           </div>
         </Grid.Column>
       </Grid>
+          </div>
+        </div>
     );
   }
 }

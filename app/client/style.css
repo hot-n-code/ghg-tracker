@@ -14,6 +14,33 @@
   background-repeat: no-repeat;
   height: 500px;
 }
+
+.background-all {
+  background-image: url('images/wave_transparent.png');
+  background-color: #f9f8eb;
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  z-index: -999;
+  width: 100%;
+  background-position: center 100%;
+  background-attachment: scroll;
+}
+
+.signin {
+  height: 100vh;
+}
+
+.signup {
+  height: 100vh;
+}
+
+body {
+  background-color: #f9f8eb;
+  background-size: cover;
+  z-index: -999;
+  margin: 0;
+}
+
 .ghg-text {
   font-size: 400%;
 }
@@ -22,6 +49,10 @@
 {
   margin-top: 14px;
   background-color: #5c8d89;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 175px;
 }
 
 .footer-text {
