@@ -1,9 +1,13 @@
 import React from 'react';
+import { Container } from 'semantic-ui-react';
+
+const paddingStyle = { padding: 20 };
 
 /** A simple static component to render some text for the landing page. */
 class FeedBack extends React.Component {
   render() {
     return (
+        <Container style={paddingStyle}>
         <div className='container'>
           <div className="row">
             <div className='container-fluid'>
@@ -55,6 +59,7 @@ class FeedBack extends React.Component {
             </div>
           </div>
         </div>
+        </Container>
     );
   }
 }

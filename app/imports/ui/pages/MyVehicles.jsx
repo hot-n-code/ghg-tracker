@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import VehicleCard from '../components/VehicleCard';
 
+const paddingStyle = { padding: 20 };
+
 // Create sample placeholder vehicle data for mock-up
 const sampleVehicleData = [
   {
@@ -53,7 +55,7 @@ class MyVehicles extends React.Component {
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
     return (
-      <div>
+      <div style={paddingStyle}>
         <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
           <Grid.Column>
             <Header as='h1' textAlign='center'>

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Container, Image, Header, Grid, Table, Button } from 'semantic-ui-react';
 
+const paddingStyle = { padding: 20 };
+
 class DataAdminPage extends React.Component {
   render() {
     return (
-        <Container>
-          <Grid.Column>
+        <Container style={paddingStyle}>
+          <Grid.Column >
             <Header as='h1' textAlign='center'>Community Data</Header>
             <Image floated='left' src="https://www.iconpacks.net/icons/1/free-pie-chart-icon-683-thumb.png" size='large'/>
             <Image floated='right' src="https://globuswarwick.files.wordpress.com/2020/02/screen-shot-2020-02-11-at-21.50.22.png?w=663" size='large'/>

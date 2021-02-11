@@ -17,14 +17,14 @@ class NavBar extends React.Component {
         <Menu.Item as={NavLink} activeClassName='' exact to='/'>
           <Image src={cornerLogo} size='small' padding={0} />
         </Menu.Item>
-        {this.props.currentUser
+        {this.props.currentUser && !Roles.userIsInRole(Meteor.userId(), 'admin')
           ? [
               <Menu.Item
                 as={NavLink}
                 activeClassName='active'
                 exact
-                to='/add'
-                key='add'
+                to='/my-vehicles'
+                key='my-vehicles'
               >
                 My Vehicles
               </Menu.Item>,
@@ -35,16 +35,16 @@ class NavBar extends React.Component {
                 to='/userPage'
                 key='about'
               >
-                MY DATA
+                My Data
               </Menu.Item>,
               <Menu.Item
                 as={NavLink}
                 activeClassName='active'
                 exact
-                to='/list'
-                key='list'
+                to='/inputdailydata'
+                key='inputdailydata'
               >
-                List Stuff
+                Input Data
               </Menu.Item>,
               <Menu.Item
                 as={NavLink}
@@ -65,7 +65,7 @@ class NavBar extends React.Component {
             to='/admin'
             key='admin'
           >
-            Admin
+            User List
           </Menu.Item>
         ) : (
           ''
@@ -76,9 +76,9 @@ class NavBar extends React.Component {
             activeClassName='active'
             exact
             to='/admindata'
-            key='admin'
-          >
-            Cumulative Data(Admin)
+            key='admin'> Admin
+            <br />
+            Cumulative Data
           </Menu.Item>
         ) : (
           ''

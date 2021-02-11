@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyData } from '../../api/ghg-data/DailyDataCollection';
 
+const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
   date: Date,
@@ -40,7 +41,7 @@ class InputDailyData extends React.Component {
   render() {
     let fRef = null;
     return (
-        <Grid stackable container centered>
+        <Grid stackable container centered style={paddingStyle}>
           <Grid.Column>
             <Header as="h2" textAlign="center">Input Daily Data</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >

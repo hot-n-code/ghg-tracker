@@ -1,13 +1,14 @@
 import React from 'react';
 import { Grid, Header, Button, Image, Container, Table } from 'semantic-ui-react';
 
+const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
  * users may also edit their data of their entries.
  * */
 class UserPage extends React.Component {
     render() {
         return (
-            <Container>
+            <Container style={paddingStyle}>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <h1>My Progress</h1>
