@@ -26,8 +26,8 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import AdminPage from '../pages/AdminPage';
 import DataAdminPage from '../pages/DataAdminPage';
-import EditDailyData from '../pages/EditDailyData';
-import InputDailyData from '../pages/InputDailyData';
+import EditDailyUserData from '../pages/EditDailyUserData';
+import InputDailyUserData from '../pages/InputDailyUserData';
 import UserPage from '../pages/UserPage';
 import AltTransportation from '../pages/AltTransportation';
 
@@ -52,12 +52,12 @@ class App extends React.Component {
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
-            <ProtectedRoute path='/inputdailydata' component={InputDailyData} />
+            <ProtectedRoute path='/input-daily-user-data' component={InputDailyUserData} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <ProtectedRoute
-              path='/editdailydata/:_id'
-              component={EditDailyData}
+              path='/edit-daily-user-data/:_id'
+              component={EditDailyUserData}
             />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />

@@ -11,7 +11,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 
 /** Renders the Page for editing daily data */
-class EditDailyData extends React.Component {
+class EditDailyUserData extends React.Component {
 
   /** On successful submit, update data. */
   submit(data) {
@@ -31,7 +31,7 @@ class EditDailyData extends React.Component {
     return (
       <Grid stackable container centered>
         <Grid.Column>
-          <Header as="h2" textAlign="center">Edit Daily Data</Header>
+          <Header as="h2" textAlign="center">Edit Your Daily Data</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
               <DateField name='date'/>
@@ -49,7 +49,7 @@ class EditDailyData extends React.Component {
 }
 
 /** Require the presence of a DailyData document in the props object. Uniforms adds 'model' to the props, which we use. */
-EditDailyData.propTypes = {
+EditDailyUserData.propTypes = {
   doc: PropTypes.object,
   model: PropTypes.object,
   ready: PropTypes.bool.isRequired,
@@ -65,4 +65,4 @@ export default withTracker(({ match }) => {
     doc: DailyUserData.collection.findOne(documentId),
     ready: subscription.ready(),
   };
-})(EditDailyData);
+})(EditDailyUserData);
