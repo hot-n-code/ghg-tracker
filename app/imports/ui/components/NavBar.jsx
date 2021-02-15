@@ -41,8 +41,8 @@ class NavBar extends React.Component {
                 as={NavLink}
                 activeClassName='active'
                 exact
-                to='/input-data'
-                key='input-data'
+                to='/input-daily-data'
+                key='input-daily-data'
               >
                 Input Data
               </Menu.Item>,
