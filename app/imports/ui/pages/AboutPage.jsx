@@ -2,11 +2,12 @@ import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 
 const menuStyle = { height: '200px' };
+const paddingStyle = { padding: '20px', paddingTop: '0px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
     return (
-        <Container fluid>
+        <Container fluid style={paddingStyle}>
           <Grid.Row>
           <div className='background-about' style={menuStyle}>
             &nbsp;&nbsp;
