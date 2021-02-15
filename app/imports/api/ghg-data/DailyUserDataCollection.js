@@ -31,4 +31,4 @@ class DailyUserDataCollection {
   }
 }
 
-export const DailyData = new DailyUserDataCollection();
+export const DailyUserData = new DailyUserDataCollection();

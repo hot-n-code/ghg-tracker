@@ -5,7 +5,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
@@ -27,7 +27,7 @@ class InputDailyData extends React.Component {
   submit(data, formRef) {
     const { date, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    DailyData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
+    DailyUserData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {

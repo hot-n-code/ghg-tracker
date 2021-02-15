@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
-import { DailyData } from '../../api/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -14,10 +14,10 @@ Meteor.publish(Stuffs.userPublicationName, function () {
 });
 
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
-Meteor.publish(DailyData.userPublicationName, function () {
+Meteor.publish(DailyUserData.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
-    return DailyData.collection.find({ owner: username });
+    return DailyUserData.collection.find({ owner: username });
   }
   return this.ready();
 });
@@ -33,9 +33,9 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
-Meteor.publish(DailyData.adminPublicationName, function () {
+Meteor.publish(DailyUserData.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return DailyData.collection.find();
+    return DailyUserData.collection.find();
   }
   return this.ready();
 });

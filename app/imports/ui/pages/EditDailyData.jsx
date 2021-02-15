@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
-const bridge = new SimpleSchema2Bridge(DailyData.schema);
+const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 
 /** Renders the Page for editing daily data */
 class EditDailyData extends React.Component {
@@ -16,7 +16,7 @@ class EditDailyData extends React.Component {
   /** On successful submit, update data. */
   submit(data) {
     const { date, modeOfTransportation, milesTraveled, _id } = data;
-    DailyData.collection.update(_id, { $set: { date, modeOfTransportation, milesTraveled } }, (error) => (error ?
+    DailyUserData.collection.update(_id, { $set: { date, modeOfTransportation, milesTraveled } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Item updated successfully', 'success')));
   }
@@ -60,9 +60,9 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing : _id.
   const documentId = match.params._id;
   // Get access to Edit data.
-  const subscription = Meteor.subscribe(DailyData.userPublickationName);
+  const subscription = Meteor.subscribe(DailyUserData.userPublickationName);
   return {
-    doc: DailyData.collection.findOne(documentId),
+    doc: DailyUserData.collection.findOne(documentId),
     ready: subscription.ready(),
   };
 })(EditDailyData);
