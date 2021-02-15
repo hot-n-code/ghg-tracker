@@ -32,8 +32,8 @@ class NavBar extends React.Component {
                 as={NavLink}
                 activeClassName='active'
                 exact
-                to='/userPage'
-                key='about'
+                to='/user-page'
+                key='user-page'
               >
                 My Data
               </Menu.Item>,
@@ -41,17 +41,26 @@ class NavBar extends React.Component {
                 as={NavLink}
                 activeClassName='active'
                 exact
-                to='/inputdailydata'
-                key='inputdailydata'
+                to='/input-daily-data'
+                key='input-daily-data'
               >
                 Input Data
+              </Menu.Item>,
+              <Menu.Item
+                  as={NavLink}
+                  activeClassName='active'
+                  exact
+                  to='/alt'
+                  key='alt'
+              >
+                Alternative Transportation
               </Menu.Item>,
               <Menu.Item
                 as={NavLink}
                 activeClassName='active'
                 exact
                 to='/feedback'
-                key='add'
+                key='feedback'
               >
                 Feedback
               </Menu.Item>,
@@ -75,8 +84,8 @@ class NavBar extends React.Component {
             as={NavLink}
             activeClassName='active'
             exact
-            to='/admindata'
-            key='admin'> Admin
+            to='/admin-data'
+            key='admin-data'> Admin
             <br />
             Cumulative Data
           </Menu.Item>
@@ -88,7 +97,7 @@ class NavBar extends React.Component {
             <Menu.Item position='right'>
               {' '}
               {/* zero padding!!! */}
-              <Menu secondary stackable>
+              <Menu secondary stackable id='right-nav-bar'>
                 <Menu.Item
                   as={NavLink}
                   activeClassName='active'

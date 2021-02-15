@@ -7,10 +7,10 @@ import { Tracker } from 'meteor/tracker';
  *
  * Daily Data corresponds to individual data or daily log-in by the user.
  */
-class DailyDataCollection {
+class DailyUserDataCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'DailyDataCollection';
+    this.name = 'DailyUserDataCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
@@ -31,4 +31,4 @@ class DailyDataCollection {
   }
 }
 
-export const DailyData = new DailyDataCollection();
+export const DailyUserData = new DailyUserDataCollection();

@@ -5,7 +5,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/ghg-data/DailyDataCollection';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
@@ -21,13 +21,13 @@ const formSchema = new SimpleSchema({
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the Page for inputting daily data */
-class InputDailyData extends React.Component {
+class InputDailyUserData extends React.Component {
 
   /** On submit, insert data. */
   submit(data, formRef) {
     const { date, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    DailyData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
+    DailyUserData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -43,7 +43,7 @@ class InputDailyData extends React.Component {
     return (
         <Grid stackable container centered style={paddingStyle}>
           <Grid.Column>
-            <Header as="h2" textAlign="center">Input Daily Data</Header>
+            <Header as="h2" textAlign="center">Input Your Daily Data</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
                 <Segment>
                   <DateField name='date'/>
@@ -59,4 +59,4 @@ class InputDailyData extends React.Component {
   }
 }
 
-export default InputDailyData;
+export default InputDailyUserData;
