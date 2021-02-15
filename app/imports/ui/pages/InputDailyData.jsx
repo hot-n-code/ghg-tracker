@@ -5,7 +5,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/ghg-data/DailyDataCollection';
+import { DailyData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */

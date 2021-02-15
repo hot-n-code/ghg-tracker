@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/ghg-data/DailyDataCollection';
+import { DailyData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const bridge = new SimpleSchema2Bridge(DailyData.schema);
 
