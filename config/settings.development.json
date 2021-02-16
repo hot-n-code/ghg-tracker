@@ -9,5 +9,14 @@
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
     { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
     { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  ],
+
+  "defaultDailyUserData": [
+    { "inputDate": "2021-02-12", "modeOfTransportation" : "Electric Vehicle", "milesTraveled" : 44, "owner" : "john@foo.com" },
+    { "inputDate": "2019-11-13", "modeOfTransportation" : "Telework", "milesTraveled" : 25, "owner" : "john@foo.com" },
+    { "inputDate": "2019-11-14", "modeOfTransportation" : "Public Transportation", "milesTraveled" : 30, "owner" : "john@foo.com" },
+    { "inputDate": "2019-11-15", "modeOfTransportation" : "Carpool", "milesTraveled" : 60, "owner" : "john@foo.com" },
+    { "inputDate": "2019-11-16", "modeOfTransportation" : "Electric Vehicle", "milesTraveled" : 22, "owner" : "john@foo.com" },
+    { "inputDate": "2019-11-17", "modeOfTransportation" : "Alternative Fuel Vehicle", "milesTraveled" : 12, "owner" : "john@foo.com" }
   ]
 }

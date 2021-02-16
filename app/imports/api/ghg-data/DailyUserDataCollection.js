@@ -16,7 +16,7 @@ class DailyUserDataCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       owner: String,
-      date: Date,
+      inputDate: Date,
       modeOfTransportation: {
         type: String,
         allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
