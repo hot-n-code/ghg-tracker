@@ -15,8 +15,8 @@ class EditDailyUserData extends React.Component {
 
   /** On successful submit, update data. */
   submit(data) {
-    const { date, modeOfTransportation, milesTraveled, _id } = data;
-    DailyUserData.collection.update(_id, { $set: { date, modeOfTransportation, milesTraveled } }, (error) => (error ?
+    const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
+    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Item updated successfully', 'success')));
   }
@@ -34,7 +34,7 @@ class EditDailyUserData extends React.Component {
           <Header as="h2" textAlign="center">Edit Your Daily Data</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
-              <DateField name='date'/>
+              <DateField name='inputDate'/>
               <SelectField name='modeOfTransportation'/>
               <NumField name='milesTraveled'/>
               <SubmitField value='Submit'/>

@@ -10,7 +10,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
-  date: Date,
+  inputDate: Date,
   modeOfTransportation: {
     type: String,
     allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
@@ -25,9 +25,9 @@ class InputDailyUserData extends React.Component {
 
   /** On submit, insert data. */
   submit(data, formRef) {
-    const { date, modeOfTransportation, milesTraveled } = data;
+    const { inputDate, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    DailyUserData.collection.insert({ date, modeOfTransportation, milesTraveled, owner }, (error) => {
+    DailyUserData.collection.insert({ inputDate, modeOfTransportation, milesTraveled, owner }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -46,7 +46,7 @@ class InputDailyUserData extends React.Component {
             <Header as="h2" textAlign="center">Input Your Daily Data</Header>
             <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
                 <Segment>
-                  <DateField name='date'/>
+                  <DateField name='inputDate' max={new Date(Date.now())}/>
                   <SelectField name='modeOfTransportation'/>
                   <NumField name='milesTraveled'/>
                   <SubmitField value='Submit'/>
