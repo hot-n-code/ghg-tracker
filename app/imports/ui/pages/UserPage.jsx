@@ -70,13 +70,13 @@ class UserPage extends React.Component {
                     <Table.Body>
                         <Table.Row>
                             <Table.Cell>February 8, 2021 5:50 PM</Table.Cell>
-                            <Table.Cell>Tesla Model 3</Table.Cell>
+                            <Table.Cell>Public Transportation</Table.Cell>
                             <Table.Cell>5.1</Table.Cell>
                             <Table.Cell><Button size='large' color='gray'>Edit</Button></Table.Cell>
                         </Table.Row>
                         <Table.Row>
                             <Table.Cell>February 8, 2021 2:30 PM</Table.Cell>
-                            <Table.Cell>Tesla Model 3</Table.Cell>
+                            <Table.Cell>Public Transportation</Table.Cell>
                             <Table.Cell>2.3</Table.Cell>
                             <Table.Cell><Button size='large' color='gray'>Edit</Button></Table.Cell>
                         </Table.Row>
