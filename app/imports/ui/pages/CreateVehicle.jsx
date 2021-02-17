@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
+const paddingStyle = { padding: 20 };
+
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = () => new SimpleSchema({
   make: String,
@@ -24,7 +26,6 @@ const makeSchema = () => new SimpleSchema({
   },
 });
 
-/** Renders the Home Page: what appears after the user logs in. */
 class CreateVehicle extends React.Component {
 
   /** On submit, insert the data. */
@@ -37,7 +38,7 @@ class CreateVehicle extends React.Component {
           if (error) {
             swal('Error', error.message, 'error');
           } else {
-            swal('Success', 'Item added successfully', 'success');
+            swal('Success', 'Vehicle added successfully', 'success');
             formRef.reset();
           }
         });
@@ -53,10 +54,10 @@ class CreateVehicle extends React.Component {
     const bridge = new SimpleSchema2Bridge(formSchema);
     let fRef = null;
     return (
-        <div>
+        <div style={paddingStyle}>
           <Grid container centered>
             <Grid.Column>
-              <Header as="h2" textAlign="center" inverted>Create Vehicle</Header>
+              <Header as="h2" textAlign="center">Create Vehicle</Header>
               <AutoForm ref={ref => { fRef = ref; }}
                         schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>

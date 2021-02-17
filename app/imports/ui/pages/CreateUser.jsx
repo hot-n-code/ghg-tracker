@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import { Users } from '../../api/user/UserCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 
+const paddingStyle = { padding: 20 };
+
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allVehicles) => new SimpleSchema({
   email: { type: String, label: 'Email', optional: true },
@@ -21,7 +23,7 @@ const makeSchema = (allVehicles) => new SimpleSchema({
   'vehicles.$': { type: String, allowedValues: allVehicles },
 });
 
-/** Renders the createProfile Page: what appears after the user logs in. */
+/** Renders the createUser Page: what appears after the user logs in. */
 class CreateUser extends React.Component {
   /** Redirecting. */
   handleClick = () => {
@@ -30,12 +32,13 @@ class CreateUser extends React.Component {
   }
 
   submit(data) {
+    /** Gathers user's data and adds it to the userCollection */
     const { firstName, lastName } = data;
     const email = Meteor.user().username;
     const image = 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg';
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
-      swal('Error', 'You already have a created profile');
+      swal('Error', 'You already have a created user');
     } else {
       Users.collection.insert({ firstName, lastName, email, image },
           (error) => {
@@ -56,20 +59,19 @@ class CreateUser extends React.Component {
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
     const email = Meteor.user().username;
-    // Create the form schema for uniforms. Need to determine all interests and jams for multi select list.
     const allVehicles = _.pluck(UserVehicle.collection.find().fetch(), 'user');
     const formSchema = makeSchema(allVehicles);
     const bridge = new SimpleSchema2Bridge(formSchema);
-    // Now create the model with all the user information.
     const vehicles = _.pluck(UserVehicle.collection.find({ profile: email }).fetch(), 'model');
     const user = Users.collection.findOne({ email });
+    // Model with all the user information.
     const model = _.extend({}, user, { vehicles });
     let fRef = null;
     return (
-        <div className="bg-image">
-          <Grid id="createProfile-page" container centered>
+        <div style={paddingStyle}>
+          <Grid container centered>
             <Grid.Column>
-              <Header as="h2" textAlign="center" inverted>User Creation</Header>
+              <Header as="h2" textAlign="center">User Creation</Header>
               <AutoForm ref={ref => { fRef = ref; }}
                         model={model} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>

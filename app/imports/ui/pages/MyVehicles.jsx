@@ -9,16 +9,6 @@ import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
 const paddingStyle = { padding: 20 };
 
-function getVehicleData(model) {
-  const make = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'make');
-  const logo = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'logo');
-  const price = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'price');
-  const year = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'year');
-  const MPG = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'MPG');
-  const fuelSpending = _.pluck(Vehicle.collection.find({ model: model }).fetch(), 'fuelSpending');
-  return _.extend({ }, { make, model, logo, price, year, MPG, fuelSpending });
-}
-
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -32,8 +22,9 @@ class MyVehicles extends React.Component {
 
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
-    const owner = _.pluck(Vehicle.collection.find({ owner: 'tim@gmail.com' }).fetch(), 'model');
-    const ownerData = owner.map(model => getVehicleData(model));
+    /** Finds the vehicles that are owned by the user */
+    const email = Meteor.user().username;
+    const userVehicle = Vehicle.collection.find({ owner: email }).fetch();
     return (
         <div style={paddingStyle}>
           <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
@@ -50,7 +41,7 @@ class MyVehicles extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <Grid stackable columns={3}>
-                {_.map(ownerData, (vehicle, index) => (
+                {_.map(userVehicle, (vehicle, index) => (
                     <Grid.Column key={index}>
                       <VehicleCard vehicle={vehicle} />
                     </Grid.Column>
@@ -58,7 +49,10 @@ class MyVehicles extends React.Component {
               </Grid>
             </Grid.Column>
           </Grid>
-          <Button circular icon='add' size='massive' />
+          <br/>
+          <a href='#/create-vehicle'>
+            <Button circular icon='add' size='massive'/>
+          </a>
         </div>
     );
   }

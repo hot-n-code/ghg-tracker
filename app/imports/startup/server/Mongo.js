@@ -45,6 +45,7 @@ if (DailyUserData.collection.find().count() === 0) {
   }
 }
 
+/** Initialize the database with a default data document. */
 function addVehicle({ make, model, owner, logo, price, year, MPG, fuelSpending, type }) {
   console.log(`Defining vehicle ${owner}`);
   Vehicle.collection.insert({ make, model, owner, logo, price, year, MPG, fuelSpending, type });
@@ -58,6 +59,7 @@ if (Vehicle.collection.find().count() === 0) {
   }
 }
 
+/** Initialize the database with a default data document. */
 function addUser({ firstName, lastName, email, image, vehicles, role }) {
   console.log(`Defining profile ${email}`);
   Users.collection.insert({ firstName, lastName, email, image });
