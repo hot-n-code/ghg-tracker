@@ -17,7 +17,7 @@ class UserPage extends React.Component {
                             <Button size='large' color='gray'>This Week</Button>
                             <Button size='large' color='gray'>This Month</Button>
                         </div>
-                        <Image src="/images/chart.png"
+                        <Image src="/images/cumulative-page/graph.png"
                                floated='left' size='massive' alt="filler placement for eventual graph"/>
                     </Grid.Column>
                     <Grid.Column>
