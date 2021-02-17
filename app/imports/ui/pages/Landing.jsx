@@ -1,5 +1,8 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
+import LandingNewsFeed from '../components/LandingNewsFeed';
+import LandingCumulativeData from '../components/LandingCumulativeData';
+import LandingDescription from '../components/LandingDescription';
 
 const menuStyle = { height: '500px' };
 
@@ -10,10 +13,13 @@ class Landing extends React.Component {
         <div>
           <div className='background-landing' style={menuStyle}>
             <div className='ghg-text'>
-            <Header textAlign="center" size="massive" inverted> GHG Tracker </Header>
+              <Header textAlign="center" size="massive" inverted> GHG Tracker </Header>
             </div>
-            <Header className="logo-description" textAlign="center" inverted> Tracking greenhouse gas emissions that are emitted from your every day transportation.</Header>
+            <Header className="logo-description" textAlign="center" inverted> Tracking greenhouse gas emissions that are released from your every day transportation.</Header>
           </div>
+          <LandingDescription/>
+          <LandingCumulativeData/>
+          <LandingNewsFeed />
         </div>
     );
   }

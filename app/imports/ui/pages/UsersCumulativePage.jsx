@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Header, Image, Container, Segment } from 'semantic-ui-react';
 
 const UsersCumulativePage = () => (
+      <div className='background-all'>
         <div>
           <Container>
             <Grid.Column>
@@ -75,6 +76,7 @@ const UsersCumulativePage = () => (
             </Grid>
           </Container>
         </div>
+      </div>
     );
 
 export default UsersCumulativePage;

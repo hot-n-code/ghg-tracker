@@ -1,9 +1,11 @@
 import React from 'react';
 import { Input, Container, Image, Header, Grid, Segment, Button } from 'semantic-ui-react';
 
+const paddingStyle = { padding: 20 };
 class AdminPage extends React.Component {
   render() {
     return (
+        <div style={paddingStyle}>
         <Container>
           <Input fluid icon='search' placeholder='Search...'>
           </Input>
@@ -38,6 +40,7 @@ class AdminPage extends React.Component {
             </Grid>
           </Segment>
         </Container>
+        </div>
     );
   }
 }

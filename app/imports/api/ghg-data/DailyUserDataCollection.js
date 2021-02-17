@@ -7,13 +7,16 @@ import { Tracker } from 'meteor/tracker';
  *
  * Daily Data corresponds to individual data or daily log-in by the user.
  */
-class DailyDataCollection {
+class DailyUserDataCollection {
   constructor() {
-    this.name = 'DailyDataCollection';
+    // The name of this collection.
+    this.name = 'DailyUserDataCollection';
+    // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
+    // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       owner: String,
-      date: Date,
+      inputDate: Date,
       modeOfTransportation: {
         type: String,
         allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
@@ -28,4 +31,4 @@ class DailyDataCollection {
   }
 }
 
-export const DailyData = new DailyDataCollection();
+export const DailyUserData = new DailyUserDataCollection();

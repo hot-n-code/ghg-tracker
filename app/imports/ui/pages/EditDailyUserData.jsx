@@ -6,17 +6,17 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyData } from '../../api/data/DailyDataCollection';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
-const bridge = new SimpleSchema2Bridge(DailyData.schema);
+const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 
 /** Renders the Page for editing daily data */
-class EditDailyData extends React.Component {
+class EditDailyUserData extends React.Component {
 
   /** On successful submit, update data. */
   submit(data) {
-    const { date, modeOfTransportation, milesTraveled, _id } = data;
-    DailyData.collection.update(_id, { $set: { date, modeOfTransportation, milesTraveled } }, (error) => (error ?
+    const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
+    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled } }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Item updated successfully', 'success')));
   }
@@ -29,12 +29,12 @@ class EditDailyData extends React.Component {
   /** Render the form. Uses Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
     return (
-      <Grid container centered>
+      <Grid stackable container centered>
         <Grid.Column>
-          <Header as="h2" textAlign="center">Edit Daily Data</Header>
+          <Header as="h2" textAlign="center">Edit Your Daily Data</Header>
           <AutoForm schema={bridge} onSubmit={data => this.submit(data)} model={this.props.doc}>
             <Segment>
-              <DateField name='date'/>
+              <DateField name='inputDate'/>
               <SelectField name='modeOfTransportation'/>
               <NumField name='milesTraveled'/>
               <SubmitField value='Submit'/>
@@ -49,7 +49,7 @@ class EditDailyData extends React.Component {
 }
 
 /** Require the presence of a DailyData document in the props object. Uniforms adds 'model' to the props, which we use. */
-EditDailyData.propTypes = {
+EditDailyUserData.propTypes = {
   doc: PropTypes.object,
   model: PropTypes.object,
   ready: PropTypes.bool.isRequired,
@@ -60,9 +60,9 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing : _id.
   const documentId = match.params._id;
   // Get access to Edit data.
-  const subscription = Meteor.subscribe(DailyData.userPublickationName);
+  const subscription = Meteor.subscribe(DailyUserData.userPublickationName);
   return {
-    doc: DailyData.collection.findOne(documentId),
+    doc: DailyUserData.collection.findOne(documentId),
     ready: subscription.ready(),
   };
-})(EditDailyData);
+})(EditDailyUserData);

@@ -32,4 +32,4 @@ class UserCollection {
   // todo remove
 }
 
-export const User = new UserCollection();
+export const Users = new UserCollection();

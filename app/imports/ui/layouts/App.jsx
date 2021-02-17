@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import 'semantic-ui-css/semantic.css';
 import { Roles } from 'meteor/alanning:roles';
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
+import MyVehicles from '../pages/MyVehicles';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
 import AddStuff from '../pages/AddStuff';
@@ -20,39 +26,45 @@ import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
 import AdminPage from '../pages/AdminPage';
 import DataAdminPage from '../pages/DataAdminPage';
-import EditDailyData from '../pages/EditDailyData';
-import InputDailyData from '../pages/InputDailyData';
+import EditDailyUserData from '../pages/EditDailyUserData';
+import InputDailyUserData from '../pages/InputDailyUserData';
 import UserPage from '../pages/UserPage';
+import AltTransportation from '../pages/AltTransportation';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {
     return (
-        <Router>
-          <div>
-            <NavBar/>
-            <Switch>
-              <Route exact path="/" component={Landing}/>
-              <Route path="/signin" component={Signin}/>
-              <Route path="/signup" component={Signup}/>
-              <Route path="/signout" component={Signout}/>
-              <Route path="/about" component={AboutPage}/>
-              <ProtectedRoute path="/admindata" component={DataAdminPage}/>
-              <ProtectedRoute path="/admin" component={AdminPage}/>
-              <Route path="/cumulative" component={UsersCumulativePage}/>
-                <Route path="/userPage" component={UserPage}/>
-              <ProtectedRoute path="/list" component={ListStuff}/>
-              <ProtectedRoute path="/add" component={AddStuff}/>
-              <ProtectedRoute path="/inputdailydata" component={InputDailyData}/>
-              <ProtectedRoute path="/feedback" component={FeedBack}/>
-              <ProtectedRoute path="/edit/:_id" component={EditStuff}/>
-              <ProtectedRoute path="/editdailydata/:_id" component={EditDailyData}/>
-              <AdminProtectedRoute path="/admin" component={ListStuffAdmin}/>
-              <Route component={NotFound}/>
-            </Switch>
-            <Footer/>
-          </div>
-        </Router>
+      <Router>
+        <div>
+          <NavBar />
+          <Switch>
+            <Route exact path='/' component={Landing} />
+            <Route path='/signin' component={Signin} />
+            <Route path='/signup' component={Signup} />
+            <Route path='/signout' component={Signout} />
+            <Route path='/about' component={AboutPage} />
+            <ProtectedRoute path='/admin-data' component={DataAdminPage} />
+            <ProtectedRoute path='/admin' component={AdminPage} />
+            <Route path='/cumulative' component={UsersCumulativePage} />
+            <Route path='/user-page' component={UserPage} />
+            <Route path="/alt" component={AltTransportation}/>
+            <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
+            <ProtectedRoute path='/list' component={ListStuff} />
+            <ProtectedRoute path='/add' component={AddStuff} />
+            <ProtectedRoute path='/input-daily-data' component={InputDailyUserData} />
+            <ProtectedRoute path='/feedback' component={FeedBack} />
+            <ProtectedRoute path='/edit/:_id' component={EditStuff} />
+            <ProtectedRoute
+              path='/edit-daily-data/:_id'
+              component={EditDailyUserData}
+            />
+            <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
+            <Route component={NotFound} />
+          </Switch>
+          <Footer />
+        </div>
+      </Router>
     );
   }
 }
@@ -65,11 +77,14 @@ class App extends React.Component {
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => {
+    render={props => {
       const isLogged = Meteor.userId() !== null;
-      return isLogged ?
-          (<Component {...props} />) :
-          (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
+      return isLogged ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: '/signin', state: { from: props.location } }}
+        />
       );
     }}
   />
@@ -81,17 +96,20 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
  * @param {any} { component: Component, ...rest }
  */
 const AdminProtectedRoute = ({ component: Component, ...rest }) => (
-    <Route
-        {...rest}
-        render={(props) => {
-          const isLogged = Meteor.userId() !== null;
-          const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
-          return (isLogged && isAdmin) ?
-              (<Component {...props} />) :
-              (<Redirect to={{ pathname: '/signin', state: { from: props.location } }}/>
-              );
-        }}
-    />
+  <Route
+    {...rest}
+    render={props => {
+      const isLogged = Meteor.userId() !== null;
+      const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
+      return isLogged && isAdmin ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: '/signin', state: { from: props.location } }}
+        />
+      );
+    }}
+  />
 );
 
 /** Require a component and location to be passed to each ProtectedRoute. */
