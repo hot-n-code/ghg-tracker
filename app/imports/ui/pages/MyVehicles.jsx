@@ -5,6 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Stuffs } from '../../api/stuff/Stuff';
 import VehicleCard from '../components/VehicleCard';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
 const paddingStyle = { padding: 20 };
 
