@@ -25,6 +25,35 @@ Meteor.publish(DailyUserData.userPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Users.userPublicationName, () => Users.collection.find());
+
+Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
+
+Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
+// Meteor.publish(Users.userPublicationName, function () {
+//   if (this.userId) {
+//     const username = Meteor.users.findOne(this.userId).username;
+//     return Users.collection.find({ email: username });
+//   }
+//   return this.ready();
+// });
+//
+// Meteor.publish(Vehicle.userPublicationName, function () {
+//   if (this.userId) {
+//     const username = Meteor.users.findOne(this.userId).username;
+//     return Vehicle.collection.find({ owner: username });
+//   }
+//   return this.ready();
+// });
+//
+// Meteor.publish(UserVehicle.userPublicationName, function () {
+//   if (this.userId) {
+//     const username = Meteor.users.findOne(this.userId).username;
+//     return UserVehicle.collection.find({ user: username });
+//   }
+//   return this.ready();
+// });
+
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
 Meteor.publish(Stuffs.adminPublicationName, function () {
@@ -33,10 +62,6 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
   }
   return this.ready();
 });
-
-Meteor.publish(Users.userPublicationName, () => Users.collection.find());
-Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
-Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.

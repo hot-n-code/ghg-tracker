@@ -56,6 +56,15 @@ class NavBar extends React.Component {
                 Alternative Transportation
               </Menu.Item>,
               <Menu.Item
+                  as={NavLink}
+                  activeClassName='active'
+                  exact
+                  to='/create-vehicle'
+                  key='/create-vehicle'
+              >
+                Create Vehicle
+              </Menu.Item>,
+              <Menu.Item
                 as={NavLink}
                 activeClassName='active'
                 exact

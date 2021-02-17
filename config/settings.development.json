@@ -29,11 +29,11 @@
     {
       "make": "Toyota", "model": "Corolla", "logo":
       "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
-      "price": 22000, "year": 2016, "MPG": 24, "fuelSpending": 1800, "type": "gas", "owner": "john@foo.com" },
+      "price": 22000, "year": 2016, "MPG": 24, "fuelSpending": 1800, "type": "gas", "owner": "tim@gmail.com" },
     {
       "make": "Honda", "model": "Civic", "logo":
-      "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png", "price": 22000, "year": 2018, "MPG": 26, "fuelSpending": 1700, "type": "gas", "owner": "john@foo.com" },
+      "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png", "price": 22000, "year": 2018, "MPG": 26, "fuelSpending": 1700, "type": "gas", "owner": "tim@gmail.com" },
     {
-      "make": "Nissan", "model": "Sentra", "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png", "price": 22000, "year": 2019, "MPG": 26, "fuelSpending": 1600, "type": "gas", "owner": "john@foo.com" }
+      "make": "Nissan", "model": "Sentra", "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png", "price": 22000, "year": 2019, "MPG": 26, "fuelSpending": 1600, "type": "gas", "owner": "tim@gmail.com" }
   ]
 }
