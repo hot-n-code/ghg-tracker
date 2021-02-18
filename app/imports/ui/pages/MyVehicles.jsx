@@ -47,7 +47,9 @@ class MyVehicles extends React.Component {
             </Grid>
           </Grid.Column>
         </Grid>
-        <Button circular icon='add' size='massive' />
+        <a href='#/create-vehicle'>
+          <Button circular icon='add' size='massive' />
+        </a>
       </div>
     );
   }
