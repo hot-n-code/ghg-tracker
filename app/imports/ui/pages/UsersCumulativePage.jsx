@@ -7,7 +7,6 @@ const UsersCumulativePage = () => (
           <Container>
             <Grid.Column>
               <div>
-                <br/>
                 <Header as='h1' textAlign='center'> Cumulative Data Of Users</Header>
                 <br/>
               </div>

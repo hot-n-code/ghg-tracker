@@ -8,6 +8,38 @@ import VehicleCard from '../components/VehicleCard';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
 const paddingStyle = { padding: 20 };
+// Create sample placeholder vehicle data for mock-up
+const sampleVehicleData = [
+  {
+    make: 'Toyota',
+    model: 'Corolla',
+    logo:
+      'https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png',
+    price: '22,000',
+    year: '2016',
+    consumption: '24 MPG',
+    fuelSpending: '1800',
+  },
+  {
+    make: 'Honda',
+    model: 'Civic',
+    logo:
+      'https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png',
+    price: '22,000',
+    year: '2018',
+    consumption: '26 MPG',
+    fuelSpending: '1700',
+  },
+  {
+    make: 'Nissan',
+    model: 'Sentra',
+    logo: 'https://www.freepnglogos.com/uploads/nissan-logo-23.png',
+    price: '22,000',
+    year: '2019',
+    consumption: '26 MPG',
+    fuelSpending: '1600',
+  },
+];
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
@@ -26,34 +58,31 @@ class MyVehicles extends React.Component {
     const email = Meteor.user().username;
     const userVehicle = Vehicle.collection.find({ owner: email }).fetch();
     return (
-        <div style={paddingStyle}>
-          <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
-            <Grid.Column>
-              <Header as='h1' textAlign='center'>
-                My Vehicles
-              </Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Search
-                  input={{ icon: 'search', iconPosition: 'left' }}
-                  placeholder={'Search'}
-              />
-            </Grid.Column>
-            <Grid.Column>
-              <Grid stackable columns={3}>
-                {_.map(userVehicle, (vehicle, index) => (
-                    <Grid.Column key={index}>
-                      <VehicleCard vehicle={vehicle} />
-                    </Grid.Column>
-                ))}
-              </Grid>
-            </Grid.Column>
-          </Grid>
-          <br/>
-          <a href='#/create-vehicle'>
-            <Button circular icon='add' size='massive'/>
-          </a>
-        </div>
+      <div className='background-all'>
+        <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+          <Grid.Column>
+            <Header as='h1' textAlign='center'>
+              My Vehicles
+            </Header>
+          </Grid.Column>
+          <Grid.Column>
+            <Search
+              input={{ icon: 'search', iconPosition: 'left' }}
+              placeholder={'Search'}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <Grid stackable columns={3}>
+              {sampleVehicleData.map((vehicle, index) => (
+                <Grid.Column key={index}>
+                  <VehicleCard vehicle={vehicle} />
+                </Grid.Column>
+              ))}
+            </Grid>
+          </Grid.Column>
+        </Grid>
+        <Button circular icon='add' size='massive' />
+      </div>
     );
   }
 }
