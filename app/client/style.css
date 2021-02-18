@@ -24,12 +24,21 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-
+.ui.center.aligned.header.landing-description {
+  line-height: 3;
+}
 .landing-heading {
   font-size: 250%;
 }
 .landing-data {
   background-color: #A7D7C5;
+  background-image: url('images/wave_transparent.png');
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  z-index: -999;
+  width: 100%;
+  background-position: center 100%;
+  background-attachment: scroll;
 }
 .background-all {
   background-image: url('images/wave_transparent.png');
