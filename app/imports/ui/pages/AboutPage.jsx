@@ -47,12 +47,12 @@ class AboutPage extends React.Component {
             </Container>
           <div style={infoStyleBottom}>
           </div>
-          {/*<Header as='h1' className='centered'>*/}
-          {/*  Contact Information*/}
-          {/*</Header>*/}
-          {/*<Header as='h5' className='centered'>*/}
-          {/*  HAWAIIAN ELECTRIC INDUSTRIES*/}
-          {/*</Header>*/}
+          {/* <Header as='h1' className='centered'> */}
+          {/*  Contact Information */}
+          {/* </Header> */}
+          {/* <Header as='h5' className='centered'> */}
+          {/*  HAWAIIAN ELECTRIC INDUSTRIES */}
+          {/* </Header> */}
           <Grid columns={3} padded>
             <Grid.Column>
               <Header as='h4' className='centered'>

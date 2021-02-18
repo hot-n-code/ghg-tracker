@@ -24,7 +24,7 @@ class UsersCumulativePage extends React.Component {
                 </div>
                 <Grid>
                   <Grid.Column width={9}>
-                    {/*<Image src="/images/cumulative-page/graph.png"/>*/}
+                    {/* <Image src="/images/cumulative-page/graph.png"/> */}
                     <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
                   </Grid.Column>
                   <Grid.Column textAlign='right' width={7}>
@@ -36,7 +36,7 @@ class UsersCumulativePage extends React.Component {
                   </Grid.Column>
                 </Grid>
               </Grid.Column>
-              <div style={{ paddingTop: '20px'}}></div>
+              <div style={{ paddingTop: '20px' }}/>
               <Header as='h1' textAlign='center'>
                 ENVIRONMENTAL IMPACT
                 <br/>
