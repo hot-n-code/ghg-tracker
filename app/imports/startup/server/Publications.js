@@ -5,6 +5,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { Make } from '../../api/make/Make';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -30,6 +31,8 @@ Meteor.publish(Users.userPublicationName, () => Users.collection.find());
 Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
 
 Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
+
+Meteor.publish(Make.userPublicationName, () => Make.collection.find());
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.

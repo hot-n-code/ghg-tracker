@@ -7,8 +7,8 @@ class UserCollection {
     this.name = 'UserCollection';
     this.collection = new Mongo.Collection(this.name);
     this.schema = new SimpleSchema({
-      firstName: String,
-      lastName: String,
+      name: String,
+      goal: String,
       email: String,
       image: String,
       vehicles: { type: Array, optional: true },

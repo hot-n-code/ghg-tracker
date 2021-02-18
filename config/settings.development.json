@@ -5,7 +5,7 @@
   ],
 
   "defaultUser": [
-    { "firstName": "test", "lastName": "test", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
+    { "name": "test", "goal": "convert to renewable energy", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
       }
   ],
 
@@ -35,5 +35,33 @@
       "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png", "price": 22000, "year": 2018, "MPG": 26, "fuelSpending": 1700, "type": "gas", "owner": "test@gmail.com" },
     {
       "make": "Nissan", "model": "Sentra", "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png", "price": 22000, "year": 2019, "MPG": 26, "fuelSpending": 1600, "type": "gas", "owner": "test@gmail.com" }
+  ],
+
+  "defaultMakes": [
+    { "make": "Nissan",
+      "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
+      "owner": "admin@foo.com"
+    },
+    { "make": "Honda",
+      "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
+      "owner": "admin@foo.com"
+    },
+    { "make": "Toyota",
+      "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
+      "owner": "admin@foo.com"
+    },
+    { "make": "Tesla",
+      "logo": "https://www.freepnglogos.com/uploads/tesla-logo-png-black-1.png",
+      "owner": "admin@foo.com"
+    },
+    { "make": "Ford",
+      "logo": "https://www.freepnglogos.com/uploads/ford-logo-transparent-8.png",
+      "owner": "admin@foo.com"
+    },
+    { "make": "Volkswagen",
+      "logo": "https://www.freepnglogos.com/uploads/vw-png-logo/volkswagen-auto-eps-png-logo-vector-22.png",
+      "owner": "admin@foo.com"
+    }
   ]
+
 }

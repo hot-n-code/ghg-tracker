@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import VehicleCard from '../components/VehicleCard';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { Make } from '../../api/make/Make';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
@@ -64,9 +65,10 @@ MyVehicles.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // KEEP FOR REFERENCE: Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Vehicle.userPublicationName);
+  const sub1 = Meteor.subscribe(Vehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(Make.userPublicationName);
   return {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
-    ready: subscription.ready(),
+    ready: sub1.ready() && sub2.ready(),
   };
 })(MyVehicles);
