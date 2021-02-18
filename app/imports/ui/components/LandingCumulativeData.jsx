@@ -12,7 +12,7 @@ const LandingCumulativeData = () => (
         <br/>
         <Header as='h2' textAlign='center'> Make A Difference Today.
           <br/>
-        <Button className="ui massive black basic button" position='centered' as={NavLink} activeClassName="active" exact to="/signup" color='blue'>Sign Up</Button>
+        <Button className="ui massive blue button" position='centered' as={NavLink} activeClassName="active" exact to="/signup">Sign Up</Button>
         </Header>
     </div>
     );
