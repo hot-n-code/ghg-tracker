@@ -9,7 +9,7 @@ const LandingNewsFeed = () => (
       <Header as='h3'>Stay in the Loop and Check Out the Latest News on Green House Gasses.. </Header>
       <Grid relaxed columns={3} stackable>
         <Grid.Column>
-          <Segment>
+          <Segment compact>
             <Item>
               <Item.Image size='large' src='/images/landing-page/footprint.jpg' />
               <Header as='h2'>GHG in Hawai&apos;i</Header>
@@ -29,7 +29,7 @@ const LandingNewsFeed = () => (
           </Segment>
         </Grid.Column>
         <Grid.Column>
-          <Segment>
+          <Segment compact>
             <Item>
               <Item.Image size='large' src='/images/landing-page/global-gas.jpg' />
               <Header as='h2'>GHG Global</Header>
@@ -48,7 +48,7 @@ const LandingNewsFeed = () => (
           </Segment>
         </Grid.Column>
         <Grid.Column>
-          <Segment>
+          <Segment compact>
             <Item>
               <Item.Image size='large' src='/images/landing-page/oahu-2.jpg' />
               <Header as='h2'>HEI Updates</Header>
