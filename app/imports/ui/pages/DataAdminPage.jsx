@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Table, Button, Header } from 'semantic-ui-react';
+import { Container, Grid, Table, Button } from 'semantic-ui-react';
 import { Bar, Pie } from 'react-chartjs-2';
 
 const paddingStyle = { padding: 20 };
