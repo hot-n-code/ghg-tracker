@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header, Container } from 'semantic-ui-react';
+import { Grid, Segment, Header } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';

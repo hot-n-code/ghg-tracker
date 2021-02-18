@@ -50,7 +50,7 @@ export default class Signin extends React.Component {
                 marginLeft: 'auto',
                 width: '400px',
                 paddingBottom: '40px',
-                paddingTop: '40px'
+                paddingTop: '40px',
               }}>
                 <Header as='h2' textAlign='center'>Sign-in</Header>
                 <Segment padded color='grey'>

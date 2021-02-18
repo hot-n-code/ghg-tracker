@@ -47,7 +47,7 @@ class Signup extends React.Component {
                 marginLeft: 'auto',
                 paddingBottom: '40px',
                 paddingTop: '40px',
-                width: '800px'
+                width: '800px',
               }}>
                 <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
                 <Segment padded color='gray'>
