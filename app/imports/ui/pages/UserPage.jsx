@@ -12,13 +12,14 @@ class UserPage extends React.Component {
         super(props);
         this.state = {
             labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Electric Vehicle'],
-            datasets: [{ data: [50, 40, 2, 2, 1, 5], backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange', 'purple'],
+            datasets: [{ data: [50, 40, 2, 2, 1, 5], backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
             }],
         };
     }
 
     render() {
         return (
+            <div className='background-all'>
             <Container style={paddingStyle}>
                 <Grid stackable columns={2}>
                     <Grid.Column>
@@ -43,6 +44,8 @@ class UserPage extends React.Component {
                         <Header as='h2' textAlign='center'>10 days</Header>
                     </Grid.Column>
                 </Grid>
+              <div style={{ paddingTop: '150px' }}></div>
+              <div>
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
@@ -99,7 +102,9 @@ class UserPage extends React.Component {
                         </Table.Row>
                     </Table.Body>
                 </Table>
+              </div>
             </Container>
+            </div>
         );
     }
 }

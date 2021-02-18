@@ -33,6 +33,7 @@ class DataAdminPage extends React.Component {
 
   render() {
     return (
+        <div className='background-all'>
         <Container style={paddingStyle}>
           <Grid columns={2}>
             <Grid.Column>
@@ -106,6 +107,7 @@ class DataAdminPage extends React.Component {
             </Table.Body>
           </Table>
         </Container>
+        </div>
     );
   }
 }
