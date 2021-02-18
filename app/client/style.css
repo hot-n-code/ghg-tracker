@@ -47,7 +47,7 @@
   background-repeat: repeat-x;
   z-index: -999;
   padding: 20px;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background-position: center 100%;
   background-attachment: scroll;
