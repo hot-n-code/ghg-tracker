@@ -1,35 +1,21 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 
-const menuStyle = { height: '200px' };
-<<<<<<< Updated upstream
-const paddingStyle = { padding: '20px', paddingTop: '0px' };
-=======
-const infoStyle = { height: '50px' };
-const space = { height: '25px' };
->>>>>>> Stashed changes
+const menuStyle = { height: '350px' };
+const paddingStyle = { padding: '20px', paddingTop: '100px' };
+const infoStyle = { paddingTop: '50px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
     return (
-<<<<<<< Updated upstream
-        <Container fluid style={paddingStyle}>
-          <Grid.Row>
-=======
         <Container fluid>
->>>>>>> Stashed changes
-          <div className='background-about' style={menuStyle}>
-            <Container>
-              <div style={space}>
-              </div>
-            <Header inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
+        <Container fluid className='background-about' style={menuStyle}>
+            <Header style={paddingStyle} inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
               financial infrastructure that empowers much of the economic and community activity of our state.</Header>
-            <Header inverted size='small' className='centered' >Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
-            </Container>
-          </div>
-          <div style={infoStyle}>
-          </div>
-            <Container>
+            <Header inverted size='small' className='centered' >
+              Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
+        </Container>
+            <Container style={infoStyle}>
             <Grid columns={3} divided>
             <Grid.Column>
               <Image src="/images/HE.png" centered/>

@@ -23,72 +23,23 @@ class NavBar extends React.Component {
         <Menu.Item as={NavLink} activeClassName='' exact to='/'>
           <Image src={cornerLogo} size='small' padding={0} />
         </Menu.Item>
-<<<<<<< Updated upstream
-        {this.props.currentUser && !Roles.userIsInRole(Meteor.userId(), 'admin')
-          ? [
-              <Menu.Item
-                as={NavLink}
-                activeClassName='active'
-                exact
-                to='/my-vehicles'
-                key='my-vehicles'
-              >
-                My Vehicles
-              </Menu.Item>,
-              <Menu.Item
-                as={NavLink}
-                activeClassName='active'
-                exact
-                to='/user-page'
-                key='user-page'
-              >
-                My Data
-              </Menu.Item>,
-              <Menu.Item
-                as={NavLink}
-                activeClassName='active'
-                exact
-                to='/input-daily-data'
-                key='input-daily-data'
-              >
-                Input Data
-              </Menu.Item>,
-              <Menu.Item
-                  as={NavLink}
-                  activeClassName='active'
-                  exact
-                  to='/alt'
-                  key='alt'
-              >
-                Alternative Transportation
-              </Menu.Item>,
-              <Menu.Item
-                as={NavLink}
-                activeClassName='active'
-                exact
-                to='/feedback'
-                key='feedback'
-              >
-                Feedback
-              </Menu.Item>,
-=======
         {this.props.currentUser && Roles.userIsInRole(Meteor.userId(), 'admin') === false ? (
             // eslint-disable-next-line react/jsx-key
             [
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>My Vehicles</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/userPage' key='about' onClick={this.handleItemClick}>My Data</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/inputdailydata' key='inputdailydata' onClick={this.handleItemClick}>Input Data</Menu.Item>,
+              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>My Data</Menu.Item>,
+              // eslint-disable-next-line max-len
+              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/input-daily-data' key='input-daily-data' onClick={this.handleItemClick}>Input Data</Menu.Item>,
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/feedback' key='add' onClick={this.handleItemClick}>Feedback</Menu.Item>,
->>>>>>> Stashed changes
+              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/feedback' key='feedback' onClick={this.handleItemClick}>Feedback</Menu.Item>,
             ]
         ) : ''}
           {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-          [<Menu.Item header='h1' as={NavLink} activeClassName='active' exact to='/admin' key='admin' onClick={this.handleItemClick}>User List</Menu.Item>,
-           <Menu.Item header='h1' as={NavLink} activeClassName='active' exact to='/admindata' key='admin'> Admin onClick={this.handleItemClick}Cumulative Data</Menu.Item>]
+          [<Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/admin' key='admin' onClick={this.handleItemClick}>User List</Menu.Item>,
+           <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/admin-data' key='admin-data' onClick={this.handleItemClick}> Admin Cumulative Data</Menu.Item>]
           ) : ''}
           <Menu.Item position='right'>
-          <Menu.Item>
+            <Menu.Item>
             {this.props.currentUser === '' ? (
                 <Menu pointing secondary borderless stackable style={menuStyle}>
                   <Menu.Item header='h1' as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>CUMULATIVE DATA</Menu.Item>
@@ -104,22 +55,7 @@ class NavBar extends React.Component {
                 </Dropdown>
             )}
           </Menu.Item>
-<<<<<<< Updated upstream
-        ) : (
-          ''
-        )}
-        {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-          <Menu.Item
-            as={NavLink}
-            activeClassName='active'
-            exact
-            to='/admin-data'
-            key='admin-data'> Admin
-            <br />
-            Cumulative Data
-=======
->>>>>>> Stashed changes
-          </Menu.Item>
+        </Menu.Item>
         </Menu>
         </div>
     );

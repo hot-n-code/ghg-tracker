@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Header, Form, Grid } from 'semantic-ui-react';
 
-const space = { height: '25px' };
+const space = { paddingTop: '25px' };
 /** A simple static component to render some text for the landing page. */
 class FeedBack extends React.Component {
   state = {}
@@ -13,20 +13,17 @@ class FeedBack extends React.Component {
     return (
         <Container>
           <Container fluid>
-            <div style={space}></div>
-            <Header size='huge' className='centered'>Feedback</Header>
+            <Header style={space} size='huge' className='centered'>Feedback</Header>
             <Header sub className='centered'>
               Feedback helps us to understand where improvements are needed. Please let us know.
             </Header>
-            <div style={space}></div>
           </Container>
-          <Form action="#">
+          <Form action="#" style={space}>
             <Form.Group widths='equal'>
               <Form.Input htmlFor="nameField" fluid label='Name (Optional):' placeholder='Name' />
               <Form.Input htmlFor="emailField" fluid label='Email:' placeholder='Email' required="true" />
             </Form.Group>
-            <div style={space}></div>
-            <Form.Group inline>
+            <Form.Group inline style={space}>
               <label htmlFor="typeField">Feedback Type:</label>
               <Form.Radio
                   label='Problem'
