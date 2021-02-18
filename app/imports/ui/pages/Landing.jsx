@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Grid, Image } from 'semantic-ui-react';
+import { Header, Container, Grid, Image } from 'semantic-ui-react';
 import LandingNewsFeed from '../components/LandingNewsFeed';
 import LandingCumulativeData from '../components/LandingCumulativeData';
 import LandingDescription from '../components/LandingDescription';
