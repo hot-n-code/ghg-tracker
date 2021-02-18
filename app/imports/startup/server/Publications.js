@@ -2,6 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import { Users } from '../../api/user/UserCollection';
+import { UserVehicle } from '../../api/user/UserVehicleCollection';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -22,6 +25,12 @@ Meteor.publish(DailyUserData.userPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Users.userPublicationName, () => Users.collection.find());
+
+Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
+
+Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
+
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
 Meteor.publish(Stuffs.adminPublicationName, function () {
@@ -33,6 +42,7 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
+
 Meteor.publish(DailyUserData.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return DailyUserData.collection.find();
