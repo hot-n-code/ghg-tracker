@@ -1,23 +1,21 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 
-const menuStyle = { height: '200px' };
-const paddingStyle = { padding: '20px', paddingTop: '0px' };
+const menuStyle = { height: '350px' };
+const paddingStyle = { padding: '20px', paddingTop: '100px' };
+const infoStyle = { paddingTop: '50px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
     return (
-        <Container fluid style={paddingStyle}>
-          <Grid.Row>
-          <div className='background-about' style={menuStyle}>
-            &nbsp;&nbsp;
-            <Header inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
+        <Container fluid>
+        <Container fluid className='background-about' style={menuStyle}>
+            <Header style={paddingStyle} inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
               financial infrastructure that empowers much of the economic and community activity of our state.</Header>
-            &nbsp;&nbsp;
-            <Header inverted size='small' className='centered' >Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
-          </div>
-          </Grid.Row>
-            &nbsp;&nbsp;
+            <Header inverted size='small' className='centered' >
+              Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
+        </Container>
+            <Container style={infoStyle}>
             <Grid columns={3} divided>
             <Grid.Column>
               <Image src="/images/HE.png" centered/>
@@ -43,14 +41,15 @@ class AboutPage extends React.Component {
               <Button inverted color='green' content='Learn More' />
             </Grid.Column>
           </Grid>
-          <div>
+            </Container>
+          <div style={infoStyle}>
+          </div>
           <Header as='h1' className='centered'>
             Contact Information
           </Header>
           <Header as='h5' className='centered'>
             HAWAIIAN ELECTRIC INDUSTRIES
           </Header>
-          </div>
           <Grid columns={2} padded>
             <Grid.Column>
               <Header as='h4' className='centered'>
