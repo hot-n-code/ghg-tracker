@@ -40,93 +40,98 @@ class Signup extends React.Component {
     }
     return (
         <div className='background-all'>
-          <div className='signup'>
-      <Grid centered container className='signup-page'>
-        <Grid.Column>
-          <div style={{ marginRight: 'auto', marginLeft: 'auto', paddingBottom: '40px', paddingTop: '40px', width: '800px' }}>
-            <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
-            <Segment padded color='gray'>
-              <Form onSubmit={this.submit}>
-                <Form.Group widths='equal'>
-                  <Form.Input
-                    required
-                    label='First name'
-                    name='first name'
-                    placeholder='First name'
-                    onChange={this.handleChange}
+          <Grid centered container className='signup-page'>
+            <Grid.Column>
+              <div style={{
+                marginRight: 'auto',
+                marginLeft: 'auto',
+                paddingBottom: '40px',
+                paddingTop: '40px',
+                width: '800px',
+              }}>
+                <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
+                <Segment padded color='gray'>
+                  <Form onSubmit={this.submit}>
+                    <Form.Group widths='equal'>
+                      <Form.Input
+                          required
+                          label='First name'
+                          name='first name'
+                          placeholder='First name'
+                          onChange={this.handleChange}
+                      />
+                      <Form.Input
+                          required
+                          label='Last name'
+                          name='last name'
+                          placeholder='Last name'
+                          onChange={this.handleChange}
+                      />
+                    </Form.Group>
+                    <Form.Group widths='equal'>
+                      <Form.Input
+                          required
+                          label='Email'
+                          icon='user'
+                          iconPosition='left'
+                          name='email'
+                          type='email'
+                          placeholder='Email address'
+                          onChange={this.handleChange}
+                      />
+                      <Form.Input
+                          required
+                          label='Confirm email'
+                          placeholder='Please retype your email'
+                      />
+                    </Form.Group>
+                    <Form.Group widths='equal'>
+                      <Form.Input
+                          required
+                          label='Password'
+                          icon='lock'
+                          iconPosition='left'
+                          name='password'
+                          placeholder='Password'
+                          type='password'
+                          onChange={this.handleChange}
+                      />
+                      <Form.Input
+                          required
+                          label='Confirm password'
+                          placeholder='Please retype your password'
+                          type='password'
+                      />
+                    </Form.Group>
+                    <Form.Button primary animated content='Submit'>
+                      <Button.Content visible>Submit</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name='arrow right'/>
+                      </Button.Content>
+                    </Form.Button>
+                  </Form>
+                </Segment>
+                <Message>
+                  <Link to='/signin'>Already have an account? Login</Link>
+                </Message>
+                {this.state.error === '' ? (
+                    ''
+                ) : (
+                    <Message
+                        color='red'
+                        error
+                        header='Registration was not successful'
+                        content={this.state.error}
                     />
-                  <Form.Input
-                    required
-                    label='Last name'
-                    name='last name'
-                    placeholder='Last name'
-                    onChange={this.handleChange}
-                    />
-                </Form.Group>
-                <Form.Group widths='equal'>
-                  <Form.Input
-                      required
-                      label='Email'
-                      icon='user'
-                      iconPosition='left'
-                      name='email'
-                      type='email'
-                      placeholder='Email address'
-                      onChange={this.handleChange}
-                    />
-                  <Form.Input
-                      required
-                      label='Confirm email'
-                      placeholder='Please retype your email'
-                    />
-                </Form.Group>
-                <Form.Group widths='equal'>
-                  <Form.Input
-                    required
-                    label='Password'
-                    icon='lock'
-                    iconPosition='left'
-                    name='password'
-                    placeholder='Password'
-                    type='password'
-                    onChange={this.handleChange}
-                    />
-                  <Form.Input
-                    required
-                    label='Confirm password'
-                    placeholder='Please retype your password'
-                    type='password'
-                    />
-                </Form.Group>
-                <Form.Button primary animated content='Submit'>
-                  <Button.Content visible>Submit</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name='arrow right'/>
-                  </Button.Content>
-                </Form.Button>
-              </Form>
-            </Segment>
-            <Message>
-              <Link to='/signin'>Already have an account? Login</Link>
-            </Message>
-            {this.state.error === '' ? (
-                ''
-            ) : (
-                <Message
-                    color='red'
-                    error
-                    header='Registration was not successful'
-                    content={this.state.error}
-                />
-            )}
-          </div>
-        </Grid.Column>
-      </Grid>
-          </div>
+                )}
+              </div>
+            </Grid.Column>
+          </Grid>
         </div>
     );
   }
 }
+
 // todo make sure that confirming email and password actually work.
 
 /** Ensure that the React Router location object is available in case we need to redirect. */
