@@ -6,6 +6,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
+import { Make } from '../../api/make/Make';
 
 /* eslint-disable no-console */
 
@@ -60,9 +61,9 @@ if (Vehicle.collection.find().count() === 0) {
 }
 
 /** Initialize the database with a default data document. */
-function addUser({ firstName, lastName, email, image, vehicles, role }) {
+function addUser({ name, goal, email, image, vehicles, role }) {
   console.log(`Defining profile ${email}`);
-  Users.collection.insert({ firstName, lastName, email, image });
+  Users.collection.insert({ name, goal, email, image });
   // Add interests and projects.
   createUser(email, role);
   vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
@@ -75,5 +76,18 @@ if (Users.collection.find().count() === 0) {
     Meteor.settings.defaultUser.map(user => addUser(user));
   } else {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+  }
+}
+
+function addMake(data) {
+  console.log(`Defining make ${data.make}`);
+  Make.collection.insert(data);
+}
+
+/** Initialize the collection if empty. */
+if (Make.collection.find().count() === 0) {
+  if (Meteor.settings.defaultMakes) {
+    console.log('Creating default make.');
+    Meteor.settings.defaultMakes.map(data => addMake(data));
   }
 }
