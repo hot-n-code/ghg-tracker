@@ -48,7 +48,7 @@ export default class Signin extends React.Component {
               <div style={{
                 marginRight: 'auto',
                 marginLeft: 'auto',
-                width: '400px',
+                width: '35%',
                 paddingBottom: '40px',
                 paddingTop: '40px',
               }}>

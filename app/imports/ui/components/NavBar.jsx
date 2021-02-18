@@ -33,6 +33,7 @@ class NavBar extends React.Component {
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/input-daily-data' key='input-daily-data' onClick={this.handleItemClick}>Input Data</Menu.Item>,
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/feedback' key='feedback' onClick={this.handleItemClick}>Feedback</Menu.Item>,
+              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
             ]
         ) : ''}
           {Roles.userIsInRole(Meteor.userId(), 'admin') ? (

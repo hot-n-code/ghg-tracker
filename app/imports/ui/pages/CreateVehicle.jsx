@@ -54,6 +54,7 @@ class CreateVehicle extends React.Component {
     const bridge = new SimpleSchema2Bridge(formSchema);
     let fRef = null;
     return (
+        <div className='background-all'>
         <div style={paddingStyle}>
           <Grid container centered>
             <Grid.Column>
@@ -79,6 +80,7 @@ class CreateVehicle extends React.Component {
               </AutoForm>
             </Grid.Column>
           </Grid>
+        </div>
         </div>
     );
   }

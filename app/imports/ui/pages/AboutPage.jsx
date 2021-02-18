@@ -3,12 +3,14 @@ import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
-const infoStyle = { paddingTop: '50px' };
+const infoStyleTop = { paddingTop: '50px' };
+const infoStyleBottom = { paddingTop: '200px' };
 const button = { marginLeft: '33%', marginRight: '33%', marginTop: '35px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
     return (
+        <div className='background-all-about'>
         <Container fluid>
         <Container fluid className='background-about' style={menuStyle}>
             <Header style={paddingStyle} inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
@@ -16,7 +18,7 @@ class AboutPage extends React.Component {
             <Header inverted size='small' className='centered' >
               Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
         </Container>
-            <Container style={infoStyle}>
+            <Container style={infoStyleTop}>
             <Grid columns={3} divided>
             <Grid.Column>
               <Image src="/images/HE.png" centered/>
@@ -43,15 +45,15 @@ class AboutPage extends React.Component {
             </Grid.Column>
           </Grid>
             </Container>
-          <div style={infoStyle}>
+          <div style={infoStyleBottom}>
           </div>
-          <Header as='h1' className='centered'>
-            Contact Information
-          </Header>
-          <Header as='h5' className='centered'>
-            HAWAIIAN ELECTRIC INDUSTRIES
-          </Header>
-          <Grid columns={2} padded>
+          {/*<Header as='h1' className='centered'>*/}
+          {/*  Contact Information*/}
+          {/*</Header>*/}
+          {/*<Header as='h5' className='centered'>*/}
+          {/*  HAWAIIAN ELECTRIC INDUSTRIES*/}
+          {/*</Header>*/}
+          <Grid columns={3} padded>
             <Grid.Column>
               <Header as='h4' className='centered'>
                 CORPORATE HEADQUARTERS
@@ -59,6 +61,14 @@ class AboutPage extends React.Component {
               <Header sub className='centered'>1001 Bishop Street, Suite 2900
                 Honolulu, Hawaii 96813
                 Telephone: (808) 543-5662</Header>
+            </Grid.Column>
+            <Grid.Column>
+              <Header as='h4' className='centered'>
+                Contact Information
+              </Header>
+              <Header as='h5' className='centered'>
+                HAWAIIAN ELECTRIC INDUSTRIES
+              </Header>
             </Grid.Column>
             <Grid.Column>
               <Header as='h4' className='centered'>
@@ -71,6 +81,7 @@ class AboutPage extends React.Component {
             </Grid.Column>
           </Grid>
         </Container>
+        </div>
     );
   }
 }
