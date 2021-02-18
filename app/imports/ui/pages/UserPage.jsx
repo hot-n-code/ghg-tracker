@@ -1,11 +1,22 @@
 import React from 'react';
 import { Grid, Header, Button, Image, Container, Table } from 'semantic-ui-react';
+import { Pie } from 'react-chartjs-2';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
  * users may also edit their data of their entries.
  * */
 class UserPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Electric Vehicle'],
+            datasets: [{ data: [50, 40, 2, 2, 1, 5], backgroundColor: ['red', 'blue', 'green', 'yellow', 'orange', 'purple'],
+            }],
+        };
+    }
+
     render() {
         return (
             <Container style={paddingStyle}>
@@ -17,13 +28,19 @@ class UserPage extends React.Component {
                             <Button size='large' color='gray'>This Week</Button>
                             <Button size='large' color='gray'>This Month</Button>
                         </div>
-                        <Image src="/images/cumulative-page/graph.png"
-                               floated='left' size='massive' alt="filler placement for eventual graph"/>
+                        <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
                     </Grid.Column>
                     <Grid.Column>
-                        <Header as='h1' textAlign='center'>My Carbon Footprint</Header>
-                        <Image floated='right' src="/images/carbonmeter.png" size='medium'
-                               alt="filler placement for eventual meter"/>
+                        <Image style={{ display: 'block',
+                            margin: '0 auto' }} src="/images/home.png"
+                                size='small' alt="home"/>
+                        <Header as='h1' textAlign='center'>Days Worked at Home:</Header>
+                        <Header as='h2' textAlign='center'>206 days</Header>
+                        <Image style={{ display: 'block',
+                            margin: '0 auto' }} src="/images/Biking.png"
+                               size='small' alt="biking"/>
+                        <Header as='h1' textAlign='center'>Days Biked to Work:</Header>
+                        <Header as='h2' textAlign='center'>10 days</Header>
                     </Grid.Column>
                 </Grid>
                 <Grid stackable columns={3}>
