@@ -22,7 +22,7 @@ class UserPage extends React.Component {
             <Container style={paddingStyle}>
                 <Grid stackable columns={2}>
                     <Grid.Column>
-                        <h1>My Progress</h1>
+                        <h1>My Summary</h1>
                         <div id='graph-buttons'>
                             <Button size='large' color='gray'>Today</Button>
                             <Button size='large' color='gray'>This Week</Button>
