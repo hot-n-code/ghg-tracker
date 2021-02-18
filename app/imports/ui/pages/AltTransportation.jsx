@@ -1,99 +1,108 @@
 import React from 'react';
-import { Image, Card, CardGroup, Header, Button, Container } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
+import {  Grid, Header, Loader } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
+import AltVehicleCard from '../components/AltVehicleCard';
+import { Stuffs } from '../../api/stuff/Stuff';
 
-/** A simple static component to render some text for the landing page. */
+const paddingStyle = { padding: 20 };
+
+const sampleVehicleData = [
+  {
+    name: 'Walking',
+    image:
+        'images/Walking.png',
+    milesTraveled: 'xx',
+    fuelSaved: 'xx',
+    physical: true,
+    caloriesBurnt: 'xx',
+  },
+  {
+    name: 'Biking',
+    image:
+        'images/Biking.png',
+    milesTraveled: 'xx',
+    fuelSaved: 'xx',
+    physical: true,
+    caloriesBurnt: 'xx',
+  },
+  {
+    name: 'Bussing',
+    image:
+        'images/Bussing.jpg',
+    milesTraveled: 'xx',
+    fuelSaved: 'xx',
+    physical: false,
+    caloriesBurnt: 'xx',
+  },
+  {
+    name: 'Alternative Fuel Vehicles',
+    image:
+        'images/AltFuel.png',
+    milesTraveled: 'xx',
+    fuelSaved: 'xx',
+    physical: false,
+    caloriesBurnt: 'xx',
+  },
+  {
+    name: 'Carpool',
+    image:
+        'images/Carpool.png',
+    milesTraveled: 'xx',
+    fuelSaved: 'xx',
+    physical: false,
+    caloriesBurnt: 'xx',
+  }
+];
+
 class AltTransportation extends React.Component {
+  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
+    return this.props.ready ? (
+        this.renderPage()
+    ) : (
+        <Loader active>Getting data</Loader>
+    );
+  }
+
+  /** Render the page once subscriptions of Alt Vehicles collection have been received. */
+  renderPage() {
     return (
-        <Container>
-          <Header textAlign='center' as="h1">
-            Alternative Transportation
-          </Header>
-          <CardGroup centered itemsPerRow={3}>
-            <Card>
-              <Image
-                  src='images/Walking.png' wrapped ui={false}/>
-              <Card.Content>
-                <Header textAlign='center' size='large'>Walking</Header>
-              </Card.Content>
-              <Card.Content textAlign="center">
-                <Button color='green' size='large'> Calculate </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Compare </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Info </Button>
-              </Card.Content>
-            </Card>
-            <Card>
-              <Image
-                  src='images/Biking.png' wrapped ui={false}/>
-              <Card.Content>
-                <Header textAlign='center' size='large'>Biking</Header>
-              </Card.Content>
-              <Card.Content textAlign="center">
-                <Button color='green' size='large'> Calculate </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Compare </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Info </Button>
-              </Card.Content>
-            </Card>
-            <Card>
-              <Image
-                  src='images/Bussing.jpg' wrapped ui={false}/>
-              <Card.Content>
-                <Header textAlign='center' size='large'>Bussing</Header>
-              </Card.Content>
-              <Card.Content textAlign="center">
-                <Button color='green' size='large'> Calculate </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Compare </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Info </Button>
-              </Card.Content>
-            </Card>
-            <Card>
-              <Image
-                  src='images/AltFuel.png' wrapped ui={false}/>
-              <Card.Content>
-                <Header textAlign='center' size='large'>Alternative Fuel Vehicles</Header>
-              </Card.Content>
-              <Card.Content textAlign="center">
-                <Button color='green' size='large'> Calculate </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Compare </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Info </Button>
-              </Card.Content>
-            </Card>
-            <Card>
-              <Image
-                  src='images/Carpool.png' wrapped ui={false}/>
-              <Card.Content>
-                <Header textAlign='center' size='large'>Car-pooling</Header>
-              </Card.Content>
-              <Card.Content textAlign="center">
-                <Button color='green' size='large'> Calculate </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Compare </Button>
-                <br/>
-                <br/>
-                <Button color='green' size='large'> Info </Button>
-              </Card.Content>
-            </Card>
-          </CardGroup>
-        </Container>
+        <div style={paddingStyle}>
+          <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+            <Grid.Column>
+              <Header as='h1' textAlign='center'>
+                Alternative Transportation
+              </Header>
+            </Grid.Column>
+            <Grid.Column>
+              <Grid stackable columns={3}>
+                {sampleVehicleData.map((vehicle, index) => (
+                    <Grid.Column key={index}>
+                      <AltVehicleCard vehicle={vehicle} />
+                    </Grid.Column>
+                ))}
+              </Grid>
+            </Grid.Column>
+          </Grid>
+        </div>
     );
   }
 }
 
-export default AltTransportation;
+/** Require an array of Vehicle documents in the props. */
+AltTransportation.propTypes = {
+  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
+};
+
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+export default withTracker(() => {
+  // KEEP FOR REFERENCE: Get access to Stuff documents.
+  const subscription = Meteor.subscribe(Stuffs.userPublicationName);
+  return {
+    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
+    ready: subscription.ready(),
+  };
+})(AltTransportation);
