@@ -4,6 +4,7 @@ import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
 const infoStyle = { paddingTop: '50px' };
+const button = { marginLeft: '33%', marginRight: '33%', marginTop: '35px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
@@ -22,7 +23,7 @@ class AboutPage extends React.Component {
               <Header size='small'>For 130 years, Hawaiian Electric has provided the energy that fuels our islands growth and prosperity.
                 Now, we are spearheading the way toward a 100 clean energy, carbon neutral future.
                 Hawaiian Electric serves 95 of Hawaii, creating a strong partnership with our communities, and sustainable economics for our shareholders and stakeholders.</Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
             <Grid.Column>
               <Image src="/images/ASB.jpg" size='medium' centered/>
@@ -30,7 +31,7 @@ class AboutPage extends React.Component {
                 businesses and communities since 1925.
                 Our ability to finance a sustainable Hawaii economy supports Hawaiian Electric’s efforts to create clean, energy-efficient communities.
               </Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
             <Grid.Column>
               <Image src="/images/CE.png" centered/>
@@ -38,7 +39,7 @@ class AboutPage extends React.Component {
                 Hawaii’s sustainable future.
                 Through Pacific Current we are able to invest in projects that advance Hawaii’s ambitious environmental and economic goals.
               </Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
           </Grid>
             </Container>
