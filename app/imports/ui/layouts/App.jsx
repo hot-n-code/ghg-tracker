@@ -28,8 +28,10 @@ import AdminPage from '../pages/AdminPage';
 import DataAdminPage from '../pages/DataAdminPage';
 import EditDailyUserData from '../pages/EditDailyUserData';
 import InputDailyUserData from '../pages/InputDailyUserData';
+import CreateUser from '../pages/CreateUser';
 import UserPage from '../pages/UserPage';
 import AltTransportation from '../pages/AltTransportation';
+import CreateVehicle from '../pages/CreateVehicle';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -53,6 +55,8 @@ class App extends React.Component {
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
             <ProtectedRoute path='/input-daily-data' component={InputDailyUserData} />
+            <ProtectedRoute path="/create-user" component={CreateUser}/>
+            <ProtectedRoute path="/create-vehicle" component={CreateVehicle}/>
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <ProtectedRoute

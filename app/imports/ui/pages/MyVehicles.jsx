@@ -3,9 +3,11 @@ import { Meteor } from 'meteor/meteor';
 import { Button, Grid, Header, Loader, Search } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Stuffs } from '../../api/stuff/Stuff';
+import { _ } from 'meteor/underscore';
 import VehicleCard from '../components/VehicleCard';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
+const paddingStyle = { padding: 20 };
 // Create sample placeholder vehicle data for mock-up
 const sampleVehicleData = [
   {
@@ -44,14 +46,17 @@ class MyVehicles extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return this.props.ready ? (
-      this.renderPage()
+        this.renderPage()
     ) : (
-      <Loader active>Getting data</Loader>
+        <Loader active>Getting data</Loader>
     );
   }
 
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
+    /** Finds the vehicles that are owned by the user */
+    const email = Meteor.user().username;
+    const userVehicle = Vehicle.collection.find({ owner: email }).fetch();
     return (
       <div className='background-all'>
         <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
@@ -91,7 +96,7 @@ MyVehicles.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // KEEP FOR REFERENCE: Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Stuffs.userPublicationName);
+  const subscription = Meteor.subscribe(Vehicle.userPublicationName);
   return {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: subscription.ready(),

@@ -22,7 +22,7 @@ class VehicleCard extends React.Component {
             <span className={'vehicle-card-label'}>
               Average Fuel Consumption:{' '}
             </span>
-            {this.props.vehicle.consumption}
+            {this.props.vehicle.MPG}
           </Card.Description>
           <Card.Description>
             <span className={'vehicle-card-label'}>Yearly Fuel Spending: </span>

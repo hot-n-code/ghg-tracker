@@ -4,6 +4,11 @@
     { "email": "john@foo.com", "password": "changeme" }
   ],
 
+  "defaultUser": [
+    { "firstName": "test", "lastName": "test", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
+      }
+  ],
+
   "defaultData": [
     { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
@@ -18,5 +23,17 @@
     { "inputDate": "2019-11-15", "modeOfTransportation" : "Carpool", "milesTraveled" : 60, "owner" : "john@foo.com" },
     { "inputDate": "2019-11-16", "modeOfTransportation" : "Electric Vehicle", "milesTraveled" : 22, "owner" : "john@foo.com" },
     { "inputDate": "2019-11-17", "modeOfTransportation" : "Alternative Fuel Vehicle", "milesTraveled" : 12, "owner" : "john@foo.com" }
+  ],
+
+  "defaultVehicle" : [
+    {
+      "make": "Toyota", "model": "Corolla", "logo":
+      "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
+      "price": 22000, "year": 2016, "MPG": 24, "fuelSpending": 1800, "type": "gas", "owner": "test@gmail.com" },
+    {
+      "make": "Honda", "model": "Civic", "logo":
+      "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png", "price": 22000, "year": 2018, "MPG": 26, "fuelSpending": 1700, "type": "gas", "owner": "test@gmail.com" },
+    {
+      "make": "Nissan", "model": "Sentra", "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png", "price": 22000, "year": 2019, "MPG": 26, "fuelSpending": 1600, "type": "gas", "owner": "test@gmail.com" }
   ]
 }
