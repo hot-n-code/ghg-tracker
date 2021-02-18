@@ -28,8 +28,8 @@ class AdminPage extends React.Component {
                 <td>September 14, 2013</td>
                 <td>jhlilk22@yahoo.com</td>
                 <td>
-                  <button class="ui green button">Edit</button>
-                  <button class="ui red button">Remove</button>
+                  <button className="ui green button">Edit</button>
+                  <button className="ui red button">Remove</button>
                 </td>
               </tr>
               <tr>
