@@ -37,18 +37,11 @@
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
+  padding: 20px;
+  height: 100vh;
   width: 100%;
   background-position: center 100%;
   background-attachment: scroll;
-}
-
-
-.signin {
-  height: 100vh;
-}
-
-.signup {
-  height: 100vh;
 }
 
 body {
@@ -68,7 +61,8 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 175px;
+  height: 100%;
+  padding-bottom: 0;
 }
 
 .footer-text {

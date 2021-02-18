@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
+import { Grid, Segment, Header, Container } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -7,7 +7,6 @@ import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
-const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
   inputDate: Date,
@@ -41,10 +40,13 @@ class InputDailyUserData extends React.Component {
   render() {
     let fRef = null;
     return (
-        <Grid stackable container centered style={paddingStyle}>
-          <Grid.Column>
-            <Header as="h2" textAlign="center">Input Your Daily Data</Header>
-            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => this.submit(data, fRef)} >
+        <div className='background-all'>
+          <Grid stackable container centered>
+            <Grid.Column>
+              <Header as="h1" textAlign="center">Input Your Daily Data</Header>
+              <AutoForm ref={ref => {
+                fRef = ref;
+              }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
                   <DateField name='inputDate' max={new Date(Date.now())}/>
                   <SelectField name='modeOfTransportation'/>
@@ -52,9 +54,10 @@ class InputDailyUserData extends React.Component {
                   <SubmitField value='Submit'/>
                   <ErrorsField/>
                 </Segment>
-            </AutoForm>
-          </Grid.Column>
-        </Grid>
+              </AutoForm>
+            </Grid.Column>
+          </Grid>
+        </div>
     );
   }
 }

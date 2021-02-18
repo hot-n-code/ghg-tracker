@@ -1,12 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import AltVehicleCard from '../components/AltVehicleCard';
 import { Stuffs } from '../../api/stuff/Stuff';
-
-const paddingStyle = { padding: 20 };
 
 const sampleVehicleData = [
   {
@@ -69,7 +67,7 @@ class AltTransportation extends React.Component {
   /** Render the page once subscriptions of Alt Vehicles collection have been received. */
   renderPage() {
     return (
-        <div style={paddingStyle}>
+        <div className='background-all'>
           <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
             <Grid.Column>
               <Header as='h1' textAlign='center'>
