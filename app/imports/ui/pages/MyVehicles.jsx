@@ -7,40 +7,6 @@ import { _ } from 'meteor/underscore';
 import VehicleCard from '../components/VehicleCard';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
-const paddingStyle = { padding: 20 };
-// Create sample placeholder vehicle data for mock-up
-const sampleVehicleData = [
-  {
-    make: 'Toyota',
-    model: 'Corolla',
-    logo:
-      'https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png',
-    price: '22,000',
-    year: '2016',
-    consumption: '24 MPG',
-    fuelSpending: '1800',
-  },
-  {
-    make: 'Honda',
-    model: 'Civic',
-    logo:
-      'https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png',
-    price: '22,000',
-    year: '2018',
-    consumption: '26 MPG',
-    fuelSpending: '1700',
-  },
-  {
-    make: 'Nissan',
-    model: 'Sentra',
-    logo: 'https://www.freepnglogos.com/uploads/nissan-logo-23.png',
-    price: '22,000',
-    year: '2019',
-    consumption: '26 MPG',
-    fuelSpending: '1600',
-  },
-];
-
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -73,7 +39,7 @@ class MyVehicles extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Grid stackable columns={3}>
-              {sampleVehicleData.map((vehicle, index) => (
+              {_.map(userVehicle, (vehicle, index) => (
                 <Grid.Column key={index}>
                   <VehicleCard vehicle={vehicle} />
                 </Grid.Column>

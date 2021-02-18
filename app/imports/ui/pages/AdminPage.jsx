@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, Container, Image, Header, Grid, Segment, Button } from 'semantic-ui-react';
+import { Input, Container, Table, button } from 'semantic-ui-react';
 
 const paddingStyle = { padding: 20 };
 class AdminPage extends React.Component {
@@ -11,34 +11,49 @@ class AdminPage extends React.Component {
           </Input>
           <br/>
           <br/>
-          <Segment>
-            <Grid>
-              <Grid.Column width={2}>
-                <Image size='small' rounded src='https://images-na.ssl-images-amazon.com/images/I/41LMQ-wZ2oL._AC_SY355_.jpg'/>
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <Header as='h1'>Name</Header>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Button fluid color='grey'>Edit</Button>
-                <Button fluid color='red'>Remove</Button>
-              </Grid.Column>
-            </Grid>
-          </Segment>
-          <Segment>
-            <Grid>
-              <Grid.Column width={2}>
-                <Image size='small' rounded src='https://images-na.ssl-images-amazon.com/images/I/41LMQ-wZ2oL._AC_SY355_.jpg'/>
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <Header as='h1'>Name</Header>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Button fluid color='grey'>Edit</Button>
-                <Button fluid color='red'>Remove</Button>
-              </Grid.Column>
-            </Grid>
-          </Segment>
+            <Table className="ui single line table">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Number of Cars</th>
+                <th>Registration Date</th>
+                <th>E-mail address</th>
+                <th>Edit</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>John Lilki</td>
+                <td>1</td>
+                <td>September 14, 2013</td>
+                <td>jhlilk22@yahoo.com</td>
+                <td>
+                  <button className="ui green button">Edit</button>
+                  <button className="ui red button">Remove</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Jamie Harington</td>
+                <td>2</td>
+                <td>January 11, 2014</td>
+                <td>jamieharingonton@yahoo.com</td>
+                <td>
+                  <button className="ui green button">Edit</button>
+                  <button className="ui red button">Remove</button>
+                </td>
+              </tr>
+              <tr>
+                <td>Jill Lewis</td>
+                <td>1</td>
+                <td>May 11, 2014</td>
+                <td>jilsewris22@yahoo.com</td>
+                <td>
+                  <button className="ui green button">Edit</button>
+                  <button className="ui red button">Remove</button>
+                </td>
+              </tr>
+              </tbody>
+            </Table>
         </Container>
         </div>
     );
