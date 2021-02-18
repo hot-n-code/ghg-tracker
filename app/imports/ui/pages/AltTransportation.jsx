@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import {  Grid, Header, Loader } from 'semantic-ui-react';
+import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import AltVehicleCard from '../components/AltVehicleCard';
@@ -53,7 +53,7 @@ const sampleVehicleData = [
     fuelSaved: 'xx',
     physical: false,
     caloriesBurnt: 'xx',
-  }
+  },
 ];
 
 class AltTransportation extends React.Component {
@@ -80,7 +80,7 @@ class AltTransportation extends React.Component {
               <Grid stackable columns={3}>
                 {sampleVehicleData.map((vehicle, index) => (
                     <Grid.Column key={index}>
-                      <AltVehicleCard vehicle={vehicle} />
+                      <AltVehicleCard vehicle={vehicle}/>
                     </Grid.Column>
                 ))}
               </Grid>
