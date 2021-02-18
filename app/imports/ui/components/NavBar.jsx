@@ -27,6 +27,7 @@ class NavBar extends React.Component {
             // eslint-disable-next-line react/jsx-key
             [
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>My Vehicles</Menu.Item>,
+              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/create-vehicle' key='create-vehicle' onClick={this.handleItemClick}>Add Vehicles</Menu.Item>,
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>My Data</Menu.Item>,
               // eslint-disable-next-line max-len
               <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/input-daily-data' key='input-daily-data' onClick={this.handleItemClick}>Input Data</Menu.Item>,
