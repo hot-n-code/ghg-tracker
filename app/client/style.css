@@ -23,17 +23,18 @@
   background-position: center;
   background-repeat: no-repeat;
   height: 500px;
+  /*filter: blur(1px);*/
+  /*z-index: -10;*/
 }
-
+.ui.center.aligned.header.landing-description {
+  line-height: 3;
+}
 .landing-heading {
   font-size: 250%;
 }
 .landing-data {
   background-color: #A7D7C5;
-}
-.background-all {
   background-image: url('images/wave_transparent.png');
-  background-color: #f9f8eb;
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -41,14 +42,35 @@
   background-position: center 100%;
   background-attachment: scroll;
 }
-
-
-.signin {
-  height: 100vh;
+.background-all {
+  background-image: url('images/wave_transparent.png');
+  background-color: #f9f8eb;
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  z-index: -999;
+  padding: 20px;
+  min-height: 100vh;
+  width: 100%;
+  background-position: center 100%;
+  background-attachment: scroll;
 }
 
-.signup {
-  height: 100vh;
+.background-all-about {
+  background-image: url('images/wave_transparent.png');
+  background-color: #f9f8eb;
+  background-size: 100% 30%;
+  background-repeat: repeat-x;
+  z-index: -999;
+  padding-bottom: 20px;
+  min-height: 100vh;
+  width: 100%;
+  background-position: center 100%;
+  background-attachment: scroll;
+}
+
+.user-page-top {
+  background-color: #cae7dc;
+  background-size: cover;
 }
 
 body {
@@ -56,6 +78,10 @@ body {
   background-size: cover;
   z-index: -999;
   margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Rubik', sans-serif !important;
 }
 
 .ghg-text {
@@ -68,7 +94,8 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 175px;
+  height: 100%;
+  padding-bottom: 0;
 }
 
 .footer-text {

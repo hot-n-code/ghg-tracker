@@ -1,30 +1,31 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 
-const menuStyle = { height: '200px' };
-const paddingStyle = { padding: '20px', paddingTop: '0px' };
+const menuStyle = { height: '350px' };
+const paddingStyle = { padding: '20px', paddingTop: '100px' };
+const infoStyleTop = { paddingTop: '50px' };
+const infoStyleBottom = { paddingTop: '200px' };
+const button = { marginLeft: '33%', marginRight: '33%', marginTop: '35px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
   render() {
     return (
-        <Container fluid style={paddingStyle}>
-          <Grid.Row>
-          <div className='background-about' style={menuStyle}>
-            &nbsp;&nbsp;
-            <Header inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
+        <div className='background-all-about'>
+        <Container fluid>
+        <Container fluid className='background-about' style={menuStyle}>
+            <Header style={paddingStyle} inverted size='huge' textAlign='center'>At HEI, our family of Hawaii-based companies provides the energy and
               financial infrastructure that empowers much of the economic and community activity of our state.</Header>
-            &nbsp;&nbsp;
-            <Header inverted size='small' className='centered' >Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
-          </div>
-          </Grid.Row>
-            &nbsp;&nbsp;
+            <Header inverted size='small' className='centered' >
+              Accelerating a Sustainable Future for Hawaii, Enhancing the Lives of Our Communities and Creating Value for Our Shareholders</Header>
+        </Container>
+            <Container style={infoStyleTop}>
             <Grid columns={3} divided>
             <Grid.Column>
               <Image src="/images/HE.png" centered/>
               <Header size='small'>For 130 years, Hawaiian Electric has provided the energy that fuels our islands growth and prosperity.
                 Now, we are spearheading the way toward a 100 clean energy, carbon neutral future.
                 Hawaiian Electric serves 95 of Hawaii, creating a strong partnership with our communities, and sustainable economics for our shareholders and stakeholders.</Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
             <Grid.Column>
               <Image src="/images/ASB.jpg" size='medium' centered/>
@@ -32,7 +33,7 @@ class AboutPage extends React.Component {
                 businesses and communities since 1925.
                 Our ability to finance a sustainable Hawaii economy supports Hawaiian Electric’s efforts to create clean, energy-efficient communities.
               </Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
             <Grid.Column>
               <Image src="/images/CE.png" centered/>
@@ -40,18 +41,19 @@ class AboutPage extends React.Component {
                 Hawaii’s sustainable future.
                 Through Pacific Current we are able to invest in projects that advance Hawaii’s ambitious environmental and economic goals.
               </Header>
-              <Button inverted color='green' content='Learn More' />
+              <Button inverted color='green' content='Learn More' style={button} />
             </Grid.Column>
           </Grid>
-          <div>
-          <Header as='h1' className='centered'>
-            Contact Information
-          </Header>
-          <Header as='h5' className='centered'>
-            HAWAIIAN ELECTRIC INDUSTRIES
-          </Header>
+            </Container>
+          <div style={infoStyleBottom}>
           </div>
-          <Grid columns={2} padded>
+          {/* <Header as='h1' className='centered'> */}
+          {/*  Contact Information */}
+          {/* </Header> */}
+          {/* <Header as='h5' className='centered'> */}
+          {/*  HAWAIIAN ELECTRIC INDUSTRIES */}
+          {/* </Header> */}
+          <Grid columns={3} padded>
             <Grid.Column>
               <Header as='h4' className='centered'>
                 CORPORATE HEADQUARTERS
@@ -59,6 +61,14 @@ class AboutPage extends React.Component {
               <Header sub className='centered'>1001 Bishop Street, Suite 2900
                 Honolulu, Hawaii 96813
                 Telephone: (808) 543-5662</Header>
+            </Grid.Column>
+            <Grid.Column>
+              <Header as='h4' className='centered'>
+                Contact Information
+              </Header>
+              <Header as='h5' className='centered'>
+                HAWAIIAN ELECTRIC INDUSTRIES
+              </Header>
             </Grid.Column>
             <Grid.Column>
               <Header as='h4' className='centered'>
@@ -71,6 +81,7 @@ class AboutPage extends React.Component {
             </Grid.Column>
           </Grid>
         </Container>
+        </div>
     );
   }
 }

@@ -6,20 +6,19 @@ const paddingStyle = { padding: '20px' };
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const LandingDescription = () => (
     <div>
-      <Grid columns={2} stackable style={paddingStyle}>
+      <Grid columns={2} stackable style={paddingStyle} divided>
         <Grid.Column>
           <div className='landing-heading'>
-            <Header textAlign='center' > <u>WHO IS GHG TRACKER?</u> </Header>
+            <Header textAlign='center' > <u>WHO ARE WE?</u> </Header>
           </div>
-          <Header as='h2' textAlign='center'>
-            Our focus is on Greenhouse Gas Emissions (GHG) and how it is everyone’s responsibility.
-            <br/>
-            This Project Focuses on Tackling GHG from Transportation
-            <br/>
-            Climate change has the potential to increase the severity and frequency of hurricanes, flooding, and droughts, and is expected to
+          <Header as='h2' textAlign='center' className='landing-description'>
+            <p>Our focus is on Greenhouse Gas Emissions (GHG) and how it is everyone’s responsibility.
+            </p>
+           <p> This Project Focuses on Tackling GHG from Transportation</p>
+           <p> Climate change has the potential to increase the severity and frequency of hurricanes, flooding, and droughts, and is expected to
             lead to increasing sea level rise.
-            <br />
-            GHG is the most significant factor in climate change.
+           </p>
+              GHG is the most significant factor in climate change.
           </Header>
         </Grid.Column>
         <Grid.Column>

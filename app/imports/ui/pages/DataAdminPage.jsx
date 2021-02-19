@@ -1,17 +1,82 @@
 import React from 'react';
-import { Container, Image, Header, Grid, Table, Button } from 'semantic-ui-react';
+import { Container, Grid, Table, Button } from 'semantic-ui-react';
+import { Bar, Pie } from 'react-chartjs-2';
 
 const paddingStyle = { padding: 20 };
 
 class DataAdminPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      transportation: ['Telework', 'Public Transportation', 'Biking',
+        'Walk', 'Carpool', 'Electric Vehicle'],
+      transportationDatasets: [
+        {
+          backgroundColor: ['blue', 'red', 'green', 'purple', 'light blue', 'orange'],
+          borderColor: 'rgba(0,0,0,1)',
+          data: [190, 9, 0, 0, 10, 7],
+        },
+      ],
+      labels: ['January', 'February', 'March',
+        'April', 'May'],
+      datasets: [
+        {
+          label: 'Carbon Emission',
+          backgroundColor: 'rgba(75,192,192,1)',
+          borderColor: 'rgba(0,0,0,1)',
+          borderWidth: 2,
+          data: [65, 59, 80, 81, 56],
+        },
+      ],
+    };
+  }
+
   render() {
     return (
+        <div className='background-all'>
         <Container style={paddingStyle}>
-          <Grid.Column >
-            <Header as='h1' textAlign='center'>Community Data</Header>
-            <Image floated='left' src="https://www.iconpacks.net/icons/1/free-pie-chart-icon-683-thumb.png" size='large'/>
-            <Image floated='right' src="https://globuswarwick.files.wordpress.com/2020/02/screen-shot-2020-02-11-at-21.50.22.png?w=663" size='large'/>
-          </Grid.Column>
+          <Grid columns={2}>
+            <Grid.Column>
+              <Pie data={{ labels: this.state.transportation, datasets: this.state.transportationDatasets }}
+                   height={200}
+                   options={{
+                     maintainAspectRatio: false,
+                     title: {
+                       display: true,
+                       text: 'Mode of Transportation',
+                       fontSize: 30,
+                     },
+                   }}
+              />
+            </Grid.Column>
+            <Grid.Column>
+              <Bar data={{ labels: this.state.labels, datasets: this.state.datasets }}
+                   height={300} width={500}
+                   options={{
+                     maintainAspectRatio: false,
+                     title: {
+                       display: true,
+                       text: 'Carbon Emissions per Month ',
+                       fontSize: 30,
+                     },
+                     scales: {
+                       yAxes: [{
+                         scaleLabel: {
+                           display: true,
+                           labelString: 'Carbon Emissions',
+                         },
+                       }],
+                       xAxes: [{
+                         scaleLabel: {
+                           display: true,
+                           labelString: 'Months',
+                         },
+                       }],
+                     },
+                   }}
+              />
+            </Grid.Column>
+          </Grid>
           <Table singleLine>
             <Table.Header>
               <Table.Row>
@@ -25,7 +90,7 @@ class DataAdminPage extends React.Component {
             <Table.Body>
               <Table.Row>
                 <Table.Cell>Cars</Table.Cell>
-                <Table.Cell>0.0</Table.Cell>
+                <Table.Cell>100.0</Table.Cell>
                 <Table.Cell>20500</Table.Cell>
                 <Table.Cell>
                   <Button fluid color='grey'>Edit</Button>
@@ -33,7 +98,7 @@ class DataAdminPage extends React.Component {
               </Table.Row>
               <Table.Row>
                 <Table.Cell>Bus</Table.Cell>
-                <Table.Cell>0.0</Table.Cell>
+                <Table.Cell>500.0</Table.Cell>
                 <Table.Cell>11800</Table.Cell>
                 <Table.Cell>
                   <Button fluid color='grey'>Edit</Button>
@@ -42,6 +107,7 @@ class DataAdminPage extends React.Component {
             </Table.Body>
           </Table>
         </Container>
+        </div>
     );
   }
 }

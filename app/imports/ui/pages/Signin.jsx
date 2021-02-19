@@ -43,56 +43,60 @@ export default class Signin extends React.Component {
     // Otherwise return the Login form.
     return (
         <div className='background-all'>
-          <div className='signin'>
-        <Grid centered container className='signin-page'>
-          <Grid.Column>
-            <div style={{ marginRight: 'auto', marginLeft: 'auto', width: '400px', paddingBottom: '40px', paddingTop: '40px' }}>
-              <Header as='h2' textAlign='center'>Sign-in</Header>
-              <Segment padded color='grey'>
-                <Form onSubmit={this.submit}>
-                  <Form.Input
-                    label='Email'
-                    icon='user'
-                    iconPosition='left'
-                    name='email'
-                    type='email'
-                    placeholder='Email Address'
-                    onChange={this.handleChange}
+          <Grid centered container className='signin-page'>
+            <Grid.Column>
+              <div style={{
+                marginRight: 'auto',
+                marginLeft: 'auto',
+                width: '35%',
+                paddingBottom: '40px',
+                paddingTop: '40px',
+              }}>
+                <Header as='h2' textAlign='center'>Sign-in</Header>
+                <Segment padded color='grey'>
+                  <Form onSubmit={this.submit}>
+                    <Form.Input
+                        label='Email'
+                        icon='user'
+                        iconPosition='left'
+                        name='email'
+                        type='email'
+                        placeholder='Email Address'
+                        onChange={this.handleChange}
                     />
                     <Form.Input
-                      label='Password'
-                      icon='lock'
-                      iconPosition='left'
-                      name='password'
-                      placeholder='Password'
-                      type='password'
-                      onChange={this.handleChange}
+                        label='Password'
+                        icon='lock'
+                        iconPosition='left'
+                        name='password'
+                        placeholder='Password'
+                        type='password'
+                        onChange={this.handleChange}
                     />
-                      <Form.Button primary animated>
-                        <Button.Content visible>Submit</Button.Content>
-                        <Button.Content hidden>
-                          <Icon name='arrow right'/>
-                        </Button.Content>
-                      </Form.Button>
-                </Form>
-              </Segment>
-              <Message>
-                <Link to='/signup'>Not registered? Click here to Signup</Link>
-              </Message>
-              {this.state.error === '' ? (
-                  ''
-              ) : (
-                  <Message
-                    color='red'
-                    error
-                    header='Login was not successful'
-                    content={this.state.error}
+                    <Form.Button primary animated>
+                      <Button.Content visible>Submit</Button.Content>
+                      <Button.Content hidden>
+                        <Icon name='arrow right'/>
+                      </Button.Content>
+                    </Form.Button>
+                  </Form>
+                </Segment>
+                <Message>
+                  <Link to='/signup'>Not registered? Click here to Signup</Link>
+                </Message>
+                {this.state.error === '' ? (
+                    ''
+                ) : (
+                    <Message
+                        color='red'
+                        error
+                        header='Login was not successful'
+                        content={this.state.error}
                     />
-              )}
-            </div>
-          </Grid.Column>
-        </Grid>
-        </div>
+                )}
+              </div>
+            </Grid.Column>
+          </Grid>
         </div>
     );
   }
