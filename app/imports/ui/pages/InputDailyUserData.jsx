@@ -15,6 +15,7 @@ const formSchema = new SimpleSchema({
     allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
   },
   milesTraveled: Number,
+  cO2Reduced: Number,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
