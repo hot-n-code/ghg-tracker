@@ -4,8 +4,9 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Loader, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
@@ -77,8 +78,13 @@ class AddDailyData extends React.Component {
     });
   }
 
-  /** Render the form. Uses Uniforms: https://github.com/vazco/uniforms */
+  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
+    return (this.props.ready) ? this.renderModal() : <Loader active>Getting your data</Loader>;
+  }
+
+  /** Render the form. Uses Uniforms: https://github.com/vazco/uniforms */
+  renderModal() {
     let fRef = null;
     return (
       <Modal size='mini'
@@ -104,9 +110,13 @@ class AddDailyData extends React.Component {
   }
 }
 
+AddDailyData.propTypes = {
+  ready: PropTypes.object,
+};
+
 export default withTracker(() => {
-  const doc = Meteor.subscribe(Vehicle.userPublicationName);
+  const vehicles = Meteor.subscribe(Vehicle.userPublicationName);
   return {
-    ready: doc.ready(),
+    ready: vehicles.ready(),
   };
 })(AddDailyData);
