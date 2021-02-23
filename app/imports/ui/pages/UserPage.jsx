@@ -1,6 +1,10 @@
 import React from 'react';
 import { Grid, Header, Button, Image, Container, Table } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import { Stuffs } from '../../api/stuff/Stuff';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -20,6 +24,8 @@ class UserPage extends React.Component {
     render() {
         return (
             <Container style={paddingStyle}>
+                <Header as='h1' textAlign='center'>Welcome Back, John.</Header>
+                <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <h1>My Summary</h1>
@@ -71,7 +77,6 @@ class UserPage extends React.Component {
                 </Grid>
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
-                        <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
                     </Grid.Column>
                 </Grid>
@@ -104,4 +109,14 @@ class UserPage extends React.Component {
     }
 }
 
-export default UserPage;
+UserPage.propTypes = {
+    ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+     // template to connect data
+    const subscription = Meteor.subscribe(Stuffs.userPublicationName);
+    return {
+        ready: subscription.ready(),
+    };
+})(UserPage);
