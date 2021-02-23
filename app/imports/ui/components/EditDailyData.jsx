@@ -57,7 +57,8 @@ class EditDailyData extends React.Component {
   /** On successful submit, update data. */
   submit(data) {
     const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
-    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled } }, (error) => {
+    const cO2Reduced = this.computeCO2Reduced(milesTraveled, modeOfTransportation);
+    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, cO2Reduced } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
