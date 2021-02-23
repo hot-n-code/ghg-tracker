@@ -4,16 +4,13 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Button, Modal } from 'semantic-ui-react';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
   inputDate: Date,
-  modeOfTransportation: {
-    type: String,
-    allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
-  },
+  modeOfTransportation: String,
   milesTraveled: Number,
 });
 
@@ -28,6 +25,7 @@ class InputDailyUserData extends React.Component {
     };
   }
 
+  /** Handles the state of the modal (close or open) */
   handleModalOpen = () => this.setState({ modalOpen: true });
 
   handleModalClose = () => this.setState({ modalOpen: false });
