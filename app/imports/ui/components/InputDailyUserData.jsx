@@ -1,11 +1,11 @@
 import React from 'react';
-import { Grid, Segment, Header } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import { Button, Modal } from 'semantic-ui-react';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
@@ -15,23 +15,34 @@ const formSchema = new SimpleSchema({
     allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
   },
   milesTraveled: Number,
-  cO2Reduced: Number,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /** Renders the Page for inputting daily data */
 class InputDailyUserData extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalOpen: false,
+    };
+  }
+
+  handleModalOpen = () => this.setState({ modalOpen: true });
+
+  handleModalClose = () => this.setState({ modalOpen: false });
 
   /** On submit, insert data. */
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    DailyUserData.collection.insert({ inputDate, modeOfTransportation, milesTraveled, owner }, (error) => {
+    const cO2Reduced = 15;
+    DailyUserData.collection.insert({ inputDate, modeOfTransportation, milesTraveled, owner, cO2Reduced }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'Data added successfully', 'success');
+        this.handleModalClose();
         formRef.reset();
       }
     });
@@ -41,24 +52,25 @@ class InputDailyUserData extends React.Component {
   render() {
     let fRef = null;
     return (
-        <div className='background-all'>
-          <Grid stackable container centered>
-            <Grid.Column>
-              <Header as="h1" textAlign="center">Input Your Daily Data</Header>
-              <AutoForm ref={ref => {
-                fRef = ref;
-              }} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
-                <Segment>
-                  <DateField name='inputDate' max={new Date(Date.now())}/>
-                  <SelectField name='modeOfTransportation'/>
-                  <NumField name='milesTraveled'/>
-                  <SubmitField value='Submit'/>
-                  <ErrorsField/>
-                </Segment>
-              </AutoForm>
-            </Grid.Column>
-          </Grid>
-        </div>
+      <Modal size='tiny'
+             closeIcon
+             open={this.state.modalOpen}
+             onClose={this.handleModalClose}
+             onOpen={this.handleModalOpen}
+             trigger={<Button>Add Data</Button>}
+      >
+        <Modal.Header>Add Daily Data</Modal.Header>
+        <Modal.Content>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge}
+                    onSubmit={data => { this.submit(data, fRef); }}>
+            <DateField name='inputDate' max={new Date(Date.now())}/>
+            <SelectField name='modeOfTransportation'/>
+            <NumField name='milesTraveled'/>
+            <SubmitField value='Submit'/>
+            <ErrorsField/>
+          </AutoForm>
+        </Modal.Content>
+      </Modal>
     );
   }
 }
