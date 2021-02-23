@@ -13,9 +13,9 @@ class MyVehicles extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return this.props.ready ? (
-        this.renderPage()
+      this.renderPage()
     ) : (
-        <Loader active>Getting data</Loader>
+      <Loader active>Getting vehicles.</Loader>
     );
   }
 
