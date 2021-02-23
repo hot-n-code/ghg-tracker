@@ -21,7 +21,7 @@ const bridge = new SimpleSchema2Bridge(formSchema);
 const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'];
 
 /** Renders the Page for inputting daily data */
-class InputDailyUserData extends React.Component {
+class AddDailyData extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +81,7 @@ class InputDailyUserData extends React.Component {
   render() {
     let fRef = null;
     return (
-      <Modal size='tiny'
+      <Modal size='mini'
              closeIcon
              open={this.state.modalOpen}
              onClose={this.handleModalClose}
@@ -109,4 +109,4 @@ export default withTracker(() => {
   return {
     ready: doc.ready(),
   };
-})(InputDailyUserData);
+})(AddDailyData);
