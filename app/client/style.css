@@ -79,7 +79,8 @@ body {
 }
 
 #graph-buttons {
-  float: left;
+  display: inline-block;
+  margin-left: 75px;
   margin-right: -50px;
   margin-bottom: 25px;
 }
