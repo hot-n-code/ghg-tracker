@@ -41,7 +41,7 @@ class AddDailyData extends React.Component {
     let autoMPG;
     let cO2Reduced;
     if (altTransportation.includes(modeOfTransportation)) {
-      autoMPG = Vehicle.collection.findOne({ owner: email, make: 'Toyota' }).MPG;
+      autoMPG = Vehicle.collection.findOne({ owner: email }).MPG;
       cO2Reduced = (milesTraveled / autoMPG) * 19.6;
     } else {
       autoMPG = Vehicle.collection.findOne({ owner: email, make: modeOfTransportation }).MPG;
