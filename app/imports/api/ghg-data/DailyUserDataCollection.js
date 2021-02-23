@@ -17,10 +17,7 @@ class DailyUserDataCollection {
     this.schema = new SimpleSchema({
       owner: String,
       inputDate: Date,
-      modeOfTransportation: {
-        type: String,
-        allowedValues: ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'],
-      },
+      modeOfTransportation: String,
       milesTraveled: Number,
       cO2Reduced: Number,
     }, { tracker: Tracker });
