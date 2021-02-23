@@ -5,7 +5,9 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { Button, Modal } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const formSchema = new SimpleSchema({
@@ -15,6 +17,8 @@ const formSchema = new SimpleSchema({
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
+
+const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'];
 
 /** Renders the Page for inputting daily data */
 class InputDailyUserData extends React.Component {
@@ -30,11 +34,38 @@ class InputDailyUserData extends React.Component {
 
   handleModalClose = () => this.setState({ modalOpen: false });
 
+  /** Compute Reduced CO2 */
+  computeCO2Reduced(milesTraveled, modeOfTransportation) {
+    const email = Meteor.user().username;
+    let autoMPG;
+    let cO2Reduced;
+    if (altTransportation.includes(modeOfTransportation)) {
+      autoMPG = Vehicle.collection.findOne({ owner: email, make: 'Toyota' }).MPG;
+      cO2Reduced = (milesTraveled / autoMPG) * 19.6;
+    } else {
+      autoMPG = Vehicle.collection.findOne({ owner: email, make: modeOfTransportation }).MPG;
+      cO2Reduced = (milesTraveled / autoMPG) * -19.6;
+    }
+    return cO2Reduced.toFixed(2);
+  }
+
+  /** Get modeOfTransportation Options */
+  getModeOfTransportation() {
+    const email = Meteor.user().username;
+    const userVehicles = [];
+    Vehicle.collection.find({ owner: email }).forEach(
+        function (vehicle) {
+          userVehicles.push(vehicle.make);
+        },
+    );
+    return userVehicles.concat(altTransportation);
+  }
+
   /** On submit, insert data. */
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
     const owner = Meteor.user().username;
-    const cO2Reduced = 15;
+    const cO2Reduced = this.computeCO2Reduced(milesTraveled, modeOfTransportation);
     DailyUserData.collection.insert({ inputDate, modeOfTransportation, milesTraveled, owner, cO2Reduced }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
@@ -62,7 +93,7 @@ class InputDailyUserData extends React.Component {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge}
                     onSubmit={data => { this.submit(data, fRef); }}>
             <DateField name='inputDate' max={new Date(Date.now())}/>
-            <SelectField name='modeOfTransportation'/>
+            <SelectField name='modeOfTransportation' allowedValues={this.getModeOfTransportation()}/>
             <NumField name='milesTraveled'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
@@ -73,4 +104,9 @@ class InputDailyUserData extends React.Component {
   }
 }
 
-export default InputDailyUserData;
+export default withTracker(() => {
+  const doc = Meteor.subscribe(Vehicle.userPublicationName);
+  return {
+    ready: doc.ready(),
+  };
+})(InputDailyUserData);
