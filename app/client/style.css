@@ -33,7 +33,7 @@
   font-size: 250%;
 }
 .landing-data {
-  background-color: #A7D7C5;
+  background-color: #a7d7c5;
   background-image: url('images/wave_transparent.png');
   background-size: 100% 30%;
   background-repeat: repeat-x;
@@ -80,7 +80,12 @@ body {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Rubik', sans-serif !important;
 }
 
@@ -125,6 +130,17 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.vehicle-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 20px;
+  margin: 2rem 3rem;
+  width: 60%;
 }
 
 .ui.centered.card.vehicle-card {

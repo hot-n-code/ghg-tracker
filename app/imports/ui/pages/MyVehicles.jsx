@@ -1,10 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Grid, Header, Loader, Search } from 'semantic-ui-react';
+import { Button, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+// import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
-import VehicleCard from '../components/VehicleCard';
+import VehicleList from '../components/VehicleList';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 
@@ -23,10 +23,11 @@ class MyVehicles extends React.Component {
   renderPage() {
     /** Finds the vehicles that are owned by the user */
     const email = Meteor.user().username;
-    const userVehicle = Vehicle.collection.find({ owner: email }).fetch();
+    const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
     return (
       <div className='background-all'>
-        <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+        <VehicleList userVehicles={userVehicles} />
+        {/* <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
           <Grid.Column>
             <Header as='h1' textAlign='center'>
               My Vehicles
@@ -40,14 +41,14 @@ class MyVehicles extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Grid stackable columns={3}>
-              {_.map(userVehicle, (vehicle, index) => (
+              {_.map(userVehicles, (vehicle, index) => (
                 <Grid.Column key={index}>
                   <VehicleCard vehicle={vehicle} />
                 </Grid.Column>
               ))}
             </Grid>
           </Grid.Column>
-        </Grid>
+        </Grid> */}
         <a href='#/create-vehicle'>
           <Button circular icon='add' size='massive' />
         </a>
