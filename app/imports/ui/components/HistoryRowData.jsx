@@ -8,7 +8,7 @@ class HistoryRowData extends React.Component {
     render() {
         return (
             <Table.Row>
-                <Table.Cell>{this.props.user.inputDate}</Table.Cell>
+                <Table.Cell>{this.props.user.inputDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>{this.props.user.modeOfTransportation}</Table.Cell>
                 <Table.Cell>{this.props.user.milesTraveled}</Table.Cell>
             </Table.Row>

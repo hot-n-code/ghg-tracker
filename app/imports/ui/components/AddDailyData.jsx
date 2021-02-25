@@ -111,7 +111,7 @@ class AddDailyData extends React.Component {
 }
 
 AddDailyData.propTypes = {
-  ready: PropTypes.object,
+  ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {

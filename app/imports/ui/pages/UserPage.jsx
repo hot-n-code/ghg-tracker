@@ -5,9 +5,8 @@ import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-
-/* import HistoryRowData from '../components/HistoryRowData';
-import AddDailyData from '../components/AddDailyData'; */
+import HistoryRowData from '../components/HistoryRowData';
+import AddDailyData from '../components/AddDailyData';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -86,7 +85,7 @@ class UserPage extends React.Component {
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
-                      {/* <AddDailyData/> */}
+                      <AddDailyData/>
                     </Grid.Column>
                 </Grid>
                 <Table stackable striped>
@@ -98,7 +97,7 @@ class UserPage extends React.Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {/* this.props.userData.map((usersData) => <HistoryRowData key={usersData._id} usersData={usersData} />)} */}
+                      {this.props.userData.map((usersData) => <HistoryRowData key={usersData._id} usersData={usersData} />)}
                     </Table.Body>
                 </Table>
               </div>
