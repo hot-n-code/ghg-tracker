@@ -54,7 +54,7 @@ class UserPage extends React.Component {
                         <Header as='h2' textAlign='center'>10 days</Header>
                     </Grid.Column>
                 </Grid>
-              <div style={{ paddingTop: '150px' }}></div>
+              <div style={{ paddingTop: '150px' }}/>
               <div>
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
