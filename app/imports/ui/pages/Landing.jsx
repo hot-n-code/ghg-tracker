@@ -14,7 +14,7 @@ class Landing extends React.Component {
         <div>
           <div className='background-landing' style={menuStyle}>
             <div style={padding} className='ghg-text'>
-              <Header textAlign="center" size="massive" inverted> GHG Tracker </Header>
+              <Header textAlign="center" inverted> GHG Tracker </Header>
             </div>
             <Header className="logo-description" textAlign="center" inverted as='h2'> Tracking greenhouse gas emissions that are released from your every day transportation.</Header>
           </div>

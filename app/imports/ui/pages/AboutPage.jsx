@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
+import FeedBack from './FeedBack';
 
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
@@ -47,6 +48,7 @@ class AboutPage extends React.Component {
             </Container>
           <div style={infoStyleBottom}>
           </div>
+          <FeedBack/>
           {/* <Header as='h1' className='centered'> */}
           {/*  Contact Information */}
           {/* </Header> */}
