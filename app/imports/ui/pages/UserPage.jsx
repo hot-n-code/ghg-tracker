@@ -37,7 +37,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <Grid stackable columns={2}>
+                <Grid stackable fluid columns={2}>
                     <Grid.Column>
                         <h1>My Summary</h1>
                         <div id='graph-buttons'>
