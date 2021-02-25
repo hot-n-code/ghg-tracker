@@ -11,7 +11,7 @@ class FeedBack extends React.Component {
   render() {
     const { value } = this.state;
     return (
-        <div className='background-all'>
+        <div>
           <Container>
             <Header as='h1' className='centered'>Feedback</Header>
             <Header sub className='centered'>

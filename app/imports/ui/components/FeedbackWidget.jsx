@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const FeedbackWidget = () => (
-    <div className='background-all'>
+    <Container>
       <Container>
         <Header as='h1' className='centered'>Feedback</Header>
         <Header sub className='centered'>
@@ -47,7 +47,7 @@ const FeedbackWidget = () => (
           </Grid>
         </Form>
       </Container>
-    </div>
+    </Container>
     );
 
 export default FeedbackWidget;
