@@ -1,10 +1,11 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
+import FeedBack from './FeedBack';
 
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
 const infoStyleTop = { paddingTop: '50px' };
-const infoStyleBottom = { paddingTop: '200px' };
+const infoStyleBottom = { paddingTop: '100px' };
 const button = { marginLeft: '33%', marginRight: '33%', marginTop: '35px' };
 /** A simple static component to render some text for the landing page. */
 class AboutPage extends React.Component {
@@ -46,6 +47,9 @@ class AboutPage extends React.Component {
           </Grid>
             </Container>
           <div style={infoStyleBottom}>
+          </div>
+          <FeedBack/>
+          <div style={{ paddingBottom: '220px' }}>
           </div>
           {/* <Header as='h1' className='centered'> */}
           {/*  Contact Information */}
