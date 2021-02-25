@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, Header, Button, Image, Container, Table } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
+import AddDailyData from '../components/AddDailyData';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -44,8 +45,9 @@ class UserPage extends React.Component {
                         <Header as='h2' textAlign='center'>10 days</Header>
                     </Grid.Column>
                 </Grid>
-              <div style={{ paddingTop: '150px' }}></div>
+              <div style={{ paddingTop: '150px' }}/>
               <div>
+                <AddDailyData />
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>

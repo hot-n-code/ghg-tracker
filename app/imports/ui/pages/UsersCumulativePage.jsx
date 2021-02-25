@@ -1,6 +1,10 @@
 import React from 'react';
+import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Image, Container, Segment } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Pie } from 'react-chartjs-2';
+import { _ } from 'meteor/underscore';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 class UsersCumulativePage extends React.Component {
     constructor(props) {
@@ -13,6 +17,11 @@ class UsersCumulativePage extends React.Component {
     }
 
     render() {
+      const miles = _.pluck(DailyUserData.collection.find({}).fetch(), 'milesTraveled');
+      const totalMiles = _.reduce(miles, function (sum, num) { return sum + num; }, 0);
+      console.log(totalMiles);
+      const ghg = _.pluck(DailyUserData.collection.find({}).fetch(), 'cO2Reduced');
+      const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
       return (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
@@ -60,7 +69,7 @@ class UsersCumulativePage extends React.Component {
                       Green House Gas (GHG) Reduced
                     </Header>
                     <Header as='h2' textAlign='center' block>
-                      2,176 POUNDS
+                      {ghgTotal} POUNDS
                     </Header>
                   </Segment>
                 </Grid.Column>
@@ -94,4 +103,11 @@ class UsersCumulativePage extends React.Component {
   }
 }
 
-export default UsersCumulativePage;
+export default withTracker(() => {
+  // KEEP FOR REFERENCE: Get access to Stuff documents.
+  const sub1 = Meteor.subscribe(DailyUserData.adminPublicationName);
+  return {
+    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
+    ready: sub1.ready(),
+  };
+})(UsersCumulativePage);
