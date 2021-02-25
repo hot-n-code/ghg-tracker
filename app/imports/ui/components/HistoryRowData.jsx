@@ -8,9 +8,9 @@ class HistoryRowData extends React.Component {
     render() {
         return (
             <Table.Row>
-                <Table.Cell>{this.props.user.inputDate.toLocaleDateString()}</Table.Cell>
-                <Table.Cell>{this.props.user.modeOfTransportation}</Table.Cell>
-                <Table.Cell>{this.props.user.milesTraveled}</Table.Cell>
+                <Table.Cell>{this.props.data.inputDate.toLocaleDateString()}</Table.Cell>
+                <Table.Cell>{this.props.data.modeOfTransportation}</Table.Cell>
+                <Table.Cell>{this.props.data.milesTraveled}</Table.Cell>
             </Table.Row>
         );
     }
@@ -18,7 +18,7 @@ class HistoryRowData extends React.Component {
 
 /** Require a document to be passed to this component. */
 HistoryRowData.propTypes = {
-    user: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

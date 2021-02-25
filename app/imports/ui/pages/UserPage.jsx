@@ -27,6 +27,13 @@ class UserPage extends React.Component {
     }
 
     renderPage() {
+      const email = Meteor.user().username;
+      const userData = [];
+      DailyUserData.collection.find({ owner: email }).forEach(
+          function (data) {
+            userData.push(data);
+          },
+      );
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
@@ -85,7 +92,7 @@ class UserPage extends React.Component {
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
-                      <AddDailyData/>
+                      {/* <AddDailyData/> */}
                     </Grid.Column>
                 </Grid>
                 <Table stackable striped>
@@ -97,7 +104,7 @@ class UserPage extends React.Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {this.props.userData.map((usersData) => <HistoryRowData key={usersData._id} usersData={usersData} />)}
+                      {userData.map((value, index) => <HistoryRowData key={index} data={value}/>)}
                     </Table.Body>
                 </Table>
               </div>
@@ -108,14 +115,13 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
-    userData: PropTypes.array.isRequired,
+    // userData: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
     const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
     return {
-        userData: DailyUserData.collection.find({}).fetch(),
         ready: subscription.ready(),
     };
 })(UserPage);
