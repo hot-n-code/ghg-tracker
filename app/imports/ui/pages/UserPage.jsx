@@ -92,7 +92,7 @@ class UserPage extends React.Component {
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
-                       <AddDailyData/>
+                        <Header as='h1' textAlign='center'><AddDailyData/></Header>
                     </Grid.Column>
                 </Grid>
                 <Table stackable striped>
