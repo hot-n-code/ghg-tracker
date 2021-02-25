@@ -33,9 +33,9 @@ if (Stuffs.collection.find().count() === 0) {
 }
 
 /** Initialize the database with a default data document. */
-function addDailyUserData(userData) {
-  console.log(`  Adding: ${userData.modeOfTransportation} (${userData.owner})`);
-  DailyUserData.collection.insert(userData);
+function addDailyUserData({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced }) {
+  console.log(`  Defining Daily User Data (${owner})`);
+  DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced });
 }
 
 /** Initialize the collection if empty. */
