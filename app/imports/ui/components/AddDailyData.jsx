@@ -7,6 +7,7 @@ import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } 
 import { Button, Loader, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 
@@ -19,7 +20,7 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Electric Vehicle', 'Public Transportation', 'Telework', 'Walking'];
+const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
 
 /** Renders the Page for inputting daily data */
 class AddDailyData extends React.Component {
@@ -35,38 +36,25 @@ class AddDailyData extends React.Component {
 
   handleModalClose = () => this.setState({ modalOpen: false });
 
-  /** Compute Reduced CO2 */
-  computeCO2Reduced(milesTraveled, modeOfTransportation) {
+  /** Get user's vehicles */
+  getVehicles() {
     const email = Meteor.user().username;
-    let autoMPG;
-    let cO2Reduced;
-    if (altTransportation.includes(modeOfTransportation)) {
-      autoMPG = Vehicle.collection.findOne({ owner: email }).MPG;
-      cO2Reduced = (milesTraveled / autoMPG) * 19.6;
-    } else {
-      autoMPG = Vehicle.collection.findOne({ owner: email, make: modeOfTransportation }).MPG;
-      cO2Reduced = (milesTraveled / autoMPG) * -19.6;
-    }
-    return cO2Reduced.toFixed(2);
+    return Vehicle.collection.find({ owner: email }).fetch();
   }
 
-  /** Get modeOfTransportation Options */
-  getModeOfTransportation() {
-    const email = Meteor.user().username;
-    const userVehicles = [];
-    Vehicle.collection.find({ owner: email }).forEach(
-        function (vehicle) {
-          userVehicles.push(vehicle.make);
-        },
-    );
-    return userVehicles.concat(altTransportation);
+  /** Compute Reduced CO2 */
+  computeCO2Reduced(milesTraveled, modeOfTransportation) {
+    const autoMPG = altTransportation.includes(modeOfTransportation) ?
+        (_.max(this.getVehicles(), (vehicle) => vehicle.MPG)).MPG :
+        _.find(this.getVehicles(), (vehicle) => vehicle.make === modeOfTransportation).MPG * -1;
+    return ((milesTraveled / autoMPG) * 19.6).toFixed(2);
   }
 
   /** On submit, insert data. */
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
-    const owner = Meteor.user().username;
     const cO2Reduced = this.computeCO2Reduced(milesTraveled, modeOfTransportation);
+    const owner = Meteor.user().username;
     DailyUserData.collection.insert({ inputDate, modeOfTransportation, milesTraveled, owner, cO2Reduced }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
@@ -99,10 +87,12 @@ class AddDailyData extends React.Component {
       >
         <Modal.Header>Add Daily Data</Modal.Header>
         <Modal.Content>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge}
+          <AutoForm ref={ref => { fRef = ref; }}
+                    schema={bridge}
                     onSubmit={data => { this.submit(data, fRef); }}>
             <DateField name='inputDate' max={new Date(Date.now())}/>
-            <SelectField name='modeOfTransportation' allowedValues={this.getModeOfTransportation()}/>
+            <SelectField name='modeOfTransportation'
+                         allowedValues={_.pluck(this.getVehicles(), 'make').concat(altTransportation)}/>
             <NumField name='milesTraveled'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
@@ -113,13 +103,15 @@ class AddDailyData extends React.Component {
   }
 }
 
+/** Require a document to be passed to this component. */
 AddDailyData.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const vehicles = Meteor.subscribe(Vehicle.userPublicationName);
+  const subscription = Meteor.subscribe(Vehicle.userPublicationName);
   return {
-    ready: vehicles.ready(),
+    ready: subscription.ready(),
   };
 })(AddDailyData);
