@@ -1,10 +1,11 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Image, Container, Segment, Button } from 'semantic-ui-react';
+import { Grid, Header, Container } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Pie } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import CumulativeCard from '../components/CumulativeCard';
 
 function CalculateCumulative() {
   const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
@@ -34,6 +35,25 @@ function CalculateCumulative() {
   return data;
 }
 
+const impactData = [
+  {
+    title: 'Vehicle Miles Travel Reduced',
+    img: '/images/cumulative-page/car.png',
+    data: '',
+  },
+  {
+    title: 'Green House Gas (GHG) Reduced',
+    img: '/images/cumulative-page/C.png',
+    data: '',
+  },
+  {
+    title: 'Gallons of Gas Saved',
+    img: '/images/cumulative-page/gas.png',
+    data: '',
+  },
+
+];
+
 class UsersCumulativePage extends React.Component {
 
     constructor(props) {
@@ -47,6 +67,9 @@ class UsersCumulativePage extends React.Component {
 
     render() {
       const data = CalculateCumulative();
+      impactData[0].data = data[0];
+      impactData[1].data = data[1];
+      impactData[2].data = data[2];
       return (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
@@ -75,40 +98,12 @@ class UsersCumulativePage extends React.Component {
                 ENVIRONMENTAL IMPACT
                 <br/>
               </Header>
-              <Grid relaxed columns={3}>
-                <Grid.Column>
-                  <Segment>
-                    <Image src="/images/cumulative-page/car.png"/>
-                    <Header as='h1' dividing textAlign='center'>
-                      Vehicle Miles Travel Reduced
-                    </Header>
-                    <Header as='h2' textAlign='center'>
-                      {data[0]} MILES
-                    </Header>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column>
-                  <Segment>
-                    <Image src="/images/cumulative-page/C.png"/>
-                    <Header as='h1' dividing textAlign='center'>
-                      Green House Gas (GHG) Reduced
-                    </Header>
-                    <Header as='h2' textAlign='center'>
-                      {data[1]} POUNDS
-                    </Header>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column>
-                  <Segment>
-                    <Image src="/images/cumulative-page/gas.png" size='small' centered/>
-                    <Header as='h1' dividing textAlign='center'>
-                      Gallons of Gas Saved
-                    </Header>
-                    <Button color='green' centered>
-                      {data[2]} GALLONS
-                    </Button>
-                  </Segment>
-                </Grid.Column>
+              <Grid stackable columns={3}>
+                {impactData.map((user, index) => (
+                    <Grid.Column key={index}>
+                      <CumulativeCard user={user}/>
+                    </Grid.Column>
+                ))}
               </Grid>
             </Container>
           </div>
