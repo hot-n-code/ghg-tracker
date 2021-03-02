@@ -151,6 +151,18 @@ h6 {
   justify-content: center;
 }
 
+#root
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div
+  > div.vehicle-list-item {
+  display: flex;
+  justify-content: center;
+}
+
 .vehicle-card {
   display: flex;
   flex-direction: column;

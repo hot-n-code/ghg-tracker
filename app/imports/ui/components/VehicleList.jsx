@@ -29,7 +29,7 @@ class VehicleList extends React.Component {
       <div className='vehicle-list-container'>
         <Grid stackable columns={3}>
           {_.map(userVehicles, (vehicle, index) => (
-            <Grid.Column key={index}>
+            <Grid.Column key={index} className='vehicle-list-item'>
               <VehicleCard key={vehicle._id} vehicle={vehicle} />
             </Grid.Column>
           ))}
