@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Image, Container, Segment } from 'semantic-ui-react';
+import { Grid, Header, Image, Container, Segment, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Pie } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
@@ -47,7 +47,6 @@ class UsersCumulativePage extends React.Component {
 
     render() {
       const data = CalculateCumulative();
-      console.log(data);
       return (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
@@ -76,14 +75,14 @@ class UsersCumulativePage extends React.Component {
                 ENVIRONMENTAL IMPACT
                 <br/>
               </Header>
-              <Grid relaxed columns={4}>
+              <Grid relaxed columns={3}>
                 <Grid.Column>
                   <Segment>
                     <Image src="/images/cumulative-page/car.png"/>
                     <Header as='h1' dividing textAlign='center'>
                       Vehicle Miles Travel Reduced
                     </Header>
-                    <Header as='h2' textAlign='center' block>
+                    <Header as='h2' textAlign='center'>
                       {data[0]} MILES
                     </Header>
                   </Segment>
@@ -94,31 +93,20 @@ class UsersCumulativePage extends React.Component {
                     <Header as='h1' dividing textAlign='center'>
                       Green House Gas (GHG) Reduced
                     </Header>
-                    <Header as='h2' textAlign='center' block>
+                    <Header as='h2' textAlign='center'>
                       {data[1]} POUNDS
                     </Header>
                   </Segment>
                 </Grid.Column>
                 <Grid.Column>
                   <Segment>
-                    <Image src="/images/cumulative-page/gas.png"/>
+                    <Image src="/images/cumulative-page/gas.png" size='small' centered/>
                     <Header as='h1' dividing textAlign='center'>
                       Gallons of Gas Saved
                     </Header>
-                    <Header as='h2' textAlign='center' block>
+                    <Button color='green' centered>
                       {data[2]} GALLONS
-                    </Header>
-                  </Segment>
-                </Grid.Column>
-                <Grid.Column>
-                  <Segment>
-                    <Image src="/images/cumulative-page/bike.png"/>
-                    <Header as='h1' dividing textAlign='center'>
-                      Days Biked to Work
-                    </Header>
-                    <Header as='h2' textAlign='center' block>
-                      10 DAYS
-                    </Header>
+                    </Button>
                   </Segment>
                 </Grid.Column>
               </Grid>
