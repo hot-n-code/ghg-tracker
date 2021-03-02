@@ -1,11 +1,15 @@
 /* NAVBAR */
 .ui.attached.menu {
   background: #5c8d89;
-  border: none !important;
-  border-radius: 0 !important;
   margin-bottom: 0px;
   padding: 0px;
 }
+
+#root > div > div:nth-child(1) > div {
+  border: none;
+  border-radius: 0;
+}
+
 /* LANDING PAGE */
 .background-landing {
   background-image: url('images/landing-page/oahu.jpeg');
@@ -156,9 +160,62 @@ h6 {
   border-radius: 20px;
   margin: 2rem 3rem;
   width: 60%;
+  cursor: pointer;
 }
 
-.ui.centered.card.vehicle-card {
+div.vehicle-card-logo > img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.vehicle-card-expand-overlay {
+  z-index: 2;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  will-change: opacity;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.vehicle-card-expand {
+  z-index: 5;
+  background-color: white;
+  border-radius: 20px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 1rem 2rem;
+  padding: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.vehicle-card-expand-container {
+  text-align: left;
+  width: 60%;
+  height: 70%;
+}
+
+.vehicle-card-expand-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.vehicle-card-expand img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* .ui.centered.card.vehicle-card {
   text-align: center;
   width: 373px;
   transition: 0.2s all ease-in;
@@ -171,20 +228,20 @@ h6 {
 .ui.card .content .vehicle-make-logo {
   height: 187px;
   width: 187px;
-}
+} */
 
-.ui.card > .content > .header:not(.ui).vehicle-card-header {
+/* .ui.card > .content > .header:not(.ui).vehicle-card-header {
   margin-top: 15px;
-}
+} */
 
-.ui.card > .content > .description {
+/* .ui.card > .content > .description {
   font-size: 20px;
   margin-top: 15px;
 }
 
 .vehicle-card-label {
   font-weight: 700;
-}
+} */
 
 #root > div > div:nth-child(2) > button {
   background-color: rgb(55, 116, 156);
