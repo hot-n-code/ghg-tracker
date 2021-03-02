@@ -1,46 +1,57 @@
 import React from 'react';
-import { Grid, Header, Search } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { Meteor } from 'meteor/meteor';
+import { Grid, Loader } from 'semantic-ui-react';
+import { withTracker } from 'meteor/react-meteor-data';
+// import { AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
-import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 import VehicleCard from '../components/VehicleCard';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { Make } from '../../api/make/Make';
 
-/** Renders a single vehicle card. */
+/** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class VehicleList extends React.Component {
+  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
+    return this.props.ready ? (
+      this.renderPage()
+    ) : (
+      <Loader active>Getting vehicles.</Loader>
+    );
+  }
+
+  /** Render the page once subscriptions of Vehicles collection have been received. */
+  renderPage() {
+    /** Finds the vehicles that are owned by the user */
+    const email = Meteor.user().username;
+    const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
     return (
-      <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
-        <Grid.Column>
-          <Header as='h1' textAlign='center'>
-            My Vehicles
-          </Header>
-        </Grid.Column>
-        <Grid.Column>
-          <Search
-            input={{ icon: 'search', iconPosition: 'left' }}
-            placeholder={'Search'}
-          />
-        </Grid.Column>
-        <Grid.Column>
-          <Grid stackable columns={3}>
-            {_.map(this.props.userVehicles, (vehicle, index) => (
-              <Grid.Column key={index}>
-                <VehicleCard vehicle={vehicle} id={uuidv4()} />
-              </Grid.Column>
-            ))}
-          </Grid>
-        </Grid.Column>
-      </Grid>
+      <div className='vehicle-list-container'>
+        <Grid stackable columns={3}>
+          {_.map(userVehicles, (vehicle, index) => (
+            <Grid.Column key={index}>
+              <VehicleCard key={vehicle._id} vehicle={vehicle} />
+            </Grid.Column>
+          ))}
+        </Grid>
+      </div>
     );
   }
 }
 
-/** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
+/** Require an array of Vehicle documents in the props. */
 VehicleList.propTypes = {
-  // vehicle: PropTypes.object.isRequired,
-  userVehicles: PropTypes.array.isRequired,
+  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
 };
 
-/** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default withRouter(VehicleList);
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+export default withTracker(() => {
+  // KEEP FOR REFERENCE: Get access to Stuff documents.
+  const sub1 = Meteor.subscribe(Vehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(Make.userPublicationName);
+  return {
+    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
+    ready: sub1.ready() && sub2.ready(),
+  };
+})(VehicleList);
