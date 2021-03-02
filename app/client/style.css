@@ -121,7 +121,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #graph-buttons {
-  float: left;
+  display: inline-block;
+  margin-left: 75px;
   margin-right: -50px;
   margin-bottom: 25px;
 }
