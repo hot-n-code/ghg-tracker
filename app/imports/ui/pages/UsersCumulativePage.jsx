@@ -6,7 +6,36 @@ import { Pie } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
+function CalculateCumulative() {
+  const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+  const test = DailyUserData.collection.find({}).fetch();
+
+  const altData = [];
+  let i = 0;
+  test.map((value) => {
+    if (altTransportation.includes(value.modeOfTransportation)) {
+      altData[i] = value;
+      i++;
+    }
+    return altData;
+  });
+
+  console.log(altData);
+
+  const data = [];
+  const miles = _.pluck(altData, 'milesTraveled');
+  const totalMiles = _.reduce(miles, function (sum, num) { return sum + num; }, 0);
+  data[0] = totalMiles;
+
+  const ghg = _.pluck(altData, 'cO2Reduced');
+  const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
+  data[1] = ghgTotal;
+  data[2] = totalMiles / 20;
+  return data;
+}
+
 class UsersCumulativePage extends React.Component {
+
     constructor(props) {
       super(props);
       this.state = {
@@ -17,11 +46,8 @@ class UsersCumulativePage extends React.Component {
     }
 
     render() {
-      const miles = _.pluck(DailyUserData.collection.find({}).fetch(), 'milesTraveled');
-      const totalMiles = _.reduce(miles, function (sum, num) { return sum + num; }, 0);
-      console.log(totalMiles);
-      const ghg = _.pluck(DailyUserData.collection.find({}).fetch(), 'cO2Reduced');
-      const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
+      const data = CalculateCumulative();
+      console.log(data);
       return (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
@@ -58,7 +84,7 @@ class UsersCumulativePage extends React.Component {
                       Vehicle Miles Travel Reduced
                     </Header>
                     <Header as='h2' textAlign='center' block>
-                      4,298 MILES
+                      {data[0]} MILES
                     </Header>
                   </Segment>
                 </Grid.Column>
@@ -69,7 +95,7 @@ class UsersCumulativePage extends React.Component {
                       Green House Gas (GHG) Reduced
                     </Header>
                     <Header as='h2' textAlign='center' block>
-                      {ghgTotal} POUNDS
+                      {data[1]} POUNDS
                     </Header>
                   </Segment>
                 </Grid.Column>
@@ -80,7 +106,7 @@ class UsersCumulativePage extends React.Component {
                       Gallons of Gas Saved
                     </Header>
                     <Header as='h2' textAlign='center' block>
-                      121 GALLONS
+                      {data[2]} GALLONS
                     </Header>
                   </Segment>
                 </Grid.Column>
