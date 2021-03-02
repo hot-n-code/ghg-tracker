@@ -26,31 +26,29 @@ class NavBar extends React.Component {
         {this.props.currentUser && Roles.userIsInRole(Meteor.userId(), 'admin') === false ? (
             // eslint-disable-next-line react/jsx-key
             [
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>My Vehicles</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/create-vehicle' key='create-vehicle' onClick={this.handleItemClick}>Add Vehicles</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>My Data</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/feedback' key='feedback' onClick={this.handleItemClick}>Feedback</Menu.Item>,
-              <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>My Data</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>My Vehicles</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
             ]
         ) : ''}
           {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-          [<Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/admin' key='admin' onClick={this.handleItemClick}>User List</Menu.Item>,
-           <Menu.Item header='h1' style={menuItem} as={NavLink} activeClassName='active' exact to='/admin-data' key='admin-data' onClick={this.handleItemClick}> Admin Cumulative Data</Menu.Item>]
+          [<Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/admin' key='admin' onClick={this.handleItemClick}>User List</Menu.Item>,
+           <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/admin-data' key='admin-data' onClick={this.handleItemClick}> Admin Cumulative Data</Menu.Item>]
           ) : ''}
           <Menu.Item position='right'>
             <Menu.Item>
             {this.props.currentUser === '' ? (
                 <Menu pointing secondary borderless stackable style={menuStyle}>
-                  <Menu.Item header='h1' as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>CUMULATIVE DATA</Menu.Item>
-                  <Menu.Item header='h1' as={NavLink} activeClassName='active' exact to='/about' key='about' onClick={this.handleItemClick}>ABOUT HEI</Menu.Item>
-                  <Menu.Item header='h1' id='login-dropdown-sign-up' name='Join' as={NavLink} exact to='/signup' content='JOIN' onClick={this.handleItemClick}/>
-                  <Menu.Item header='h1' id='login-dropdown-sign-in' name='Signin' as={NavLink} exact to='/signin' content='SIGN IN' onClick={this.handleItemClick}/>
+                  <Menu.Item as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>CUMULATIVE DATA</Menu.Item>
+                  <Menu.Item as={NavLink} activeClassName='active' exact to='/about' key='about' onClick={this.handleItemClick}>ABOUT HEI</Menu.Item>
+                  <Menu.Item id='login-dropdown-sign-up' name='Join' as={NavLink} exact to='/signup' content='JOIN' onClick={this.handleItemClick}/>
+                  <Menu.Item id='login-dropdown-sign-in' name='Signin' as={NavLink} exact to='/signin' content='SIGN IN' onClick={this.handleItemClick}/>
                 </Menu>
             ) : (
-                <Dropdown style={menuItem2} header='h1' id='navbar-current-user' text={this.props.currentUser} pointing='top right' icon={'user'}>
+                <Dropdown style={menuItem2} id='navbar-current-user' text={this.props.currentUser} pointing='top right' icon={'user'}>
                   <Dropdown.Menu>
-                    <Dropdown.Item header='h1' id='navbar-sign-out' icon='sign out' text='Sign Out' as={NavLink} exact to='/signout'/>
+                    <Dropdown.Item id='navbar-sign-out' icon='sign out' text='Sign Out' as={NavLink} exact to='/signout'/>
                   </Dropdown.Menu>
                 </Dropdown>
             )}

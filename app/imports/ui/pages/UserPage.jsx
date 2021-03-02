@@ -1,6 +1,11 @@
 import React from 'react';
-import { Grid, Header, Button, Image, Container, Table } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
+import { Grid, Header, Button, Image, Container, Table, Loader } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
 
 const paddingStyle = { padding: 20 };
@@ -8,7 +13,6 @@ const paddingStyle = { padding: 20 };
  * users may also edit their data of their entries.
  * */
 class UserPage extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -19,10 +23,21 @@ class UserPage extends React.Component {
     }
 
     render() {
+        return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+    }
+
+    renderPage() {
+      const email = Meteor.user().username;
+      const userData = [];
+      DailyUserData.collection.find({ owner: email }).forEach(
+          function (data) {
+            userData.push(data);
+          },
+      );
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <Grid stackable columns={2}>
+                <Grid stackable fluid columns={2}>
                     <Grid.Column>
                         <h1>My Summary</h1>
                         <div id='graph-buttons'>
@@ -47,7 +62,6 @@ class UserPage extends React.Component {
                 </Grid>
               <div style={{ paddingTop: '150px' }}/>
               <div>
-                <AddDailyData />
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
@@ -78,6 +92,7 @@ class UserPage extends React.Component {
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>Your CO2 Emission was up 2.6% from yesterday.</Header>
                         <Header as='h2' textAlign='center'>My Transportation History</Header>
+                        <Header as='h1' textAlign='center'><AddDailyData/></Header>
                     </Grid.Column>
                 </Grid>
                 <Table stackable striped>
@@ -86,22 +101,10 @@ class UserPage extends React.Component {
                             <Table.HeaderCell>Date</Table.HeaderCell>
                             <Table.HeaderCell>Mode of Transportation</Table.HeaderCell>
                             <Table.HeaderCell>Total Miles</Table.HeaderCell>
-                            <Table.HeaderCell>Edit Data</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>February 8, 2021 5:50 PM</Table.Cell>
-                            <Table.Cell>Public Transportation</Table.Cell>
-                            <Table.Cell>5.1</Table.Cell>
-                            <Table.Cell><Button size='large' color='gray'>Edit</Button></Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>February 8, 2021 2:30 PM</Table.Cell>
-                            <Table.Cell>Public Transportation</Table.Cell>
-                            <Table.Cell>2.3</Table.Cell>
-                            <Table.Cell><Button size='large' color='gray'>Edit</Button></Table.Cell>
-                        </Table.Row>
+                      {userData.map((value, index) => <HistoryRowData key={index} data={value}/>)}
                     </Table.Body>
                 </Table>
               </div>
@@ -111,4 +114,14 @@ class UserPage extends React.Component {
     }
 }
 
-export default UserPage;
+UserPage.propTypes = {
+    // userData: PropTypes.array.isRequired,
+    ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+    const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
+    return {
+        ready: subscription.ready(),
+    };
+})(UserPage);

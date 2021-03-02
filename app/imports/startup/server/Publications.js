@@ -18,13 +18,8 @@ Meteor.publish(Stuffs.userPublicationName, function () {
 });
 
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
-Meteor.publish(DailyUserData.userPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return DailyUserData.collection.find({ owner: username });
-  }
-  return this.ready();
-});
+
+Meteor.publish(DailyUserData.userPublicationName, () => DailyUserData.collection.find());
 
 Meteor.publish(Users.userPublicationName, () => Users.collection.find());
 
