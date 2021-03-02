@@ -2,74 +2,47 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Container } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Pie } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
+import { Pie } from 'react-chartjs-2';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-import CumulativeCard from '../components/CumulativeCard';
+import CumulativeData from '../components/CumulativeData';
 
-function CalculateCumulative() {
-  const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
-  const test = DailyUserData.collection.find({}).fetch();
-
-  const altData = [];
-  let i = 0;
+const transportationData = () => {
+  const altTransportation = ['Biking', 'Public Transportation', 'Walking'];
+  const test = _.pluck(DailyUserData.collection.find({}).fetch(), 'modeOfTransportation');
+  const altData = [0, 0, 0, 0];
+  // eslint-disable-next-line array-callback-return
   test.map((value) => {
-    if (altTransportation.includes(value.modeOfTransportation)) {
-      altData[i] = value;
-      i++;
+    if (value === 'Telework') {
+      altData[0] += 1;
+    } else if (value === 'Carpool') {
+      altData[1] += 1;
+    } else if (altTransportation.includes(value)) {
+      altData[2] += 1;
+    } else {
+      altData[3] += 1;
     }
-    return altData;
   });
-
-  console.log(altData);
-
-  const data = [];
-  const miles = _.pluck(altData, 'milesTraveled');
-  const totalMiles = _.reduce(miles, function (sum, num) { return sum + num; }, 0);
-  data[0] = totalMiles;
-
-  const ghg = _.pluck(altData, 'cO2Reduced');
-  const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
-  data[1] = ghgTotal;
-  data[2] = totalMiles / 20;
-  return data;
-}
-
-const impactData = [
-  {
-    title: 'Vehicle Miles Travel Reduced',
-    img: '/images/cumulative-page/car.png',
-    data: '',
-  },
-  {
-    title: 'Green House Gas (GHG) Reduced',
-    img: '/images/cumulative-page/C.png',
-    data: '',
-  },
-  {
-    title: 'Gallons of Gas Saved',
-    img: '/images/cumulative-page/gas.png',
-    data: '',
-  },
-
-];
+  return altData;
+};
 
 class UsersCumulativePage extends React.Component {
 
     constructor(props) {
       super(props);
       this.state = {
-        labels: ['Telework', 'Other', 'Carpool', 'Electric Vehicle'],
-        datasets: [{ data: [84, 4, 4, 7], backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391'],
-        }],
+        labels: ['Telework', 'Carpool', 'Other', 'Vehicles'],
       };
     }
 
     render() {
-      const data = CalculateCumulative();
-      impactData[0].data = data[0];
-      impactData[1].data = data[1];
-      impactData[2].data = data[2];
+      const pieData = transportationData();
+      const dataSets = [
+        {
+          data: pieData,
+          backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391'],
+        },
+      ];
       return (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
@@ -81,8 +54,7 @@ class UsersCumulativePage extends React.Component {
                 </div>
                 <Grid>
                   <Grid.Column width={9}>
-                    {/* <Image src="/images/cumulative-page/graph.png"/> */}
-                    <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
+                    <Pie data={{ labels: this.state.labels, datasets: dataSets }} height='200px'/>
                   </Grid.Column>
                   <Grid.Column textAlign='right' width={7}>
                     <Header as='h1' color='blue'> MODES OF TRAVEL COUNT </Header>
@@ -93,18 +65,7 @@ class UsersCumulativePage extends React.Component {
                   </Grid.Column>
                 </Grid>
               </Grid.Column>
-              <div style={{ paddingTop: '20px' }}/>
-              <Header as='h1' textAlign='center'>
-                ENVIRONMENTAL IMPACT
-                <br/>
-              </Header>
-              <Grid stackable columns={3}>
-                {impactData.map((user, index) => (
-                    <Grid.Column key={index}>
-                      <CumulativeCard user={user}/>
-                    </Grid.Column>
-                ))}
-              </Grid>
+              <CumulativeData/>
             </Container>
           </div>
         </div>
