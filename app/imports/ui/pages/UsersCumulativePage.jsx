@@ -3,11 +3,7 @@ import { Grid, Header, Container } from 'semantic-ui-react';
 import CumulativeDataCard from '../components/CumulativeDataCard';
 import CumulativeDataChart from '../components/CumulativeDataChart';
 
-class UsersCumulativePage extends React.Component {
-
-    render() {
-
-      return (
+const UsersCumulativePage = () => (
         <div className='background-all'>
           <div style={{ paddingBottom: '80px' }}>
             <Container>
@@ -23,7 +19,5 @@ class UsersCumulativePage extends React.Component {
           </div>
         </div>
       );
-  }
-}
 
 export default UsersCumulativePage;
