@@ -2,28 +2,36 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Container } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { Pie } from 'react-chartjs-2';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import CumulativeData from '../components/CumulativeData';
 
-const transportationData = () => {
+const percentage = (num, total) => ((num / total) * 100).toFixed(1);
+
+const transportationData = (data) => {
   const altTransportation = ['Biking', 'Public Transportation', 'Walking'];
-  const test = _.pluck(DailyUserData.collection.find({}).fetch(), 'modeOfTransportation');
-  const altData = [0, 0, 0, 0];
-  // eslint-disable-next-line array-callback-return
+  const test = _.pluck(data, 'modeOfTransportation');
+  const altData = {
+    Telework: 0,
+    Carpool: 0,
+    Other: 0,
+    Vehicle: 0,
+  };
   test.map((value) => {
     if (value === 'Telework') {
-      altData[0] += 1;
+      altData.Telework += 1;
     } else if (value === 'Carpool') {
-      altData[1] += 1;
+      altData.Carpool += 1;
     } else if (altTransportation.includes(value)) {
-      altData[2] += 1;
+      altData.Other += 1;
     } else {
-      altData[3] += 1;
+      altData.Vehicle += 1;
     }
+    return altData;
   });
-  return altData;
+  return [altData.Telework, altData.Carpool, altData.Other, altData.Vehicle];
 };
 
 class UsersCumulativePage extends React.Component {
@@ -36,7 +44,8 @@ class UsersCumulativePage extends React.Component {
     }
 
     render() {
-      const pieData = transportationData();
+      const pieData = transportationData(this.props.dailyUserData);
+      const totalTransportation = _.reduce(pieData, (memo, num) => memo + num);
       const dataSets = [
         {
           data: pieData,
@@ -58,10 +67,10 @@ class UsersCumulativePage extends React.Component {
                   </Grid.Column>
                   <Grid.Column textAlign='right' width={7}>
                     <Header as='h1' color='blue'> MODES OF TRAVEL COUNT </Header>
-                    <Header as='h2'>84% OF USERS TELEWORK</Header>
-                    <Header as='h2'>7% OF USERS USE ELECTRIC VEHICLES</Header>
-                    <Header as='h2'>4% OF USERS CARPOOL</Header>
-                    <Header as='h2'>4% OF USERS USE PUBLIC TRANSPORTATION</Header>
+                    <Header as='h2'>{percentage(pieData[0], totalTransportation)}% OF USERS TELEWORK</Header>
+                    <Header as='h2'>{percentage(pieData[1], totalTransportation)}7% OF USERS USE CARPOOL</Header>
+                    <Header as='h2'>{percentage(pieData[2], totalTransportation)}4% OF USERS USE OTHER ALTERNATIVE TRANSPORTATION</Header>
+                    <Header as='h2'>{percentage(pieData[3], totalTransportation)}4% OF USERS USE VEHICLES</Header>
                   </Grid.Column>
                 </Grid>
               </Grid.Column>
@@ -73,11 +82,14 @@ class UsersCumulativePage extends React.Component {
   }
 }
 
+UsersCumulativePage.propTypes = {
+  dailyUserData: PropTypes.array.isRequired,
+};
+
 export default withTracker(() => {
-  // KEEP FOR REFERENCE: Get access to Stuff documents.
-  const sub1 = Meteor.subscribe(DailyUserData.adminPublicationName);
+  const subscriptionData = Meteor.subscribe(DailyUserData.cumulativePublicationName);
   return {
-    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
-    ready: sub1.ready(),
+    dailyUserData: DailyUserData.collection.find({}).fetch(),
+    ready: subscriptionData.ready(),
   };
 })(UsersCumulativePage);

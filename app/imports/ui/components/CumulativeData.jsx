@@ -2,6 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Header } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import CumulativeCard from '../components/CumulativeCard';
@@ -9,12 +10,12 @@ import CumulativeCard from '../components/CumulativeCard';
 class CumulativeData extends React.Component {
   render() {
 
-     const CalculateCumulative = () => {
-        const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public     Transportation', 'Telework', 'Walking'];
-        const test = DailyUserData.collection.find({}).fetch();
+      const CalculateCumulative = (dailyUser) => {
+        const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+        const userData = dailyUser;
         const altData = [];
         let i = 0;
-        test.map((value) => {
+        userData.map((value) => {
           if (altTransportation.includes(value.modeOfTransportation)) {
             altData[i] = value;
             i++;
@@ -23,11 +24,11 @@ class CumulativeData extends React.Component {
       });
         const data = [];
         const miles = _.pluck(altData, 'milesTraveled');
-        data[0] = _.reduce(miles, function (sum, num) { return sum + num; }, 0);
+        data[0] = (_.reduce(miles, function (sum, num) { return sum + num; }, 0)).toFixed(1);
 
         const ghg = _.pluck(altData, 'cO2Reduced');
-        data[1] = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
-        data[2] = data[0] / 20;
+        data[1] = (_.reduce(ghg, function (sum, num) { return sum + num; }, 0)).toFixed(1);
+        data[2] = (data[0] / 20).toFixed(1);
         return data;
     };
 
@@ -50,7 +51,7 @@ class CumulativeData extends React.Component {
 
     ];
 
-    const data = CalculateCumulative();
+    const data = CalculateCumulative(this.props.dailyUserData);
     impactData[0].data = data[0];
     impactData[1].data = data[1];
     impactData[2].data = data[2];
@@ -72,12 +73,14 @@ class CumulativeData extends React.Component {
     );
   }
 }
+CumulativeData.propTypes = {
+  dailyUserData: PropTypes.array.isRequired,
+};
 
 export default withTracker(() => {
-  // KEEP FOR REFERENCE: Get access to Stuff documents.
-  const sub1 = Meteor.subscribe(DailyUserData.adminPublicationName);
+  const subscriptionData = Meteor.subscribe(DailyUserData.cumulativePublicationName);
   return {
-    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
-    ready: sub1.ready(),
+    dailyUserData: DailyUserData.collection.find({}).fetch(),
+    ready: subscriptionData.ready(),
   };
 })(CumulativeData);
