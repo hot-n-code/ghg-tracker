@@ -7,9 +7,8 @@ import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import CumulativeCard from '../components/CumulativeCard';
 
-class CumulativeData extends React.Component {
+class CumulativeDataCard extends React.Component {
   render() {
-
       const CalculateCumulative = (dailyUser) => {
         const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
         const userData = dailyUser;
@@ -73,7 +72,7 @@ class CumulativeData extends React.Component {
     );
   }
 }
-CumulativeData.propTypes = {
+CumulativeDataCard.propTypes = {
   dailyUserData: PropTypes.array.isRequired,
 };
 
@@ -83,4 +82,4 @@ export default withTracker(() => {
     dailyUserData: DailyUserData.collection.find({}).fetch(),
     ready: subscriptionData.ready(),
   };
-})(CumulativeData);
+})(CumulativeDataCard);
