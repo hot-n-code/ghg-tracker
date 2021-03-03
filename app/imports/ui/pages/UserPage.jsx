@@ -5,6 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import { Users } from '../../api/user/UserCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
 
@@ -49,7 +50,9 @@ class UserPage extends React.Component {
                                     <Header as='h1'>John Smith</Header>
                                 </Card.Header>
                                 <Card.Header>
-                                    <Header as='h4'>Date joined: February 7, 2021</Header>
+                                    <Header as='h4'>My Goal:
+                                    </Header>
+                                    {/* {this.props.userInfo.goal} */}
                                 </Card.Header>
                                 <Card.Meta>
                                     <Header as='h4'>My Overall CO2 Emissions: 5 lbs</Header>
@@ -148,12 +151,17 @@ class UserPage extends React.Component {
 
 UserPage.propTypes = {
     // userData: PropTypes.array.isRequired,
+    // userInfo: PropTypes.object.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-    const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
+    // const userId = match.params._id;
+    // const getUser = Meteor.users.findOne(userId);
+    const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
+    // const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
-        ready: subscription.ready(),
+        // userInfo: Users.findOne({ username: getUser }),
+        ready: subscription1.ready(),
     };
 })(UserPage);
