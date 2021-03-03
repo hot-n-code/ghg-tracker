@@ -5,7 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-import { Users } from '../../api/user/UserCollection';
+// import { Users } from '../../api/user/UserCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
 
