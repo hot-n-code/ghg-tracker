@@ -4,6 +4,7 @@ import { Grid, Header, Button, Image, Container, Table, Loader } from 'semantic-
 import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
@@ -13,15 +14,6 @@ const paddingStyle = { padding: 20 };
  * users may also edit their data of their entries.
  * */
 class UserPage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Electric Vehicle'],
-            datasets: [{ data: [50, 40, 2, 2, 1, 5], backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
-            }],
-        };
-    }
-
     render() {
         return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
     }
@@ -34,6 +26,31 @@ class UserPage extends React.Component {
             userData.push(data);
           },
       );
+
+      const myTelework = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled');
+      const totalTelework = _.reduce(myTelework, (total, num) => total + num, 0);
+      const myAV = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Alternative Fuel Vehicle' }).fetch(), 'milesTraveled');
+      const totalAV = _.reduce(myAV, (total, num) => total + num, 0);
+      const myBiking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
+      const totalBiking = _.reduce(myBiking, (total, num) => total + num, 0);
+      const myWalking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Walking' }).fetch(), 'milesTraveled');
+      const totalWalking = _.reduce(myWalking, (total, num) => total + num, 0);
+      const myCarpool = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Carpool' }).fetch(), 'milesTraveled');
+      const totalCarpool = _.reduce(myCarpool, (total, num) => total + num, 0);
+      const myPT = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Public Transportation' }).fetch(), 'milesTraveled');
+      const totalPT = _.reduce(myPT, (total, num) => total + num, 0);
+      const state = {
+          labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Alternative Fuel Vehicle'],
+          datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV], backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
+            }],
+        };
+
+        // Grabbing values from db to calculate USER totals for the day
+      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date(Date.now()) }).fetch(), 'milesTraveled');
+      const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
+      const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date(Date.now()) }).fetch(), 'cO2Reduced');
+      const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0);
+
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
@@ -45,7 +62,7 @@ class UserPage extends React.Component {
                             <Button size='large' color='gray'>This Week</Button>
                             <Button size='large' color='gray'>This Month</Button>
                         </div>
-                        <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
+                        <Pie data={state} height='200px'/>
                     </Grid.Column>
                     <Grid.Column>
                         <Image style={{ display: 'block',
