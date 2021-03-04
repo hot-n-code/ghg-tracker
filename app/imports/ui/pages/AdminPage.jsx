@@ -5,6 +5,7 @@ const paddingStyle = { padding: 20 };
 class AdminPage extends React.Component {
   render() {
     return (
+        <div className='background-all'>
         <div style={paddingStyle}>
         <Container>
           <Input fluid icon='search' placeholder='Search...'>
@@ -55,6 +56,7 @@ class AdminPage extends React.Component {
               </tbody>
             </Table>
         </Container>
+        </div>
         </div>
     );
   }

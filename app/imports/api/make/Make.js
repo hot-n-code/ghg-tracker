@@ -2,26 +2,20 @@ import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
-/**
- * Encapsulates state and variable values for Daily Data collection.
- *
- * Daily Data corresponds to individual data or daily log-in by the user.
- */
-class DailyUserDataCollection {
+/** Encapsulates state and variable values for this collection. */
+class MakeCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'DailyUserDataCollection';
+    this.name = 'MakeCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
       owner: String,
-      inputDate: Date,
-      modeOfTransportation: String,
-      milesTraveled: Number,
-      cO2Reduced: Number,
+      make: String,
+      logo: String,
     }, { tracker: Tracker });
-    // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
+    // Ensure collection documents obey schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
     this.userPublicationName = `${this.name}.publication.user`;
@@ -29,4 +23,4 @@ class DailyUserDataCollection {
   }
 }
 
-export const DailyUserData = new DailyUserDataCollection();
+export const Make = new MakeCollection();

@@ -20,6 +20,7 @@ class Footer extends React.Component {
                       <List.Item href='/#/about' className="footer-text">About HEI</List.Item>
                       <List.Item href='/signup#/signup' className="footer-text">Join</List.Item>
                       <List.Item href='/#/signin' className="footer-text">Sign In</List.Item>
+                      <List.Item href='/#/feedback' className="foot-text">Submit Feedback</List.Item>
                     </List>
                   </GridColumn>
 

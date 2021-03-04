@@ -16,8 +16,8 @@ const paddingStyle = { padding: 20 };
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = (allVehicles) => new SimpleSchema({
   email: { type: String, label: 'Email', optional: true },
-  firstName: { type: String, label: 'First Name', optional: true },
-  lastName: { type: String, label: 'Last Name', optional: true },
+  name: { type: String, label: 'Name', optional: true },
+  goal: { type: String, label: 'Goal', optional: true },
   image: { type: String, label: 'Picture URL', optional: true },
   vehicles: { type: Array, label: 'Vehicles', optional: true },
   'vehicles.$': { type: String, allowedValues: allVehicles },
@@ -28,19 +28,19 @@ class CreateUser extends React.Component {
   /** Redirecting. */
   handleClick = () => {
     // eslint-disable-next-line
-    document.location.href = '/';
+    document.location.href = '#/create-vehicle';
   }
 
   submit(data) {
     /** Gathers user's data and adds it to the userCollection */
-    const { firstName, lastName } = data;
+    const { name, goal } = data;
     const email = Meteor.user().username;
     const image = 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg';
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
       swal('Error', 'You already have a created user');
     } else {
-      Users.collection.insert({ firstName, lastName, email, image },
+      Users.collection.insert({ name, goal, email, image },
           (error) => {
             if (error) {
               swal('Error', error.message, 'error');
@@ -76,10 +76,10 @@ class CreateUser extends React.Component {
                         model={model} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
                   <Form.Group widths={'equal'}>
-                    <TextField id='firstName' name='firstName' required showInlineError={true} placeholder={'firstName'}/>
+                    <TextField id='name' name='name' required showInlineError={true} placeholder={'name'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
-                    <TextField id='lastName' name='lastName' required showInlineError={true} placeholder={'lastName'}/>
+                    <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
                   </Form.Group>
