@@ -46,9 +46,9 @@ class UserPage extends React.Component {
         };
 
         // Grabbing values from db to calculate USER totals for the day
-      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date(Date.now()) }).fetch(), 'milesTraveled');
+      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'milesTraveled');
       const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
-      const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date(Date.now()) }).fetch(), 'cO2Reduced');
+      const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'cO2Reduced');
       const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0);
 
         return (
@@ -96,13 +96,13 @@ class UserPage extends React.Component {
                         <Image className='images' src="/images/speedometer.png"
                                size='medium' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>Total Miles</Header>
-                        <Header as='h2' textAlign='center'>7.4</Header>
+                        <Header as='h2' textAlign='center'>{totalUserMilesToday}</Header>
                     </Grid.Column>
                     <Grid.Column>
                         <Image className='images' src="/images/co2.png"
                                floated='right' size='medium' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>CO2 Reduced</Header>
-                        <Header as='h2' textAlign='center'>15.2 lbs</Header>
+                        <Header as='h2' textAlign='center'>{totalUserCO2Today} lbs</Header>
                     </Grid.Column>
                 </Grid>
                 <Grid stackable columns={3}>
