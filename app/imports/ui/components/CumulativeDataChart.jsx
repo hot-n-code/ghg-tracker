@@ -7,17 +7,12 @@ import { _ } from 'meteor/underscore';
 import { Pie } from 'react-chartjs-2';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
-class CumulativeDataChart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      labels: ['Telework', 'Carpool', 'Other', 'Vehicles'],
-    };
-  }
-
-  transportationData = (dailyUser) => {
+// Displaying a pie chart of the mode of transportation from DailyUserData collection
+const CumulativeDataChart = (props) => {
+  // Calculating the sum of individual modes of transportation between all users
+  const transportationData = (dailyUser) => {
     const altTransportation = ['Biking', 'Public Transportation', 'Walking'];
-    const allModeData = _.pluck(dailyUser, 'modeOfTransportation');
+    const allModeData = dailyUser;
     const altData = {
       Telework: 0,
       Carpool: 0,
@@ -38,30 +33,30 @@ class CumulativeDataChart extends React.Component {
     });
     return [altData.Telework, altData.Carpool, altData.Other, altData.Vehicle];
   };
-
-  pieDataSet = (dailyUser) => {
-    const dataSets = [
-      {
-        data: this.transportationData(dailyUser),
-        backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391'],
-      },
-    ];
+  // Forming the layout for pie chart
+  const pieDataSet = (dailyUser) => {
+    const dataSets = {
+      labels: ['Telework', 'Carpool', 'Other', 'Vehicles'],
+      datasets: [
+          {
+            data: transportationData(dailyUser),
+            backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391'],
+          }],
+  };
     return dataSets;
-  }
-
-  render() {
+  };
     return (
         <Grid>
           <Grid.Column width={9}>
-            <Pie data={{ labels: this.state.labels, datasets: this.pieDataSet(this.props.dailyUserData) }} height='200px'/>
+            <Pie data={ pieDataSet(props.dailyUserData)} height='200px'/>
           </Grid.Column>
           <Grid.Column textAlign='right' width={7}>
             <Header as='h1' color='blue'> MODES OF TRAVEL COUNT </Header>
           </Grid.Column>
         </Grid>
     );
-  }
-}
+};
+
 CumulativeDataChart.propTypes = {
   dailyUserData: PropTypes.array.isRequired,
 };
@@ -70,7 +65,7 @@ export default withTracker(() => {
   const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
 
   return {
-    dailyUserData: DailyUserData.collection.find({}).fetch(),
+    dailyUserData: _.pluck(DailyUserData.collection.find({}).fetch(), 'modeOfTransportation'),
     ready: subscriptionDailyUser.ready(),
   };
 })(CumulativeDataChart);
