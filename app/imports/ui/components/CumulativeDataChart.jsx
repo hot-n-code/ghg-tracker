@@ -16,24 +16,23 @@ class CumulativeDataChart extends React.Component {
   }
 
   render() {
-
     const percentage = (num, total) => ((num / total) * 100).toFixed(1);
 
-    const transportationData = (data) => {
+    const transportationData = (dailyUser) => {
       const altTransportation = ['Biking', 'Public Transportation', 'Walking'];
-      const test = _.pluck(data, 'modeOfTransportation');
+      const allModeData = _.pluck(dailyUser, 'modeOfTransportation');
       const altData = {
         Telework: 0,
         Carpool: 0,
         Other: 0,
         Vehicle: 0,
       };
-      test.map((value) => {
-        if (value === 'Telework') {
+      allModeData.map((mode) => {
+        if (mode === 'Telework') {
           altData.Telework += 1;
-        } else if (value === 'Carpool') {
+        } else if (mode === 'Carpool') {
           altData.Carpool += 1;
-        } else if (altTransportation.includes(value)) {
+        } else if (altTransportation.includes(mode)) {
           altData.Other += 1;
         } else {
           altData.Vehicle += 1;
@@ -72,9 +71,10 @@ CumulativeDataChart.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscriptionData = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+
   return {
     dailyUserData: DailyUserData.collection.find({}).fetch(),
-    ready: subscriptionData.ready(),
+    ready: subscriptionDailyUser.ready(),
   };
 })(CumulativeDataChart);

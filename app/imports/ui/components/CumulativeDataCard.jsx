@@ -9,51 +9,47 @@ import CumulativeCard from '../components/CumulativeCard';
 
 class CumulativeDataCard extends React.Component {
   render() {
-      const CalculateCumulative = (dailyUser) => {
-        const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+      const sumData = (arr, key) => _.reduce(_.pluck(arr, key), function (sum, num) { return sum + num; }, 0).toFixed(1);
+
+      const CalculateCumulative = (dailyUser, impactArr) => {
+        const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
         const userData = dailyUser;
+        const eImpact = impactArr;
         const altData = [];
         let i = 0;
-        userData.map((value) => {
-          if (altTransportation.includes(value.modeOfTransportation)) {
-            altData[i] = value;
+        userData.map((collectionData) => {
+          if (altTransportation.includes(collectionData.modeOfTransportation)) {
+            altData[i] = collectionData;
             i++;
           }
           return altData;
       });
-        const data = [];
-        const miles = _.pluck(altData, 'milesTraveled');
-        data[0] = (_.reduce(miles, function (sum, num) { return sum + num; }, 0)).toFixed(1);
-
-        const ghg = _.pluck(altData, 'cO2Reduced');
-        data[1] = (_.reduce(ghg, function (sum, num) { return sum + num; }, 0)).toFixed(1);
-        data[2] = (data[0] / 20).toFixed(1);
-        return data;
+        eImpact[0].data = sumData(altData, 'milesTraveled');
+        eImpact[1].data = sumData(altData, 'cO2Reduced');
+        eImpact[2].data = (eImpact[0].data / 20).toFixed(1);
+        return eImpact;
     };
 
-    const impactData = [
+    const eImpactData = [
       {
         title: 'Vehicle Miles Travel Reduced',
         img: '/images/cumulative-page/car.png',
-        data: '',
+        data: '0',
       },
       {
         title: 'Green House Gas (GHG) Reduced',
         img: '/images/cumulative-page/C.png',
-        data: '',
+        data: '0',
       },
       {
         title: 'Gallons of Gas Saved',
         img: '/images/cumulative-page/gas.png',
-        data: '',
+        data: '0',
       },
 
     ];
 
-    const data = CalculateCumulative(this.props.dailyUserData);
-    impactData[0].data = data[0];
-    impactData[1].data = data[1];
-    impactData[2].data = data[2];
+    const data = CalculateCumulative(this.props.dailyUserData, eImpactData);
 
     return (
         <div style={{ paddingTop: '20px' }}>
@@ -62,7 +58,7 @@ class CumulativeDataCard extends React.Component {
             <br/>
           </Header>
           <Grid stackable columns={3}>
-            {impactData.map((user, index) => (
+            {data.map((user, index) => (
                 <Grid.Column key={index}>
                   <CumulativeCard user={user}/>
                 </Grid.Column>
@@ -77,9 +73,9 @@ CumulativeDataCard.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscriptionData = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
   return {
     dailyUserData: DailyUserData.collection.find({}).fetch(),
-    ready: subscriptionData.ready(),
+    ready: subscriptionDailyUser.ready(),
   };
 })(CumulativeDataCard);

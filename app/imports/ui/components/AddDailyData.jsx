@@ -20,7 +20,7 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-const altTransportation = ['Alternative Fuel Vehicle', 'Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
 
 /** Renders the Page for inputting daily data */
 class AddDailyData extends React.Component {
