@@ -11,7 +11,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 const CumulativeDataChart = (props) => {
   // Calculating the sum of individual modes of transportation between all users
   const transportationData = (dailyUser) => {
-    const altTransportation = ['Biking', 'Public Transportation', 'Walking'];
+    const otherAltTransportation = ['Biking', 'Public Transportation', 'Walking'];
     const allModeData = dailyUser;
     const altData = {
       Telework: 0,
@@ -24,7 +24,7 @@ const CumulativeDataChart = (props) => {
         altData.Telework += 1;
       } else if (mode === 'Carpool') {
         altData.Carpool += 1;
-      } else if (altTransportation.includes(mode)) {
+      } else if (otherAltTransportation.includes(mode)) {
         altData.Other += 1;
       } else {
         altData.Vehicle += 1;
