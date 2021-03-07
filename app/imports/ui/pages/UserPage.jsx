@@ -27,6 +27,7 @@ class UserPage extends React.Component {
           },
       );
 
+      const today = new Date().toDateString();
       const myTelework = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled');
       const totalTelework = _.reduce(myTelework, (total, num) => total + num, 0);
       const myAV = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Alternative Fuel Vehicle' }).fetch(), 'milesTraveled');
@@ -46,10 +47,11 @@ class UserPage extends React.Component {
         };
 
         // Grabbing values from db to calculate USER totals for the day
-      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'milesTraveled');
+      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date() }).fetch(), 'milesTraveled');
       const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
       const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'cO2Reduced');
-      const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0);
+      const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0).toFixed(2);
+      // const daysBiking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch());
 
         return (
             <div className='background-all'>
@@ -58,9 +60,9 @@ class UserPage extends React.Component {
                     <Grid.Column>
                         <h1>My Summary</h1>
                         <div id='graph-buttons'>
-                            <Button size='large' color='gray'>Today</Button>
-                            <Button size='large' color='gray'>This Week</Button>
-                            <Button size='large' color='gray'>This Month</Button>
+                            <Button size='large' color='grey'>This Week</Button>
+                            <Button size='large' color='grey'>This Month</Button>
+                            <Button size='large' color='grey'>All Time</Button>
                         </div>
                         <Pie data={state} height='200px'/>
                     </Grid.Column>
@@ -82,7 +84,7 @@ class UserPage extends React.Component {
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
-                            My Numbers for February 8, 2021</Header>
+                            My Numbers for {today}</Header>
                     </Grid.Column>
                 </Grid>
                 <Grid stackable columns={3}>
