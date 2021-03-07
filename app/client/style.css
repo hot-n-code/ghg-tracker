@@ -167,7 +167,7 @@ h6 {
   padding: 2rem;
   background-color: white;
   border-radius: 20px !important;
-  margin: 2rem 3rem;
+  margin: 1rem 3rem;
   width: 60%;
   cursor: pointer;
 }
@@ -186,7 +186,7 @@ h6 {
 
 .vehicle-card-description,
 .vehicle-card-expand-description {
-  padding-top: 30px;
+  padding-top: 20px;
 }
 
 .vehicle-card-description span,
@@ -204,7 +204,13 @@ div.vehicle-card-logo > img,
 .vehicle-card-expand-logo img {
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  max-height: 201px;
+}
+
+.vehicle-card-btn {
+  padding-top: 15px;
+  align-self: center;
 }
 
 .vehicle-card-expand-overlay {
@@ -215,6 +221,7 @@ div.vehicle-card-logo > img,
   left: 0;
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 
 .vehicle-card-expand {
@@ -224,7 +231,7 @@ div.vehicle-card-logo > img,
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 2rem;
+  padding: 1rem 3rem;
   margin: 10% 40%;
   cursor: pointer;
   width: 20%;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
-import { Header } from 'semantic-ui-react';
+import { Header, Button } from 'semantic-ui-react';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
@@ -15,6 +15,10 @@ const VehicleCard = ({ vehicle }) => {
       <motion.div
         className='vehicle-card'
         layoutId={_id}
+        whileHover={{
+          scale: 1.1,
+          boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
+        }}
         onClick={() => setSelectedId(_id)}
       >
         <div className='vehicle-card-container'>
@@ -57,13 +61,24 @@ const VehicleCard = ({ vehicle }) => {
               <span className='vehicle-card-label'>Yearly Fuel Spending: </span>
               {`${fuelSpending}`}
             </motion.div>
+            <motion.div
+              className='vehicle-card-btn'
+              layoutId={`vehicle-card-btn-${_id}`}
+            >
+              <Button inverted color='green' onClick={() => setSelectedId(_id)}>
+                Compare
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
 
       <AnimatePresence>
         {selectedId && (
-          <motion.div className='vehicle-card-expand-overlay'>
+          <motion.div
+            className='vehicle-card-expand-overlay'
+            onClick={() => setSelectedId(null)}
+          >
             <motion.div
               className='vehicle-card-expand'
               layoutId={selectedId}
