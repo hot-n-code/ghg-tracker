@@ -5,7 +5,7 @@ import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-// import { Users } from '../../api/user/UserCollection';
+import { Users } from '../../api/user/UserCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
 
@@ -45,14 +45,14 @@ class UserPage extends React.Component {
                             <Card.Content textAlign='center'>
                                 <Image circular style={{ display: 'block',
                                     margin: '0 auto' }}
-                                       src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='medium'/>
+                                       src={this.props.profile.image} size='medium'/>
                                 <Card.Header style={{ margin: '9px' }}>
-                                    <Header as='h1'>John Smith</Header>
+                                    <Header as='h1'>{this.props.profile.name}</Header>
                                 </Card.Header>
                                 <Card.Header>
                                     <Header as='h4'>My Goal:
                                     </Header>
-                                    {/* {this.props.userInfo.goal} */}
+                                    {this.props.profile.goal}
                                 </Card.Header>
                                 <Card.Meta>
                                     <Header as='h4'>My Overall CO2 Emissions: 5 lbs</Header>
@@ -151,17 +151,16 @@ class UserPage extends React.Component {
 
 UserPage.propTypes = {
     // userData: PropTypes.array.isRequired,
-    // userInfo: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
-    // const userId = match.params._id;
-    // const getUser = Meteor.users.findOne(userId);
+export default withTracker(({ match }) => {
+    const userId = match.params._id;
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-    // const subscription2 = Meteor.subscribe(Users.userPublicationName);
+    const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
-        // userInfo: Users.findOne({ username: getUser }),
-        ready: subscription1.ready(),
+        profile: Users.findOne(userId),
+        ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
