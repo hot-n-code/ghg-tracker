@@ -40,13 +40,6 @@ class MyVehicles extends React.Component {
             />
           </Grid.Column>
           <Grid.Column>
-            {/* <Grid stackable columns={3}>
-              {_.map(userVehicles, (vehicle, index) => (
-                <Grid.Column key={index}>
-                  <VehicleCard vehicle={vehicle} />
-                </Grid.Column>
-              ))}
-            </Grid> */}
             <VehicleList />
           </Grid.Column>
         </Grid>
