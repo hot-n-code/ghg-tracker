@@ -30,7 +30,6 @@ class UserPage extends React.Component {
 
     renderPage() {
       const email = Meteor.user().username;
-      const userProfile = Users.collection.find({ owner: email }).fetch();
       const userData = [];
       DailyUserData.collection.find({ owner: email }).forEach(
           function (data) {
@@ -43,16 +42,16 @@ class UserPage extends React.Component {
                 <Header as='h1' textAlign='center'>Hi John! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
-                        <ProfileCard key={userProfile}/>
+                        <ProfileCard profile={this.props.profile}/>
                     </Grid.Column>
                     <Grid.Column>
                         <Card fluid>
                             <Card.Content>
                                 <Header as='h1' textAlign='center'>My Summary</Header>
                                 <div id='graph-buttons'>
-                                    <Button size='large' color='gray'>Today</Button>
-                                    <Button size='large' color='gray'>This Week</Button>
-                                    <Button size='large' color='gray'>This Month</Button>
+                                    <Button size='large' color='grey'>This Week</Button>
+                                    <Button size='large' color='grey'>This Month</Button>
+                                    <Button size='large' color='grey'>All Time</Button>
                                 </div>
                                 <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
                             </Card.Content>
@@ -131,6 +130,7 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
+    profile: PropTypes.object.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
@@ -138,6 +138,7 @@ export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
+        profile: Users.collection.find({}).fetch()[0],
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);

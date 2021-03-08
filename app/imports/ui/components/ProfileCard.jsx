@@ -16,9 +16,8 @@ class ProfileCard extends React.Component {
                         <Header as='h1'>{this.props.profile.name}</Header>
                     </Card.Header>
                     <Card.Header>
-                        <Header as='h4'>My Goal:
+                        <Header as='h4'>My Goal: {this.props.profile.goal}
                         </Header>
-                        {this.props.profile.goal}
                     </Card.Header>
                     <Card.Meta>
                         <Header as='h4'>My Overall CO2 Emissions: 5 lbs</Header>
