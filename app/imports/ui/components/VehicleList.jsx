@@ -2,8 +2,6 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-// import { AnimateSharedLayout } from 'framer-motion';
-import { _ } from 'meteor/underscore';
 import PropTypes from 'prop-types';
 import VehicleCard from '../components/VehicleCard';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
@@ -28,7 +26,7 @@ class VehicleList extends React.Component {
     return (
       <div className='vehicle-list-container'>
         <Grid stackable columns={3}>
-          {_.map(userVehicles, (vehicle, index) => (
+          {userVehicles.map((vehicle, index) => (
             <Grid.Column key={index} className='vehicle-list-item'>
               <VehicleCard key={vehicle._id} vehicle={vehicle} />
             </Grid.Column>
@@ -41,17 +39,14 @@ class VehicleList extends React.Component {
 
 /** Require an array of Vehicle documents in the props. */
 VehicleList.propTypes = {
-  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  // KEEP FOR REFERENCE: Get access to Stuff documents.
   const sub1 = Meteor.subscribe(Vehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Make.userPublicationName);
   return {
-    // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: sub1.ready() && sub2.ready(),
   };
 })(VehicleList);
