@@ -8,6 +8,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
+import ProfileCard from '../components/ProfileCard';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -29,6 +30,7 @@ class UserPage extends React.Component {
 
     renderPage() {
       const email = Meteor.user().username;
+      const userProfile = Users.collection.find({ owner: email }).fetch();
       const userData = [];
       DailyUserData.collection.find({ owner: email }).forEach(
           function (data) {
@@ -41,28 +43,7 @@ class UserPage extends React.Component {
                 <Header as='h1' textAlign='center'>Hi John! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
-                        <Card fluid>
-                            <Card.Content textAlign='center'>
-                                <Image circular style={{ display: 'block',
-                                    margin: '0 auto' }}
-                                       src={this.props.profile.image} size='medium'/>
-                                <Card.Header style={{ margin: '9px' }}>
-                                    <Header as='h1'>{this.props.profile.name}</Header>
-                                </Card.Header>
-                                <Card.Header>
-                                    <Header as='h4'>My Goal:
-                                    </Header>
-                                    {this.props.profile.goal}
-                                </Card.Header>
-                                <Card.Meta>
-                                    <Header as='h4'>My Overall CO2 Emissions: 5 lbs</Header>
-                                </Card.Meta>
-                                <Card.Meta>
-                                    <Header as='h4'>Number of Trees Planted: 0.792</Header>
-                                </Card.Meta>
-                                <Button style={{ margin: '20px' }} size='medium' color='gray'>Edit Profile</Button>
-                            </Card.Content>
-                        </Card>
+                        <ProfileCard key={userProfile}/>
                     </Grid.Column>
                     <Grid.Column>
                         <Card fluid>
@@ -150,17 +131,13 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
-    // userData: PropTypes.array.isRequired,
-    profile: PropTypes.object.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
-    const userId = match.params._id;
+export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
-        profile: Users.findOne(userId),
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
