@@ -11,7 +11,11 @@ import { Make } from '../../api/make/Make';
 /* eslint-disable no-console */
 
 function createUser(email, role) {
-  const userID = Accounts.createUser({ username: email, email, password: 'foo' });
+  const userID = Accounts.createUser({
+    username: email,
+    email,
+    password: 'foo',
+  });
   if (role === 'admin') {
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
@@ -42,14 +46,36 @@ function addDailyUserData({ owner, inputDate, modeOfTransportation, milesTravele
 if (DailyUserData.collection.find().count() === 0) {
   if (Meteor.settings.defaultDailyUserData) {
     console.log('Creating default data.');
-    Meteor.settings.defaultDailyUserData.map(userData => addDailyUserData(userData));
+    Meteor.settings.defaultDailyUserData.map(userData =>
+      addDailyUserData(userData),
+    );
   }
 }
 
 /** Initialize the database with a default data document. */
-function addVehicle({ make, model, owner, logo, price, year, MPG, fuelSpending, type }) {
+function addVehicle({
+  make,
+  model,
+  owner,
+  logo,
+  price,
+  year,
+  MPG,
+  fuelSpending,
+  type,
+}) {
   console.log(`Defining vehicle ${owner}`);
-  Vehicle.collection.insert({ make, model, owner, logo, price, year, MPG, fuelSpending, type });
+  Vehicle.collection.insert({
+    make,
+    model,
+    owner,
+    logo,
+    price,
+    year,
+    MPG,
+    fuelSpending,
+    type,
+  });
 }
 
 /** Initialize the collection if empty. */
@@ -66,7 +92,9 @@ function addUser({ name, goal, email, image, vehicles, role }) {
   Users.collection.insert({ name, goal, email, image });
   // Add interests and projects.
   createUser(email, role);
-  vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
+  vehicles.map(vehicle =>
+    UserVehicle.collection.insert({ user: email, model: vehicle }),
+  );
 }
 
 /** Initialize the collection if empty. */
@@ -75,7 +103,9 @@ if (Users.collection.find().count() === 0) {
     console.log('Creating the default profiles');
     Meteor.settings.defaultUser.map(user => addUser(user));
   } else {
-    console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+    console.log(
+      'Cannot initialize the database!  Please invoke meteor with a settings file.',
+    );
   }
 }
 

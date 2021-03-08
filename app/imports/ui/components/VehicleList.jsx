@@ -1,16 +1,16 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Grid, Header, Search, Loader } from 'semantic-ui-react';
+import { Grid, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
-// import { _ } from 'meteor/underscore';
+// import { AnimateSharedLayout } from 'framer-motion';
+import { _ } from 'meteor/underscore';
 import PropTypes from 'prop-types';
-// import VehicleCard from '../components/VehicleCard';
-import VehicleList from '../components/VehicleList';
+import VehicleCard from '../components/VehicleCard';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
-class MyVehicles extends React.Component {
+class VehicleList extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return this.props.ready ? (
@@ -23,36 +23,24 @@ class MyVehicles extends React.Component {
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
     /** Finds the vehicles that are owned by the user */
-    // const email = Meteor.user().username;
-    // const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
+    const email = Meteor.user().username;
+    const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
     return (
-      <div className='vehicle-list-container background-all'>
-        <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
-          <Grid.Column>
-            <Header as='h1' textAlign='center'>
-              My Vehicles
-            </Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Search
-              input={{ icon: 'search', iconPosition: 'left' }}
-              placeholder={'Search'}
-            />
-          </Grid.Column>
-          <Grid.Column>
-            <VehicleList />
-          </Grid.Column>
+      <div className='vehicle-list-container'>
+        <Grid stackable columns={3}>
+          {_.map(userVehicles, (vehicle, index) => (
+            <Grid.Column key={index} className='vehicle-list-item'>
+              <VehicleCard key={vehicle._id} vehicle={vehicle} />
+            </Grid.Column>
+          ))}
         </Grid>
-        <a href='#/create-vehicle'>
-          <Button circular icon='add' size='massive' />
-        </a>
       </div>
     );
   }
 }
 
 /** Require an array of Vehicle documents in the props. */
-MyVehicles.propTypes = {
+VehicleList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
@@ -66,4 +54,4 @@ export default withTracker(() => {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: sub1.ready() && sub2.ready(),
   };
-})(MyVehicles);
+})(VehicleList);

@@ -5,63 +5,153 @@
   ],
 
   "defaultUser": [
-    { "name": "test", "goal": "convert to renewable energy", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
-      }
+    {
+      "name": "test",
+      "goal": "convert to renewable energy",
+      "email": "test@gmail.com",
+      "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png",
+      "vehicles": ["Corolla", "Sentra", "Civic"]
+    }
   ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+    {
+      "name": "Basket",
+      "quantity": 3,
+      "owner": "john@foo.com",
+      "condition": "excellent"
+    },
+    {
+      "name": "Bicycle",
+      "quantity": 2,
+      "owner": "john@foo.com",
+      "condition": "poor"
+    },
+    {
+      "name": "Banana",
+      "quantity": 2,
+      "owner": "admin@foo.com",
+      "condition": "good"
+    },
+    {
+      "name": "Boogie Board",
+      "quantity": 2,
+      "owner": "admin@foo.com",
+      "condition": "excellent"
+    }
   ],
 
   "defaultDailyUserData": [
-    { "owner" : "test@gmail.com", "inputDate": "2021-02-12", "modeOfTransportation" : "Electric Vehicle", "milesTraveled" : 44, "cO2Reduced": 25 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-13", "modeOfTransportation" : "Telework", "milesTraveled" : 25, "cO2Reduced": 15 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-14", "modeOfTransportation" : "Public Transportation", "milesTraveled" : 30, "cO2Reduced": 19 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-15", "modeOfTransportation" : "Carpool", "milesTraveled" : 60, "cO2Reduced": 30 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-16", "modeOfTransportation" : "Electric Vehicle", "milesTraveled" : 22, "cO2Reduced": 13 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-17", "modeOfTransportation" : "Alternative Fuel Vehicle", "milesTraveled" : 12, "cO2Reduced": 8 }
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2021-02-12",
+      "modeOfTransportation": "Electric Vehicle",
+      "milesTraveled": 44,
+      "cO2Reduced": 25
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-13",
+      "modeOfTransportation": "Telework",
+      "milesTraveled": 25,
+      "cO2Reduced": 15
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-14",
+      "modeOfTransportation": "Public Transportation",
+      "milesTraveled": 30,
+      "cO2Reduced": 19
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-15",
+      "modeOfTransportation": "Carpool",
+      "milesTraveled": 60,
+      "cO2Reduced": 30
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-16",
+      "modeOfTransportation": "Electric Vehicle",
+      "milesTraveled": 22,
+      "cO2Reduced": 13
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-17",
+      "modeOfTransportation": "Alternative Fuel Vehicle",
+      "milesTraveled": 12,
+      "cO2Reduced": 8
+    }
   ],
 
-  "defaultVehicle" : [
+  "defaultVehicle": [
     {
-      "make": "Toyota", "model": "Corolla", "logo":
-      "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
-      "price": 22000, "year": 2016, "MPG": 24, "fuelSpending": 1800, "type": "gas", "owner": "test@gmail.com" },
+      "make": "Toyota",
+      "model": "Corolla",
+      "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
+      "price": 22000,
+      "year": 2016,
+      "MPG": 24,
+      "fuelSpending": 1800,
+      "type": "gas",
+      "owner": "test@gmail.com"
+    },
     {
-      "make": "Honda", "model": "Civic", "logo":
-      "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png", "price": 22000, "year": 2018, "MPG": 26, "fuelSpending": 1700, "type": "gas", "owner": "test@gmail.com" },
+      "make": "Honda",
+      "model": "Civic",
+      "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
+      "price": 22000,
+      "year": 2018,
+      "MPG": 26,
+      "fuelSpending": 1700,
+      "type": "gas",
+      "owner": "test@gmail.com"
+    },
     {
-      "make": "Nissan", "model": "Sentra", "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png", "price": 22000, "year": 2019, "MPG": 26, "fuelSpending": 1600, "type": "gas", "owner": "test@gmail.com" }
+      "make": "Nissan",
+      "model": "Sentra",
+      "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
+      "price": 22000,
+      "year": 2019,
+      "MPG": 26,
+      "fuelSpending": 1600,
+      "type": "gas",
+      "owner": "test@gmail.com"
+    }
   ],
 
   "defaultMakes": [
-    { "make": "Nissan",
+    {
+      "make": "Nissan",
       "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
       "owner": "admin@foo.com"
     },
-    { "make": "Honda",
+    {
+      "make": "Honda",
       "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
       "owner": "admin@foo.com"
     },
-    { "make": "Toyota",
+    {
+      "make": "Toyota",
       "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
       "owner": "admin@foo.com"
     },
-    { "make": "Tesla",
+    {
+      "make": "Tesla",
       "logo": "https://www.freepnglogos.com/uploads/tesla-logo-png-black-1.png",
       "owner": "admin@foo.com"
     },
-    { "make": "Ford",
+    {
+      "make": "Ford",
       "logo": "https://www.freepnglogos.com/uploads/ford-logo-transparent-8.png",
       "owner": "admin@foo.com"
     },
-    { "make": "Volkswagen",
+    {
+      "make": "Volkswagen",
       "logo": "https://www.freepnglogos.com/uploads/vw-png-logo/volkswagen-auto-eps-png-logo-vector-22.png",
       "owner": "admin@foo.com"
     }
   ]
-
 }
