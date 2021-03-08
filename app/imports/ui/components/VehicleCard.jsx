@@ -73,6 +73,7 @@ const VehicleCard = ({ vehicle }) => {
         </div>
       </motion.div>
 
+      {/* Vehicle card modal. Opens based on click event and state of 'selectedId' */}
       <AnimatePresence>
         {selectedId && (
           <motion.div
@@ -114,7 +115,7 @@ const VehicleCard = ({ vehicle }) => {
   );
 };
 
-/** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
+/** Individual vehicle data is passed in as an object in props. */
 VehicleCard.propTypes = {
   vehicle: PropTypes.object.isRequired,
 };
