@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -20,9 +21,7 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
-
-// Renders the Page for inputting daily data
+// Renders modal for inputting daily data
 class AddDailyData extends React.Component {
   constructor(props) {
     super(props);
@@ -36,21 +35,12 @@ class AddDailyData extends React.Component {
 
   handleModalClose = () => this.setState({ modalOpen: false });
 
-  // Computes Reduced CO2
-  // Put in an exported function
-  computeCO2Reduced(milesTraveled, modeOfTransportation) {
-    const autoMPG = altTransportation.includes(modeOfTransportation) ?
-        (_.max(this.props.vehicles, (vehicle) => vehicle.MPG)).MPG :
-        _.find(this.props.vehicles, (vehicle) => vehicle.make === modeOfTransportation).MPG * -1;
-    return ((milesTraveled / autoMPG) * 19.6).toFixed(2);
-  }
-
   // On submit, insert data.
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
-    const cO2Reduced = this.computeCO2Reduced(milesTraveled, modeOfTransportation);
+    const cO2Reduced = computeCO2Reduced(milesTraveled, modeOfTransportation, this.props.vehicles);
     const owner = Meteor.user().username;
-    DailyUserData.collection.define({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced }, (error) => {
+    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -69,7 +59,7 @@ class AddDailyData extends React.Component {
     return (this.props.ready) ? this.renderModal() : <Loader active>Getting your data</Loader>;
   }
 
-  // Render the form. Uses Uniforms: https://github.com/vazco/uniforms
+  // Render the form.
   renderModal() {
     let formRef = null;
     return (
@@ -85,9 +75,10 @@ class AddDailyData extends React.Component {
           <AutoForm ref={ref => { formRef = ref; }}
                     schema={bridge}
                     onSubmit={data => { this.submit(data, formRef); }}>
-            <DateField name='inputDate' max={new Date(Date.now())}/>
+            <DateField name='inputDate'
+                       max={new Date(Date.now())}/>
             <SelectField name='modeOfTransportation'
-                         allowedValues={_.pluck(this.props.vehicles, 'make').concat(altTransportation)}/>
+                         allowedValues={_.pluck(this.props.vehicles, 'make').concat(getAltTransportation())}/>
             <NumField name='milesTraveled'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
@@ -104,7 +95,7 @@ AddDailyData.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
-// withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+// withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const subscription = Meteor.subscribe(Vehicle.userPublicationName);
   const email = Meteor.user().username;
