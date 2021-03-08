@@ -46,9 +46,7 @@ function addDailyUserData({ owner, inputDate, modeOfTransportation, milesTravele
 if (DailyUserData.collection.find().count() === 0) {
   if (Meteor.settings.defaultDailyUserData) {
     console.log('Creating default data.');
-    Meteor.settings.defaultDailyUserData.map(userData =>
-      addDailyUserData(userData),
-    );
+    Meteor.settings.defaultDailyUserData.map(userData => addDailyUserData(userData));
   }
 }
 
@@ -92,9 +90,7 @@ function addUser({ name, goal, email, image, vehicles, role }) {
   Users.collection.insert({ name, goal, email, image });
   // Add interests and projects.
   createUser(email, role);
-  vehicles.map(vehicle =>
-    UserVehicle.collection.insert({ user: email, model: vehicle }),
-  );
+  vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
 }
 
 /** Initialize the collection if empty. */
