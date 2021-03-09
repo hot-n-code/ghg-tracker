@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, Image, Header, Container, Button, Menu } from 'semantic-ui-react';
-import FeedBack from './FeedBack';
+import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
+import FeedBack from './FeedBack';
 
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
