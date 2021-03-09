@@ -244,6 +244,22 @@ div.vehicle-card-logo > img,
   justify-content: flex-start;
 }
 
+/* ADD VEHICLE MODAL */
+.add-vehicle-overlay {
+  z-index: 2;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.add-vehicle-container {
+  z-index: 10;
+}
+
 /* Add vehicle button */
 .ui.circular.button {
   background-color: rgb(55, 116, 156);
