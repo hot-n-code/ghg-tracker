@@ -47,11 +47,12 @@ class UserPage extends React.Component {
         };
 
         // Grabbing values from db to calculate USER totals for the day
-      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email, inputDate: new Date() }).fetch(), 'milesTraveled');
+      const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'milesTraveled');
       const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
       const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'cO2Reduced');
       const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0).toFixed(2);
-      // const daysBiking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch());
+      const daysTelework = _.size(_.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Telework' }).fetch()));
+      const daysBiking = _.size(_.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch()));
 
         return (
             <div className='background-all'>
@@ -71,12 +72,12 @@ class UserPage extends React.Component {
                             margin: '0 auto' }} src="/images/home.png"
                                 size='small' alt="home"/>
                         <Header as='h1' textAlign='center'>Days Worked at Home:</Header>
-                        <Header as='h2' textAlign='center'>206 days</Header>
+                        <Header as='h2' textAlign='center'>{daysTelework} days</Header>
                         <Image style={{ display: 'block',
                             margin: '0 auto' }} src="/images/Biking.png"
                                size='small' alt="biking"/>
                         <Header as='h1' textAlign='center'>Days Biked to Work:</Header>
-                        <Header as='h2' textAlign='center'>10 days</Header>
+                        <Header as='h2' textAlign='center'>{daysBiking}</Header>
                     </Grid.Column>
                 </Grid>
               <div style={{ paddingTop: '150px' }}/>
