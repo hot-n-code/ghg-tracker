@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Card, Header, Image } from 'semantic-ui-react';
+import { Card, Header, Image, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class ProfileCard extends React.Component {
@@ -15,14 +15,16 @@ class ProfileCard extends React.Component {
                     <Card.Header style={{ margin: '9px' }}>
                         <Header as='h1'>{this.props.profile.name}</Header>
                     </Card.Header>
-                    <Card.Header>
+                    <Card.Meta>
+                        <Header as='h4'>Email: {this.props.profile.email}</Header>
+                    </Card.Meta>
+                    <Card.Meta>
                         <Header as='h4'>My Goal: {this.props.profile.goal}
                         </Header>
-                    </Card.Header>
-                    <Card.Meta>
-                        <Header as='h4'>My Overall CO2 Emissions: 5 lbs</Header>
                     </Card.Meta>
-                    <Button style={{ margin: '20px' }} size='medium' color='gray'>Edit Profile</Button>
+                    <Button style={{ margin: '20px' }} size='medium' color='grey'>
+                        <Link to={`/edit/${this.props.profile._id}`} style={{ color: '#FFF' }}>Edit Profile</Link>
+                    </Button>
                 </Card.Content>
             </Card>
         );

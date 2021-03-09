@@ -39,7 +39,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <Header as='h1' textAlign='center'>Hi John! Your CO2 Emission was up 2.6% from yesterday.</Header>
+                <Header as='h1' textAlign='center'>Hi {this.props.profile.name}! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.profile}/>
