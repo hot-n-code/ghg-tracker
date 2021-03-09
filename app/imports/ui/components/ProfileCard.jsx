@@ -22,8 +22,8 @@ class ProfileCard extends React.Component {
                         <Header as='h4'>My Goal: {this.props.profile.goal}
                         </Header>
                     </Card.Meta>
-                    <Button style={{ margin: '20px' }} size='medium' color='grey'>
-                        <Link to={`/edit/${this.props.profile._id}`} style={{ color: '#FFF' }}>Edit Profile</Link>
+                    <Button style={{ margin: '20px' }} size='medium'>
+                        <Link to={`/edit/${this.props.profile._id}`}> </Link>Edit Profile
                     </Button>
                 </Card.Content>
             </Card>

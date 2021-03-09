@@ -49,9 +49,9 @@ class UserPage extends React.Component {
                             <Card.Content>
                                 <Header as='h1' textAlign='center'>My Summary</Header>
                                 <div id='graph-buttons'>
-                                    <Button size='large' color='grey'>This Week</Button>
-                                    <Button size='large' color='grey'>This Month</Button>
-                                    <Button size='large' color='grey'>All Time</Button>
+                                    <Button size='large'>This Week</Button>
+                                    <Button size='large'>This Month</Button>
+                                    <Button size='large'>All Time</Button>
                                 </div>
                                 <Pie data={{ labels: this.state.labels, datasets: this.state.datasets }} height='200px'/>
                             </Card.Content>
