@@ -30,6 +30,9 @@ import CreateUser from '../pages/CreateUser';
 import UserPage from '../pages/UserPage';
 import AltTransportation from '../pages/AltTransportation';
 import CreateVehicle from '../pages/CreateVehicle';
+import HEmore from '../pages/HEmore';
+import Asbmore from '../pages/Asbmore';
+import Pcmore from '../pages/Pcmore';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -44,6 +47,9 @@ class App extends React.Component {
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
             <Route path='/about' component={AboutPage} />
+            <Route path='/hemore' component={HEmore} />
+            <Route path='/asbmore' component={Asbmore} />
+            <Route path='/pcmore' component={Pcmore} />
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
             <ProtectedRoute path='/admin' component={AdminPage} />
             <Route path='/cumulative' component={UsersCumulativePage} />
