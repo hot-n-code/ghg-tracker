@@ -5,13 +5,13 @@ import { Header, Button } from 'semantic-ui-react';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
-  // State
-  const [selectedId, setSelectedId] = useState(null);
-  // Destructure vehicle prop object.
   const { _id, year, make, model, logo, price, MPG, fuelSpending } = vehicle;
 
+  // State
+  const [selectedId, setSelectedId] = useState(null);
+
   return (
-    <AnimateSharedLayout>
+    <AnimateSharedLayout type='crossfade'>
       <motion.div
         className='vehicle-card'
         layoutId={_id}
@@ -73,7 +73,6 @@ const VehicleCard = ({ vehicle }) => {
         </div>
       </motion.div>
 
-      {/* Vehicle card modal. Opens based on click event and state of 'selectedId' */}
       <AnimatePresence>
         {selectedId && (
           <motion.div
