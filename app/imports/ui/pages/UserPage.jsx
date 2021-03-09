@@ -77,7 +77,7 @@ class UserPage extends React.Component {
                             margin: '0 auto' }} src="/images/Biking.png"
                                size='small' alt="biking"/>
                         <Header as='h1' textAlign='center'>Days Biked to Work:</Header>
-                        <Header as='h2' textAlign='center'>{daysBiking}</Header>
+                        <Header as='h2' textAlign='center'>{daysBiking} days</Header>
                     </Grid.Column>
                 </Grid>
               <div style={{ paddingTop: '150px' }}/>
