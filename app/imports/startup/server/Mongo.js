@@ -11,7 +11,11 @@ import { Make } from '../../api/make/Make';
 /* eslint-disable no-console */
 
 function createUser(email, role) {
-  const userID = Accounts.createUser({ username: email, email, password: 'foo' });
+  const userID = Accounts.createUser({
+    username: email,
+    email,
+    password: 'foo',
+  });
   if (role === 'admin') {
     Roles.createRole(role, { unlessExists: true });
     Roles.addUsersToRoles(userID, 'admin');
@@ -47,9 +51,29 @@ if (DailyUserData.collection.find().count() === 0) {
 }
 
 /** Initialize the database with a default data document. */
-function addVehicle({ make, model, owner, logo, price, year, MPG, fuelSpending, type }) {
+function addVehicle({
+  make,
+  model,
+  owner,
+  logo,
+  price,
+  year,
+  MPG,
+  fuelSpending,
+  type,
+}) {
   console.log(`Defining vehicle ${owner}`);
-  Vehicle.collection.insert({ make, model, owner, logo, price, year, MPG, fuelSpending, type });
+  Vehicle.collection.insert({
+    make,
+    model,
+    owner,
+    logo,
+    price,
+    year,
+    MPG,
+    fuelSpending,
+    type,
+  });
 }
 
 /** Initialize the collection if empty. */
@@ -75,7 +99,9 @@ if (Users.collection.find().count() === 0) {
     console.log('Creating the default profiles');
     Meteor.settings.defaultUser.map(user => addUser(user));
   } else {
-    console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+    console.log(
+      'Cannot initialize the database!  Please invoke meteor with a settings file.',
+    );
   }
 }
 

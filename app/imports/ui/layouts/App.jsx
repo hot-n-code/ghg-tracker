@@ -48,12 +48,12 @@ class App extends React.Component {
             <ProtectedRoute path='/admin' component={AdminPage} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <Route path='/user-page' component={UserPage} />
-            <Route path="/alt" component={AltTransportation}/>
+            <Route path='/alt' component={AltTransportation} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
-            <ProtectedRoute path="/create-user" component={CreateUser}/>
-            <ProtectedRoute path="/create-vehicle" component={CreateVehicle}/>
+            <ProtectedRoute path='/create-user' component={CreateUser} />
+            <ProtectedRoute path='/create-vehicle' component={CreateVehicle} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />

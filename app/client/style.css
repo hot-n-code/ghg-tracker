@@ -1,11 +1,15 @@
 /* NAVBAR */
 .ui.attached.menu {
   background: #5c8d89;
-  border: none !important;
-  border-radius: 0 !important;
   margin-bottom: 0px;
   padding: 0px;
 }
+
+#root > div > div:nth-child(1) > div {
+  border: none;
+  border-radius: 0;
+}
+
 /* LANDING PAGE */
 .background-landing {
   background-image: url('images/landing-page/oahu.jpeg');
@@ -33,7 +37,7 @@
   font-size: 250%;
 }
 .landing-data {
-  background-color: #A7D7C5;
+  background-color: #a7d7c5;
   background-image: url('images/wave_transparent.png');
   background-size: 100% 30%;
   background-repeat: repeat-x;
@@ -94,7 +98,12 @@ body {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Rubik', sans-serif !important;
 }
 
@@ -142,41 +151,118 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
 }
 
-.ui.centered.card.vehicle-card {
-  text-align: center;
-  width: 373px;
-  transition: 0.2s all ease-in;
+#root
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div
+  > div.vehicle-list-item {
+  display: flex;
+  justify-content: center;
 }
 
-.ui.centered.card.vehicle-card:hover {
-  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
+.vehicle-card {
+  padding: 2rem;
+  background-color: white;
+  border-radius: 20px !important;
+  margin: 1rem 3rem;
+  width: 60%;
+  cursor: pointer;
 }
 
-.ui.card .content .vehicle-make-logo {
-  height: 187px;
-  width: 187px;
+.vehicle-card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
-.ui.card > .content > .header:not(.ui).vehicle-card-header {
-  margin-top: 15px;
+.vehicle-card-header,
+.vehicle-card-expand-header {
+  padding-top: 20px;
+  align-self: center;
 }
 
-.ui.card > .content > .description {
-  font-size: 20px;
-  margin-top: 15px;
+.vehicle-card-description,
+.vehicle-card-expand-description {
+  padding-top: 20px;
 }
 
-.vehicle-card-label {
-  font-weight: 700;
+.vehicle-card-description span,
+.vehicle-card-expand-description span {
+  font-weight: bold;
+  padding-right: 10px;
 }
 
-#root > div > div:nth-child(2) > button {
+.vehicle-card-description,
+.vehicle-card-expand-description {
+  font-size: 18px;
+}
+
+div.vehicle-card-logo > img,
+.vehicle-card-expand-logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  max-height: 201px;
+}
+
+.vehicle-card-btn {
+  padding-top: 15px;
+  align-self: center;
+}
+
+.vehicle-card-expand-overlay {
+  z-index: 2;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.vehicle-card-expand {
+  z-index: 10;
+  background-color: white;
+  border-radius: 20px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem 3rem;
+  margin: 10% 40%;
+  cursor: pointer;
+  width: 20%;
+  height: 60%;
+  max-width: 100%;
+}
+
+.vehicle-card-expand-description {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.ui.circular.button {
   background-color: rgb(55, 116, 156);
   margin-top: 30px;
   position: relative;
   left: 83%;
+  transition: 0.2s all ease-out;
 }
 
-#root > div > div:nth-child(2) > button > i {
+.ui.circular.button:hover {
+  background-color: rgba(55, 116, 156, 0.5);
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.ui.circular.button:active,
+.ui.circular.button:focus {
+  background-color: rgba(55, 116, 156, 0.3);
+  transform: translate(-2px, 2px);
+}
+
+.ui.circular.button > .icon {
   color: rgb(255, 255, 255);
 }
