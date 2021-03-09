@@ -3,56 +3,13 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import AltVehicleCard from '../components/AltVehicleCard';
-import { Stuffs } from '../../api/stuff/Stuff';
-
-const sampleVehicleData = [
-  {
-    name: 'Walking',
-    image:
-        'images/Walking.png',
-    milesTraveled: 'xx',
-    fuelSaved: 'xx',
-    physical: true,
-    caloriesBurnt: 'xx',
-  },
-  {
-    name: 'Biking',
-    image:
-        'images/Biking.png',
-    milesTraveled: 'xx',
-    fuelSaved: 'xx',
-    physical: true,
-    caloriesBurnt: 'xx',
-  },
-  {
-    name: 'Bussing',
-    image:
-        'images/Bussing.jpg',
-    milesTraveled: 'xx',
-    fuelSaved: 'xx',
-    physical: false,
-    caloriesBurnt: 'xx',
-  },
-  {
-    name: 'Alternative Fuel Vehicles',
-    image:
-        'images/AltFuel.png',
-    milesTraveled: 'xx',
-    fuelSaved: 'xx',
-    physical: false,
-    caloriesBurnt: 'xx',
-  },
-  {
-    name: 'Carpool',
-    image:
-        'images/Carpool.png',
-    milesTraveled: 'xx',
-    fuelSaved: 'xx',
-    physical: false,
-    caloriesBurnt: 'xx',
-  },
-];
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import WalkingCard from '../components/altvehiclecards/WalkingCard';
+import BikingCard from '../components/altvehiclecards/BikingCard';
+import PublicTransportCard from '../components/altvehiclecards/PublicTransportCard';
+import CarpoolCard from '../components/altvehiclecards/CarpoolCard';
+import ElectricVehicleCard from '../components/altvehiclecards/ElectricVehicleCard';
+import TeleworkCard from '../components/altvehiclecards/TeleworkCard';
 
 class AltTransportation extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -66,6 +23,14 @@ class AltTransportation extends React.Component {
 
   /** Render the page once subscriptions of Alt Vehicles collection have been received. */
   renderPage() {
+    const email = Meteor.user().username;
+    const userData = [];
+    DailyUserData.collection.find({ owner: email }).forEach(
+        function (data) {
+          userData.push(data);
+        },
+    );
+
     return (
         <div className='background-all'>
           <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
@@ -76,11 +41,24 @@ class AltTransportation extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <Grid stackable columns={3}>
-                {sampleVehicleData.map((vehicle, index) => (
-                    <Grid.Column key={index}>
-                      <AltVehicleCard vehicle={vehicle}/>
-                    </Grid.Column>
-                ))}
+                <Grid.Column>
+                  <WalkingCard userData={userData}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <BikingCard userData={userData}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <PublicTransportCard userData={userData}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <CarpoolCard userData={userData}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <ElectricVehicleCard userData={userData}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <TeleworkCard userData={userData}/>
+                </Grid.Column>
               </Grid>
             </Grid.Column>
           </Grid>
@@ -98,7 +76,7 @@ AltTransportation.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // KEEP FOR REFERENCE: Get access to Stuff documents.
-  const subscription = Meteor.subscribe(Stuffs.userPublicationName);
+  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   return {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: subscription.ready(),
