@@ -39,7 +39,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <Header as='h1' textAlign='center'>Hi {this.props.profile.name}! Your CO2 Emission was up 2.6% from yesterday.</Header>
+                <Header as='h1' textAlign='center'>Welcome Back! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.profile}/>
@@ -130,15 +130,17 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
-    profile: PropTypes.object.isRequired,
+    profile: PropTypes.object,
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
+export default withTracker(({ match }) => {
+    const documentId = match.params._id;
+    const userId = Meteor.users.findOne(documentId);
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
-        profile: Users.collection.find({}).fetch()[0],
+        profile: Users.collection.findOne({ username: userId }),
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
