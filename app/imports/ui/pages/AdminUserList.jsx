@@ -1,8 +1,8 @@
 import React from 'react';
-import { Input, Container, Table, button } from 'semantic-ui-react';
+import { Input, Container, Table, Button } from 'semantic-ui-react';
 
 const paddingStyle = { padding: 20 };
-class AdminPage extends React.Component {
+class AdminUserList extends React.Component {
   render() {
     return (
         <div className='background-all'>
@@ -62,4 +62,4 @@ class AdminPage extends React.Component {
   }
 }
 
-export default AdminPage;
+export default AdminUserList;
