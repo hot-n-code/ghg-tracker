@@ -112,7 +112,7 @@ export default withTracker(({ match }) => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing : _id.
   const documentId = match.params._id;
   // Get access to Edit data.
-  const subscription = Meteor.subscribe(DailyUserData.userPublickationName);
+  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   return {
     doc: DailyUserData.collection.findOne(documentId),
     ready: subscription.ready(),

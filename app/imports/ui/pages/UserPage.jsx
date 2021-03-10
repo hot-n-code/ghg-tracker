@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Button, Image, Container, Table, Loader } from 'semantic-ui-react';
+import { Grid, Header, Image, Container, Table, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
@@ -33,9 +33,11 @@ class UserPage extends React.Component {
       const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'cO2Reduced');
       const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0).toFixed(2);
       const daysTelework = _.size(_.pluck(DailyUserData.collection.find({ owner: email,
-          modeOfTransportation: 'Telework' }).fetch()));
-      const daysBiking = _.size(_.pluck(DailyUserData.collection.find({ owner: email,
-          modeOfTransportation: 'Biking' }).fetch()));
+          modeOfTransportation: 'Telework' }).fetch(), 'inputDate'));
+      const daysBiking = _.pluck(DailyUserData.collection.find({ owner: email,
+            modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
+      const bikeAverage = (_.reduce(daysBiking,
+          (total, num) => total + num, 0) / _.size(daysBiking)).toFixed(2);
 
         return (
             <div className='background-all'>
@@ -49,12 +51,12 @@ class UserPage extends React.Component {
                             margin: '0 auto' }} src="/images/home.png"
                                 size='small' alt="home"/>
                         <Header as='h1' textAlign='center'>Days Worked at Home:</Header>
-                        <Header as='h2' textAlign='center'>{daysTelework} days</Header>
+                        <Header as='h2' textAlign='center'>{daysTelework} day(s)</Header>
                         <Image style={{ display: 'block',
                             margin: '0 auto' }} src="/images/Biking.png"
                                size='small' alt="biking"/>
-                        <Header as='h1' textAlign='center'>Days Biked to Work:</Header>
-                        <Header as='h2' textAlign='center'>{daysBiking} days</Header>
+                        <Header as='h1' textAlign='center'>Average Miles Biked:</Header>
+                        <Header as='h2' textAlign='center'>{bikeAverage} miles</Header>
                     </Grid.Column>
                 </Grid>
               <div style={{ paddingTop: '150px' }}/>
@@ -101,7 +103,7 @@ class UserPage extends React.Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {userData.map((value, index) => <HistoryRowData key={index} data={value}/>)}
+                      {userData.map((value, index) => <HistoryRowData key={index} transportationData={value}/>)}
                     </Table.Body>
                 </Table>
               </div>

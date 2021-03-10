@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Grid, Header } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import { _ } from 'meteor/underscore';
 import { Pie } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
@@ -32,12 +32,7 @@ const MyDataChart = () => {
         <Grid>
             <Grid.Column>
                 <Header as='h1'>My Mileage Breakdown</Header>
-                <div id='graph-buttons'>
-                    <Button size='large' color='grey'>This Week</Button>
-                    <Button size='large' color='grey'>This Month</Button>
-                    <Button size='large' color='grey'>All Time</Button>
-                </div>
-                <Pie data={stateAll} height='200px'/>
+                <Pie data={stateAll} height='250px'/>
             </Grid.Column>
         </Grid>
     );
