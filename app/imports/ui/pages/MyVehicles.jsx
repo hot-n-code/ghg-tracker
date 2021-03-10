@@ -29,12 +29,6 @@ class MyVehicles extends React.Component {
             </Header>
           </Grid.Column>
           <Grid.Column>
-            <Search
-              input={{ icon: 'search', iconPosition: 'left' }}
-              placeholder={'Search'}
-            />
-          </Grid.Column>
-          <Grid.Column>
             <VehicleList />
           </Grid.Column>
         </Grid>
