@@ -130,31 +130,31 @@ class AddvehicleModal extends React.Component {
                         <TextField
                           name='model'
                           showInlineError={true}
-                          placeholder={'model of vehicle'}
+                          placeholder={'Model of Vehicle'}
                         />
                       </Form.Group>
                       <Form.Group widths={'equal'}>
                         <NumField
                           name='price'
                           showInlineError={true}
-                          placeholder={'price of vehicle'}
+                          placeholder={'Price of Vehicle'}
                         />
                         <NumField
                           name='year'
                           showInlineError={true}
-                          placeholder={'year'}
+                          placeholder={'Year'}
                         />
                       </Form.Group>
                       <Form.Group widths={'equal'}>
                         <NumField
                           name='MPG'
                           showInlineError={true}
-                          placeholder={'miles per gallon'}
+                          placeholder={'Miles Per Gallon'}
                         />
                         <NumField
                           name='fuelSpending'
                           showInlineError={true}
-                          placeholder={'fuelSpending'}
+                          placeholder={'Fuel Spending'}
                         />
                       </Form.Group>
                       <SelectField name='type' />
