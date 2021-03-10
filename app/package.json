@@ -38,7 +38,8 @@
     "testcafe": "^1.10.1"
   },
   "scripts": {
-    "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/vehicle_data.json",
+    "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
+    "populate": "mongoimport --host 127.0.0.1:3001 --db meteor --collection VehicleCollection --file ../config/vehicle_data.json",
     "lint": "eslint --quiet --ext .jsx --ext .js ./imports",
     "testcafe-development": "testcafe chrome tests/*.testcafe.js",
     "testcafe": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\""
