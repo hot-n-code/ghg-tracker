@@ -16,7 +16,7 @@ const VehicleCard = ({ vehicle }) => {
         className='vehicle-card'
         layoutId={_id}
         whileHover={{
-          scale: 1.1,
+          scale: 1.04,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
         onClick={() => setSelectedId(_id)}
