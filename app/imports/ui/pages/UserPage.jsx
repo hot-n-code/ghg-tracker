@@ -1,13 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Button, Image, Container, Table, Loader } from 'semantic-ui-react';
-import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
+import MyDataChart from "../components/MyDataChart";
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -15,7 +15,7 @@ const paddingStyle = { padding: 20 };
  * */
 class UserPage extends React.Component {
     render() {
-        return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+        return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
     }
 
     renderPage() {
@@ -28,44 +28,21 @@ class UserPage extends React.Component {
       );
 
       const today = new Date().toDateString();
-      const myTelework = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled');
-      const totalTelework = _.reduce(myTelework, (total, num) => total + num, 0);
-      const myAV = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Alternative Fuel Vehicle' }).fetch(), 'milesTraveled');
-      const totalAV = _.reduce(myAV, (total, num) => total + num, 0);
-      const myBiking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
-      const totalBiking = _.reduce(myBiking, (total, num) => total + num, 0);
-      const myWalking = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Walking' }).fetch(), 'milesTraveled');
-      const totalWalking = _.reduce(myWalking, (total, num) => total + num, 0);
-      const myCarpool = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Carpool' }).fetch(), 'milesTraveled');
-      const totalCarpool = _.reduce(myCarpool, (total, num) => total + num, 0);
-      const myPT = _.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Public Transportation' }).fetch(), 'milesTraveled');
-      const totalPT = _.reduce(myPT, (total, num) => total + num, 0);
-      const state = {
-          labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Alternative Fuel Vehicle'],
-          datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV], backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
-            }],
-        };
-
-        // Grabbing values from db to calculate USER totals for the day
       const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'milesTraveled');
       const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
       const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: email }).fetch(), 'cO2Reduced');
       const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0).toFixed(2);
-      const daysTelework = _.size(_.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Telework' }).fetch()));
-      const daysBiking = _.size(_.pluck(DailyUserData.collection.find({ owner: email, modeOfTransportation: 'Biking' }).fetch()));
+      const daysTelework = _.size(_.pluck(DailyUserData.collection.find({ owner: email,
+          modeOfTransportation: 'Telework' }).fetch()));
+      const daysBiking = _.size(_.pluck(DailyUserData.collection.find({ owner: email,
+          modeOfTransportation: 'Biking' }).fetch()));
 
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
                 <Grid stackable fluid columns={2}>
                     <Grid.Column>
-                        <h1>My Summary</h1>
-                        <div id='graph-buttons'>
-                            <Button size='large' color='grey'>This Week</Button>
-                            <Button size='large' color='grey'>This Month</Button>
-                            <Button size='large' color='grey'>All Time</Button>
-                        </div>
-                        <Pie data={state} height='200px'/>
+                        <MyDataChart/>
                     </Grid.Column>
                     <Grid.Column>
                         <Image style={{ display: 'block',
@@ -85,7 +62,7 @@ class UserPage extends React.Component {
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
-                            My Numbers for {today}</Header>
+                            My Numbers as of {today}</Header>
                     </Grid.Column>
                 </Grid>
                 <Grid stackable columns={3}>
@@ -135,7 +112,6 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
-    // userData: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
