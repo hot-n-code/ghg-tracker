@@ -3,7 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import VehicleCard from '../components/VehicleCard';
+import VehicleCard from './VehicleCard';
+import AddVehicleModal from './AddVehicleModal';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 
@@ -20,9 +21,7 @@ class VehicleList extends React.Component {
 
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
-    /** Finds the vehicles that are owned by the user */
-    const email = Meteor.user().username;
-    const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
+    const userVehicles = this.props.vehicles;
     return (
       <div className='vehicle-list-container'>
         <Grid stackable columns={3}>
@@ -32,6 +31,7 @@ class VehicleList extends React.Component {
             </Grid.Column>
           ))}
         </Grid>
+        <AddVehicleModal />
       </div>
     );
   }
@@ -40,6 +40,7 @@ class VehicleList extends React.Component {
 /** Require an array of Vehicle documents in the props. */
 VehicleList.propTypes = {
   ready: PropTypes.bool.isRequired,
+  vehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -48,5 +49,6 @@ export default withTracker(() => {
   const sub2 = Meteor.subscribe(Make.userPublicationName);
   return {
     ready: sub1.ready() && sub2.ready(),
+    vehicles: Vehicle.collection.find({}).fetch(),
   };
 })(VehicleList);

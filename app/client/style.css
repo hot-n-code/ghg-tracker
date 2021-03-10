@@ -197,7 +197,7 @@ h6 {
 
 .vehicle-card-description,
 .vehicle-card-expand-description {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 div.vehicle-card-logo > img,
@@ -244,22 +244,93 @@ div.vehicle-card-logo > img,
   justify-content: flex-start;
 }
 
+/* ADD VEHICLE MODAL */
+.add-vehicle-overlay {
+  z-index: 2;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.add-vehicle-container {
+  z-index: 10;
+  background-color: white;
+  border-radius: 15px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem 3rem;
+  margin: 10% 30%;
+  width: 40%;
+  height: 50%;
+  max-width: 100%;
+}
+
+div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
+  display: inline;
+  margin-left: 14px;
+}
+
+.add-vehicle-close-btn {
+  background-color: rgba(167, 215, 197, 0.5);
+  border-radius: 50%;
+  display: inline;
+  font-size: 1.5rem;
+  margin-left: 28.3rem;
+  margin-right: 14px;
+  padding: 8px 12px;
+  text-align: center;
+  transition: 0.3s all ease-in;
+}
+
+.add-vehicle-close-btn:hover {
+  background-color: rgba(167, 215, 197, 0.8);
+  color: rgb(255, 255, 255);
+}
+
+.add-vehicle-close-btn:focus,
+.add-vehicle-close-btn:active {
+  background-color: rgb(92, 141, 137);
+  color: rgb(255, 255, 255);
+}
+
+#root
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div.add-vehicle-overlay
+  > div
+  > div.add-vehicle-form
+  > form
+  > div {
+  border: none;
+  box-shadow: none;
+}
+
+/* Add vehicle button */
 .ui.circular.button {
   background-color: rgb(55, 116, 156);
   margin-top: 30px;
-  position: relative;
-  left: 83%;
-  transition: 0.2s all ease-out;
+  position: fixed;
+  top: 85%;
+  left: 85%;
+  transition: 0.3s all ease-out;
 }
 
 .ui.circular.button:hover {
-  background-color: rgba(55, 116, 156, 0.5);
-  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(79, 148, 194, 0.7);
+  box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.4);
 }
 
 .ui.circular.button:active,
 .ui.circular.button:focus {
-  background-color: rgba(55, 116, 156, 0.3);
+  background-color: rgba(94, 169, 219, 0.7);
   transform: translate(-2px, 2px);
 }
 
