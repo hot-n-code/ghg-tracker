@@ -52,14 +52,14 @@ const VehicleCard = ({ vehicle }) => {
               <span className='vehicle-card-label'>
                 Average Fuel Consumption:{' '}
               </span>
-              {`${MPG}`}
+              {`${MPG}`} MPG
             </motion.div>
             <motion.div
               className='vehicle-card-description'
               layoutId={`vehicle-card-spending-${_id}`}
             >
               <span className='vehicle-card-label'>Yearly Fuel Spending: </span>
-              {`${fuelSpending}`}
+              ${`${fuelSpending}`}
             </motion.div>
             <motion.div
               className='vehicle-card-btn'
@@ -98,13 +98,13 @@ const VehicleCard = ({ vehicle }) => {
                 <span className='vehicle-card-label'>
                   Average Fuel Consumption:{' '}
                 </span>
-                {`${MPG}`}
+                {`${MPG}`} MPG
               </motion.div>
               <motion.div className='vehicle-card-expand-description'>
                 <span className='vehicle-card-label'>
                   Yearly Fuel Spending:{' '}
                 </span>
-                {`${fuelSpending}`}
+                ${`${fuelSpending}`}
               </motion.div>
             </motion.div>
           </motion.div>
