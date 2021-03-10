@@ -20,8 +20,7 @@ import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
-const makeSchema = () =>
-  new SimpleSchema({
+const makeSchema = () => new SimpleSchema({
     make: {
       type: String,
       allowedValues: [
