@@ -89,6 +89,25 @@ class AddvehicleModal extends React.Component {
     const bridge = new SimpleSchema2Bridge(formSchema);
     const isSelected = this.state.isSelected;
     let formRef = null;
+
+    // Animation variants
+    const overlay = {
+      visible: { opacity: 1 },
+      hidden: { opacity: 0 },
+    };
+
+    const modal = {
+      hidden: {
+        y: '-100vh',
+        opacity: 0,
+      },
+      visible: {
+        y: 0,
+        opacity: 1,
+        transition: { delay: 0.2 },
+      },
+    };
+
     return (
       <AnimateSharedLayout type='crossfade'>
         <motion.div className='add-vehicle-btn' layoutId='add-vehicle-toggle'>
@@ -100,23 +119,34 @@ class AddvehicleModal extends React.Component {
           />
         </motion.div>
 
-        <AnimatePresence>
+        <AnimatePresence
+          exitBeforeEnter
+          onExitComplete={() => this.addVehicleModalHandler(false)}
+        >
           {isSelected && (
             <motion.div
               className='add-vehicle-overlay'
-              onClick={() => this.addVehicleModalHandler(false)}
-              layoutId='add-vehicle-toggle'
+              variants={overlay}
+              initial='hidden'
+              animate='visible'
+              exit='hidden'
             >
-              <motion.div className='add-vehicle-container'>
+              <motion.div className='add-vehicle-container' variants={modal}>
                 <motion.div className='add-vehicle-header'>
                   <Header as='h2' textAlign='center'>
                     Create Vehicle
                   </Header>
                 </motion.div>
-                <motion.div onClick={() => this.addVehicleModalHandler(false)}>
+                <motion.div
+                  className='add-vehicle-close-btn'
+                  onClick={() => this.addVehicleModalHandler(false)}
+                >
                   &#10005;
                 </motion.div>
-                <motion.div className='add-vehicle-form'>
+                <motion.div
+                  className='add-vehicle-form'
+                  layoutId='add-vehicle-toggle'
+                >
                   <AutoForm
                     ref={ref => {
                       formRef = ref;
