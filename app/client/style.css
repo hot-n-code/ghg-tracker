@@ -258,6 +258,16 @@ div.vehicle-card-logo > img,
 
 .add-vehicle-container {
   z-index: 10;
+  background-color: white;
+  border-radius: 20px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem 3rem;
+  margin: 10% 40%;
+  width: 20%;
+  height: 60%;
+  max-width: 100%;
 }
 
 /* Add vehicle button */

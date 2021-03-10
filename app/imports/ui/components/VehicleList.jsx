@@ -10,17 +10,6 @@ import { Make } from '../../api/make/Make';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class VehicleList extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     isSelected: false,
-  //   };
-  // }
-
-  // addVehicleModalHandler(openStatus) {
-  //   this.setState({ isSelected: openStatus });
-  // }
-
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
   render() {
     return this.props.ready ? (
@@ -35,7 +24,6 @@ class VehicleList extends React.Component {
     /** Finds the vehicles that are owned by the user */
     const email = Meteor.user().username;
     const userVehicles = Vehicle.collection.find({ owner: email }).fetch();
-    // const isSelected = this.state.isSelected;
     return (
       <div className='vehicle-list-container'>
         <Grid stackable columns={3}>
@@ -45,12 +33,6 @@ class VehicleList extends React.Component {
             </Grid.Column>
           ))}
         </Grid>
-        {/* <Button
-          circular
-          icon='add'
-          size='massive'
-          onClick={() => this.addVehicleModalHandler(true)}
-        /> */}
         <AddVehicleModal />
       </div>
     );

@@ -20,7 +20,8 @@ import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
-const makeSchema = () => new SimpleSchema({
+const makeSchema = () =>
+  new SimpleSchema({
     make: {
       type: String,
       allowedValues: [
@@ -112,6 +113,9 @@ class AddvehicleModal extends React.Component {
                     Create Vehicle
                   </Header>
                 </motion.div>
+                <motion.div onClick={() => this.addVehicleModalHandler(false)}>
+                  &#10005;
+                </motion.div>
                 <motion.div className='add-vehicle-form'>
                   <AutoForm
                     ref={ref => {
@@ -121,11 +125,6 @@ class AddvehicleModal extends React.Component {
                     onSubmit={data => this.submit(data, formRef)}
                   >
                     <Segment>
-                      <motion.div
-                        onClick={() => this.addVehicleModalHandler(false)}
-                      >
-                        &#10005;
-                      </motion.div>
                       <Form.Group widths={'equal'}>
                         <SelectField name='make' />
                         <TextField
