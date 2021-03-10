@@ -43,7 +43,7 @@ const makeSchema = () => new SimpleSchema({
     },
   });
 
-class AddvehicleModal extends React.Component {
+class AddVehicleModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -200,7 +200,7 @@ class AddvehicleModal extends React.Component {
   }
 }
 
-AddvehicleModal.propTypes = {
+AddVehicleModal.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
@@ -213,4 +213,4 @@ export default withTracker(() => {
   return {
     ready: sub1.ready() && sub2.ready() && sub3.ready(),
   };
-})(AddvehicleModal);
+})(AddVehicleModal);
