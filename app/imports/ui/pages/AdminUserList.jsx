@@ -1,9 +1,17 @@
 import React from 'react';
-import { Input, Container, Table, Button } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
+import { Input, Container, Table, Button, Loader } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Users } from '../../api/user/UserCollection';
 
 const paddingStyle = { padding: 20 };
 class AdminUserList extends React.Component {
   render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  }
+
+  renderPage() {
     return (
         <div className='background-all'>
         <div style={paddingStyle}>
@@ -16,41 +24,17 @@ class AdminUserList extends React.Component {
               <thead>
               <tr>
                 <th>Name</th>
-                <th>Number of Cars</th>
-                <th>Registration Date</th>
                 <th>E-mail address</th>
                 <th>Edit</th>
               </tr>
               </thead>
               <tbody>
               <tr>
-                <td>John Lilki</td>
-                <td>1</td>
-                <td>September 14, 2013</td>
-                <td>jhlilk22@yahoo.com</td>
+                <td>{this.props.user.name}</td>
+                <td>{this.props.user.email}</td>
                 <td>
-                  <button className="ui green button">Edit</button>
-                  <button className="ui red button">Remove</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Jamie Harington</td>
-                <td>2</td>
-                <td>January 11, 2014</td>
-                <td>jamieharingonton@yahoo.com</td>
-                <td>
-                  <button className="ui green button">Edit</button>
-                  <button className="ui red button">Remove</button>
-                </td>
-              </tr>
-              <tr>
-                <td>Jill Lewis</td>
-                <td>1</td>
-                <td>May 11, 2014</td>
-                <td>jilsewris22@yahoo.com</td>
-                <td>
-                  <button className="ui green button">Edit</button>
-                  <button className="ui red button">Remove</button>
+                  <Button className="ui green button">Edit</Button>
+                  <Button className="ui red button">Remove</Button>
                 </td>
               </tr>
               </tbody>
@@ -61,5 +45,17 @@ class AdminUserList extends React.Component {
     );
   }
 }
+/** Require an array of Vehicle documents in the props. */
+AdminUserList.propTypes = {
+  user: PropTypes.array,
+  ready: PropTypes.bool.isRequired,
+};
 
-export default AdminUserList;
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+export default withTracker(() => {
+  const sub1 = Meteor.subscribe(Users.userPublicationName);
+  return {
+    user: Users.collection.find({}).fetch(),
+    ready: sub1.ready(),
+  };
+})(AdminUserList);
