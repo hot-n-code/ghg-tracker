@@ -1,61 +1,68 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Input, Container, Table, Button, Loader } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
+import { Button, Loader, Table, Container, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { Users } from '../../api/user/UserCollection';
+import UserList from '../components/UserList';
 
 const paddingStyle = { padding: 20 };
 class AdminUserList extends React.Component {
   render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+    return this.props.ready ? (
+        this.renderPage()
+    ) : (
+        <Loader active>Getting data</Loader>
+    );
   }
 
   renderPage() {
+    const email = Meteor.user().username;
+    const userData = [];
+    Users.collection.find({ owner: email }).forEach(
+        function (data) {
+          userData.push(data);
+        },
+    );
     return (
         <div className='background-all'>
-        <div style={paddingStyle}>
-        <Container>
-          <Input fluid icon='search' placeholder='Search...'>
-          </Input>
-          <br/>
-          <br/>
-            <Table className="ui single line table">
-              <thead>
-              <tr>
-                <th>Name</th>
-                <th>E-mail address</th>
-                <th>Edit</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>{this.props.user.name}</td>
-                <td>{this.props.user.email}</td>
-                <td>
-                  <Button className="ui green button">Edit</Button>
-                  <Button className="ui red button">Remove</Button>
-                </td>
-              </tr>
-              </tbody>
-            </Table>
-        </Container>
-        </div>
+          <div style={paddingStyle}>
+            <Container>
+              <Input fluid icon='search' placeholder='Search...'>
+              </Input>
+              <br/>
+              <br/>
+              <Table className="ui single line table">
+                <Table.Head>
+                <Table.Row>
+                  <Table.HeaderCell>Name</Table.HeaderCell>
+                  <Table.HeaderCell>E-mail address</Table.HeaderCell>
+                  <Table.HeaderCell>Edit</Table.HeaderCell>
+                </Table.Row>
+                </Table.Head>
+                <Table.Body>
+                  {userData.map((value, index) => <UserList key={index} data={value}/>)}
+                  <Table.Row>
+                    <Button className="ui green button">Edit</Button>
+                    <Button className="ui red button">Remove</Button>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+            </Container>
+          </div>
         </div>
     );
   }
 }
-/** Require an array of Vehicle documents in the props. */
+
 AdminUserList.propTypes = {
-  user: PropTypes.array,
+  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
-/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const sub1 = Meteor.subscribe(Users.userPublicationName);
+  const subscription = Meteor.subscribe(Users.userPublicationName);
   return {
-    user: Users.collection.find({}).fetch(),
-    ready: sub1.ready(),
+    ready: subscription.ready(),
   };
 })(AdminUserList);
