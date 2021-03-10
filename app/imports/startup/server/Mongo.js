@@ -7,6 +7,7 @@ import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Make } from '../../api/make/Make';
+import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /* eslint-disable no-console */
 
@@ -115,5 +116,19 @@ if (Make.collection.find().count() === 0) {
   if (Meteor.settings.defaultMakes) {
     console.log('Creating default make.');
     Meteor.settings.defaultMakes.map(data => addMake(data));
+  }
+}
+
+/** Initialize the database with a default data document. */
+function addAllVehicle({ Year, MMake, Model, Mpg }) {
+  console.log(`Defining vehicle ${MMake}`);
+  AllVehicle.collection.insert({ Year, MMake, Model, Mpg });
+}
+
+/** Initialize the collection if empty. */
+if (AllVehicle.collection.find().count() === 0) {
+  if (Meteor.settings.defaultVehicle) {
+    console.log('Creating default Vehicle.');
+    Meteor.settings.defaultVehicle.map(vehicle => addAllVehicle(vehicle));
   }
 }
