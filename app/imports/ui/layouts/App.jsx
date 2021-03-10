@@ -29,7 +29,6 @@ import DataAdminPage from '../pages/DataAdminPage';
 import CreateUser from '../pages/CreateUser';
 import UserPage from '../pages/UserPage';
 import AltTransportation from '../pages/AltTransportation';
-import CreateVehicle from '../pages/CreateVehicle';
 import HEmore from '../pages/HEmore';
 import Asbmore from '../pages/Asbmore';
 import Pcmore from '../pages/Pcmore';
@@ -59,7 +58,6 @@ class App extends React.Component {
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
-            <ProtectedRoute path='/create-vehicle' component={CreateVehicle} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
