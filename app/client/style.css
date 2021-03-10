@@ -143,22 +143,14 @@ h6 {
 }
 
 /* MY VEHICLES PAGE */
-
-/* Search bar */
-#root > div > div:nth-child(2) > div > div:nth-child(2) > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 #root
   > div
   > div.vehicle-list-container.background-all
   > div
-  > div:nth-child(3)
+  > div:nth-child(2)
   > div
-  > div
-  > div.vehicle-list-item {
+  > div.ui.stackable.three.column.grid
+  > div {
   display: flex;
   justify-content: center;
 }
