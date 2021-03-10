@@ -135,12 +135,12 @@ class AddvehicleModal extends React.Component {
                   <Header as='h2' textAlign='center'>
                     Create Vehicle
                   </Header>
-                </motion.div>
-                <motion.div
-                  className='add-vehicle-close-btn'
-                  onClick={() => this.addVehicleModalHandler(false)}
-                >
-                  &#10005;
+                  <motion.div
+                    className='add-vehicle-close-btn'
+                    onClick={() => this.addVehicleModalHandler(false)}
+                  >
+                    &#10005;
+                  </motion.div>
                 </motion.div>
                 <motion.div
                   className='add-vehicle-form'
