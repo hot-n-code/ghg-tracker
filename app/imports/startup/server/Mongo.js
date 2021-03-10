@@ -121,14 +121,14 @@ if (Make.collection.find().count() === 0) {
 
 /** Initialize the database with a default data document. */
 function addAllVehicle({ Year, MMake, Model, Mpg }) {
-  console.log(`Defining vehicle ${MMake}`);
+  console.log(`Defining all vehicle ${MMake}`);
   AllVehicle.collection.insert({ Year, MMake, Model, Mpg });
 }
 
 /** Initialize the collection if empty. */
 if (AllVehicle.collection.find().count() === 0) {
-  if (Meteor.settings.defaultVehicle) {
+  if (Meteor.settings.Vehicles) {
     console.log('Creating default Vehicle.');
-    Meteor.settings.defaultVehicle.map(vehicle => addAllVehicle(vehicle));
+    Meteor.settings.Vehicles.map(vehicle => addAllVehicle(vehicle));
   }
 }
