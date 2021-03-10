@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Grid, Header, Search, Loader } from 'semantic-ui-react';
+import { Grid, Header, Search, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
@@ -38,9 +38,6 @@ class MyVehicles extends React.Component {
             <VehicleList />
           </Grid.Column>
         </Grid>
-        <a href='#/create-vehicle'>
-          <Button circular icon='add' size='massive' />
-        </a>
       </div>
     );
   }

@@ -5,18 +5,18 @@ import { Header, Button } from 'semantic-ui-react';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
-  // State
-  const [selectedId, setSelectedId] = useState(null);
-  // Destructure vehicle prop object.
   const { _id, year, make, model, logo, price, MPG, fuelSpending } = vehicle;
 
+  // State
+  const [selectedId, setSelectedId] = useState(null);
+
   return (
-    <AnimateSharedLayout>
+    <AnimateSharedLayout type='crossfade'>
       <motion.div
         className='vehicle-card'
         layoutId={_id}
         whileHover={{
-          scale: 1.1,
+          scale: 1.04,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
         onClick={() => setSelectedId(_id)}
@@ -52,14 +52,14 @@ const VehicleCard = ({ vehicle }) => {
               <span className='vehicle-card-label'>
                 Average Fuel Consumption:{' '}
               </span>
-              {`${MPG}`}
+              {`${MPG}`} MPG
             </motion.div>
             <motion.div
               className='vehicle-card-description'
               layoutId={`vehicle-card-spending-${_id}`}
             >
               <span className='vehicle-card-label'>Yearly Fuel Spending: </span>
-              {`${fuelSpending}`}
+              ${`${fuelSpending}`}
             </motion.div>
             <motion.div
               className='vehicle-card-btn'
@@ -98,13 +98,13 @@ const VehicleCard = ({ vehicle }) => {
                 <span className='vehicle-card-label'>
                   Average Fuel Consumption:{' '}
                 </span>
-                {`${MPG}`}
+                {`${MPG}`} MPG
               </motion.div>
               <motion.div className='vehicle-card-expand-description'>
                 <span className='vehicle-card-label'>
                   Yearly Fuel Spending:{' '}
                 </span>
-                {`${fuelSpending}`}
+                ${`${fuelSpending}`}
               </motion.div>
             </motion.div>
           </motion.div>
@@ -114,7 +114,7 @@ const VehicleCard = ({ vehicle }) => {
   );
 };
 
-/** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
+/** Individual vehicle data is passed in as an object in props. */
 VehicleCard.propTypes = {
   vehicle: PropTypes.object.isRequired,
 };
