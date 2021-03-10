@@ -50,7 +50,7 @@ const VehicleCard = ({ vehicle }) => {
               layoutId={`vehicle-card-consumption-${_id}`}
             >
               <span className='vehicle-card-label'>
-                Average Fuel Consumption:{' '}
+                Avg. Fuel Consumption:{' '}
               </span>
               {`${MPG}`} MPG
             </motion.div>
@@ -75,36 +75,63 @@ const VehicleCard = ({ vehicle }) => {
 
       <AnimatePresence>
         {selectedId && (
-          <motion.div
-            className='vehicle-card-expand-overlay'
-            onClick={() => setSelectedId(null)}
-          >
-            <motion.div
-              className='vehicle-card-expand'
-              layoutId={selectedId}
-              onClick={() => setSelectedId(null)}
-            >
-              <motion.div className='vehicle-card-expand-logo'>
-                <img src={logo} alt={`${make} Logo`} />
-              </motion.div>
-              <motion.div className='vehicle-card-expand-header'>
-                <Header as='h1'>{`${year} ${make} ${model}`}</Header>
-              </motion.div>
-              <motion.div className='vehicle-card-expand-description'>
-                <span className='vehicle-card-label'>Purchase Price: </span>$
-                {`${price}`}
-              </motion.div>
-              <motion.div className='vehicle-card-expand-description'>
-                <span className='vehicle-card-label'>
-                  Average Fuel Consumption:{' '}
-                </span>
-                {`${MPG}`} MPG
-              </motion.div>
-              <motion.div className='vehicle-card-expand-description'>
-                <span className='vehicle-card-label'>
-                  Yearly Fuel Spending:{' '}
-                </span>
-                ${`${fuelSpending}`}
+          <motion.div className='vehicle-card-expand-overlay'>
+            <motion.div className='vehicle-card-expand' layoutId={selectedId}>
+              <motion.p
+                className='vehicle-card-expand-close-btn'
+                onClick={() => setSelectedId(null)}
+              >
+                &#10005;
+              </motion.p>
+              <motion.div className='vehicle-card-expand-container'>
+                <motion.div className='vehicle-card-expand-col'>
+                  <motion.div className='vehicle-card-expand-logo'>
+                    <img src={logo} alt={`${make} Logo`} />
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-header'>
+                    <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>Purchase Price: </span>
+                    ${`${price}`}
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>
+                      Avg. Fuel Consumption:{' '}
+                    </span>
+                    {`${MPG}`} MPG
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>
+                      Yearly Fuel Spending:{' '}
+                    </span>
+                    ${`${fuelSpending}`}
+                  </motion.div>
+                </motion.div>
+                <motion.div className='vehicle-card-expand-col'>
+                  <motion.div className='vehicle-card-expand-logo'>
+                    <img src={logo} alt={`${make} Logo`} />
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-header'>
+                    <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>Purchase Price: </span>
+                    ${`${price}`}
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>
+                      Avg. Fuel Consumption:{' '}
+                    </span>
+                    {`${MPG}`} MPG
+                  </motion.div>
+                  <motion.div className='vehicle-card-expand-description'>
+                    <span className='vehicle-card-label'>
+                      Yearly Fuel Spending:{' '}
+                    </span>
+                    ${`${fuelSpending}`}
+                  </motion.div>
+                </motion.div>
               </motion.div>
             </motion.div>
           </motion.div>
