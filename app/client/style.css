@@ -259,15 +259,30 @@ div.vehicle-card-logo > img,
 .add-vehicle-container {
   z-index: 10;
   background-color: white;
-  border-radius: 20px !important;
+  border-radius: 15px !important;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 1rem 3rem;
-  margin: 10% 40%;
-  width: 20%;
-  height: 60%;
+  margin: 10% 30%;
+  width: 40%;
+  height: 50%;
   max-width: 100%;
+}
+
+#root
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div.add-vehicle-overlay
+  > div
+  > div.add-vehicle-form
+  > form
+  > div {
+  border: none;
+  box-shadow: none;
 }
 
 /* Add vehicle button */
