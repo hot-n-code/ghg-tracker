@@ -6,6 +6,7 @@
     "chart.js": "^2.9.4",
     "classnames": "^2.2.6",
     "core-js": "^3.8.3",
+    "framer-motion": "^3.5.2",
     "graphql": "^14.5.8",
     "meteor-node-stubs": "^1.0.1",
     "prop-types": "^15.7.2",
@@ -21,7 +22,8 @@
     "sweetalert": "^2.1.2",
     "uniforms": "^3.0.0",
     "uniforms-bridge-simple-schema-2": "^3.0.0",
-    "uniforms-semantic": "^3.0.0"
+    "uniforms-semantic": "^3.0.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
@@ -37,6 +39,7 @@
   },
   "scripts": {
     "start": "meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json",
+    "populate": "mongoimport --host 127.0.0.1:3001 --db meteor --collection AllVehicleCollection --file ../config/vehicle_data.json",
     "lint": "eslint --quiet --ext .jsx --ext .js ./imports",
     "testcafe-development": "testcafe chrome tests/*.testcafe.js",
     "testcafe": "testcafe chrome:headless tests/*.testcafe.js -q --app \"meteor npm run start\""
