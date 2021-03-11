@@ -1,6 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff.js';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
@@ -10,15 +8,6 @@ import { Make } from '../../api/make/Make';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /* eslint-disable no-console */
-
-// to be reviewed
-// function createUser(email, role) {
-//   const userID = Accounts.createUser({ username: email, email, password: 'foo' });
-//   if (role === 'admin') {
-//     Roles.createRole(role, { unlessExists: true });
-//     Roles.addUsersToRoles(userID, 'admin');
-//   }
-// }
 
 /** Initialize the database with a default data document. */
 function addData(data) {
