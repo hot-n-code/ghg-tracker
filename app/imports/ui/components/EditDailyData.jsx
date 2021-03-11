@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Loader, Modal } from 'semantic-ui-react';
+import { Icon, Loader, Modal } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
@@ -51,19 +51,20 @@ class EditDailyData extends React.Component {
 
   // Render the form.
   renderModal() {
+    const doc = _.find(this.props.dailies, (daily) => daily._id === this.props.transportationID);
     return (
         <Modal size='mini'
                closeIcon
                open={this.state.modalOpen}
                onClose={this.handleModalClose}
                onOpen={this.handleModalOpen}
-               trigger={<Button>Edit</Button>}
+               trigger={<Icon style={{ cursor: 'pointer' }} name='edit outline'/>}
         >
           <Modal.Header>Edit Data</Modal.Header>
           <Modal.Content>
             <AutoForm schema={bridge}
                       onSubmit={data => this.submit(data)}
-                      model={this.props.doc}>
+                      model={doc}>
               <DateField name='inputDate'
                          max={new Date(Date.now())}/>
               <SelectField name='modeOfTransportation'
@@ -82,21 +83,21 @@ class EditDailyData extends React.Component {
 
 // Require the presence of a DailyData document in the props object.
 EditDailyData.propTypes = {
-  doc: PropTypes.object,
+  transportationID: PropTypes.string,
+  dailies: PropTypes.array.isRequired,
   model: PropTypes.object,
   vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components.
-export default withTracker(({ match }) => {
-  const documentId = match.params._id;
+export default withTracker(() => {
   const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
   const email = Meteor.user().username;
   return {
     vehicles: Vehicle.collection.find({ owner: email }).fetch(),
-    doc: DailyUserData.collection.findOne(documentId),
+    dailies: DailyUserData.collection.find({ owner: email }).fetch(),
     ready: subscription.ready() && subscription2.ready(),
   };
 })(EditDailyData);

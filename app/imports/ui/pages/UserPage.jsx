@@ -122,6 +122,7 @@ class UserPage extends React.Component {
                             <Table.HeaderCell>Mode of Transportation</Table.HeaderCell>
                             <Table.HeaderCell>Total Miles</Table.HeaderCell>
                             <Table.HeaderCell>CO2 Reduced</Table.HeaderCell>
+                            <Table.HeaderCell width={1}/>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
