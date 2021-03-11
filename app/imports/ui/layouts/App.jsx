@@ -53,8 +53,8 @@ class App extends React.Component {
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
             <ProtectedRoute path='/admin' component={AdminPage} />
             <Route path='/cumulative' component={UsersCumulativePage} />
-            <Route path='/user-page' component={UserPage} />
-            <Route path='/alt' component={AltTransportation} />
+            <ProtectedRoute path='/user-page/' component={UserPage} />
+            <Route path="/alt" component={AltTransportation}/>
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />

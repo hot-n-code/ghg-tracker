@@ -82,6 +82,9 @@ class CreateUser extends React.Component {
                     <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
+                    <TextField id='image' name='image' required showInlineError={true} placeholder={'image'}/>
+                  </Form.Group>
+                  <Form.Group widths={'equal'}>
                   </Form.Group>
                   <SubmitField value='Add' onClick={this.handleClick}/>
                 </Segment>
@@ -101,7 +104,8 @@ CreateUser.propTypes = {
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(Users.userPublicationName);
   return {
-    ready: sub1.ready(),
+    ready: sub1.ready() && sub2.ready(),
   };
 })(CreateUser);

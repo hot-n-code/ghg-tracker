@@ -1,16 +1,14 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "test@gmail.com", "password": "foo" },
     { "email": "john@foo.com", "password": "changeme" }
   ],
 
   "defaultUser": [
-    {
-      "name": "test",
-      "goal": "convert to renewable energy",
-      "email": "test@gmail.com",
-      "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png",
-      "vehicles": ["Corolla", "Sentra", "Civic"]
+    { "name": "test", "goal": "convert to renewable energy", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
+    },
+    { "name": "John", "goal": "convert to renewable energy", "email": "john@foo.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "vehicles": ["Corolla", "Sentra", "Civic"]
     }
   ],
 
