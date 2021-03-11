@@ -46,7 +46,6 @@ class UserPage extends React.Component {
          return (_.reduce(bikeDays, (total, num) => total + num, 0) / _.size(bikeDays)).toFixed(2);
       };
 
-
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>

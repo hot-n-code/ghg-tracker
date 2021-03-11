@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import { _ } from 'meteor/underscore';
 import { Pie } from 'react-chartjs-2';
 import { withRouter } from 'react-router-dom';
@@ -18,7 +18,7 @@ const MyDataChart = () => {
     const totalWalking = _.reduce(_.pluck(DailyUserData.collection.find({ owner: email,
         modeOfTransportation: 'Walking' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0);
     const totalCarpool = _.reduce(_.pluck(DailyUserData.collection.find({ owner: email,
-        modeOfTransportation: 'Carpool' }).fetch(), 'milesTraveled'),(total, num) => total + num, 0);
+        modeOfTransportation: 'Carpool' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0);
     const totalPT = _.reduce(_.pluck(DailyUserData.collection.find({ owner: email,
         modeOfTransportation: 'Public Transportation' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0);
     const stateAll = {
