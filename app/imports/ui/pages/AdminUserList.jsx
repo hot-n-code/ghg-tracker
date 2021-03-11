@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Loader, Table, Container, Input } from 'semantic-ui-react';
+import { Loader, Table, Container, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -14,7 +14,7 @@ class AdminUserList extends React.Component {
   }
 
   renderPage() {
-    console.log(this.props.doc);
+    const test = this.props.doc;
     return (
         <div className='background-all'>
           <div style={paddingStyle}>
@@ -24,18 +24,15 @@ class AdminUserList extends React.Component {
               <br/>
               <Table>
                 <Table.Header>
-                <Table.Row>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
-                  <Table.HeaderCell>Edit</Table.HeaderCell>
-                </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                  {this.props.doc.map((list) => <UserList key={list._id} list={list}/>)}
-                  <Table.Row>
-                    <Button className="ui green button">Edit</Button>
-                    <Button className="ui red button">Remove</Button>
-                  </Table.Row>
+                    {_.map(test, (data, index) => (
+                        <Table.Row>
+                          <UserList key={index} data={data} />
+                        </Table.Row>
+                    ))}
                 </Table.Body>
               </Table>
             </Container>
