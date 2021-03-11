@@ -43,7 +43,7 @@ class AdminUserList extends React.Component {
 
 AdminUserList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
-  doc: PropTypes.object.isRequired,
+  doc: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
