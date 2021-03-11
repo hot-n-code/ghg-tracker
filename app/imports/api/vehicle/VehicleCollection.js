@@ -22,7 +22,7 @@ class VehicleCollection {
         fuelSpending: Number,
         type: {
           type: String,
-          allowedValues: ['gas', 'ev', 'hybrid'],
+          allowedValues: ['Gas', 'EV/Hybrid'],
         },
       },
       { tracker: Tracker },
