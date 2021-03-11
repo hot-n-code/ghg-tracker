@@ -134,7 +134,7 @@ UserPage.propTypes = {
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
+export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
