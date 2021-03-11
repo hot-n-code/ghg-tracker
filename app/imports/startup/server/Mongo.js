@@ -10,13 +10,13 @@ import { Make } from '../../api/make/Make';
 
 /* eslint-disable no-console */
 
-function createUser(email, role) {
-  const userID = Accounts.createUser({ username: email, email, password: 'foo' });
-  if (role === 'admin') {
-    Roles.createRole(role, { unlessExists: true });
-    Roles.addUsersToRoles(userID, 'admin');
-  }
-}
+// function createUser(email, role) {
+//   const userID = Accounts.createUser({ username: email, email, password: 'foo' });
+//   if (role === 'admin') {
+//     Roles.createRole(role, { unlessExists: true });
+//     Roles.addUsersToRoles(userID, 'admin');
+//   }
+// }
 
 /** Initialize the database with a default data document. */
 function addData(data) {
@@ -61,11 +61,10 @@ if (Vehicle.collection.find().count() === 0) {
 }
 
 /** Initialize the database with a default data document. */
-function addUser({ name, goal, email, image, vehicles, role }) {
+function addUser({ name, goal, email, image, vehicles }) {
   console.log(`Defining profile ${email}`);
   Users.collection.insert({ name, goal, email, image });
   // Add interests and projects.
-  createUser(email, role);
   vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
 }
 
