@@ -12,22 +12,18 @@ class VehicleCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema(
       {
-        // make: String,
-        // model: String,
-        // owner: String,
-        // logo: String,
-        // price: Number,
-        // year: Number,
-        // MPG: Number,
-        // fuelSpending: Number,
-        // type: {
-        //   type: String,
-        //   allowedValues: ['gas', 'ev', 'hybrid'],
-        // },
-        Year: Number,
-        Make: String,
-        Model: String,
-        Mpg: Number,
+        make: String,
+        model: String,
+        owner: String,
+        logo: String,
+        price: Number,
+        year: Number,
+        MPG: Number,
+        fuelSpending: Number,
+        type: {
+          type: String,
+          allowedValues: ['gas', 'ev', 'hybrid'],
+        },
       },
       { tracker: Tracker },
     );

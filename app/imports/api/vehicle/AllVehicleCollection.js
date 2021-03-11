@@ -12,10 +12,10 @@ class AllVehicleCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema(
       {
-        Year: String,
+        Year: Number,
         Make: String,
         Model: String,
-        Mpg: String,
+        Mpg: Number,
       },
       { tracker: Tracker },
     );
