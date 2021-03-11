@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
@@ -51,7 +50,7 @@ class EditDailyData extends React.Component {
 
   // Render the form.
   renderModal() {
-    const doc = _.find(this.props.dailies, (daily) => daily._id === this.props.transportationID);
+    const doc = this.props.dailies.find(({ _id }) => _id === this.props.transportationID);
     return (
         <Modal size='mini'
                closeIcon
@@ -68,7 +67,7 @@ class EditDailyData extends React.Component {
               <DateField name='inputDate'
                          max={new Date(Date.now())}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={_.pluck(this.props.vehicles, 'make').concat(getAltTransportation())}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
               <NumField name='milesTraveled'/>
               <SubmitField value='Submit'/>
               <ErrorsField/>

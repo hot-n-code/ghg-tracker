@@ -5,14 +5,29 @@ export function getAltTransportation() {
 }
 
 export function computeCO2Reduced(milesTraveled, modeOfTransportation, userVehicles) {
-  const autoMPG = getAltTransportation().includes(modeOfTransportation) ?
-      (_.max(userVehicles, (vehicle) => vehicle.MPG)).MPG :
-      _.find(userVehicles, (vehicle) => vehicle.make === modeOfTransportation).MPG * -1;
-  let CO2Reduced = ((milesTraveled / autoMPG) * 19.6).toFixed(2);
-  if (CO2Reduced === 'NaN') {
-    CO2Reduced = 0;
+  // get max MPG (replace with favorite car's MPG later)
+  const maxMPG = _.max(userVehicles, (vehicle) => vehicle.MPG).MPG;
+  let autoMPG;
+
+  function getVehicle(makeModel, vehicles) {
+    return (_.find(vehicles, (vehicle) => makeModel === (`${vehicle.make} ${vehicle.model}`)));
   }
-  return CO2Reduced;
+
+  // If the user has a regular gas vehicle,
+  if (maxMPG > 0) {
+    autoMPG = (getAltTransportation().includes(modeOfTransportation) ||
+        getVehicle(modeOfTransportation, userVehicles).type === 'EV/Hybrid') ?
+        maxMPG : getVehicle(modeOfTransportation, userVehicles).MPG * -1;
+  } else {
+    // If the user has no gas vehicle (all EV/Hybrid), autoMPG is equal to the average MPG of vehicles in the US.
+    autoMPG = 25;
+  }
+
+  let cO2Reduced = ((milesTraveled / autoMPG) * 19.6).toFixed(2);
+  if (cO2Reduced === 'NaN') {
+    cO2Reduced = 0;
+  }
+  return cO2Reduced;
 }
 
 export function computeFuelSaved(milesTraveled, userVehicles, trips) {
