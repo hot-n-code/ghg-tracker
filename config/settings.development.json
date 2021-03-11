@@ -17,12 +17,27 @@
   ],
 
   "defaultDailyUserData": [
-    { "owner" : "test@gmail.com", "inputDate": "2021-02-12", "modeOfTransportation" : "Telework", "milesTraveled" : 44, "cO2Reduced": 25 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-13", "modeOfTransportation" : "Telework", "milesTraveled" : 25, "cO2Reduced": 15 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-14", "modeOfTransportation" : "Public Transportation", "milesTraveled" : 30, "cO2Reduced": 19 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-15", "modeOfTransportation" : "Carpool", "milesTraveled" : 60, "cO2Reduced": 30 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-16", "modeOfTransportation" : "Telework", "milesTraveled" : 22, "cO2Reduced": 13 },
-    { "owner" : "test@gmail.com", "inputDate": "2019-11-17", "modeOfTransportation" : "Carpool", "milesTraveled" : 12, "cO2Reduced": 8 }
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-13",
+      "modeOfTransportation": "Telework",
+      "milesTraveled": 25,
+      "cO2Reduced": 18.85
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-14",
+      "modeOfTransportation": "Public Transportation",
+      "milesTraveled": 20,
+      "cO2Reduced": 15.08
+    },
+    {
+      "owner": "test@gmail.com",
+      "inputDate": "2019-11-15",
+      "modeOfTransportation": "Carpool",
+      "milesTraveled": 60,
+      "cO2Reduced": 45.23
+    }
   ],
 
   "defaultVehicle" : [

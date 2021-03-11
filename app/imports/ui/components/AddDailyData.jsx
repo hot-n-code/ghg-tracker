@@ -20,9 +20,7 @@ const formSchema = new SimpleSchema({
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
-
-/** Renders the Page for inputting daily data */
+// Renders modal for inputting daily data
 class AddDailyData extends React.Component {
   constructor(props) {
     super(props);
