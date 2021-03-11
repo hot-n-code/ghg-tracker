@@ -16,6 +16,7 @@ class UserCollection {
     }, { tracker: Tracker });
 
     this.collection.attachSchema(this.schema);
+    this.adminPublicationName = `${this.name}.publication.admin`;
   }
 }
 
