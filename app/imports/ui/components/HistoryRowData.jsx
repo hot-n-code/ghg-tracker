@@ -3,6 +3,7 @@ import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import EditDailyData from './EditDailyData';
+import DeleteDailyData from './DeleteDailyData';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class HistoryRowData extends React.Component {
@@ -14,6 +15,7 @@ class HistoryRowData extends React.Component {
                 <Table.Cell>{this.props.transportationData.milesTraveled}</Table.Cell>
                 <Table.Cell>{this.props.transportationData.cO2Reduced}</Table.Cell>
                 <Table.Cell collapsing><EditDailyData transportationID={this.props.transportationData._id}/></Table.Cell>
+                <Table.Cell collapsing><DeleteDailyData transportationID={this.props.transportationData._id}/></Table.Cell>
             </Table.Row>
         );
     }
