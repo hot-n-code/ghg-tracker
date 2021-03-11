@@ -33,6 +33,7 @@ import CreateVehicle from '../pages/CreateVehicle';
 import HEmore from '../pages/HEmore';
 import Asbmore from '../pages/Asbmore';
 import Pcmore from '../pages/Pcmore';
+import LeafWidget from '../components/LeafWidget';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -50,6 +51,7 @@ class App extends React.Component {
             <Route path='/hemore' component={HEmore} />
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
+            <Route path='/leaf' component={LeafWidget} />
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
             <ProtectedRoute path='/admin' component={AdminPage} />
             <Route path='/cumulative' component={UsersCumulativePage} />
