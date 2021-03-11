@@ -17,13 +17,6 @@ class AdminUserList extends React.Component {
   }
 
   renderPage() {
-    const email = Meteor.user().username;
-    const userData = [];
-    Users.collection.find({ owner: email }).forEach(
-        function (data) {
-          userData.push(data);
-        },
-    );
     return (
         <div className='background-all'>
           <div style={paddingStyle}>
@@ -41,7 +34,7 @@ class AdminUserList extends React.Component {
                 </Table.Row>
                 </Table.Head>
                 <Table.Body>
-                  {userData.map((value, index) => <UserList key={index} data={value}/>)}
+                  {this.props.user.map((list) => <UserList key={list._id} list={list}/>)}
                   <Table.Row>
                     <Button className="ui green button">Edit</Button>
                     <Button className="ui red button">Remove</Button>
@@ -57,12 +50,15 @@ class AdminUserList extends React.Component {
 
 AdminUserList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
+  user: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const subscription = Meteor.subscribe(Users.userPublicationName);
+  const subscription = Meteor.subscribe(Users.adminPublicationName);
+  const email = Meteor.user().username;
   return {
+    user: Users.collection.findOne({ owner: email }).fetch(),
     ready: subscription.ready(),
   };
 })(AdminUserList);
