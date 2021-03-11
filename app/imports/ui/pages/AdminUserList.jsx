@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Loader, Table, Container, Input } from 'semantic-ui-react';
+import { Loader, Table, Container, Input, Button } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -26,12 +26,11 @@ class AdminUserList extends React.Component {
                 <Table.Header>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
+                  <Table.HeaderCell>Edit</Table.HeaderCell>
                 </Table.Header>
                 <Table.Body>
                     {_.map(test, (data, index) => (
-                        <Table.Row>
                           <UserList key={index} data={data} />
-                        </Table.Row>
                     ))}
                 </Table.Body>
               </Table>
@@ -44,7 +43,7 @@ class AdminUserList extends React.Component {
 
 AdminUserList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
-  doc: PropTypes.array.isRequired,
+  doc: PropTypes.object.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
