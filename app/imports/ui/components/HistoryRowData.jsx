@@ -12,6 +12,7 @@ class HistoryRowData extends React.Component {
                 <Table.Cell>{this.props.transportationData.inputDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>{this.props.transportationData.modeOfTransportation}</Table.Cell>
                 <Table.Cell>{this.props.transportationData.milesTraveled}</Table.Cell>
+                <Table.Cell>{this.props.transportationData.cO2Reduced}</Table.Cell>
             </Table.Row>
         );
     }
