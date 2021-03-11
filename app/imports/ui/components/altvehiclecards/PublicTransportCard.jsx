@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { computeCO2Reduced, computeFuelSaved } from '../../utilities/GlobalFunctions';
 
 /** Renders a single vehicle card. */
 class PublicTransportCard extends React.Component {
@@ -13,13 +14,19 @@ class PublicTransportCard extends React.Component {
     return (
         <Card centered link className={'vehicle-card'}>
           <Card.Content>
-            <Image src='images/Bussing.jpg'/>
+            <Image src='images/altvehicle-page/Bussing.jpg'/>
             <Card.Header className={'vehicle-card-header'}>
               Public Transportation
             </Card.Header>
             <Card.Description>
               <span className={'vehicle-card-label'}>Total Miles: </span>
               {totalMiles}
+              <br/>
+              <span className={'vehicle-card-label'}>CO2 Reduced: </span>
+              {computeCO2Reduced(totalMiles, 'Public Transportation', this.props.userVehicles)}
+              <br/>
+              <span className={'vehicle-card-label'}>Fuel Saved: </span>
+              {computeFuelSaved(totalMiles, this.props.userVehicles, trips.length)}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -35,6 +42,7 @@ class PublicTransportCard extends React.Component {
 /** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
 PublicTransportCard.propTypes = {
   userData: PropTypes.array.isRequired,
+  userVehicles: PropTypes.array.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
