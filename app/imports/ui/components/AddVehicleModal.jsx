@@ -54,9 +54,9 @@ class AddVehicleModal extends React.Component {
     const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
     search.miles = find[0];
     if (find[0] > 0) {
-      search.type = 'gas';
+      search.type = 'Gas';
     } else {
-      search.type = 'ev';
+      search.type = 'EV/Hybrid';
     }
     return [search.miles, search.type];
   }

@@ -93,7 +93,7 @@
       "year": 2016,
       "MPG": 24,
       "fuelSpending": 1800,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     },
     {
@@ -104,7 +104,7 @@
       "year": 2018,
       "MPG": 26,
       "fuelSpending": 1700,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     },
     {
@@ -115,7 +115,7 @@
       "year": 2019,
       "MPG": 26,
       "fuelSpending": 1600,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     }
   ],
