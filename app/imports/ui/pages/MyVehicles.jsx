@@ -32,8 +32,8 @@ class MyVehicles extends React.Component {
           </Grid.Column>
           <Grid.Column>
             <Search
-              input={{ icon: 'search', iconPosition: 'left' }}
-              placeholder={'Search'}
+                input={{ icon: 'search', iconPosition: 'left' }}
+                placeholder={'Search'}
             />
           </Grid.Column>
           <Grid.Column>

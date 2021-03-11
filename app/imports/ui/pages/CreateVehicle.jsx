@@ -37,35 +37,53 @@ const makeSchema = () => new SimpleSchema({
     model: String,
     price: Number,
     year: Number,
-    MPG: Number,
     fuelSpending: Number,
-    type: {
-      type: String,
-      allowedValues: ['gas', 'ev', 'hybrid'],
-    },
+    // MPG: Number,
+    // fuelSpending: Number,
+    // type: {
+    //   type: String,
+    //   allowedValues: ['gas', 'ev', 'hybrid'],
+    // },
   });
 
 class CreateVehicle extends React.Component {
+  getMPGType(make, model, year) {
+    const search = {
+      miles: '',
+      type: '',
+    };
+    const totalCars = this.props.AllVehicles[0].Vehicles;
+    const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
+    search.miles = find[0];
+    if (find[0] > 0) {
+      search.type = 'Gas';
+    } else {
+      search.type = 'EV/Hybrid';
+    }
+    return [search.miles, search.type];
+  }
+
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { make, model, price, year, MPG, fuelSpending, type } = data;
+    const { make, model, price, year, fuelSpending } = data;
     const owner = Meteor.user().username;
     // LOGO
     const temp = _.pluck(Make.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
-    // END LOGO
-    // BEGIN MPG AND TYPE
-    // END MPG AND TYPE
+    // MPG
+    const get = this.getMPGType(make, model, year);
+    const MPG = get[0];
+    const type = get[1];
     Vehicle.collection.insert(
-      { make, model, logo, price, year, MPG, fuelSpending, type, owner },
-      error => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Vehicle added successfully', 'success');
-          formRef.reset();
-        }
-      },
+        { make, model, logo, price, year, MPG, fuelSpending, type, owner },
+        error => {
+          if (error) {
+            swal('Error', error.message, 'error');
+          } else {
+            swal('Success', 'Vehicle added successfully', 'success');
+            formRef.reset();
+          }
+        },
     );
   }
 
@@ -125,7 +143,6 @@ class CreateVehicle extends React.Component {
                     placeholder={'fuelSpending'}
                   />
                 </Form.Group>
-                <SelectField name='type' />
                 <SubmitField value='Submit' />
               </Segment>
             </AutoForm>
