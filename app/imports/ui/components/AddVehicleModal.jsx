@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
+import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = () => new SimpleSchema({
@@ -35,15 +36,31 @@ const makeSchema = () => new SimpleSchema({
     model: String,
     price: Number,
     year: Number,
-    MPG: Number,
-    fuelSpending: Number,
-    type: {
-      type: String,
-      allowedValues: ['gas', 'ev', 'hybrid'],
-    },
+    // MPG: Number,
+    // fuelSpending: Number,
+    // type: {
+    //   type: String,
+    //   allowedValues: ['gas', 'ev', 'hybrid'],
+    // },
   });
 
 class AddVehicleModal extends React.Component {
+  getMPGType(make, model, year) {
+    const search = {
+      miles: '',
+      type: '',
+    };
+    const totalCars = this.props.AllVehicles[0].Vehicles;
+    const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
+    search.miles = find[0];
+    if (find[0] > 0) {
+      search.type = 'gas';
+    } else {
+      search.type = 'ev';
+    }
+    return [search.miles, search.type];
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -57,10 +74,17 @@ class AddVehicleModal extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { make, model, price, year, MPG, fuelSpending, type } = data;
+    const { make, model, price, year } = data;
     const owner = Meteor.user().username;
+    // LOGO
     const temp = _.pluck(Make.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
+    // FUEL SPENDING
+    const fuelSpending = 0;
+    // MPG
+    const get = this.getMPGType(make, model, year);
+    const MPG = get[0];
+    const type = get[1];
     Vehicle.collection.insert(
       { make, model, logo, price, year, MPG, fuelSpending, type, owner },
       error => {
@@ -88,7 +112,6 @@ class AddVehicleModal extends React.Component {
     const bridge = new SimpleSchema2Bridge(formSchema);
     const isSelected = this.state.isSelected;
     let formRef = null;
-
     // Animation variants
     const overlay = {
       visible: { opacity: 1 },
@@ -174,19 +197,6 @@ class AddVehicleModal extends React.Component {
                           placeholder={'Year'}
                         />
                       </Form.Group>
-                      <Form.Group widths={'equal'}>
-                        <NumField
-                          name='MPG'
-                          showInlineError={true}
-                          placeholder={'Miles Per Gallon'}
-                        />
-                        <NumField
-                          name='fuelSpending'
-                          showInlineError={true}
-                          placeholder={'Fuel Spending'}
-                        />
-                      </Form.Group>
-                      <SelectField name='type' />
                       <SubmitField value='Submit' />
                     </Segment>
                   </AutoForm>
@@ -202,6 +212,7 @@ class AddVehicleModal extends React.Component {
 
 AddVehicleModal.propTypes = {
   ready: PropTypes.bool.isRequired,
+  AllVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -210,7 +221,9 @@ export default withTracker(() => {
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Vehicle.userPublicationName);
   const sub3 = Meteor.subscribe(Make.userPublicationName);
+  const sub4 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
-    ready: sub1.ready() && sub2.ready() && sub3.ready(),
+    AllVehicles: AllVehicle.collection.find({}).fetch(),
+    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready(),
   };
 })(AddVehicleModal);

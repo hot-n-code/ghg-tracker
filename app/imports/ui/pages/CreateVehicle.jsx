@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
+import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 
@@ -49,8 +50,12 @@ class CreateVehicle extends React.Component {
   submit(data, formRef) {
     const { make, model, price, year, MPG, fuelSpending, type } = data;
     const owner = Meteor.user().username;
+    // LOGO
     const temp = _.pluck(Make.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
+    // END LOGO
+    // BEGIN MPG AND TYPE
+    // END MPG AND TYPE
     Vehicle.collection.insert(
       { make, model, logo, price, year, MPG, fuelSpending, type, owner },
       error => {
@@ -115,11 +120,6 @@ class CreateVehicle extends React.Component {
                 </Form.Group>
                 <Form.Group widths={'equal'}>
                   <NumField
-                    name='MPG'
-                    showInlineError={true}
-                    placeholder={'miles per gallon'}
-                  />
-                  <NumField
                     name='fuelSpending'
                     showInlineError={true}
                     placeholder={'fuelSpending'}
@@ -139,6 +139,7 @@ class CreateVehicle extends React.Component {
 
 CreateVehicle.propTypes = {
   ready: PropTypes.bool.isRequired,
+  AllVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -147,7 +148,9 @@ export default withTracker(() => {
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Vehicle.userPublicationName);
   const sub3 = Meteor.subscribe(Make.userPublicationName);
+  const sub4 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
-    ready: sub1.ready() && sub2.ready() && sub3.ready(),
+    AllVehicles: AllVehicle.collection.find({}).fetch(),
+    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready(),
   };
 })(CreateVehicle);
