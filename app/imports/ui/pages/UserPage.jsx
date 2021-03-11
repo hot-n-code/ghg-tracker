@@ -36,8 +36,13 @@ class UserPage extends React.Component {
           modeOfTransportation: 'Telework' }).fetch(), 'inputDate'));
       const daysBiking = _.pluck(DailyUserData.collection.find({ owner: email,
             modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
-      const bikeAverage = (_.reduce(daysBiking,
-          (total, num) => total + num, 0) / _.size(daysBiking)).toFixed(2);
+      const bikeAverage = (bikeDays) => {
+          if (bikeDays.length === 0) {
+              return 0;
+          }
+         return (_.reduce(bikeDays, (total, num) => total + num, 0) / _.size(bikeDays)).toFixed(2);
+      };
+
 
         return (
             <div className='background-all'>
@@ -56,7 +61,7 @@ class UserPage extends React.Component {
                             margin: '0 auto' }} src="/images/Biking.png"
                                size='small' alt="biking"/>
                         <Header as='h1' textAlign='center'>Average Miles Biked:</Header>
-                        <Header as='h2' textAlign='center'>{bikeAverage} miles</Header>
+                        <Header as='h2' textAlign='center'>{bikeAverage(daysBiking)} miles</Header>
                     </Grid.Column>
                 </Grid>
               <div style={{ paddingTop: '150px' }}/>
