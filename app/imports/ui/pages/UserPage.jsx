@@ -58,7 +58,7 @@ class UserPage extends React.Component {
                     <Grid.Column>
                         <Card fluid>
                             <Card.Content>
-                                <Header as='h1' textAlign='center'>My Mileage Summary</Header>
+                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>My Mileage Summary</Header>
                                 <MyDataChart/>
                             </Card.Content>
                         </Card>
@@ -107,7 +107,7 @@ class UserPage extends React.Component {
                               margin: '0 auto' }} src="/images/altvehicle-page/Biking.png"
                                  size='small' alt="biking"/>
                           <Header as='h1' textAlign='center'>Average Miles Biked</Header>
-                          <Header as='h2' textAlign='center'>{bikeAverage(daysBiking)} day(s)</Header>
+                          <Header as='h2' textAlign='center'>{bikeAverage(daysBiking)} mile(s)</Header>
                       </Grid.Column>
                   </Grid>
                 <Grid stackable columns={3}>

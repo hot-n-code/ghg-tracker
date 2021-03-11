@@ -31,7 +31,6 @@ const MyDataChart = () => {
     return (
         <Grid>
             <Grid.Column>
-                <Header as='h1'>My Mileage Breakdown</Header>
                 <Pie data={stateAll} height='250px'/>
             </Grid.Column>
         </Grid>
