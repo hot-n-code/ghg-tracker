@@ -12,20 +12,20 @@ class ElectricVehicleCard extends React.Component {
     trips.forEach(data => { totalMiles += data.milesTraveled; });
 
     return (
-        <Card centered link className={'vehicle-card'}>
+        <Card centered link className={'alt-vehicle-card'}>
           <Card.Content>
-            <Image src='images/altvehicle-page/AltFuel.png'/>
-            <Card.Header className={'vehicle-card-header'}>
+            <Image className={'alt-vehicle-image'} src='images/altvehicle-page/AltFuel.png'/>
+            <Card.Header className={'alt-vehicle-card-header'}>
               Electric Vehicle
             </Card.Header>
             <Card.Description>
-              <span className={'vehicle-card-label'}>Total Miles: </span>
+              <span className={'alt-vehicle-card-label'}>Total Miles: </span>
               {totalMiles}
               <br/>
-              <span className={'vehicle-card-label'}>CO2 Reduced: </span>
+              <span className={'alt-vehicle-card-label'}>CO2 Reduced: </span>
               {computeCO2Reduced(totalMiles, 'Public Transportation', this.props.userVehicles)}
               <br/>
-              <span className={'vehicle-card-label'}>Fuel Saved: </span>
+              <span className={'alt-vehicle-card-label'}>Fuel Saved: </span>
               {computeFuelSaved(totalMiles, this.props.userVehicles, trips.length)}
             </Card.Description>
           </Card.Content>
