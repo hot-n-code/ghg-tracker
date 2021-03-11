@@ -43,13 +43,6 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
 
 Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
 
-Meteor.publish(Users.adminPublicationName, function () {
-  if (true) {
-    return Users.collection.find();
-  }
-  return this.ready();
-});
-
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {
