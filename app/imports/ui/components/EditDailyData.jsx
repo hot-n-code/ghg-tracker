@@ -91,7 +91,7 @@ EditDailyData.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(({ match }) => {
   const documentId = match.params._id;
-  const subscription = Meteor.subscribe(DailyUserData.userPublickationName);
+  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
   const email = Meteor.user().username;
   return {
