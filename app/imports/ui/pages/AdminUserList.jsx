@@ -56,9 +56,8 @@ AdminUserList.propTypes = {
 
 export default withTracker(() => {
   const subscription = Meteor.subscribe(Users.adminPublicationName);
-  const email = Meteor.user().username;
   return {
-    doc: Users.collection.findOne({ owner: email }).fetch(),
+    doc: Users.collection.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(AdminUserList);

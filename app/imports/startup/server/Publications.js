@@ -41,9 +41,11 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
 
-Meteor.publish(DailyUserData.adminPublicationName, function () {
+Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
+
+Meteor.publish(Users.adminPublicationName, function () {
   if (true) {
-    return DailyUserData.collection.find();
+    return Users.collection.find();
   }
   return this.ready();
 });
