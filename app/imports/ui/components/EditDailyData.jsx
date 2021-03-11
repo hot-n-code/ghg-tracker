@@ -34,7 +34,7 @@ class EditDailyData extends React.Component {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
-        swal('Success', 'Data added successfully', 'success').then(() => {
+        swal('Success', 'Data edited successfully', 'success').then(() => {
           this.handleModalClose();
           // eslint-disable-next-line no-undef
           window.location.reload();
