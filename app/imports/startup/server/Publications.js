@@ -6,6 +6,7 @@ import { Users } from '../../api/user/UserCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
+import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise publish nothing.
@@ -29,6 +30,8 @@ Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.fin
 
 Meteor.publish(Make.userPublicationName, () => Make.collection.find());
 
+Meteor.publish(AllVehicle.userPublicationName, () => AllVehicle.collection.find());
+
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
 Meteor.publish(Stuffs.adminPublicationName, function () {
@@ -40,8 +43,7 @@ Meteor.publish(Stuffs.adminPublicationName, function () {
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise publish nothing.
-
-Meteor.publish(DailyUserData.adminPublicationName, function () {
+Meteor.publish(DailyUserData.cumulativePublicationName, function () {
   if (true) {
     return DailyUserData.collection.find();
   }

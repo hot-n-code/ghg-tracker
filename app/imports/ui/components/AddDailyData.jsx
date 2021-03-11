@@ -7,7 +7,6 @@ import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } 
 import { Button, Loader, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
@@ -78,7 +77,7 @@ class AddDailyData extends React.Component {
             <DateField name='inputDate'
                        max={new Date(Date.now())}/>
             <SelectField name='modeOfTransportation'
-                         allowedValues={_.pluck(this.props.vehicles, 'make').concat(getAltTransportation())}/>
+                         allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
             <NumField name='milesTraveled'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>

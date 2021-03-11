@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { computeCO2Reduced, computeFuelSaved } from '../../utilities/GlobalFunctions';
 
 /** Renders a single vehicle card. */
 class BikingCard extends React.Component {
@@ -11,15 +12,21 @@ class BikingCard extends React.Component {
     trips.forEach(data => { totalMiles += data.milesTraveled; });
 
     return (
-        <Card centered link className={'vehicle-card'}>
+        <Card centered link className={'alt-vehicle-card'}>
           <Card.Content>
-            <Image src='images/Biking.png'/>
-            <Card.Header className={'vehicle-card-header'}>
+            <Image className={'alt-vehicle-image'} src='images/altvehicle-page/Biking.png'/>
+            <Card.Header className={'alt-vehicle-card-header'}>
               Biking
             </Card.Header>
             <Card.Description>
-              <span className={'vehicle-card-label'}>Total Miles: </span>
+              <span className={'alt-vehicle-card-label'}>Total Miles: </span>
               {totalMiles}
+              <br/>
+              <span className={'alt-vehicle-card-label'}>CO2 Reduced: </span>
+              {computeCO2Reduced(totalMiles, 'Public Transportation', this.props.userVehicles)}
+              <br/>
+              <span className={'alt-vehicle-card-label'}>Fuel Saved: </span>
+              {computeFuelSaved(totalMiles, this.props.userVehicles, trips.length)}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
@@ -35,6 +42,7 @@ class BikingCard extends React.Component {
 /** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
 BikingCard.propTypes = {
   userData: PropTypes.array.isRequired,
+  userVehicles: PropTypes.array.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */

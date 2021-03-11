@@ -3,27 +3,19 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /** Encapsulates state and variable values for this collection. */
-class VehicleCollection {
+class AllVehicleCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'VehicleCollection';
+    this.name = 'AllVehicleCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema(
       {
-        make: String,
-        model: String,
-        owner: String,
-        logo: String,
-        price: Number,
-        year: Number,
-        MPG: Number,
-        fuelSpending: Number,
-        type: {
-          type: String,
-          allowedValues: ['Gas', 'EV/Hybrid'],
-        },
+        Year: Number,
+        Make: String,
+        Model: String,
+        Mpg: Number,
       },
       { tracker: Tracker },
     );
@@ -35,4 +27,4 @@ class VehicleCollection {
   }
 }
 
-export const Vehicle = new VehicleCollection();
+export const AllVehicle = new AllVehicleCollection();

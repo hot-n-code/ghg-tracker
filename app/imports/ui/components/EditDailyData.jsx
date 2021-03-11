@@ -1,12 +1,11 @@
 import React from 'react';
-import { Button, Loader, Modal } from 'semantic-ui-react';
+import { Icon, Loader, Modal } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
@@ -51,23 +50,24 @@ class EditDailyData extends React.Component {
 
   // Render the form.
   renderModal() {
+    const doc = this.props.dailies.find(({ _id }) => _id === this.props.transportationID);
     return (
         <Modal size='mini'
                closeIcon
                open={this.state.modalOpen}
                onClose={this.handleModalClose}
                onOpen={this.handleModalOpen}
-               trigger={<Button>Edit</Button>}
+               trigger={<Icon style={{ cursor: 'pointer' }} name='edit outline'/>}
         >
           <Modal.Header>Edit Data</Modal.Header>
           <Modal.Content>
             <AutoForm schema={bridge}
                       onSubmit={data => this.submit(data)}
-                      model={this.props.doc}>
+                      model={doc}>
               <DateField name='inputDate'
                          max={new Date(Date.now())}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={_.pluck(this.props.vehicles, 'make').concat(getAltTransportation())}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
               <NumField name='milesTraveled'/>
               <SubmitField value='Submit'/>
               <ErrorsField/>
@@ -82,21 +82,21 @@ class EditDailyData extends React.Component {
 
 // Require the presence of a DailyData document in the props object.
 EditDailyData.propTypes = {
-  doc: PropTypes.object,
+  transportationID: PropTypes.string,
+  dailies: PropTypes.array.isRequired,
   model: PropTypes.object,
   vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 // withTracker connects Meteor data to React components.
-export default withTracker(({ match }) => {
-  const documentId = match.params._id;
-  const subscription = Meteor.subscribe(DailyUserData.userPublickationName);
+export default withTracker(() => {
+  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
   const email = Meteor.user().username;
   return {
     vehicles: Vehicle.collection.find({ owner: email }).fetch(),
-    doc: DailyUserData.collection.findOne(documentId),
+    dailies: DailyUserData.collection.find({ owner: email }).fetch(),
     ready: subscription.ready() && subscription2.ready(),
   };
 })(EditDailyData);
