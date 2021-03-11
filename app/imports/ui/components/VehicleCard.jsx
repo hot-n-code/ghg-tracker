@@ -2,10 +2,21 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { Header, Button } from 'semantic-ui-react';
+import { sampleVehicles } from '../utilities/sampleData.js';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
-  const { _id, year, make, model, logo, price, MPG, fuelSpending } = vehicle;
+  const {
+    _id,
+    year,
+    make,
+    model,
+    logo,
+    price,
+    MPG,
+    fuelSpending,
+    type,
+  } = vehicle;
 
   // State
   const [selectedId, setSelectedId] = useState(null);
@@ -85,51 +96,86 @@ const VehicleCard = ({ vehicle }) => {
               </motion.p>
               <motion.div className='vehicle-card-expand-container'>
                 <motion.div className='vehicle-card-expand-col'>
-                  <motion.div className='vehicle-card-expand-logo'>
-                    <img src={logo} alt={`${make} Logo`} />
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-header'>
-                    <Header as='h1'>{`${year} ${make} ${model}`}</Header>
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>Purchase Price: </span>
-                    ${`${price}`}
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>
-                      Avg. Fuel Consumption:{' '}
-                    </span>
-                    {`${MPG}`} MPG
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>
-                      Yearly Fuel Spending:{' '}
-                    </span>
-                    ${`${fuelSpending}`}
+                  <motion.div className='vehicle-card-expand-content-wrapper'>
+                    <div className='vehicle-card-expand-header-wrapper'>
+                      <motion.div className='vehicle-card-expand-logo'>
+                        <img src={logo} alt={`${make} Logo`} />
+                      </motion.div>
+                      <motion.div className='vehicle-card-expand-header'>
+                        <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                      </motion.div>
+                    </div>
+                    <motion.table className='vehicle-card-expand-stats'>
+                      <tbody>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Purchase Price:
+                          </td>
+                          <td>${`${price}`}</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Avg. Fuel Consumption:
+                          </td>
+                          <td>{`${MPG}`} MPG</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Yearly Fuel Spending:
+                          </td>
+                          <td>${`${fuelSpending}`}</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Vehicle Type:
+                          </td>
+                          <td>{`${type}`}</td>
+                        </motion.tr>
+                      </tbody>
+                    </motion.table>
                   </motion.div>
                 </motion.div>
                 <motion.div className='vehicle-card-expand-col'>
-                  <motion.div className='vehicle-card-expand-logo'>
-                    <img src={logo} alt={`${make} Logo`} />
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-header'>
-                    <Header as='h1'>{`${year} ${make} ${model}`}</Header>
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>Purchase Price: </span>
-                    ${`${price}`}
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>
-                      Avg. Fuel Consumption:{' '}
-                    </span>
-                    {`${MPG}`} MPG
-                  </motion.div>
-                  <motion.div className='vehicle-card-expand-description'>
-                    <span className='vehicle-card-label'>
-                      Yearly Fuel Spending:{' '}
-                    </span>
-                    ${`${fuelSpending}`}
+                  <motion.div className='vehicle-card-expand-content-wrapper'>
+                    <div className='vehicle-card-expand-header-wrapper'>
+                      <motion.div className='vehicle-card-expand-logo'>
+                        <img
+                          src={sampleVehicles[0].logo}
+                          alt={`${sampleVehicles[0].make} Logo`}
+                        />
+                      </motion.div>
+                      <motion.div className='vehicle-card-expand-header'>
+                        <Header as='h1'>{`${sampleVehicles[0].year} ${sampleVehicles[0].make} ${sampleVehicles[0].model}`}</Header>
+                      </motion.div>
+                    </div>
+                    <motion.table className='vehicle-card-expand-stats'>
+                      <tbody>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Purchase Price:
+                          </td>
+                          <td>${`${sampleVehicles[0].price}`}</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Avg. Fuel Consumption:
+                          </td>
+                          <td>{`${sampleVehicles[0].MPG}`} MPG</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Yearly Fuel Spending:
+                          </td>
+                          <td>${`${sampleVehicles[0].fuelSpending}`}</td>
+                        </motion.tr>
+                        <motion.tr>
+                          <td className='vehicle-card-expand-label'>
+                            Vehicle Type:
+                          </td>
+                          <td>{`${sampleVehicles[0].type}`}</td>
+                        </motion.tr>
+                      </tbody>
+                    </motion.table>
                   </motion.div>
                 </motion.div>
               </motion.div>
