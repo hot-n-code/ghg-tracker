@@ -99,7 +99,7 @@ class UserPage extends React.Component {
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/Biking.png"
+                              margin: '0 auto' }} src="/images/altvehicle-page/Biking.png"
                                  size='small' alt="biking"/>
                           <Header as='h1' textAlign='center'>Days Biked to Work</Header>
                           <Header as='h2' textAlign='center'>10 days</Header>
