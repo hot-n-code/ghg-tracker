@@ -36,8 +36,8 @@ const makeSchema = () => new SimpleSchema({
     model: String,
     price: Number,
     year: Number,
+    fuelSpending: Number,
     // MPG: Number,
-    // fuelSpending: Number,
     // type: {
     //   type: String,
     //   allowedValues: ['gas', 'ev', 'hybrid'],
@@ -74,13 +74,11 @@ class AddVehicleModal extends React.Component {
 
   /** On submit, insert the data. */
   submit(data, formRef) {
-    const { make, model, price, year } = data;
+    const { make, model, price, year, fuelSpending } = data;
     const owner = Meteor.user().username;
     // LOGO
     const temp = _.pluck(Make.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
-    // FUEL SPENDING
-    const fuelSpending = 0;
     // MPG
     const get = this.getMPGType(make, model, year);
     const MPG = get[0];
@@ -195,6 +193,13 @@ class AddVehicleModal extends React.Component {
                           name='year'
                           showInlineError={true}
                           placeholder={'Year'}
+                        />
+                      </Form.Group>
+                      <Form.Group>
+                        <NumField
+                            name='fuelSpending'
+                            showInlineError={true}
+                            placeholder={'Yearly Fuel Spending'}
                         />
                       </Form.Group>
                       <SubmitField value='Submit' />

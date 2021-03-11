@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
 import VehicleCard from './VehicleCard';
 import AddVehicleModal from './AddVehicleModal';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
@@ -21,7 +22,8 @@ class VehicleList extends React.Component {
 
   /** Render the page once subscriptions of Vehicles collection have been received. */
   renderPage() {
-    const userVehicles = this.props.vehicles;
+    const email = Meteor.user().username;
+    const userVehicles = _.where(this.props.vehicles, { owner: email });
     return (
       <div className='vehicle-list-container'>
         <Grid stackable columns={3}>
