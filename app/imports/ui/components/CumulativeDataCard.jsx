@@ -21,6 +21,9 @@ class CumulativeDataCard extends React.Component {
           if (altTransportation.includes(collectionData.modeOfTransportation)) {
             altData[i] = collectionData;
             i++;
+          } else if (collectionData.cO2Reduced > 0) {
+            altData[i] = collectionData;
+            i++;
           }
           return altData;
       });

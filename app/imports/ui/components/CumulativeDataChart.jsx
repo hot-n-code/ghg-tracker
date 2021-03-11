@@ -3,7 +3,6 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Header } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { Pie } from 'react-chartjs-2';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
@@ -12,35 +11,38 @@ const CumulativeDataChart = (props) => {
   // Calculating the sum of individual modes of transportation between all users
   const transportationData = (dailyUser) => {
     const otherAltTransportation = ['Biking', 'Public Transportation', 'Walking'];
-    const allModeData = dailyUser;
+    const allUserData = dailyUser;
     const altData = {
       Telework: 0,
       Carpool: 0,
       Other: 0,
-      Vehicle: 0,
+      GasVehicle: 0,
+      EVHybrid: 0,
     };
-    allModeData.map((mode) => {
-      if (mode === 'Telework') {
+    allUserData.map((data) => {
+      if (data.modeOfTransportation === 'Telework') {
         altData.Telework += 1;
-      } else if (mode === 'Carpool') {
+      } else if (data.modeOfTransportation === 'Carpool') {
         altData.Carpool += 1;
-      } else if (otherAltTransportation.includes(mode)) {
+      } else if (otherAltTransportation.includes(data.modeOfTransportation)) {
         altData.Other += 1;
-      } else {
-        altData.Vehicle += 1;
-      }
+      } else if (data.cO2Reduced > 0) {
+          altData.EVHybrid += 1;
+        } else {
+          altData.GasVehicle += 1;
+        }
       return altData;
     });
-    return [altData.Telework, altData.Carpool, altData.Other, altData.Vehicle];
+    return [altData.Telework, altData.Carpool, altData.Other, altData.EVHybrid, altData.GasVehicle];
   };
   // Forming the layout for pie chart
   const pieDataSet = (dailyUser) => {
     const dataSets = {
-      labels: ['Telework', 'Carpool', 'Other', 'Vehicles'],
+      labels: ['Telework', 'Carpool', 'Other', 'EV/Hybrid Vehicle', 'Gas Vehicle'],
       datasets: [
           {
             data: transportationData(dailyUser),
-            backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391'],
+            backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391', '#FF69B4'],
           }],
   };
     return dataSets;
@@ -48,24 +50,22 @@ const CumulativeDataChart = (props) => {
     return (
         <Grid>
           <Grid.Column width={9}>
-            <Pie data={ pieDataSet(props.dailyUserData)} height='200px'/>
-          </Grid.Column>
-          <Grid.Column textAlign='right' width={7}>
             <Header as='h1' color='blue'> MODES OF TRAVEL COUNT </Header>
+            <Pie data={ pieDataSet(props.userData)} height='200px'/>
           </Grid.Column>
         </Grid>
     );
 };
 
 CumulativeDataChart.propTypes = {
-  dailyUserData: PropTypes.array.isRequired,
+  userData: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
   const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
 
   return {
-    dailyUserData: _.pluck(DailyUserData.collection.find({}).fetch(), 'modeOfTransportation'),
+    userData: DailyUserData.collection.find({}).fetch(),
     ready: subscriptionDailyUser.ready(),
   };
 })(CumulativeDataChart);

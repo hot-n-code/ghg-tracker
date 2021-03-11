@@ -24,7 +24,7 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/Signin';
 import Signup from '../pages/Signup';
 import Signout from '../pages/Signout';
-import AdminPage from '../pages/AdminPage';
+import AdminUserList from '../pages/AdminUserList';
 import DataAdminPage from '../pages/DataAdminPage';
 import CreateUser from '../pages/CreateUser';
 import UserPage from '../pages/UserPage';
@@ -51,7 +51,7 @@ class App extends React.Component {
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
-            <ProtectedRoute path='/admin' component={AdminPage} />
+            <ProtectedRoute path='/admin' component={AdminUserList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
             <ProtectedRoute path='/alt' component={AltTransportation} />
