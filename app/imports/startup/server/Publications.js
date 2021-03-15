@@ -22,7 +22,13 @@ Meteor.publish(Stuffs.userPublicationName, function () {
 
 Meteor.publish(DailyUserData.userPublicationName, () => DailyUserData.collection.find());
 
-Meteor.publish(Users.userPublicationName, () => Users.collection.find());
+Meteor.publish(Users.userPublicationName, function () {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return Users.collection.find({ email: username });
+  }
+  return this.ready();
+});
 
 Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
 

@@ -22,7 +22,6 @@ class UserPage extends React.Component {
 
     renderPage() {
       const uEmail = Meteor.user().username;
-      const profTest = Users.collection.find({ email: uEmail }).fetch()[0];
       const userData = [];
       DailyUserData.collection.find({ owner: uEmail }).forEach(
           function (data) {
@@ -52,7 +51,7 @@ class UserPage extends React.Component {
                 <Header as='h1' textAlign='center'>Welcome Back! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
-                        <ProfileCard profile={profTest}/>
+                        <ProfileCard profile={this.props.users}/>
                     </Grid.Column>
                     <Grid.Column>
                         <Card fluid>
@@ -138,13 +137,17 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
+    users: PropTypes.array,
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
+export default withTracker(({ match }) => {
+    const userId = match.params._id;
+    const getUser = Meteor.users.findOne(userId);
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
+        users: Users.collection.find({ username: getUser }).fetch()[0],
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
