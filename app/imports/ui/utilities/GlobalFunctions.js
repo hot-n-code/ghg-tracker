@@ -38,3 +38,41 @@ export function computeFuelSaved(milesTraveled, userVehicles, trips) {
   }
   return fuelSaved;
 }
+
+// Calculates cumulative miles Traveled, cO2Reduced, cO2Produced, and gasSaved.
+// Returns an object of 4 attributes that can be accessed using dot notation
+export function CalculateCumulative(collection) {
+  const sumData = (arr, key) => _.reduce(_.pluck(arr, key), function (sum, num) { return sum + num; }, 0).toFixed(1);
+
+  const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+  const userData = collection;
+  console.log(userData);
+  const eImpact = {
+    milesTraveled: 0,
+    cO2Reduced: 0,
+    cO2Produced: 0,
+    GasSaved: 0,
+  };
+  const altData = [];
+  const gasData = [];
+  let x = 0;
+  let i = 0;
+  userData.map((collectionData) => {
+    if (altTransportation.includes(collectionData.modeOfTransportation)) {
+      altData[i] = collectionData;
+      i++;
+    } else if (collectionData.cO2Reduced > 0) {
+      altData[i] = collectionData;
+      i++;
+    } else if (collectionData.cO2Reduced < 0) {
+      gasData[x] = collectionData;
+      x++;
+    }
+    return altData;
+  });
+  eImpact.milesTraveled = sumData(altData, 'milesTraveled');
+  eImpact.cO2Reduced = sumData(altData, 'cO2Reduced');
+  eImpact.GasSaved = (eImpact.milesTraveled / 20).toFixed(1);
+  eImpact.cO2Produced = sumData(gasData, 'cO2Reduced') * -1;
+  return eImpact;
+}
