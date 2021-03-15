@@ -147,7 +147,7 @@ export default withTracker(({ match }) => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
-        users: Users.collection.find({ username: getUser }).fetch()[0],
+        users: Users.collection.findOne({ username: getUser }),
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
