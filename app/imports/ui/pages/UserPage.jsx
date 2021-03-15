@@ -137,7 +137,7 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
-    users: PropTypes.array,
+    users: PropTypes.object,
     ready: PropTypes.bool.isRequired,
 };
 
