@@ -17,7 +17,7 @@ import { Users } from '../../api/user/UserCollection';
 
 const bridge = new SimpleSchema2Bridge(Users.schema);
 
-// Renders modal for editing daily data
+// Modal for editing user's profile data
 class EditProfile extends React.Component {
     constructor(props) {
         super(props);
@@ -74,7 +74,7 @@ class EditProfile extends React.Component {
                      <SubmitField value='Submit'/>
                      <ErrorsField/>
                      <HiddenField name='email'/>
-                      <HiddenField name='vehicles'/>
+                     <HiddenField name='vehicles'/>
                     </AutoForm>
                 </Modal.Content>
             </Modal>
