@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Segment, Header, Form, Loader } from 'semantic-ui-react';
 import {
   AutoForm,
-  TextField,
   SubmitField,
   NumField,
   SelectField,
@@ -20,8 +19,15 @@ import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { Make } from '../../api/make/Make';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
+const findModel = (make, props) => {
+  console.log(make);
+  const totalCars = props.AllVehicles[0].Vehicles;
+  const find = _.uniq(_.pluck(_.where(totalCars, { Make: make }), 'Model'));
+ return find;
+};
+
 /** Create a schema to specify the structure of the data to appear in the form. */
-const makeSchema = () => new SimpleSchema({
+const makeSchema = (props) => new SimpleSchema({
     make: {
       type: String,
       allowedValues: [
@@ -33,7 +39,10 @@ const makeSchema = () => new SimpleSchema({
         'Volkswagen',
       ],
     },
-    model: String,
+    model: {
+      type: String,
+      allowedValues: findModel('Honda', props),
+    },
     price: Number,
     year: Number,
     fuelSpending: Number,
@@ -106,7 +115,7 @@ class AddVehicleModal extends React.Component {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
-    const formSchema = makeSchema();
+    const formSchema = makeSchema(this.props);
     const bridge = new SimpleSchema2Bridge(formSchema);
     const isSelected = this.state.isSelected;
     let formRef = null;
@@ -177,11 +186,7 @@ class AddVehicleModal extends React.Component {
                     <Segment>
                       <Form.Group widths={'equal'}>
                         <SelectField name='make' />
-                        <TextField
-                          name='model'
-                          showInlineError={true}
-                          placeholder={'Model of Vehicle'}
-                        />
+                        <SelectField name='model'/>
                       </Form.Group>
                       <Form.Group widths={'equal'}>
                         <NumField
