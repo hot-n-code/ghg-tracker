@@ -27,7 +27,7 @@ export function computeCO2Reduced(milesTraveled, modeOfTransportation, userVehic
   if (cO2Reduced === 'NaN') {
     cO2Reduced = 0;
   }
-  return cO2Reduced;
+  return (cO2Reduced.toFixed(2));
 }
 
 export function computeFuelSaved(milesTraveled, userVehicles, trips) {

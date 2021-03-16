@@ -13,7 +13,7 @@ class HistoryRowData extends React.Component {
                 <Table.Cell>{this.props.transportationData.inputDate.toLocaleDateString()}</Table.Cell>
                 <Table.Cell>{this.props.transportationData.modeOfTransportation}</Table.Cell>
                 <Table.Cell>{this.props.transportationData.milesTraveled.toFixed(2)}</Table.Cell>
-                <Table.Cell>{this.props.transportationData.cO2Reduced.toFixed(2)}</Table.Cell>
+                <Table.Cell>{this.props.transportationData.cO2Reduced}</Table.Cell>
                 <Table.Cell collapsing><EditDailyData transportationID={this.props.transportationData._id}/></Table.Cell>
                 <Table.Cell collapsing><DeleteDailyData transportationID={this.props.transportationData._id}/></Table.Cell>
             </Table.Row>
