@@ -6,10 +6,12 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
+import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
 import ProfileCard from '../components/ProfileCard';
 import MyDataChart from '../components/MyDataChart';
+import { computeFuelSaved } from '../utilities/GlobalFunctions';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -22,6 +24,7 @@ class UserPage extends React.Component {
 
     renderPage() {
       const uEmail = Meteor.user().username;
+      const myVehicles = _.where(this.props.vehicles, { owner: uEmail });
       const profTest = Users.collection.find({ email: uEmail }).fetch()[0];
       const userData = [];
       DailyUserData.collection.find({ owner: uEmail }).forEach(
@@ -35,8 +38,8 @@ class UserPage extends React.Component {
       const totalUserMilesToday = _.reduce(getUserMilesToday, (total, num) => total + num, 0);
       const getUserCO2Today = _.pluck(DailyUserData.collection.find({ owner: uEmail }).fetch(), 'cO2Reduced');
       const totalUserCO2Today = _.reduce(getUserCO2Today, (total, num) => total + num, 0).toFixed(2);
-      const daysTelework = _.size(_.pluck(DailyUserData.collection.find({ owner: uEmail,
-          modeOfTransportation: 'Telework' }).fetch(), 'inputDate'));
+      const hoursTelework = _.reduce(_.pluck(DailyUserData.collection.find({ owner: uEmail,
+          modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0).toFixed(2);
       const daysBiking = _.pluck(DailyUserData.collection.find({ owner: uEmail,
             modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
       const bikeAverage = (bikeDays) => {
@@ -45,11 +48,11 @@ class UserPage extends React.Component {
           }
          return (_.reduce(bikeDays, (total, num) => total + num, 0) / _.size(bikeDays)).toFixed(2);
       };
+      const totalTrips = _.size(DailyUserData.collection.find({ owner: uEmail }).fetch());
 
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <Header as='h1' textAlign='center'>Welcome Back! Your CO2 Emission was up 2.6% from yesterday.</Header>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={profTest}/>
@@ -78,7 +81,8 @@ class UserPage extends React.Component {
                               margin: '0 auto' }} src="/images/gas.png"
                                  size='small' alt="filler placement for eventual graph"/>
                           <Header as='h1' textAlign='center'>Total Fuel Saved</Header>
-                          <Header as='h2' textAlign='center'>0.9 gal</Header>
+                          <Header as='h2' textAlign='center'>{computeFuelSaved(totalUserMilesToday, myVehicles,
+                              totalTrips)} gallons</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
@@ -98,8 +102,8 @@ class UserPage extends React.Component {
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/home.png"
                                  size='small' alt="home"/>
-                          <Header as='h1' textAlign='center'>Days Worked at Home</Header>
-                          <Header as='h2' textAlign='center'>{daysTelework} day(s)</Header>
+                          <Header as='h1' textAlign='center'>Hours Worked at Home</Header>
+                          <Header as='h2' textAlign='center'>{hoursTelework} hour(s)</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
@@ -138,13 +142,16 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
+    vehicles: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
+    const subscription3 = Meteor.subscribe(Vehicle.userPublicationName);
     return {
-        ready: subscription1.ready() && subscription2.ready(),
+        vehicles: Vehicle.collection.find({}).fetch(),
+        ready: subscription1.ready() && subscription2.ready() && subscription3.ready(),
     };
 })(UserPage);
