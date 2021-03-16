@@ -1,6 +1,6 @@
 const sumMiles = (array) => array.reduce((accumulator, data) => accumulator + data.milesTraveled, 0).toFixed(2);
 
-export function cumulativeReduced(collection) {
+export function getCumulativeGHG(collection) {
   const eImpact = {};
 
   const altTransportation = collection.filter(({ cO2Reduced }) => cO2Reduced > 0);
