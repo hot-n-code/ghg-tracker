@@ -23,8 +23,6 @@ class UserPage extends React.Component {
     renderPage() {
       const uEmail = Meteor.user().username;
       const profTest = Users.collection.find({ email: uEmail }).fetch()[0];
-      const myDailyData = _.where(this.props.dailyData, { owner: uEmail });
-
 
       const today = new Date().toDateString();
       const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: uEmail }).fetch(), 'milesTraveled');
@@ -123,7 +121,7 @@ class UserPage extends React.Component {
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                      {myDailyData.map((value, index) => <HistoryRowData key={index} transportationData={value}/>)}
+                      {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
                     </Table.Body>
                 </Table>
               </div>
