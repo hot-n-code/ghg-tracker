@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Button, Image, Container } from 'semantic-ui-react';
+import { Header, Button, Image } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
@@ -13,9 +13,7 @@ const LandingCumulativeData = () => (
       <Header as='h1' textAlign='center'> <u>Malama I Ka `Aina</u></Header>
       <Header as='h2' textAlign='center'> Do your part to save Hawai&apos;i and track your carbon footprint today. </Header>
       <Image centered src='/images/landing-page/cloud-trans.png' padding={0} />
-      <Container>
       <Header as='h2' id='cloud-carbon'> {ghgTotal} LBS.</Header>
-      </Container>
         <br/>
         <Header as='h2' textAlign='center'> Make A Difference Today.
           <br/>

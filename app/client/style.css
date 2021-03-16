@@ -15,16 +15,19 @@
   background-image: url('images/landing-page/oahu.jpeg');
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.44);
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
   height: 500px;
 }
 #cloud-carbon {
   position: absolute;
-  transform: translate(190%, -220%);
   font-size: 80px;
+  transform: translate(285%, -220%);
   color: aliceblue;
+  z-index: 5;
+  margin: 0px;
+  text-size-adjust: none;
 }
+
 .background-about {
   background-image: url('images/honolulu.jpg');
   box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.44);
