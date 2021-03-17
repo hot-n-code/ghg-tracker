@@ -36,8 +36,8 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
   }
 
   const fuelSaved = milesTraveled / autoMPG;
-  eImpactDaily.fuelSaved = ((fuelSaved === 'Nan') ? 0 : fuelSaved).toFixed(2);
-  eImpactDaily.cO2Produced = (fuelSaved * 19.6).toFixed(2);
+  eImpactDaily.fuelSaved = ((typeof fuelSaved === 'number') ? fuelSaved : 0).toFixed(2);
+  eImpactDaily.cO2Reduced = (fuelSaved * 19.6).toFixed(2);
 
   return eImpactDaily;
 };

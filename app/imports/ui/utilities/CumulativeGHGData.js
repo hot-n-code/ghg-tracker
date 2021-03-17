@@ -10,7 +10,7 @@ import { getAltTransportation } from './DailyGHGData';
 // Array.prototype.reduce functions used by both getCumulativePerMode(collection, mode) and getCumulativeGHG(collection)
 const sumCO2Reduced = (array) => array.reduce((accumulator, data) => accumulator + data.cO2Reduced, 0).toFixed(2);
 const sumMiles = (array) => array.reduce((accumulator, data) => accumulator + data.milesTraveled, 0).toFixed(2);
-const sumFuelSaved = (array) => array.reduce((accumulator, data) => accumulator + data.fuelSaved).toFixed(2);
+const sumFuelSaved = (array) => array.reduce((accumulator, data) => accumulator + data.fuelSaved, 0).toFixed(2);
 
 /**
  * Returns an object with attributes equal to climate-related metrics related to a specific mode of the transportation
@@ -59,7 +59,7 @@ export const getCumulativeGHG = (collection) => {
 
   eImpact.cO2Reduced = sumCO2Reduced(altTransportation);
   const cO2Produced = getCumulativePerMode(collection, 'Gas').cO2Produced;
-  eImpact.cO2Produced = (cO2Produced === 'NaN') ? 0 : cO2Produced;
+  eImpact.cO2Produced = (typeof cO2Produced === 'number') ? cO2Produced : 0;
   eImpact.VMTReduced = sumMiles(altTransportation);
   eImpact.fuelSaved = sumFuelSaved(altTransportation);
 

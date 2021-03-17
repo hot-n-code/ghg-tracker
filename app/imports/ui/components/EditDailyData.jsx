@@ -30,7 +30,7 @@ class EditDailyData extends React.Component {
   submit(data) {
     const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
     const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
-    const cO2Reduced = dailyGHG.cO2Produced;
+    const cO2Reduced = dailyGHG.cO2Reduced;
     const fuelSaved = dailyGHG.fuelSaved;
     DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved } }, (error) => {
       if (error) {

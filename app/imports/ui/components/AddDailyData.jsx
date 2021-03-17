@@ -38,7 +38,7 @@ class AddDailyData extends React.Component {
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
     const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
-    const cO2Reduced = dailyGHG.cO2Produced;
+    const cO2Reduced = dailyGHG.cO2Reduced;
     const fuelSaved = dailyGHG.fuelSaved;
     const owner = Meteor.user().username;
     DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved }, (error) => {
