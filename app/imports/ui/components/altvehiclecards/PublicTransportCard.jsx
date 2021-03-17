@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { computeCO2Reduced, computeFuelSaved } from '../../utilities/GlobalFunctions';
+import { computeCO2Reduced, computeFuelSaved } from '../../utilities/DailyGHGData';
 
 /** Renders a single vehicle card. */
 class PublicTransportCard extends React.Component {

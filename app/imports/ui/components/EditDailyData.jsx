@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
+import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
 
 const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 
@@ -29,8 +29,10 @@ class EditDailyData extends React.Component {
   // On successful submit, update data.
   submit(data) {
     const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
-    const cO2Reduced = computeCO2Reduced(milesTraveled, modeOfTransportation, this.props.vehicles);
-    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, cO2Reduced } }, (error) => {
+    const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
+    const cO2Reduced = dailyGHG.cO2Produced;
+    const fuelSaved = dailyGHG.fuelSaved;
+    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -72,6 +74,7 @@ class EditDailyData extends React.Component {
               <SubmitField value='Submit'/>
               <ErrorsField/>
               <HiddenField name='cO2Reduced'/>
+              <HiddenField name='fuelSaved'/>
               <HiddenField name='owner'/>
             </AutoForm>
           </Modal.Content>

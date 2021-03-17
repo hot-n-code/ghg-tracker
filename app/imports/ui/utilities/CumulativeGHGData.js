@@ -2,16 +2,15 @@
  * CumulativeGHGData.js is a global document that contains utility functions that computes for the cumulative GHG Data
  * or climate-related metrics needed for data charts and dashboards implemented in this application.
  *
- * author(s):               Daphne Marie Tapia
- * in collaboration with:   Sophia Elize Cruz, Timothy Huo, Chak Hon Lam
+ * collaborator(s):   Daphne Marie Tapia,Sophia Elize Cruz, Timothy Huo, Chak Hon Lam
  */
 
-import { getAltTransportation } from './GlobalFunctions';
+import { getAltTransportation } from './DailyGHGData';
 
 // Array.prototype.reduce functions used by both getCumulativePerMode(collection, mode) and getCumulativeGHG(collection)
 const sumCO2Reduced = (array) => array.reduce((accumulator, data) => accumulator + data.cO2Reduced, 0).toFixed(2);
 const sumMiles = (array) => array.reduce((accumulator, data) => accumulator + data.milesTraveled, 0).toFixed(2);
-const sumFuelSaved = (array, trips) => (((array.VMTReduced / array.cO2Reduced) * 19.6) * trips).toFixed(2);
+const sumFuelSaved = (array) => array.reduce((accumulator, data) => accumulator + data.fuelSaved).toFixed(2);
 
 /**
  * Returns an object with attributes equal to climate-related metrics related to a specific mode of the transportation
@@ -20,7 +19,7 @@ const sumFuelSaved = (array, trips) => (((array.VMTReduced / array.cO2Reduced) *
  *        allowed values: ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking', 'EVHybrid', 'Gas']
  * @returns {Object}
  */
-export function getCumulativePerMode(collection, mode) {
+export const getCumulativePerMode = (collection, mode) => {
   const transpoData = {};
   let filtered;
 
@@ -41,23 +40,19 @@ export function getCumulativePerMode(collection, mode) {
   } else {
     transpoData.cO2Reduced = computeCO2;
     transpoData.VMTReduced = sumMiles(filtered);
-    transpoData.fuelSaved = sumFuelSaved(transpoData, filtered.length);
+    transpoData.fuelSaved = sumFuelSaved(filtered);
   }
   transpoData.timesUsed = filtered.length;
 
-  if (transpoData.fuelSaved === 'NaN') {
-    transpoData.fuelSaved = 0;
-  }
-
   return transpoData;
-}
+};
 
 /**
  * Returns an object with attributes equal to climate-related metrics based on all user/s input data
  * @param collection, an array of objects or documents from the DailyUserDataCollection
  * @returns {Object}
  */
-export function getCumulativeGHG(collection) {
+export const getCumulativeGHG = (collection) => {
   const eImpact = {};
 
   const altTransportation = collection.filter(({ cO2Reduced }) => cO2Reduced >= 0);
@@ -66,11 +61,7 @@ export function getCumulativeGHG(collection) {
   const cO2Produced = getCumulativePerMode(collection, 'Gas').cO2Produced;
   eImpact.cO2Produced = (cO2Produced === 'NaN') ? 0 : cO2Produced;
   eImpact.VMTReduced = sumMiles(altTransportation);
-  eImpact.fuelSaved = sumFuelSaved(eImpact, altTransportation.length);
-
-  if (eImpact.fuelSaved === 'NaN') {
-    eImpact.fuelSaved = 0;
-  }
+  eImpact.fuelSaved = sumFuelSaved(altTransportation);
 
   return eImpact;
-}
+};

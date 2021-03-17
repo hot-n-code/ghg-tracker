@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
+import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -37,9 +37,11 @@ class AddDailyData extends React.Component {
   // On submit, insert data.
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, milesTraveled } = data;
-    const cO2Reduced = computeCO2Reduced(milesTraveled, modeOfTransportation, this.props.vehicles);
+    const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
+    const cO2Reduced = dailyGHG.cO2Produced;
+    const fuelSaved = dailyGHG.fuelSaved;
     const owner = Meteor.user().username;
-    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced }, (error) => {
+    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
