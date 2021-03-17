@@ -28,18 +28,11 @@ class UserPage extends React.Component {
       const today = new Date().toDateString();
       const hoursTelework = _.reduce(_.pluck(DailyUserData.collection.find({ owner: uEmail,
           modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0).toFixed(2);
-      const daysBiking = _.pluck(DailyUserData.collection.find({ owner: uEmail,
-            modeOfTransportation: 'Biking' }).fetch(), 'milesTraveled');
-      const bikeAverage = (bikeDays) => {
-          if (bikeDays.length === 0) {
-              return 0;
-          }
-         return (_.reduce(bikeDays, (total, num) => total + num, 0) / _.size(bikeDays)).toFixed(2);
-      };
       const ghgData = getCumulativeGHG(this.props.dailyData);
       const totalCO2Reduced = ghgData.cO2Reduced;
       const totalMiles = ghgData.VMTReduced;
       const totalFuelSaved = ghgData.fuelSaved;
+      const totalGHGProduced = ghgData.cO2Produced;
 
         return (
             <div className='background-all'>
@@ -99,13 +92,14 @@ class UserPage extends React.Component {
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/altvehicle-page/Biking.png"
                                  size='small' alt="biking"/>
-                          <Header as='h1' textAlign='center'>Average Miles Biked</Header>
-                          <Header as='h2' textAlign='center'>{bikeAverage(daysBiking)} mile(s)</Header>
+                          <Header as='h1' textAlign='center'>Total CO2 Produced</Header>
+                          <Header as='h2' textAlign='center'>{totalGHGProduced} lb(s)</Header>
                       </Grid.Column>
                   </Grid>
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
-                        <Header as='h2' textAlign='center'>My Transportation History</Header>
+                        <Header as='h1' textAlign='center'
+                                style={{ marginTop: '10px' }}>My Transportation History</Header>
                         <Header as='h1' textAlign='center'><AddDailyData/></Header>
                     </Grid.Column>
                 </Grid>

@@ -10,7 +10,7 @@ const ProfileCard = ({ profile }) => (
             <Image circular style={{ display: 'block',
                 margin: '0 auto' }}
                    src={profile.image} size='medium'/>
-                   <Card.Header style={{ margin: '9px' }}>
+                   <Card.Header style={{ margin: '7px' }}>
                        <Header as='h1'>{profile.name}</Header>
                    </Card.Header>
             <Card.Meta>
@@ -20,7 +20,7 @@ const ProfileCard = ({ profile }) => (
                 <Header as='h4'>My Goal: {profile.goal}
                 </Header>
             </Card.Meta>
-            <Button style={{ margin: '20px' }} size='medium'>
+            <Button style={{ margin: '8px' }} size='medium'>
                 <Link to={`/edit/${profile._id}`}> </Link>Edit Profile
             </Button>
         </Card.Content>
