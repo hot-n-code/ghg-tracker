@@ -26,8 +26,8 @@ class UserPage extends React.Component {
       const profTest = Users.collection.find({ email: uEmail }).fetch()[0];
 
       const today = new Date().toDateString();
-      const hoursTelework = _.reduce(_.pluck(DailyUserData.collection.find({ owner: uEmail,
-          modeOfTransportation: 'Telework' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0).toFixed(2);
+      const hoursTelework = _.size(DailyUserData.collection.find({ owner: uEmail,
+          modeOfTransportation: 'Telework' }).fetch());
       const ghgData = getCumulativeGHG(this.props.dailyData);
       const totalCO2Reduced = ghgData.cO2Reduced;
       const totalMiles = ghgData.VMTReduced;
