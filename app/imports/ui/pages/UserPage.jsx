@@ -85,8 +85,8 @@ class UserPage extends React.Component {
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/home.png"
                                  size='small' alt="home"/>
-                          <Header as='h1' textAlign='center'>Hours Worked at Home</Header>
-                          <Header as='h2' textAlign='center'>{hoursTelework} hour(s)</Header>
+                          <Header as='h1' textAlign='center'>Days Worked at Home</Header>
+                          <Header as='h2' textAlign='center'>{hoursTelework} day(s)</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
