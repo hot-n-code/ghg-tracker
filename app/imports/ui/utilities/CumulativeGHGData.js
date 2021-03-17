@@ -3,7 +3,9 @@ import { getAltTransportation } from './GlobalFunctions';
 // functions used by both cumulative functions
 const sumCO2Reduced = (array) => array.reduce((accumulator, data) => accumulator + data.cO2Reduced, 0).toFixed(2);
 const sumMiles = (array) => array.reduce((accumulator, data) => accumulator + data.milesTraveled, 0).toFixed(2);
-const sumFuelSaved = (array) => (((array.VMTReduced / array.cO2Reduced) * 19.6) * array.length).toFixed(2);
+const sumFuelSaved = (array, trips) => (((array.VMTReduced / array.cO2Reduced) * 19.6) * trips).toFixed(2);
+
+
 
 // gets the total GHG Data for the specified mode of transportation
 export function getCumulativePerMode(collection, mode) {
@@ -20,13 +22,14 @@ export function getCumulativePerMode(collection, mode) {
     filtered = collection.filter(({ cO2Reduced }) => cO2Reduced < 0);
   }
 
+  const trips = filtered.length;
   const computeCO2 = sumCO2Reduced(filtered);
   if (computeCO2 < 0) {
     transpoData.cO2Produced = Math.abs(computeCO2);
   } else {
     transpoData.co2Reduced = computeCO2;
     transpoData.VMTReduced = sumMiles(filtered);
-    transpoData.fuelSaved = sumFuelSaved(transpoData);
+    transpoData.fuelSaved = sumFuelSaved(transpoData, trips);
   }
   transpoData.timesUsed = filtered.length;
 
@@ -42,11 +45,12 @@ export function getCumulativeGHG(collection) {
   const eImpact = {};
 
   const altTransportation = collection.filter(({ cO2Reduced }) => cO2Reduced >= 0);
+  const trips = altTransportation.length;
 
   eImpact.cO2Reduced = sumCO2Reduced(altTransportation);
   eImpact.cO2Produced = getCumulativePerMode(collection, 'Gas').cO2Produced;
   eImpact.VMTReduced = sumMiles(altTransportation);
-  eImpact.fuelSaved = sumFuelSaved(eImpact);
+  eImpact.fuelSaved = sumFuelSaved(eImpact, trips);
   if (eImpact.fuelSaved === 'NaN') {
     eImpact.fuelSaved = 0;
   }
