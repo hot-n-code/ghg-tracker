@@ -76,7 +76,7 @@ class UserPage extends React.Component {
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/co2.png"
+                              margin: '0 auto' }} src="https://img.icons8.com/ios/100/000000/potted-plant.png"
                                  size='small' alt="CO2"/>
                           <Header as='h1' textAlign='center'>Total CO2 Reduced</Header>
                           <Header as='h2' textAlign='center'>{totalCO2Reduced} lbs</Header>
@@ -90,7 +90,7 @@ class UserPage extends React.Component {
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/altvehicle-page/Biking.png"
+                              margin: '0 auto' }} src="/images/co2.png"
                                  size='small' alt="biking"/>
                           <Header as='h1' textAlign='center'>Total CO2 Produced</Header>
                           <Header as='h2' textAlign='center'>{totalGHGProduced} lb(s)</Header>

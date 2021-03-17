@@ -27,7 +27,7 @@ export function getCumulativePerMode(collection, mode) {
   if (computeCO2 < 0) {
     transpoData.cO2Produced = Math.abs(computeCO2);
   } else {
-    transpoData.co2Reduced = computeCO2;
+    transpoData.cO2Reduced = computeCO2;
     transpoData.VMTReduced = sumMiles(filtered);
     transpoData.fuelSaved = sumFuelSaved(transpoData, trips);
   }
