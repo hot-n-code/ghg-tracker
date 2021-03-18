@@ -109,6 +109,7 @@ class UserPage extends React.Component {
                         <Header as='h1' textAlign='center'><AddDailyData/></Header>
                     </Grid.Column>
                 </Grid>
+                <div id='example'>
                 <Table stackable striped>
                     <Table.Header>
                         <Table.Row>
@@ -120,10 +121,11 @@ class UserPage extends React.Component {
                             <Table.HeaderCell/>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
-                      {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
-                    </Table.Body>
+                     <Table.Body>
+                            {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
+                      </Table.Body>
                 </Table>
+                </div>
               </div>
             </Container>
             </div>
