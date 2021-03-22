@@ -67,7 +67,7 @@ class UserPage extends React.Component {
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/speedometer.png"
                                  size='small' alt="filler placement for eventual graph"/>
-                          <Header as='h1' textAlign='center'>Total Miles Traveled</Header>
+                          <Header as='h1' textAlign='center'>Alternative Miles</Header>
                           <Header as='h2' textAlign='center'>{totalMiles} miles</Header>
                       </Grid.Column>
                       <Grid.Column>
