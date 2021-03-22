@@ -21,10 +21,19 @@ const MyDataChart = () => {
         modeOfTransportation: 'Carpool' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0);
     const totalPT = _.reduce(_.pluck(DailyUserData.collection.find({ owner: email,
         modeOfTransportation: 'Public Transportation' }).fetch(), 'milesTraveled'), (total, num) => total + num, 0);
+    const totalCar = _.where(DailyUserData.collection.find({}).fetch(), { owner: email });
+    let gasTotal = 0;
+    totalCar.forEach((obj) => {
+           if (obj.cO2Reduced < 0) {
+               gasTotal = gasTotal + obj.milesTraveled;
+           }
+        }
+    );
+    console.log(gasTotal);
     const stateAll = {
-        labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'Alternative Fuel Vehicle'],
-        datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV],
-            backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
+        labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
+        datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV, gasTotal],
+            backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FF69B4'],
         }],
     };
 
