@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Header, Image, Button } from 'semantic-ui-react';
+import { Card, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
+import EditProfile from './EditProfile';
 
 // Renders the profile card component containing the user's data
 const ProfileCard = ({ profile }) => (
@@ -20,9 +21,7 @@ const ProfileCard = ({ profile }) => (
                 <Header as='h4'>My Goal: {profile.goal}
                 </Header>
             </Card.Meta>
-            <Button style={{ margin: '8px' }} size='medium'>
-                <Link to={`/edit/${profile._id}`}> </Link>Edit Profile
-            </Button>
+                <EditProfile profileID={profile._id}/>
         </Card.Content>
     </Card>
 );

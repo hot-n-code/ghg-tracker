@@ -33,9 +33,8 @@ class CreateUser extends React.Component {
 
   submit(data) {
     /** Gathers user's data and adds it to the userCollection */
-    const { name, goal } = data;
+    const { name, image, goal } = data;
     const email = Meteor.user().username;
-    const image = 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg';
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
       swal('Error', 'You already have a created user');
