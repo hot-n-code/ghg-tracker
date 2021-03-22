@@ -84,7 +84,7 @@ class EditProfile extends React.Component {
 // Require the presence of a DailyData document in the props object.
 EditProfile.propTypes = {
     users: PropTypes.array.isRequired,
-    profileID: PropTypes.object,
+    profileID: PropTypes.string,
     ready: PropTypes.bool.isRequired,
 };
 
