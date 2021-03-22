@@ -24,11 +24,10 @@ class UserPage extends React.Component {
     renderPage() {
       const today = new Date().toDateString();
       const hoursTelework = _.size(_.where(this.props.dailyData, { modeOfTransportation: 'Telework' }));
-      const totalFuelSaved = _.reduce(_.pluck(this.props.dailyData, 'fuelSaved'), (total, num) => total + num, 0);
-      console.log(this.props.dailyData);
       const ghgData = getCumulativeGHG(this.props.dailyData);
       const totalCO2Reduced = ghgData.cO2Reduced;
       const totalMiles = ghgData.VMTReduced;
+      const totalFuelSaved = ghgData.fuelSaved;
       const totalGHGProduced = ghgData.cO2Produced;
 
         return (
