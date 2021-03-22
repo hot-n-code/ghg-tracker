@@ -367,9 +367,3 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 .alt-vehicle-card-label {
     font-weight: 700;
 }
-
-#example {
-  margin: 30px;
-  max-height: 200px;
-  overflow-y: auto;
-}
