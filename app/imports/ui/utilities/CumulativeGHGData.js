@@ -29,6 +29,7 @@ export const getCumulativePerMode = (collection, mode) => {
   } else if (mode === 'EVHybrid') {
     filtered = collection.filter(({ modeOfTransportation, co2Reduced }) => modeOfTransportation !== mode
         && co2Reduced >= 0);
+
   // implies that mode === 'Gas'
   } else {
     filtered = collection.filter(({ cO2Reduced }) => cO2Reduced < 0);
