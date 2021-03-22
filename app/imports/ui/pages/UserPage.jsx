@@ -23,12 +23,6 @@ class UserPage extends React.Component {
     renderPage() {
       const uEmail = Meteor.user().username;
       const profTest = Users.collection.find({ email: uEmail }).fetch()[0];
-      const userData = [];
-      DailyUserData.collection.find({ owner: uEmail }).forEach(
-          function (data) {
-            userData.push(data);
-          },
-      );
 
       const today = new Date().toDateString();
       const getUserMilesToday = _.pluck(DailyUserData.collection.find({ owner: uEmail }).fetch(), 'milesTraveled');
@@ -126,9 +120,9 @@ class UserPage extends React.Component {
                             <Table.HeaderCell/>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>
-                      {userData.map((value, index) => <HistoryRowData key={index} transportationData={value}/>)}
-                    </Table.Body>
+                     <Table.Body>
+                            {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
+                      </Table.Body>
                 </Table>
               </div>
             </Container>
@@ -138,6 +132,7 @@ class UserPage extends React.Component {
 }
 
 UserPage.propTypes = {
+    dailyData: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
@@ -145,6 +140,7 @@ export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription2 = Meteor.subscribe(Users.userPublicationName);
     return {
+        dailyData: DailyUserData.collection.find({}).fetch(),
         ready: subscription1.ready() && subscription2.ready(),
     };
 })(UserPage);
