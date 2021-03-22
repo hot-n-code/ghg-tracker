@@ -54,9 +54,5 @@ export function getCumulativeGHG(collection) {
   if (eImpact.fuelSaved === 'NaN') {
     eImpact.fuelSaved = 0;
   }
-
-  if (eImpact.cO2Produced === undefined) {
-    eImpact.cO2Produced = 0;
-  }
   return eImpact;
 }
