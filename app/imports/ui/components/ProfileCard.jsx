@@ -9,7 +9,7 @@ const ProfileCard = ({ profile }) => (
     <Card fluid>
         <Card.Content textAlign='center'>
             <Image circular style={{ display: 'block',
-                margin: '10px auto', height: '325px', width: '325px'}}
+                margin: '10px auto', height: '325px', width: '325px' }}
                    src={profile.image} />
                    <Card.Header style={{ margin: '7px' }}>
                        <Header as='h1'>{profile.name}</Header>

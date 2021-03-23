@@ -25,11 +25,10 @@ const MyDataChart = () => {
     let gasTotal = 0;
     totalCar.forEach((obj) => {
            if (obj.cO2Reduced < 0) {
-               gasTotal = gasTotal + obj.milesTraveled;
+               gasTotal += obj.milesTraveled;
            }
-        }
-    );
-    console.log(gasTotal);
+        });
+    // console.log(gasTotal);
     const stateAll = {
         labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
         datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV, gasTotal],

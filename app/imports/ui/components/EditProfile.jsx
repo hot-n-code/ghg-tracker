@@ -10,7 +10,7 @@ import {
     ErrorsField,
     SubmitField,
     HiddenField,
-    TextField
+    TextField,
 } from 'uniforms-semantic';
 import { Users } from '../../api/user/UserCollection';
 
