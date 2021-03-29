@@ -28,6 +28,7 @@ class AdminUserList extends React.Component {
                 <Table.Header>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
+                  <Table.HeaderCell>Password</Table.HeaderCell>
                   <Table.HeaderCell/>
                   <Table.HeaderCell/>
                 </Table.Header>

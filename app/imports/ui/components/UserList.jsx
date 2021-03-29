@@ -6,7 +6,7 @@ import DeleteUser from './DeleteUser';
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class UserList extends React.Component {
   render() {
-    console.log(this.props.list.email);
+    console.log(this.props.list.password);
 
     return (
         <Table.Row>
