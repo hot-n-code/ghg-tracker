@@ -18,12 +18,12 @@ class DeleteUser extends React.Component {
   handleModalClose = () => this.setState({ modalOpen: false });
 
   // On successful deletion, delete data.
-  delete(transportationID) {
-    Users.collection.remove(transportationID, (error) => {
+  delete(userID) {
+    Users.collection.remove(userID, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
-        swal('Success', 'Data deleted successfully', 'success').then(() => {
+        swal('Success', 'User deleted successfully', 'success').then(() => {
           this.handleModalClose();
           // eslint-disable-next-line no-undef
           window.location.reload();
@@ -43,14 +43,14 @@ class DeleteUser extends React.Component {
                onOpen={this.handleModalOpen}
                trigger={<Icon style={{ cursor: 'pointer' }} name='trash alternate outline'/>}
         >
-          <Modal.Header>Delete Data</Modal.Header>
-          <Modal.Content>Are you sure you want to delete selected data?</Modal.Content>
+          <Modal.Header>Delete User</Modal.Header>
+          <Modal.Content>Are you sure you want to delete the user?</Modal.Content>
           <Modal.Actions>
             <Button icon
                     size='tiny'
                     negative
                     labelPosition='right'
-                    onClick={() => this.delete(this.props.transportationID)}>
+                    onClick={() => this.delete(this.props.userID)}>
               Delete
               <Icon name='trash alternate outline'/>
             </Button>
@@ -68,7 +68,7 @@ class DeleteUser extends React.Component {
 }
 
 DeleteUser.propTypes = {
-  transportationID: PropTypes.string,
+  userID: PropTypes.string,
 };
 
 export default DeleteUser;

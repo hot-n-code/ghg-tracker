@@ -1,8 +1,7 @@
 import React from 'react';
-import { Table, Button } from 'semantic-ui-react';
-import { _ } from 'meteor/underscore';
-import { Users } from '../../api/user/UserCollection';
+import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import DeleteUser from './DeleteUser';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class UserList extends React.Component {
@@ -14,6 +13,9 @@ class UserList extends React.Component {
           <Table.Cell>{this.props.list.name}</Table.Cell>
           <Table.Cell>{this.props.list.email}</Table.Cell>
           <Table.Cell>{this.props.list.password}</Table.Cell>
+          <Table.Cell>
+            <DeleteUser transportationID={this.props.list._id}/>
+          </Table.Cell>
         </Table.Row>
     );
   }

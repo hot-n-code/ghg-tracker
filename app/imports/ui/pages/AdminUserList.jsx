@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Loader, Table, Container, Input, Button } from 'semantic-ui-react';
+import { Loader, Table, Container, Input, Button, Tab } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -28,7 +28,8 @@ class AdminUserList extends React.Component {
                 <Table.Header>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
-                  <Table.HeaderCell>Edit</Table.HeaderCell>
+                  <Table.HeaderCell/>
+                  <Table.HeaderCell/>
                 </Table.Header>
                 <Table.Body>
                     {_.map(test, (list, index) => (
