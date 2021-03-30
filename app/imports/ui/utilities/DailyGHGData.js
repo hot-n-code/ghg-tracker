@@ -41,19 +41,3 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
 
   return eImpactDaily;
 };
-
-// DELETE THESE FUNCTIONS ONCE ALT TRANSPORTATION HAS BEEN MODIFIED
-export function computeCO2Reduced(milesTraveled, modeOfTransportation, userVehicles) {
-  // eslint-disable-next-line no-console
-  console.log(milesTraveled, modeOfTransportation, userVehicles);
-  return (0);
-}
-
-export function computeFuelSaved(milesTraveled, userVehicles, trips) {
-  const avgMPG = _.reduce(userVehicles, (memo, num) => memo + num.MPG, 0) / userVehicles.length;
-  let fuelSaved = ((milesTraveled / avgMPG) * trips).toFixed(2);
-  if (fuelSaved === 'NaN') {
-    fuelSaved = 0;
-  }
-  return fuelSaved;
-}

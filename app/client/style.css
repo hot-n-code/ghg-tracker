@@ -340,28 +340,28 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 .ui.centered.card.alt-vehicle-card {
-    text-align: center;
-    width: 373px;
-    transition: 0.2s all ease-in;
-    border-radius: 20px;
+  text-align: center;
+  width: 300px;
+  transition: 0.2s all ease-in;
+  border-radius: 20px;
 }
 
 .ui.centered.card.alt-vehicle-card:hover {
-    box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .ui.card .content .alt-vehicle-image {
-    height: 187px;
-    width: 187px;
+  height: 187px;
+  width: 187px;
 }
 
 .ui.card > .content > .header:not(.ui).alt-vehicle-card-header {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 
 .ui.card > .content > .description {
-    font-size: 20px;
-    margin-top: 15px;
+  font-size: 20px;
+  margin-top: 15px;
 }
 
 .alt-vehicle-card-label {
