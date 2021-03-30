@@ -10,7 +10,7 @@ import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 // User-level publication
 Meteor.publish(Stuffs.userPublicationName, () => Stuffs.collection.find());
 
-Meteor.publish(DailyUserData.userPublicationName, function publish() {
+Meteor.publish(DailyUserData.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
     return DailyUserData.collection.find({ owner: username });
@@ -26,7 +26,13 @@ Meteor.publish(Users.userPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Vehicle.userPublicationName, () => Vehicle.collection.find());
+Meteor.publish(Vehicle.userPublicationName, function () {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return Vehicle.collection.find({ email: username });
+  }
+  return this.ready();
+});
 
 Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
 
