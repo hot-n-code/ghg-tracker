@@ -10,6 +10,7 @@ import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { Users } from '../../api/user/UserCollection';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -99,7 +100,7 @@ AddDailyData.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const subscription = Meteor.subscribe(Vehicle.userPublicationName);
-  const email = Meteor.userId().username;
+  const email = Meteor.user().username;
   return {
     vehicles: Vehicle.collection.find({ owner: email }).fetch(),
     ready: subscription.ready(),

@@ -9,7 +9,6 @@ import { Users } from '../../api/user/UserCollection';
 import ProfileCard from '../components/ProfileCard';
 import MyDataChart from '../components/MyDataChart';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
-import AddDailyData from '../components/AddDailyData';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
