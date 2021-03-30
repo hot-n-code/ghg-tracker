@@ -33,6 +33,7 @@ import CreateVehicle from '../pages/CreateVehicle';
 import HEmore from '../pages/HEmore';
 import Asbmore from '../pages/Asbmore';
 import Pcmore from '../pages/Pcmore';
+import UserDataPage from '../pages/UserDataPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -43,6 +44,7 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             <Route exact path='/' component={Landing} />
+            <Route exact path='/user-data-page' component={UserDataPage} />
             <Route path='/signin' component={Signin} />
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
