@@ -8,6 +8,7 @@ import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import HistoryRowData from '../components/HistoryRowData';
 import AddDailyData from '../components/AddDailyData';
+import WhatIf from '../components/WhatIf';
 import ProfileCard from '../components/ProfileCard';
 import MyDataChart from '../components/MyDataChart';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
@@ -96,7 +97,7 @@ class UserPage extends React.Component {
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'
                                 style={{ marginTop: '10px' }}>My Transportation History</Header>
-                        <Header as='h1' textAlign='center'><AddDailyData/></Header>
+                        <Header as='h1' textAlign='center'><AddDailyData/><WhatIf/></Header>
                     </Grid.Column>
                 </Grid>
                 <Table stackable striped>
