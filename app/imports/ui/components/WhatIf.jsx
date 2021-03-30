@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Modal, Icon } from 'semantic-ui-react';
+import { Button, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
@@ -19,29 +18,26 @@ const WhatIf = (props) => {
   const [firstOpen, setFirstOpen] = useState(false);
   const [secondOpen, setSecondOpen] = useState(false);
   const [fakeData, setFakeData] = useState(() => props.userData);
-
   const makeSchema = () => new SimpleSchema({
     inputDate: Date,
     modeOfTransportation: String,
     milesTraveled: Number,
   });
-
-  // function computeFakeData(data) {
-  //   const dailyGHG = getDailyGHG(data.milesTraveled, data.modeOfTransportation, props.vehicles);
-  //   const cO2Reduced = dailyGHG.cO2Reduced;
-  //   // const fuelSaved = dailyGHG.fuelSaved;
-  //   // const owner = Meteor.user().username;
-  //   return cO2Reduced;
-  // }
-  // On submit, insert data.
   function submit(data) {
-    setFakeData(data);
-    console.log(data);
+    const dailyGHG = getDailyGHG(data.milesTraveled, data.modeOfTransportation, props.vehicles);
+    setFakeData([...fakeData, {
+      _id: fakeData.length,
+      owner: Meteor.user().username,
+      inputDate: data.inputDate,
+      modeOfTransportation: data.modeOfTransportation,
+      milesTraveled: data.milesTraveled,
+      cO2Reduced: dailyGHG.cO2Reduced,
+      fuelSaved: dailyGHG.fuelSaved,
+    }]);
   }
 
     const formSchema = makeSchema();
     const bridge = new SimpleSchema2Bridge(formSchema);
-    let fRef = null;
     return (
   <Modal size='small'
          trigger={<Button>What If</Button>}
@@ -52,9 +48,13 @@ const WhatIf = (props) => {
   >
     <Modal.Header>Add What If Data</Modal.Header>
     <Modal.Content>
-      <AutoForm ref={ref => { fRef = ref; }}
+      <AutoForm
                 schema={bridge}
-                onSubmit={data => { submit(data, fRef); setSecondOpen(true); }}>
+                onSubmit={data => {
+                  submit(data);
+                  setSecondOpen(true);
+                }
+}>
         <DateField name='inputDate'
                    max={new Date(Date.now())}/>
         <SelectField name='modeOfTransportation'
@@ -74,7 +74,11 @@ const WhatIf = (props) => {
       <Modal.Header>Modal #2</Modal.Header>
       <Modal.Content>
         <p>Thats everything!</p>
-        <p> a + { fakeData[1] }</p>
+        <ul>
+          {fakeData.map(l => (
+              <li key={l._id}>{l.milesTraveled}</li>
+          ))}
+        </ul>
       </Modal.Content>
       <Modal.Actions>
         <Button
