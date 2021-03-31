@@ -50,3 +50,16 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
  */
 export const getMilesTraveled = (distanceTraveled, unit) => ((unit === 'mi') ?
     distanceTraveled : distanceTraveled * kmToMiFactor);
+
+/**
+ * Returns today's date, used in add/edit daily data forms
+ * @param distanceTraveled, number of distance traveled by user
+ * @param unit, distance unit: mi - miles, km - kilometers
+ * @returns {*|number}
+ */
+export const getDateToday = () => {
+  const today = new Date();
+  today.setHours(11, 59, 59, 99);
+
+  return today;
+};

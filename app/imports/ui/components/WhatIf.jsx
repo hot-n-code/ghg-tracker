@@ -8,7 +8,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getDailyGHG } from '../utilities/DailyGHGData';
+import { getDailyGHG, getDateToday } from '../utilities/DailyGHGData';
 import { altTransportation } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -65,8 +65,6 @@ const WhatIf = (props) => {
   const formSchema = makeSchema();
   const bridge = new SimpleSchema2Bridge(formSchema);
   let formRef = null;
-  const today = new Date();
-  today.setHours(11, 59, 59, 99);
 
   return (
     <Modal size='tiny'
@@ -87,7 +85,7 @@ const WhatIf = (props) => {
                   }}
         >
           <DateField name='inputDate'
-                     max={today}/>
+                     max={getDateToday()}/>
           <SelectField name='modeOfTransportation'
                        allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
           <NumField name='milesTraveled'/>
