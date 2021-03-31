@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getDailyGHG, getMilesTraveled } from '../utilities/DailyGHGData';
+import { getDailyGHG, getMilesTraveled, getDateToday } from '../utilities/DailyGHGData';
 import { altTransportation } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -69,8 +69,6 @@ class AddDailyData extends React.Component {
   // Render the form.
   renderModal() {
     let formRef = null;
-    const today = new Date();
-    today.setHours(11, 59, 59, 99);
 
     return (
       <Modal size='tiny'
@@ -86,7 +84,7 @@ class AddDailyData extends React.Component {
                     schema={bridge}
                     onSubmit={data => { this.submit(data, formRef); }}>
             <DateField name='inputDate'
-                       max={today}/>
+                       max={getDateToday()}/>
             <SelectField name='modeOfTransportation'
                          allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
             <Form.Group inline>

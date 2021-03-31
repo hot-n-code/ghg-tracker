@@ -9,6 +9,7 @@ import { Users } from '../../api/user/UserCollection';
 import ProfileCard from '../components/ProfileCard';
 import MyDataChart from '../components/MyDataChart';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
+import { getDateToday } from '../utilities/DailyGHGData';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -20,7 +21,7 @@ class UserPage extends React.Component {
     }
 
     renderPage() {
-      const today = new Date().toDateString();
+      const today = getDateToday().toDateString();
       const hoursTelework = _.size(_.where(this.props.dailyData, { modeOfTransportation: 'Telework' }));
       const ghgData = getCumulativeGHG(this.props.dailyData);
       const totalCO2Reduced = ghgData.cO2Reduced;

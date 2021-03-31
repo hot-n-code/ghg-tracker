@@ -18,7 +18,7 @@ import {
 import SimpleSchema from 'simpl-schema';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getDailyGHG, getMilesTraveled } from '../utilities/DailyGHGData';
+import { getDailyGHG, getMilesTraveled, getDateToday } from '../utilities/DailyGHGData';
 import { altTransportation } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -80,8 +80,6 @@ class EditDailyData extends React.Component {
   // Render the form.
   renderModal() {
     const doc = this.props.dailies.find(({ _id }) => _id === this.props.transportationID);
-    const today = new Date();
-    today.setHours(11, 59, 59, 99);
 
     return (
         <Modal size='tiny'
@@ -97,7 +95,7 @@ class EditDailyData extends React.Component {
                       onSubmit={data => this.submit(data)}
                       model={doc}>
               <DateField name='inputDate'
-                         max={today}/>
+                         max={getDateToday()}/>
               <SelectField name='modeOfTransportation'
                            allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
               <Form.Group inline>
