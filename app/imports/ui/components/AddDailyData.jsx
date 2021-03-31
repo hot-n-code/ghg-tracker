@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -79,7 +79,7 @@ class AddDailyData extends React.Component {
             <DateField name='inputDate'
                        max={new Date(Date.now())}/>
             <SelectField name='modeOfTransportation'
-                         allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
+                         allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
             <NumField name='milesTraveled'/>
             <SubmitField value='Submit'/>
             <ErrorsField/>
@@ -99,9 +99,8 @@ AddDailyData.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const subscription = Meteor.subscribe(Vehicle.userPublicationName);
-  const email = Meteor.user().username;
   return {
-    vehicles: Vehicle.collection.find({ owner: email }).fetch(),
+    vehicles: Vehicle.collection.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(AddDailyData);

@@ -33,6 +33,8 @@ import CreateVehicle from '../pages/CreateVehicle';
 import HEmore from '../pages/HEmore';
 import Asbmore from '../pages/Asbmore';
 import Pcmore from '../pages/Pcmore';
+import WhatIf from '../components/WhatIf';
+import UserDataPage from '../pages/UserDataPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -43,6 +45,7 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             <Route exact path='/' component={Landing} />
+            <Route exact path='/user-data-page' component={UserDataPage} />
             <Route path='/signin' component={Signin} />
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
@@ -54,6 +57,7 @@ class App extends React.Component {
             <ProtectedRoute path='/admin' component={AdminUserList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
+            <ProtectedRoute path='/what-if/' component={WhatIf} />
             <ProtectedRoute path='/alt' component={AltTransportation} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/list' component={ListStuff} />

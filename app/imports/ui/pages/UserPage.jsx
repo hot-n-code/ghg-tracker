@@ -1,13 +1,11 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Image, Container, Table, Loader, Card } from 'semantic-ui-react';
+import { Grid, Header, Image, Container, Loader, Card } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
-import HistoryRowData from '../components/HistoryRowData';
-import AddDailyData from '../components/AddDailyData';
 import ProfileCard from '../components/ProfileCard';
 import MyDataChart from '../components/MyDataChart';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
@@ -46,16 +44,20 @@ class UserPage extends React.Component {
                         </Card>
                     </Grid.Column>
                 </Grid>
-              <div style={{ paddingTop: '50px' }}/>
+              <div style={{ paddingTop: '30px' }}/>
+              <div className='background-total-user-data'>
               <Grid stackable columns={3}>
                   <Grid.Column width={16}>
                       <Header as='h1' textAlign='center'>
-                          My Numbers as of {today}</Header>
+                          My numbers as of
+                        <br/>
+                        {today}</Header>
+                    <hr/>
                   </Grid.Column>
               </Grid>
                 <div style={{ paddingBottom: '50px' }}/>
                 <div>
-                  <Grid stackable columns={5}>
+                  <Grid stackable columns={5} divided>
                       <Grid.Column>
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/gas.png"
@@ -92,28 +94,7 @@ class UserPage extends React.Component {
                           <Header as='h2' textAlign='center'>{totalGHGProduced} lb(s)</Header>
                       </Grid.Column>
                   </Grid>
-                <Grid stackable columns={3}>
-                    <Grid.Column width={16}>
-                        <Header as='h1' textAlign='center'
-                                style={{ marginTop: '10px' }}>My Transportation History</Header>
-                        <Header as='h1' textAlign='center'><AddDailyData/></Header>
-                    </Grid.Column>
-                </Grid>
-                <Table stackable striped>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>Date</Table.HeaderCell>
-                            <Table.HeaderCell>Mode of Transportation</Table.HeaderCell>
-                            <Table.HeaderCell>Total Miles</Table.HeaderCell>
-                            <Table.HeaderCell>CO2 Reduced</Table.HeaderCell>
-                            <Table.HeaderCell/>
-                            <Table.HeaderCell/>
-                        </Table.Row>
-                    </Table.Header>
-                     <Table.Body>
-                            {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
-                      </Table.Body>
-                </Table>
+                </div>
               </div>
             </Container>
             </div>

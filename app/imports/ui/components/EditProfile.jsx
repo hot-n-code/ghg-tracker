@@ -60,7 +60,7 @@ class EditProfile extends React.Component {
                    open={this.state.modalOpen}
                    onClose={this.handleModalClose}
                    onOpen={this.handleModalOpen}
-                   trigger={<Button style={{ margin: '10px' }}>Edit Profile</Button>}
+                   trigger={<Button >Edit Profile</Button>}
             >
                 <Modal.Header>Edit My Profile</Modal.Header>
                 <Modal.Content>
