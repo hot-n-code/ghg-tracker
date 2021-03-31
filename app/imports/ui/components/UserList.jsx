@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import DeleteUser from './DeleteUser';
+import EditUserAdmin from './EditUserAdmin';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 class UserList extends React.Component {
@@ -14,7 +15,8 @@ class UserList extends React.Component {
           <Table.Cell>{this.props.list.email}</Table.Cell>
           <Table.Cell>{this.props.list.password}</Table.Cell>
           <Table.Cell>
-            <DeleteUser transportationID={this.props.list._id}/>
+            <EditUserAdmin userID={this.props.list._id}/>
+            <DeleteUser userID={this.props.list._id}/>
           </Table.Cell>
         </Table.Row>
     );
