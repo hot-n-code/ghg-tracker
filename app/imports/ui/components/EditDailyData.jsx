@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
 
 const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 
@@ -69,7 +69,7 @@ class EditDailyData extends React.Component {
               <DateField name='inputDate'
                          max={new Date(Date.now())}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
               <NumField name='milesTraveled'/>
               <SubmitField value='Submit'/>
               <ErrorsField/>

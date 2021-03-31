@@ -1,11 +1,20 @@
 /**
- * ** RENAME TO DailyGHGData.js once alt transportation has been modified **
  * DailyGHGData.js is a global document that contains the utility function that computes for a single
  * GHG Data or climate-related metrics
+ *
+ * author(s):   Daphne Marie Tapia, Chak Hon Lam
  */
 import { _ } from 'meteor/underscore';
 
-export const getAltTransportation = () => ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+// Common conversion factor of 8,887 grams of CO2 emissions per gallon of gasoline consumed (Federal Register 2010)
+export const gHGPerGallon = 19.6;
+
+// The weighted average combined fuel economy for cars and light trucks in 2017 (FHWA 2019)
+// Read more: https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
+export const averageAutoMPG = 22.3;
+
+// An array of all the Alternative Transportation modes that are not EV/Hybrid vehicles
+export const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
 
 /**
  * Returns an object with attributes equal to climate-related metrics based on the user input data
@@ -27,17 +36,17 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
 
   // If the user has a regular gas vehicle,
   if (maxMPG > 0) {
-    autoMPG = (getAltTransportation().includes(modeOfTransportation) ||
+    autoMPG = (altTransportation.includes(modeOfTransportation) ||
         getVehicle(modeOfTransportation, userVehicles).type === 'EV/Hybrid') ?
-        maxMPG : getVehicle(modeOfTransportation, userVehicles).MPG * -1;
+        maxMPG : -getVehicle(modeOfTransportation, userVehicles).MPG;
   } else {
   // If the user has no gas vehicle (all EV/Hybrid), autoMPG is equal to the average MPG of vehicles in the US.
-    autoMPG = 25;
+    autoMPG = averageAutoMPG;
   }
 
   const fuelSaved = milesTraveled / autoMPG;
   eImpactDaily.fuelSaved = ((typeof fuelSaved === 'number') ? fuelSaved : 0).toFixed(2);
-  eImpactDaily.cO2Reduced = (fuelSaved * 19.6).toFixed(2);
+  eImpactDaily.cO2Reduced = (fuelSaved * gHGPerGallon).toFixed(2);
 
   return eImpactDaily;
 };

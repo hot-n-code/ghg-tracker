@@ -8,7 +8,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getAltTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 
@@ -65,14 +65,14 @@ const WhatIf = (props) => {
     const bridge = new SimpleSchema2Bridge(formSchema);
     let formRef = null;
     return (
-  <Modal size='small'
+  <Modal size='mini'
          trigger={<Button>What If</Button>}
          onClick={() => setFirstOpen(true)}
          onClose={() => setFirstOpen(false)}
          onOpen={() => setFirstOpen(true)}
          open={firstOpen}
   >
-    <Modal.Header>Add What If Data</Modal.Header>
+    <Modal.Header>Add &apos;What If&apos; Data</Modal.Header>
     <Modal.Content>
       <AutoForm
                 ref={ref => { formRef = ref; }}
@@ -85,7 +85,7 @@ const WhatIf = (props) => {
         <DateField name='inputDate'
                    max={new Date(Date.now())}/>
         <SelectField name='modeOfTransportation'
-                     allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(getAltTransportation())}/>
+                     allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
         <NumField name='milesTraveled'/>
         <SubmitField value='Submit'>
         </SubmitField>
@@ -126,10 +126,9 @@ WhatIf.propTypes = {
 export default withTracker(() => {
   const userData = Meteor.subscribe(DailyUserData.userPublicationName);
   const userVehicle = Meteor.subscribe(Vehicle.userPublicationName);
-  const email = Meteor.user().username;
   return {
     userData: DailyUserData.collection.find({}).fetch(),
-    vehicles: Vehicle.collection.find({ owner: email }).fetch(),
+    vehicles: Vehicle.collection.find({}).fetch(),
     ready: userData.ready() && userVehicle.ready(),
   };
 })(WhatIf);
