@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Header, Modal } from 'semantic-ui-react';
+import { AutoForm, DateField, ErrorsField, NumField, RadioField, SelectField, SubmitField } from 'uniforms-semantic';
+import { Button, Form, Header, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getDailyGHG, getDateToday } from '../utilities/DailyGHGData';
+import { getDailyGHG, getDateToday, getMilesTraveled } from '../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -20,27 +20,33 @@ const WhatIf = (props) => {
   const [secondOpen, setSecondOpen] = useState(false);
   const [fakeData, setFakeData] = useState(() => props.userData);
   const [cO2, setCO2] = useState('');
-  const [mile, setMile] = useState('');
+  const [distance, setDistance] = useState('');
   const [fuel, setFuel] = useState('');
   const [mode, setMode] = useState('');
   const makeSchema = () => new SimpleSchema({
     inputDate: Date,
     modeOfTransportation: String,
-    milesTraveled: Number,
+    distanceTraveled: Number,
+    unit: {
+      type: String,
+      allowedValues: ['mi', 'km'],
+    },
   });
   function submit(data, formRef) {
-    const dailyGHG = getDailyGHG(data.milesTraveled, data.modeOfTransportation, props.vehicles);
+    const { distanceTraveled, unit } = data;
+    const traveled = getMilesTraveled(distanceTraveled, unit).toFixed(2);
+    const dailyGHG = getDailyGHG(traveled, data.modeOfTransportation, props.vehicles);
     setFakeData([...fakeData, {
       _id: fakeData.length,
       owner: Meteor.user().username,
       inputDate: data.inputDate,
       modeOfTransportation: data.modeOfTransportation,
-      milesTraveled: data.milesTraveled,
+      distanceTraveled: traveled,
       cO2Reduced: dailyGHG.cO2Reduced,
       fuelSaved: dailyGHG.fuelSaved,
     }]);
     setCO2(dailyGHG.cO2Reduced);
-    setMile(data.milesTraveled);
+    setDistance(traveled);
     setFuel(dailyGHG.fuelSaved);
     setMode(data.modeOfTransportation);
     formRef.reset();
@@ -88,7 +94,10 @@ const WhatIf = (props) => {
                      max={getDateToday()}/>
           <SelectField name='modeOfTransportation'
                        allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
-          <NumField name='milesTraveled'/>
+          <Form.Group inline>
+            <NumField name='distanceTraveled'/>
+            <RadioField label={null} name='unit'/>
+          </Form.Group>
           <Header>
             <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>
           </Header>
@@ -103,7 +112,7 @@ const WhatIf = (props) => {
           open={secondOpen}
           size='large'
       >
-        <Modal.Header>WHAT IF: { mode } for { mile } miles</Modal.Header>
+        <Modal.Header>WHAT IF: { mode } for { distance } miles </Modal.Header>
         <Modal.Content>
           <DisplayCO2/>
         </Modal.Content>
