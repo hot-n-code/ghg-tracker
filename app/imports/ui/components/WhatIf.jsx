@@ -66,8 +66,8 @@ const WhatIf = (props) => {
     let formRef = null;
     return (
   <Modal size='mini'
+         closeIcon
          trigger={<Button>What If</Button>}
-         onClick={() => setFirstOpen(true)}
          onClose={() => setFirstOpen(false)}
          onOpen={() => setFirstOpen(true)}
          open={firstOpen}

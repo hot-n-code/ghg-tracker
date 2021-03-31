@@ -71,7 +71,7 @@ class AddDailyData extends React.Component {
              onOpen={this.handleModalOpen}
              trigger={<Button>Add Data</Button>}
       >
-        <Modal.Header>Add Daily Data</Modal.Header>
+        <Modal.Header>Add Transportation Data</Modal.Header>
         <Modal.Content>
           <AutoForm ref={ref => { formRef = ref; }}
                     schema={bridge}
