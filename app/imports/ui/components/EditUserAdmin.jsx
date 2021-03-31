@@ -75,7 +75,7 @@ class EditUserAdmin extends React.Component {
   }
 }
 
-// Require the presence of a DailyData document in the props object.
+// Require the presence of a User document in the props object.
 EditUserAdmin.propTypes = {
   users: PropTypes.array.isRequired,
   userID: PropTypes.string,
