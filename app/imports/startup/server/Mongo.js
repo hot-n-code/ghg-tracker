@@ -29,9 +29,9 @@ function addVehicle(vehicle) {
 }
 
 // UserCollection
-function addUser({ name, goal, email, image, vehicles }) {
+function addUser({ name, goal, email, image, password, vehicles }) {
   console.log(`  Defining profile ${email}`);
-  Users.collection.insert({ name, goal, email, image });
+  Users.collection.insert({ name, goal, email, image, password });
   // Add interests and projects.
   vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
 }

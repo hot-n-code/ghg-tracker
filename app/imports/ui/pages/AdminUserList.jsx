@@ -9,6 +9,7 @@ import UserList from '../components/UserList';
 
 const paddingStyle = { padding: 20 };
 class AdminUserList extends React.Component {
+
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
@@ -26,11 +27,12 @@ class AdminUserList extends React.Component {
                 <Table.Header>
                   <Table.HeaderCell>Name</Table.HeaderCell>
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
-                  <Table.HeaderCell>Edit</Table.HeaderCell>
+                  <Table.HeaderCell>Password</Table.HeaderCell>
+                  <Table.HeaderCell/>
                 </Table.Header>
                 <Table.Body>
-                    {_.map(test, (data, index) => (
-                          <UserList key={index} data={data} />
+                    {_.map(test, (list, index) => (
+                          <UserList key={index} list={list} />
                     ))}
                 </Table.Body>
               </Table>

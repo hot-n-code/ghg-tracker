@@ -11,6 +11,7 @@ class UserCollection {
       goal: String,
       email: String,
       image: String,
+      password: String,
       vehicles: { type: Array, optional: true },
       'vehicles.$': { type: String },
     }, { tracker: Tracker });
