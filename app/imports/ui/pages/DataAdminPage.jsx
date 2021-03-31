@@ -1,6 +1,11 @@
 import React from 'react';
-import { Container, Grid, Table, Button } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor';
+import { Container, Grid, Table, Button, Loader } from 'semantic-ui-react';
 import { Bar, Pie } from 'react-chartjs-2';
+import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
+import { Users } from '../../api/user/UserCollection';
+import CumulativeDataCard from '../components/CumulativeDataCard';
 
 const paddingStyle = { padding: 20 };
 
@@ -32,6 +37,10 @@ class DataAdminPage extends React.Component {
   }
 
   render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  }
+
+  renderPage() {
     return (
         <div className='background-all'>
         <Container style={paddingStyle}>
@@ -86,11 +95,10 @@ class DataAdminPage extends React.Component {
                 <Table.HeaderCell>Action</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
-
             <Table.Body>
               <Table.Row>
-                <Table.Cell>Cars</Table.Cell>
-                <Table.Cell>100.0</Table.Cell>
+                <Table.Cell>Telework</Table.Cell>
+                <Table.Cell>100</Table.Cell>
                 <Table.Cell>20500</Table.Cell>
                 <Table.Cell>
                   <Button fluid color='grey'>Edit</Button>
@@ -106,10 +114,25 @@ class DataAdminPage extends React.Component {
               </Table.Row>
             </Table.Body>
           </Table>
+          <Grid centered>
+            <CumulativeDataCard/>
+          </Grid>
         </Container>
         </div>
     );
   }
 }
 
-export default DataAdminPage;
+DataAdminPage.propTypes = {
+  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
+  doc: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
+};
+
+export default withTracker(() => {
+  const subscription = Meteor.subscribe(Users.adminPublicationName);
+  return {
+    doc: Users.collection.find({}).fetch(),
+    ready: subscription.ready(),
+  };
+})(DataAdminPage);
