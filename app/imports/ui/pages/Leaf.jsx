@@ -1,10 +1,10 @@
 import React from 'react';
+import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 class Leaf extends React.Component {
   render() {
     return (
-        
-        // CSS code
+    // CSS code
         <div className="leaf-box">
           <div className="leaf-percent">
             <div className="percentNum" id="count">0</div>
