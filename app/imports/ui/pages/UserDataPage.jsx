@@ -50,7 +50,7 @@ export default withTracker(() => {
   const sub1 = Meteor.subscribe(DailyUserData.userPublicationName);
   const sub2 = Meteor.subscribe(Users.userPublicationName);
   return {
-    dailyData: DailyUserData.collection.find({}).fetch(),
+    dailyData: DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch(),
     ready: sub1.ready() && sub2.ready(),
   };
 })(UserDataPage);

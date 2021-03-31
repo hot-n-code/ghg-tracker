@@ -42,7 +42,7 @@ class AddDailyData extends React.Component {
   // On submit, insert data.
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, distanceTraveled, unit } = data;
-    const milesTraveled = getMilesTraveled(distanceTraveled, unit);
+    const milesTraveled = getMilesTraveled(distanceTraveled, unit).toFixed(2);
     const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
     const cO2Reduced = dailyGHG.cO2Reduced;
     const fuelSaved = dailyGHG.fuelSaved;

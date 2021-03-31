@@ -1,17 +1,42 @@
 import React from 'react';
-import { Icon, Loader, Modal } from 'semantic-ui-react';
+import { Form, Header, Icon, Loader, Modal } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
-import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
+import {
+  AutoForm,
+  DateField,
+  ErrorsField,
+  HiddenField,
+  NumField,
+  RadioField,
+  SelectField,
+  SubmitField,
+} from 'uniforms-semantic';
+import SimpleSchema from 'simpl-schema';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { getDailyGHG } from '../utilities/DailyGHGData';
+import { getDailyGHG, getMilesTraveled } from '../utilities/DailyGHGData';
 import { altTransportation } from '../utilities/GlobalVariables';
 
-const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
+// Initializes a schema that specifies the structure of the data to appear in the form.
+const formSchema = new SimpleSchema({
+  inputDate: Date,
+  modeOfTransportation: String,
+  milesTraveled: Number,
+  unit: {
+    type: String,
+    allowedValues: ['mi', 'km'],
+    defaultValue: 'mi',
+  },
+  cO2Reduced: Number,
+  fuelSaved: Number,
+  owner: String,
+});
+
+const bridge = new SimpleSchema2Bridge(formSchema);
 
 // Renders modal for editing daily data
 class EditDailyData extends React.Component {
@@ -29,7 +54,8 @@ class EditDailyData extends React.Component {
 
   // On successful submit, update data.
   submit(data) {
-    const { inputDate, modeOfTransportation, milesTraveled, _id } = data;
+    const { inputDate, modeOfTransportation, unit, _id } = data;
+    const milesTraveled = getMilesTraveled(data.milesTraveled, unit).toFixed(2);
     const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
     const cO2Reduced = dailyGHG.cO2Reduced;
     const fuelSaved = dailyGHG.fuelSaved;
@@ -54,8 +80,11 @@ class EditDailyData extends React.Component {
   // Render the form.
   renderModal() {
     const doc = this.props.dailies.find(({ _id }) => _id === this.props.transportationID);
+    const today = new Date();
+    today.setHours(11, 59, 59, 99);
+
     return (
-        <Modal size='mini'
+        <Modal size='tiny'
                closeIcon
                open={this.state.modalOpen}
                onClose={this.handleModalClose}
@@ -68,10 +97,16 @@ class EditDailyData extends React.Component {
                       onSubmit={data => this.submit(data)}
                       model={doc}>
               <DateField name='inputDate'
-                         max={new Date(Date.now())}/>
+                         max={today}/>
               <SelectField name='modeOfTransportation'
                            allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
-              <NumField name='milesTraveled'/>
+              <Form.Group inline>
+                <NumField decimal label='Distance Traveled' name='milesTraveled'/>
+                <RadioField label={null} name='unit'/>
+              </Form.Group>
+              <Header>
+                <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>
+              </Header>
               <SubmitField value='Submit'/>
               <ErrorsField/>
               <HiddenField name='cO2Reduced'/>
@@ -97,10 +132,9 @@ EditDailyData.propTypes = {
 export default withTracker(() => {
   const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
   const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
-  const email = Meteor.user().username;
   return {
-    vehicles: Vehicle.collection.find({ owner: email }).fetch(),
-    dailies: DailyUserData.collection.find({ owner: email }).fetch(),
+    vehicles: Vehicle.collection.find({}).fetch(),
+    dailies: DailyUserData.collection.find({}).fetch(),
     ready: subscription.ready() && subscription2.ready(),
   };
 })(EditDailyData);

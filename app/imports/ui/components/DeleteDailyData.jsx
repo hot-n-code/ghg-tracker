@@ -35,7 +35,7 @@ class DeleteDailyData extends React.Component {
   // Render delete modal.
   render() {
     return (
-        <Modal size='mini'
+        <Modal size='tiny'
                dimmer
                closeIcon
                open={this.state.modalOpen}
