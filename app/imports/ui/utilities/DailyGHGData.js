@@ -5,7 +5,12 @@
  * author(s):   Daphne Marie Tapia, Chak Hon Lam
  */
 import { _ } from 'meteor/underscore';
-import { altTransportation, averageAutoMPG, gHGPerGallon, kmToMiFactor } from './GlobalVariables';
+import {
+  altSelectFieldOptions,
+  averageAutoMPG,
+  gHGPerGallon,
+  kmToMiFactor,
+} from './GlobalVariables';
 
 /**
  * Returns an object with attributes equal to climate-related metrics based on the user input data
@@ -27,7 +32,7 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
 
   // If the user has a regular gas vehicle,
   if (maxMPG > 0) {
-    autoMPG = (altTransportation.includes(modeOfTransportation) ||
+    autoMPG = (altSelectFieldOptions.includes(modeOfTransportation) ||
         getVehicle(modeOfTransportation, userVehicles).type === 'EV/Hybrid') ?
         maxMPG : -getVehicle(modeOfTransportation, userVehicles).MPG;
   } else {

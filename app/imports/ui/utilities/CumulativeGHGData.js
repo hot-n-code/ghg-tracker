@@ -4,7 +4,7 @@
  *
  * author(s):   Daphne Marie Tapia, Sophia Elize Cruz, Timothy Huo, Chak Hon Lam
  */
-import { altTransportation } from './GlobalVariables';
+import { altSelectFieldOptions } from './GlobalVariables';
 
 // Array.prototype.reduce functions used by both getCumulativePerMode(collection, mode) and getCumulativeGHG(collection)
 const sumCO2Reduced = (array) => array.reduce((accumulator, data) => accumulator + data.cO2Reduced, 0).toFixed(2);
@@ -23,7 +23,7 @@ export const getCumulativePerMode = (collection, mode) => {
   let filtered;
 
   // Retrieves relevant user data from collection, filtered by modeOfTransportation
-  if (altTransportation.includes(mode)) {
+  if (altSelectFieldOptions.includes(mode)) {
     filtered = collection.filter(({ modeOfTransportation }) => modeOfTransportation === mode);
   } else if (mode === 'EVHybrid') {
     filtered = collection.filter(({ modeOfTransportation, co2Reduced }) => modeOfTransportation !== mode

@@ -5,8 +5,33 @@ export const gHGPerGallon = 19.6;
 // Read more: https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
 export const averageAutoMPG = 22.3;
 
-// An array of all the Alternative Transportation modes that are not EV/Hybrid vehicles
-export const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
-
 // Kilometers to Miles Conversion Factor
 export const kmToMiFactor = 0.621371;
+
+// An array of all the Alternative Transportation modes that are not EV/Hybrid vehicles
+export const altTransportation = [
+  {
+    label: 'Biking',
+    value: 'biking',
+  }, {
+    label: 'Carpool',
+    value: 'carpool',
+  }, {
+    label: 'Public Transportation',
+    value: 'publicTransportation',
+  }, {
+    label: 'Telework',
+    value: 'telework',
+  }, {
+    label: 'Walking',
+    value: 'walking',
+  }, {
+    label: 'EV/Hybrid',
+    value: 'EVHybrid',
+  }];
+
+// An array of Alternative Transportation labels
+export const altTransportationLabels = altTransportation.map(alt => alt.label);
+
+// An array of Alternative Transportation labels without 'EV/Hybrid'
+export const altSelectFieldOptions = altTransportationLabels.filter(label => label !== 'EV/Hybrid');

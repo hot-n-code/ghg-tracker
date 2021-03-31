@@ -19,7 +19,7 @@ import SimpleSchema from 'simpl-schema';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { getDailyGHG, getMilesTraveled, getDateToday } from '../utilities/DailyGHGData';
-import { altTransportation } from '../utilities/GlobalVariables';
+import { altSelectFieldOptions } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
@@ -97,7 +97,7 @@ class EditDailyData extends React.Component {
               <DateField name='inputDate'
                          max={getDateToday()}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
               <Form.Group inline>
                 <NumField decimal label='Distance Traveled' name='milesTraveled'/>
                 <RadioField label={null} name='unit'/>
