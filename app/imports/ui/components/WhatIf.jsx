@@ -18,12 +18,16 @@ const WhatIf = (props) => {
   const [firstOpen, setFirstOpen] = useState(false);
   const [secondOpen, setSecondOpen] = useState(false);
   const [fakeData, setFakeData] = useState(() => props.userData);
+  const [cO2, setCO2] = useState('');
+  const [mile, setMile] = useState('');
+  const [fuel, setFuel] = useState('');
+  const [mode, setMode] = useState('');
   const makeSchema = () => new SimpleSchema({
     inputDate: Date,
     modeOfTransportation: String,
     milesTraveled: Number,
   });
-  function submit(data) {
+  function submit(data, formRef) {
     const dailyGHG = getDailyGHG(data.milesTraveled, data.modeOfTransportation, props.vehicles);
     setFakeData([...fakeData, {
       _id: fakeData.length,
@@ -34,10 +38,32 @@ const WhatIf = (props) => {
       cO2Reduced: dailyGHG.cO2Reduced,
       fuelSaved: dailyGHG.fuelSaved,
     }]);
+    setCO2(dailyGHG.cO2Reduced);
+    setMile(data.milesTraveled);
+    setFuel(dailyGHG.fuelSaved);
+    setMode(data.modeOfTransportation);
+    formRef.reset();
   }
+  const DisplayCO2 = () => {
+    if (cO2 > 0) {
+      return (
+          <div>
+            <h2 style={{ color: 'green' }}>Fuel Saved: {fuel} Gallons</h2>
+            <h2 style={{ color: 'green' }}>CO2 Reduced: {cO2} Ib(s)</h2>
+          </div>
+      );
+    }
+      return (
+          <div>
+            <h2 style={{ color: 'red' }}>Fuel Spent: {fuel * -1} Gallons</h2>
+            <h2 style={{ color: 'red' }}>CO2 Produced: {cO2 * -1} Ib(s)</h2>
+          </div>
+      );
+  };
 
     const formSchema = makeSchema();
     const bridge = new SimpleSchema2Bridge(formSchema);
+    let formRef = null;
     return (
   <Modal size='small'
          trigger={<Button>What If</Button>}
@@ -49,9 +75,10 @@ const WhatIf = (props) => {
     <Modal.Header>Add What If Data</Modal.Header>
     <Modal.Content>
       <AutoForm
+                ref={ref => { formRef = ref; }}
                 schema={bridge}
                 onSubmit={data => {
-                  submit(data);
+                  submit(data, formRef);
                   setSecondOpen(true);
                 }
 }>
@@ -71,14 +98,9 @@ const WhatIf = (props) => {
         open={secondOpen}
         size='large'
     >
-      <Modal.Header>Modal #2</Modal.Header>
+      <Modal.Header>WHAT IF: { mode } for { mile } miles</Modal.Header>
       <Modal.Content>
-        <p>Thats everything!</p>
-        <ul>
-          {fakeData.map(l => (
-              <li key={l._id}>{l.milesTraveled}</li>
-          ))}
-        </ul>
+        <DisplayCO2/>
       </Modal.Content>
       <Modal.Actions>
         <Button
