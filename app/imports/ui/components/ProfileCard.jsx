@@ -1,13 +1,15 @@
 import React from 'react';
-import { Card, Header, Image } from 'semantic-ui-react';
+import { Button, Card, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import EditProfile from './EditProfile';
+import AddDailyData from './AddDailyData';
+import WhatIf from './WhatIf';
 
 // Renders the profile card component containing the user's data
 const ProfileCard = ({ profile }) => (
-    <Card fluid>
-        <Card.Content textAlign='center'>
+    <Card fluid >
+        <Card.Content textAlign='center' style={{ margin: '10px' }}>
             <Image circular style={{ display: 'block',
                 margin: '10px auto', height: '325px', width: '325px' }}
                    src={profile.image} />
@@ -23,6 +25,9 @@ const ProfileCard = ({ profile }) => (
             </Card.Meta>
           <div>
             <EditProfile profileID={profile._id}/>
+            <AddDailyData/>
+            <WhatIf/>
+            <Button>History</Button>
           </div>
         </Card.Content>
     </Card>
