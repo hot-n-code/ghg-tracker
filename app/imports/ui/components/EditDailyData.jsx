@@ -8,7 +8,8 @@ import swal from 'sweetalert';
 import { AutoForm, DateField, ErrorsField, HiddenField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { getDailyGHG } from '../utilities/DailyGHGData';
+import { altTransportation } from '../utilities/GlobalVariables';
 
 const bridge = new SimpleSchema2Bridge(DailyUserData.schema);
 

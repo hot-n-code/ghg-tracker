@@ -4,8 +4,7 @@
  *
  * author(s):   Daphne Marie Tapia, Sophia Elize Cruz, Timothy Huo, Chak Hon Lam
  */
-
-import { altTransportation } from './DailyGHGData';
+import { altTransportation } from './GlobalVariables';
 
 // Array.prototype.reduce functions used by both getCumulativePerMode(collection, mode) and getCumulativeGHG(collection)
 const sumCO2Reduced = (array) => array.reduce((accumulator, data) => accumulator + data.cO2Reduced, 0).toFixed(2);

@@ -3,19 +3,24 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
-import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Loader, Modal } from 'semantic-ui-react';
+import { AutoForm, DateField, ErrorsField, NumField, RadioField, SelectField, SubmitField } from 'uniforms-semantic';
+import { Button, Form, Header, Loader, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { getDailyGHG, getMilesTraveled } from '../utilities/DailyGHGData';
+import { altTransportation } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   inputDate: Date,
   modeOfTransportation: String,
-  milesTraveled: Number,
+  distanceTraveled: Number,
+  unit: {
+    type: String,
+    allowedValues: ['mi', 'km'],
+  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -36,7 +41,8 @@ class AddDailyData extends React.Component {
 
   // On submit, insert data.
   submit(data, formRef) {
-    const { inputDate, modeOfTransportation, milesTraveled } = data;
+    const { inputDate, modeOfTransportation, distanceTraveled, unit } = data;
+    const milesTraveled = getMilesTraveled(distanceTraveled, unit);
     const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
     const cO2Reduced = dailyGHG.cO2Reduced;
     const fuelSaved = dailyGHG.fuelSaved;
@@ -63,8 +69,11 @@ class AddDailyData extends React.Component {
   // Render the form.
   renderModal() {
     let formRef = null;
+    const today = new Date();
+    today.setHours(11, 59, 59, 99);
+
     return (
-      <Modal size='mini'
+      <Modal size='tiny'
              closeIcon
              open={this.state.modalOpen}
              onClose={this.handleModalClose}
@@ -77,10 +86,16 @@ class AddDailyData extends React.Component {
                     schema={bridge}
                     onSubmit={data => { this.submit(data, formRef); }}>
             <DateField name='inputDate'
-                       max={new Date(Date.now())}/>
+                       max={today}/>
             <SelectField name='modeOfTransportation'
                          allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
-            <NumField name='milesTraveled'/>
+            <Form.Group inline>
+              <NumField name='distanceTraveled'/>
+              <RadioField label={null} name='unit'/>
+            </Form.Group>
+            <Header>
+              <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>
+            </Header>
             <SubmitField value='Submit'/>
             <ErrorsField/>
           </AutoForm>

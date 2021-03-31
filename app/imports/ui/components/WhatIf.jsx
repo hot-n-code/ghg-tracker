@@ -8,7 +8,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { altTransportation, getDailyGHG } from '../utilities/DailyGHGData';
+import { getDailyGHG } from '../utilities/DailyGHGData';
+import { altTransportation } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 
@@ -61,58 +62,61 @@ const WhatIf = (props) => {
       );
   };
 
-    const formSchema = makeSchema();
-    const bridge = new SimpleSchema2Bridge(formSchema);
-    let formRef = null;
-    return (
-  <Modal size='mini'
-         closeIcon
-         trigger={<Button>What If</Button>}
-         onClose={() => setFirstOpen(false)}
-         onOpen={() => setFirstOpen(true)}
-         open={firstOpen}
-  >
-    <Modal.Header>Add &apos;What If&apos; Data</Modal.Header>
-    <Modal.Content>
-      <AutoForm
-                ref={ref => { formRef = ref; }}
-                schema={bridge}
-                onSubmit={data => {
-                  submit(data, formRef);
-                  setSecondOpen(true);
-                }
-}>
-        <DateField name='inputDate'
-                   max={new Date(Date.now())}/>
-        <SelectField name='modeOfTransportation'
-                     allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
-        <NumField name='milesTraveled'/>
-        <SubmitField value='Submit'>
-        </SubmitField>
-        <ErrorsField/>
-      </AutoForm>
-    </Modal.Content>
+  const formSchema = makeSchema();
+  const bridge = new SimpleSchema2Bridge(formSchema);
+  let formRef = null;
+  const today = new Date();
+  today.setHours(11, 59, 59, 99);
 
-    <Modal
-        onClose={() => setSecondOpen(false)}
-        open={secondOpen}
-        size='large'
+  return (
+    <Modal size='tiny'
+           closeIcon
+           trigger={<Button>What If</Button>}
+           onClose={() => setFirstOpen(false)}
+           onOpen={() => setFirstOpen(true)}
+           open={firstOpen}
     >
-      <Modal.Header>WHAT IF: { mode } for { mile } miles</Modal.Header>
+      <Modal.Header>Add &apos;What If&apos; Data</Modal.Header>
       <Modal.Content>
-        <DisplayCO2/>
+        <AutoForm
+                  ref={ref => { formRef = ref; }}
+                  schema={bridge}
+                  onSubmit={data => {
+                    submit(data, formRef);
+                    setSecondOpen(true);
+                  }}
+        >
+          <DateField name='inputDate'
+                     max={today}/>
+          <SelectField name='modeOfTransportation'
+                       allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
+          <NumField name='milesTraveled'/>
+          <SubmitField value='Submit'>
+          </SubmitField>
+          <ErrorsField/>
+        </AutoForm>
       </Modal.Content>
-      <Modal.Actions>
-        <Button
-            icon='check'
-            content='All Done'
-            onClick={() => setSecondOpen(false)}
-        />
-      </Modal.Actions>
-    </Modal>
 
-  </Modal>
-    );
+      <Modal
+          onClose={() => setSecondOpen(false)}
+          open={secondOpen}
+          size='large'
+      >
+        <Modal.Header>WHAT IF: { mode } for { mile } miles</Modal.Header>
+        <Modal.Content>
+          <DisplayCO2/>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+              icon='check'
+              content='All Done'
+              onClick={() => setSecondOpen(false)}
+          />
+        </Modal.Actions>
+      </Modal>
+
+    </Modal>
+  );
 };
 
 // Require a document to be passed to this component.
