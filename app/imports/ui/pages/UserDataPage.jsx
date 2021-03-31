@@ -45,14 +45,11 @@ UserDataPage.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
-  const userId = match.params._id;
-  const getUser = Meteor.users.findOne(userId);
+export default withTracker(() => {
   const sub1 = Meteor.subscribe(DailyUserData.userPublicationName);
   const sub2 = Meteor.subscribe(Users.userPublicationName);
   return {
     dailyData: DailyUserData.collection.find({}).fetch(),
-    users: Users.collection.findOne({ username: getUser }),
     ready: sub1.ready() && sub2.ready(),
   };
 })(UserDataPage);
