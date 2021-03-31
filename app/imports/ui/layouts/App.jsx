@@ -51,7 +51,7 @@ class App extends React.Component {
             <Route path='/hemore' component={HEmore} />
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
-            <Route path='/test' component={test} />
+            <Route path='/check' component={test} />
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
             <ProtectedRoute path='/admin' component={AdminUserList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
