@@ -39,7 +39,7 @@ const MyDataChart = () => {
     return (
         <Grid>
             <Grid.Column>
-                <Pie data={stateAll} height='250px'/>
+                <Pie data={stateAll} height={250}/>
             </Grid.Column>
         </Grid>
     );

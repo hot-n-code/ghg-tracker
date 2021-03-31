@@ -51,7 +51,7 @@ const CumulativeDataChart = (props) => {
         <Grid>
           <Grid.Column width={9}>
             <Header as='h1' color='blue'> MODES OF TRAVEL COUNT </Header>
-            <Pie data={ pieDataSet(props.userData)} height='200px'/>
+            <Pie data={ pieDataSet(props.userData)} height={200}/>
           </Grid.Column>
         </Grid>
     );
