@@ -29,7 +29,6 @@ class AdminUserList extends React.Component {
                   <Table.HeaderCell>E-mail address</Table.HeaderCell>
                   <Table.HeaderCell>Password</Table.HeaderCell>
                   <Table.HeaderCell/>
-                  <Table.HeaderCell/>
                 </Table.Header>
                 <Table.Body>
                     {_.map(test, (list, index) => (
