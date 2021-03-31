@@ -89,7 +89,7 @@ class EditDailyData extends React.Component {
                onOpen={this.handleModalOpen}
                trigger={<Icon style={{ cursor: 'pointer' }} name='edit outline'/>}
         >
-          <Modal.Header>Edit Data</Modal.Header>
+          <Modal.Header>Edit Transportation Data</Modal.Header>
           <Modal.Content>
             <AutoForm schema={bridge}
                       onSubmit={data => this.submit(data)}

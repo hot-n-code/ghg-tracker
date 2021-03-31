@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Modal } from 'semantic-ui-react';
+import { Button, Header, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
@@ -89,6 +89,9 @@ const WhatIf = (props) => {
           <SelectField name='modeOfTransportation'
                        allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altTransportation)}/>
           <NumField name='milesTraveled'/>
+          <Header>
+            <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>
+          </Header>
           <SubmitField value='Submit'>
           </SubmitField>
           <ErrorsField/>
