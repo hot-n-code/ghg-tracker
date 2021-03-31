@@ -49,12 +49,15 @@ class UserPage extends React.Component {
               <Grid stackable columns={3}>
                   <Grid.Column width={16}>
                       <Header as='h1' textAlign='center'>
-                          My Numbers as of {today}</Header>
+                          My numbers as of
+                        <br/>
+                        {today}</Header>
+                    <hr/>
                   </Grid.Column>
               </Grid>
                 <div style={{ paddingBottom: '50px' }}/>
                 <div>
-                  <Grid stackable columns={5}>
+                  <Grid stackable columns={5} divided>
                       <Grid.Column>
                           <Image style={{ display: 'block',
                               margin: '0 auto' }} src="/images/gas.png"
