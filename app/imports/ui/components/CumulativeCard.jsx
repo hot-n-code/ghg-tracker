@@ -7,9 +7,9 @@ import { withRouter } from 'react-router-dom';
 class CumulativeCard extends React.Component {
   render() {
     return (
-        <Card centered link className={'vehicle-card'}>
+        <Card centered link className={'vehicle-card'} style={{ minHeight: 280 }}>
           <Card.Content>
-            <Image src={this.props.user.img} centered size='small'/>
+            <Image src={this.props.user.img} centered size='small' style={{ height: 130 }}/>
             <Card.Header className={'vehicle-card-header'}>
               {this.props.user.title}
             </Card.Header>

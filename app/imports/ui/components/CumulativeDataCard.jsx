@@ -16,6 +16,8 @@ class CumulativeDataCard extends React.Component {
         const userData = dailyUser;
         const eImpact = impactArr;
         const altData = [];
+        const gasData = [];
+        let x = 0;
         let i = 0;
         userData.map((collectionData) => {
           if (altTransportation.includes(collectionData.modeOfTransportation)) {
@@ -24,12 +26,16 @@ class CumulativeDataCard extends React.Component {
           } else if (collectionData.cO2Reduced > 0) {
             altData[i] = collectionData;
             i++;
+          } else {
+            gasData[x] = collectionData;
+            x++;
           }
           return altData;
       });
         eImpact[0].data = sumData(altData, 'milesTraveled');
         eImpact[1].data = sumData(altData, 'cO2Reduced');
-        eImpact[2].data = (eImpact[0].data / 20).toFixed(1);
+        eImpact[2].data = sumData(gasData, 'cO2Reduced') * -1;
+        eImpact[3].data = (eImpact[0].data / 20).toFixed(1);
         return eImpact;
     };
 
@@ -41,6 +47,11 @@ class CumulativeDataCard extends React.Component {
       },
       {
         title: 'Green House Gas (GHG) Reduced',
+        img: 'https://img.icons8.com/ios/100/000000/potted-plant.png',
+        data: '0',
+      },
+      {
+        title: 'Green House Gas (GHG) Produced',
         img: '/images/cumulative-page/C.png',
         data: '0',
       },
@@ -60,7 +71,7 @@ class CumulativeDataCard extends React.Component {
             ENVIRONMENTAL IMPACT
             <br/>
           </Header>
-          <Grid stackable columns={3}>
+          <Grid stackable columns={4}>
             {data.map((user, index) => (
                 <Grid.Column key={index}>
                   <CumulativeCard user={user}/>
