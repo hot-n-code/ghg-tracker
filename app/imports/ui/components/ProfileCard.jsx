@@ -21,7 +21,9 @@ const ProfileCard = ({ profile }) => (
                 <Header as='h4'>My Goal: {profile.goal}
                 </Header>
             </Card.Meta>
-                <EditProfile profileID={profile._id}/>
+          <div>
+            <EditProfile profileID={profile._id}/>
+          </div>
         </Card.Content>
     </Card>
 );

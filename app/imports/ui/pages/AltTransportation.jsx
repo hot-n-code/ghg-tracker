@@ -5,12 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import WalkingCard from '../components/altvehiclecards/WalkingCard';
-import BikingCard from '../components/altvehiclecards/BikingCard';
-import PublicTransportCard from '../components/altvehiclecards/PublicTransportCard';
-import CarpoolCard from '../components/altvehiclecards/CarpoolCard';
-import ElectricVehicleCard from '../components/altvehiclecards/ElectricVehicleCard';
-import TeleworkCard from '../components/altvehiclecards/TeleworkCard';
+import AltVehicleCard from '../components/AltVehicleCard';
 
 class AltTransportation extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -36,26 +31,7 @@ class AltTransportation extends React.Component {
               </Header>
             </Grid.Column>
             <Grid.Column>
-              <Grid stackable columns={3}>
-                <Grid.Column>
-                  <WalkingCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-                <Grid.Column>
-                  <BikingCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-                <Grid.Column>
-                  <PublicTransportCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-                <Grid.Column>
-                  <CarpoolCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-                <Grid.Column>
-                  <ElectricVehicleCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-                <Grid.Column>
-                  <TeleworkCard userData={userData} userVehicles={userVehicles}/>
-                </Grid.Column>
-              </Grid>
+              <AltVehicleCard userData={userData} userVehicles={userVehicles}/>
             </Grid.Column>
           </Grid>
         </div>
