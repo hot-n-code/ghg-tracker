@@ -10,7 +10,7 @@ import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 // User-level publication
 Meteor.publish(Stuffs.userPublicationName, () => Stuffs.collection.find());
 
-Meteor.publish(DailyUserData.userPublicationName, function () {
+Meteor.publish(DailyUserData.userPublicationName, function publish() {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
     return DailyUserData.collection.find({ owner: username });
