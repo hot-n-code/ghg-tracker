@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Loader, Table, Container, Input, Button, Tab } from 'semantic-ui-react';
+import { Loader, Table, Container, Input } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -9,7 +9,6 @@ import UserList from '../components/UserList';
 
 const paddingStyle = { padding: 20 };
 class AdminUserList extends React.Component {
-
 
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
