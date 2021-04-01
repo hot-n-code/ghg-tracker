@@ -52,10 +52,10 @@ class AltVehicleCard extends React.Component {
               {transportationData.fuelSaved}
             </Card.Description>
             <br/>
-            <Button inverted color='green' onClick={() => { this.nextState(state -= 1); }}>
+            <Button color='black' onClick={() => { this.nextState(state -= 1); }}>
               Prev
             </Button>
-            <Button inverted color='green' onClick={() => { this.nextState(state += 1); }}>
+            <Button color='black' onClick={() => { this.nextState(state += 1); }}>
               Next
             </Button>
           </Card.Content>

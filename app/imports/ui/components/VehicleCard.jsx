@@ -65,7 +65,7 @@ const VehicleCard = ({ vehicle }) => {
               className='vehicle-card-btn'
               layoutId={`vehicle-card-btn-${_id}`}
             >
-              <Button inverted color='green' onClick={() => setSelectedId(_id)}>
+              <Button color='black' onClick={() => setSelectedId(_id)}>
                 Compare
               </Button>
             </motion.div>
