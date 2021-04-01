@@ -26,8 +26,8 @@ class NavBar extends React.Component {
         {this.props.currentUser && Roles.userIsInRole(Meteor.userId(), 'admin') === false ? (
             // eslint-disable-next-line react/jsx-key
             [
-              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>My Profile</Menu.Item>,
-              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>My Vehicles</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>Profile</Menu.Item>,
+              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>Vehicles</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
                 <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-data-page' key='user-data-page' onClick={this.handleItemClick}>Transportation History</Menu.Item>,

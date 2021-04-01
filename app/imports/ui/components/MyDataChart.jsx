@@ -32,7 +32,7 @@ const MyDataChart = () => {
     const stateAll = {
         labels: ['Telework', 'Public Transportation', 'Biking', 'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
         datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV, gasTotal],
-            backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FF69B4'],
+            backgroundColor: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#de0d0d'],
         }],
     };
 
