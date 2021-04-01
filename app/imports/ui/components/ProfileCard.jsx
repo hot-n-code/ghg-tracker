@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import AddDailyData from './AddDailyData';
 import WhatIf from './WhatIf';
@@ -27,7 +27,8 @@ const ProfileCard = ({ profile }) => (
             <EditProfile profileID={profile._id}/>
             <AddDailyData/>
             <WhatIf/>
-            <Button>History</Button>
+            <Button as={NavLink} activeClassName="active" exact
+                    to="/history">History</Button>
           </div>
         </Card.Content>
     </Card>
