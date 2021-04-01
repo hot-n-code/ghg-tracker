@@ -208,23 +208,35 @@ const VehicleCard = ({ vehicle }) => {
                       </motion.div>
                       <motion.div className='vehicle-card-expand-header'>
                         <Header as='h1'>
-                          <select>
+                          <select className='vehicle-card-dropdown'>
                             {dropdownYear.map((yearOption, key) => (
-                              <option value={yearOption} key={key}>
+                              <option
+                                className='vehicle-card-dropdown-option'
+                                value={yearOption}
+                                key={key}
+                              >
                                 {yearOption}
                               </option>
                             ))}
                           </select>
-                          <select>
+                          <select className='vehicle-card-dropdown'>
                             {dropdownMake.map((makeOption, key) => (
-                              <option value={makeOption} key={key}>
+                              <option
+                                className='vehicle-card-dropdown-option'
+                                value={makeOption}
+                                key={key}
+                              >
                                 {makeOption}
                               </option>
                             ))}
                           </select>
-                          <select>
+                          <select className='vehicle-card-dropdown'>
                             {dropdownModel.map((modelOption, key) => (
-                              <option value={modelOption} key={key}>
+                              <option
+                                className='vehicle-card-dropdown-option'
+                                value={modelOption}
+                                key={key}
+                              >
                                 {modelOption}
                               </option>
                             ))}
