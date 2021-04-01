@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
 import { Header, Button } from 'semantic-ui-react';
-import { getVehicleYearsList, getVehicle } from '../utilities/GlobalFunctions';
+import { getVehicleYearsList, getVehicle } from '../utilities/vehicleDropdown';
 import { sampleVehicles } from '../utilities/sampleData';
 
 /** Renders a single vehicle card. */
