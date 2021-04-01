@@ -14,7 +14,7 @@ const LandingCumulativeData = () => (
           </Grid.Column>
           <Grid.Column>
             <Image src={cloud}/>
-            <Header> 0lbs </Header>
+            <Header color='white'> 0lbs </Header>
           </Grid.Column>
           <Grid.Column>
           </Grid.Column>
