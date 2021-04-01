@@ -4,7 +4,6 @@ import { Header, Button, Image, Grid, Loader } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 import { Users } from '../../api/user/UserCollection';
