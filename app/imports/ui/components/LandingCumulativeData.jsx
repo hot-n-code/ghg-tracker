@@ -4,6 +4,8 @@ import { NavLink } from 'react-router-dom';
 
 const paddingStyle = { padding: '20px' };
 const cloud = '../images/landing-page/cloud-trans-blank.png';
+const ghg = _.pluck(DailyUserData.collection.find({}).fetch(), 'cO2Reduced');
+const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
 const LandingCumulativeData = () => (
     <div className='landing-data' style={paddingStyle}>
