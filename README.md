@@ -30,8 +30,10 @@ Second, go to [https://github.com/hot-n-code/ghg-tracker](https://github.com/hot
 Third, cd into the app/ directory of your local copy of the repo, and install third party libraries with:
 
 ```
-$ meteor npm install
+meteor npm install
 ```
+
+Finally, you need to [install MongoDB Database Tools](https://docs.mongodb.com/database-tools/installation/installation/), this will allow you to populate the vehicle database during startup.
 
 ---
 
@@ -39,7 +41,7 @@ $ meteor npm install
 Once the libraries are installed, you can run the application by invoking the "start" script in the [package.json file](https://github.com/athleticheck/athleticheck/blob/master/app/package.json):
 
 ```
-$ meteor npm run start
+meteor npm run start
 ```
 
 The first time you run the app, it will create some default users and data. Here is the output:
@@ -95,6 +97,24 @@ I20210331-19:23:43.388(-7)? Monti APM: completed instrumenting the app
 => App running at: http://localhost:3000/
 ```
 
+After running the application you must populate the vehicle database that holds MPG for most vehicles. To do this, run:
+
+```
+meteor npm run populate
+```
+
+You should get the following message:
+
+```
+> meteor-application-template-react@ populate /home/michael/Documents/GitHub/ghg-tracker/app
+> mongoimport --host 127.0.0.1:3001 --db meteor --collection AllVehicleCollection --file ../config/vehicle_data.json
+
+2021-03-31T18:01:22.488-1000	connected to: 127.0.0.1:3001
+2021-03-31T18:01:23.086-1000	imported 1 document
+
+```
+NOTE: if you skip this step adding vehicles will not work or give you an error.
+
 ---
 ### Note Regarding "bcrypt warning":
 
@@ -128,6 +148,7 @@ You can verify that the code obeys our coding standards by running ESLint over t
 meteor npm run lint
 ```
 ---
+
 
 
 ![ci-badge](https://github.com/ics-software-engineering/meteor-application-template-react/workflows/ci-meteor-application-template-react/badge.svg)
