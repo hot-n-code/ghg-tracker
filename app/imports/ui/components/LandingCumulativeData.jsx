@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
-import { Users } from '../../api/user/UserCollection';
 
 const paddingStyle = { padding: '20px' };
 const cloud = '../images/landing-page/cloud-trans-5.png';
@@ -56,10 +55,9 @@ LandingCumulativeData.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-  const subscription2 = Meteor.subscribe(Users.userPublicationName);
+  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
   return {
     dailyData: DailyUserData.collection.find({}).fetch(),
-    ready: subscription1.ready() && subscription2.ready(),
+    ready: subscriptionDailyUser.ready(),
   };
 })(LandingCumulativeData);
