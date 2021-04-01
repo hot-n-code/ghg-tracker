@@ -21,8 +21,8 @@
 }
 .cloud-box #cloud-carbon {
   position: absolute;
-  font-size: 80px;
-  transform: translate(50%, -225%);
+  font-size: 60px;
+  transform: translate(40%, -310%);
   color: aliceblue;
   z-index: 5;
   align-items: center;

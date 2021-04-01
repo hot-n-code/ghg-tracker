@@ -11,8 +11,6 @@ import { Users } from '../../api/user/UserCollection';
 
 const paddingStyle = { padding: '20px' };
 const cloud = '../images/landing-page/cloud-trans-5.png';
-const ghg = _.pluck(DailyUserData.collection.find({}).fetch(), 'cO2Reduced');
-const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
 
 class LandingCumulativeData extends React.Component {
   render() {
@@ -35,7 +33,7 @@ class LandingCumulativeData extends React.Component {
             <Grid.Column>
               <div className='cloud-box'>
                 <Image src={cloud}/>
-                <Header as='h2' id='cloud-carbon'> {ghgTotal} LBS.</Header>
+                <Header as='h2' id='cloud-carbon'> {totalCO2Reduced} LBS.</Header>
               </div>
             </Grid.Column>
             <Grid.Column>
@@ -58,14 +56,11 @@ LandingCumulativeData.propTypes = {
   ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
-  const userId = match.params._id;
-  const getUser = Meteor.users.findOne(userId);
+export default withTracker(() => {
   const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
   const subscription2 = Meteor.subscribe(Users.userPublicationName);
   return {
     dailyData: DailyUserData.collection.find({}).fetch(),
-    users: Users.collection.findOne({ username: getUser }),
     ready: subscription1.ready() && subscription2.ready(),
   };
 })(LandingCumulativeData);
