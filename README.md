@@ -1,4 +1,4 @@
-###AUTHORS:
+<h3>AUTHORS:</h3>
 - [Anna Campainha](https://github.com/annacampainha)
 - [Chak Hon Lam](https://github.com/chakhon)
 - [Daphne Tapia](https://github.com/dmtapia)
