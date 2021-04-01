@@ -19,12 +19,14 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-#cloud-carbon {
+.cloud-box #cloud-carbon {
   position: absolute;
   font-size: 80px;
-  transform: translate(285%, -220%);
+  transform: translate(50%, -225%);
   color: aliceblue;
   z-index: 5;
+  align-items: center;
+  justify-content: center;
   margin: 0px;
   text-size-adjust: none;
 }

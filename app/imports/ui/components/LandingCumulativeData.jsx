@@ -5,7 +5,7 @@ import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const paddingStyle = { padding: '20px' };
-const cloud = '../images/landing-page/cloud-trans-blank.png';
+const cloud = '../images/landing-page/cloud-trans-5.png';
 const ghg = _.pluck(DailyUserData.collection.find({}).fetch(), 'cO2Reduced');
 const ghgTotal = _.reduce(ghg, function (sum, num) { return sum + num; }, 0);
 /** The Footer appears at the bottom of every page. Rendered by the App Layout component. */
@@ -17,7 +17,7 @@ const LandingCumulativeData = () => (
         <Grid.Column>
         </Grid.Column>
         <Grid.Column>
-          <div>
+          <div className='cloud-box'>
             <Image src={cloud}/>
             <Header as='h2' id='cloud-carbon'> {ghgTotal} LBS.</Header>
           </div>
