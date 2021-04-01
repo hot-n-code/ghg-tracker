@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { Grid, GridColumn, Image, List } from 'semantic-ui-react';
 
 const logo = '../images/hei.png';
@@ -19,22 +19,21 @@ class Footer extends React.Component {
                   <GridColumn className="inverted">
                       {this.props.currentUser === '' ? (
                           <List inverted>
-                            <List.Item href='/' className="footer-text">Home</List.Item>
-                            <List.Item href='/cumulative' className="footer-text">Cumulative Data</List.Item>
-                            <List.Item href='/about' className="footer-text">About HEI</List.Item>
-                            <List.Item href='/signup#/signup' className="footer-text">Join</List.Item>
-                            <List.Item href='/signin' className="footer-text">Sign In</List.Item>
-                            <List.Item href='/feedback' className="foot-text">Submit Feedback</List.Item>
+                            <List.Item as={NavLink} activeClassName='' exact to='/'>Home</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/cumulative'>Cumulative Data</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/about'>About HEI</List.Item>
+                            <List.Item as={NavLink} exact to='/signup'>Join</List.Item>
+                            <List.Item as={NavLink} exact to='/signin'>Sign In</List.Item>
                           </List>
                       ) : (
                           <List inverted>
-                            <List.Item href='/' className="footer-text">Home</List.Item>
-                            <List.Item href='/user-page' className="foot-text">My Data</List.Item>
-                            <List.Item href='/my-vehicles' className="foot-text">My Vehicles</List.Item>
-                            <List.Item href='/alt' className="foot-text">Alternative</List.Item>
-                            <List.Item href='/cumulative' className="footer-text">Cumulative Data</List.Item>
-                            <List.Item href='/user-data-page' className="footer-text">Transportation History</List.Item>
-                            <List.Item href='/feedback' className="foot-text">Submit Feedback</List.Item>
+                            <List.Item as={NavLink} activeClassName='' exact to='/'>Home</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/user-page' >My Data</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/my-vehicles'>My Vehicles</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/alt'>Alternative</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/cumulative'>Cumulative Data</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/user-data-page'>Transportation History</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/feedback'>Submit Feedback</List.Item>
                           </List>
                       )}
                   </GridColumn>
