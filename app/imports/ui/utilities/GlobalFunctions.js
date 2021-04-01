@@ -15,10 +15,3 @@ export function computeCO2Reduced(
         .MPG * -1;
   return ((milesTraveled / autoMPG) * 19.6).toFixed(2);
 }
-
-export function getCurrentYear() {
-  const date = new Date();
-  const year = date.getFullYear();
-
-  return year;
-}
