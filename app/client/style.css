@@ -22,6 +22,7 @@
 #cloud-carbon {
   position: absolute;
   font-size: 80px;
+  transform: translate(285%, -220%);
   color: aliceblue;
   z-index: 5;
   margin: 0px;
