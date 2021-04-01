@@ -64,6 +64,7 @@ class App extends React.Component {
             <ProtectedRoute path='/create-user' component={CreateUser} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
+            <ProtectedRoute path='/history' component={UserDataPage} />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />
           </Switch>
