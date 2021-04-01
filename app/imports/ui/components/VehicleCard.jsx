@@ -1,11 +1,53 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+import { _ } from 'meteor/underscore';
 import { Header, Button } from 'semantic-ui-react';
-import { sampleVehicles } from '../utilities/sampleData.js';
+import { sampleVehicles } from '../utilities/sampleData';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
+  // Initialize vehicle comparator's dropdown values and default vehicle.
+  const initDropdownValues = property => {
+    const sortedVehicles = _.sortBy(sampleVehicles, property);
+    const listByProperty = _.pluck(sortedVehicles, property);
+    const uniqueList = _.uniq(listByProperty);
+
+    if (property === 'year') {
+      uniqueList.reverse();
+      for (let i = 0; i < uniqueList.length; i++) {
+        uniqueList[i] = uniqueList[i].toString();
+      }
+    }
+
+    return uniqueList;
+  };
+
+  const initDropdownModel = currentMake => {
+    const filteredMakeList = _.filter(
+      sampleVehicles,
+      sampleVehicle => sampleVehicle.make === currentMake,
+    );
+    const listModel = _.pluck(filteredMakeList, 'model');
+    return listModel;
+  };
+
+  const defaultComparatorVehicle = (year, model) => {
+    const yearAsInt = parseInt(year, 10);
+    const listModel = _.filter(
+      sampleVehicles,
+      sampleVehicle => sampleVehicle.model === model,
+    );
+    const defaultVehicle = _.find(
+      listModel,
+      vehicleModel => vehicleModel.year === yearAsInt,
+    );
+    return defaultVehicle;
+  };
+
+  // Dropdown handlers
+
+  // Destructure the 'vehicle' prop.
   const {
     _id,
     year,
@@ -20,6 +62,18 @@ const VehicleCard = ({ vehicle }) => {
 
   // State
   const [selectedId, setSelectedId] = useState(null);
+  const [dropdownYear, setDropdownYear] = useState(
+    initDropdownValues(Object.keys(vehicle)[6]),
+  );
+  const [dropdownMake, setDropdownMake] = useState(
+    initDropdownValues(Object.keys(vehicle)[1]),
+  );
+  const [dropdownModel, setDropdownModel] = useState(
+    initDropdownModel(dropdownMake[0]),
+  );
+  const [comparatorVehicle, setComparatorVehicle] = useState(
+    defaultComparatorVehicle(dropdownYear[0], dropdownModel[0]),
+  );
 
   return (
     <AnimateSharedLayout type='crossfade'>
@@ -63,7 +117,11 @@ const VehicleCard = ({ vehicle }) => {
               <span className='vehicle-card-label'>
                 Avg. Fuel Consumption:{' '}
               </span>
-              {`${MPG}`} MPG
+              {type === 'EV/Hybrid' ? (
+                <span>EV/Hybrid</span>
+              ) : (
+                <span>{`${MPG}`} MPG</span>
+              )}
             </motion.div>
             <motion.div
               className='vehicle-card-description'
@@ -117,7 +175,11 @@ const VehicleCard = ({ vehicle }) => {
                           <td className='vehicle-card-expand-label'>
                             Avg. Fuel Consumption:
                           </td>
-                          <td>{`${MPG}`} MPG</td>
+                          {type === 'EV/Hybrid' ? (
+                            <td>EV/Hybrid</td>
+                          ) : (
+                            <td>{`${MPG}`} MPG</td>
+                          )}
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
@@ -140,12 +202,34 @@ const VehicleCard = ({ vehicle }) => {
                     <div className='vehicle-card-expand-header-wrapper'>
                       <motion.div className='vehicle-card-expand-logo'>
                         <img
-                          src={sampleVehicles[0].logo}
-                          alt={`${sampleVehicles[0].make} Logo`}
+                          src={comparatorVehicle.logo}
+                          alt={`${comparatorVehicle.make} Logo`}
                         />
                       </motion.div>
                       <motion.div className='vehicle-card-expand-header'>
-                        <Header as='h1'>{`${sampleVehicles[0].year} ${sampleVehicles[0].make} ${sampleVehicles[0].model}`}</Header>
+                        <Header as='h1'>
+                          <select>
+                            {dropdownYear.map((yearOption, key) => (
+                              <option value={yearOption} key={key}>
+                                {yearOption}
+                              </option>
+                            ))}
+                          </select>
+                          <select>
+                            {dropdownMake.map((makeOption, key) => (
+                              <option value={makeOption} key={key}>
+                                {makeOption}
+                              </option>
+                            ))}
+                          </select>
+                          <select>
+                            {dropdownModel.map((modelOption, key) => (
+                              <option value={modelOption} key={key}>
+                                {modelOption}
+                              </option>
+                            ))}
+                          </select>
+                        </Header>
                       </motion.div>
                     </div>
                     <motion.table className='vehicle-card-expand-stats'>
@@ -154,25 +238,25 @@ const VehicleCard = ({ vehicle }) => {
                           <td className='vehicle-card-expand-label'>
                             Purchase Price:
                           </td>
-                          <td>${`${sampleVehicles[0].price}`}</td>
+                          <td>${`${comparatorVehicle.price}`}</td>
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
                             Avg. Fuel Consumption:
                           </td>
-                          <td>{`${sampleVehicles[0].MPG}`} MPG</td>
+                          <td>EV/Hybrid</td>
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
                             Yearly Fuel Spending:
                           </td>
-                          <td>${`${sampleVehicles[0].fuelSpending}`}</td>
+                          <td>${`${comparatorVehicle.fuelSpending}`}</td>
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
                             Vehicle Type:
                           </td>
-                          <td>{`${sampleVehicles[0].type}`}</td>
+                          <td>{`${comparatorVehicle.type}`}</td>
                         </motion.tr>
                       </tbody>
                     </motion.table>
