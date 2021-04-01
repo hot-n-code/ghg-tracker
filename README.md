@@ -9,9 +9,15 @@
 - [Khyla Rabang](https://github.com/vrabang)
 - [Yiwen Chen](https://github.com/yiwenc22)
 
+---
+
 Overview:
 
+---
+
 CHANGELOG:
+
+---
 
 Install:
 
