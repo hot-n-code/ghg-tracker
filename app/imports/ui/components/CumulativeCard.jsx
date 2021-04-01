@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { Card, Image, Segment } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 class CumulativeCard extends React.Component {
   render() {
     return (
-        <Card centered link className={'vehicle-card'} style={{ minHeight: 280 }}>
+        <Card centered className={'vehicle-card'} style={{ minHeight: 280 }}>
           <Card.Content>
             <Image src={this.props.user.img} centered size='small' style={{ height: 130 }}/>
             <Card.Header className={'vehicle-card-header'}>
@@ -15,9 +15,9 @@ class CumulativeCard extends React.Component {
             </Card.Header>
           </Card.Content>
           <Card.Content extra>
-            <Button inverted color='green'>
+            <Segment compact inverted>
               {this.props.user.data}
-            </Button>
+            </Segment>
           </Card.Content>
         </Card>
     );
