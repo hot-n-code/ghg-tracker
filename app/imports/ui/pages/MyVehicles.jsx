@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Search, Loader } from 'semantic-ui-react';
+import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
@@ -29,12 +29,6 @@ class MyVehicles extends React.Component {
             <Header as='h1' textAlign='center'>
               My Vehicles
             </Header>
-          </Grid.Column>
-          <Grid.Column>
-            <Search
-                input={{ icon: 'search', iconPosition: 'left' }}
-                placeholder={'Search'}
-            />
           </Grid.Column>
           <Grid.Column>
             <VehicleList />
