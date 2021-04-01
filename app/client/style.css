@@ -19,7 +19,14 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-
+#cloud-carbon {
+  position: absolute;
+  font-size: 80px;
+  color: aliceblue;
+  z-index: 5;
+  margin: 0px;
+  text-size-adjust: none;
+}
 .background-total-user-data {
   background-color: white;
   border: thin solid lightgray;
