@@ -11,11 +11,14 @@ class UserCollection {
       goal: String,
       email: String,
       image: String,
+      password: String,
       vehicles: { type: Array, optional: true },
       'vehicles.$': { type: String },
     }, { tracker: Tracker });
 
     this.collection.attachSchema(this.schema);
+    this.userPublicationName = `${this.name}.publication.user`;
+    this.adminPublicationName = `${this.name}.publication.admin`;
   }
 }
 

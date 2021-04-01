@@ -1,30 +1,22 @@
 import React from 'react';
 import { Button, Card, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 /** Renders a single vehicle card. */
-class TeleworkCard extends React.Component {
-
+class CumulativeCard extends React.Component {
   render() {
-    let totalMiles = 0;
-    const trips = this.props.userData.filter(userData => userData.modeOfTransportation === 'Telework');
-    trips.forEach(data => { totalMiles += data.milesTraveled; });
-
     return (
-        <Card centered link className={'vehicle-card'}>
+        <Card centered link className={'vehicle-card'} style={{ minHeight: 280 }}>
           <Card.Content>
-            <Image src='images/telework.png'/>
+            <Image src={this.props.user.img} centered size='small' style={{ height: 130 }}/>
             <Card.Header className={'vehicle-card-header'}>
-              Telework
+              {this.props.user.title}
             </Card.Header>
-            <Card.Description>
-              <span className={'vehicle-card-label'}>Total Miles: </span>
-              {totalMiles}
-            </Card.Description>
           </Card.Content>
           <Card.Content extra>
             <Button inverted color='green'>
-              Show More
+              {this.props.user.data}
             </Button>
           </Card.Content>
         </Card>
@@ -33,9 +25,9 @@ class TeleworkCard extends React.Component {
 }
 
 /** Currently, placeholder vehicle data is passed to this component. In production, require a document to be passed to this component. */
-TeleworkCard.propTypes = {
-  userData: PropTypes.array.isRequired,
+CumulativeCard.propTypes = {
+  user: PropTypes.object.isRequired,
 };
 
 /** Wrap this component in withRouter since we use the <Link> React Router element. */
-export default TeleworkCard;
+export default withRouter(CumulativeCard);

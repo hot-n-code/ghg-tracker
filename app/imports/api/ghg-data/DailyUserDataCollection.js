@@ -9,6 +9,7 @@ import { Tracker } from 'meteor/tracker';
  */
 class DailyUserDataCollection {
   constructor() {
+    this._collectionName = `${this._type}Collection`;
     // The name of this collection.
     this.name = 'DailyUserDataCollection';
     // Define the Mongo collection.
@@ -20,12 +21,13 @@ class DailyUserDataCollection {
       modeOfTransportation: String,
       milesTraveled: Number,
       cO2Reduced: Number,
+      fuelSaved: Number,
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions
     this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    this.cumulativePublicationName = `${this.name}.publication.admin`;
   }
 }
 

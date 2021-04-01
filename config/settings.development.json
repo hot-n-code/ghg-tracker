@@ -1,16 +1,14 @@
 {
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "test@gmail.com", "password": "foo" },
     { "email": "john@foo.com", "password": "changeme" }
   ],
 
   "defaultUser": [
-    {
-      "name": "test",
-      "goal": "convert to renewable energy",
-      "email": "test@gmail.com",
-      "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png",
-      "vehicles": ["Corolla", "Sentra", "Civic"]
+    { "name": "test", "goal": "convert to renewable energy", "email": "test@gmail.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "password": "foo", "vehicles": ["Corolla", "Sentra", "Civic"]
+    },
+    { "name": "John", "goal": "convert to renewable energy", "email": "john@foo.com", "image": "http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png", "password": "changeme", "vehicles": ["Corolla", "Sentra", "Civic"]
     }
   ],
 
@@ -44,45 +42,27 @@
   "defaultDailyUserData": [
     {
       "owner": "test@gmail.com",
-      "inputDate": "2021-02-12",
-      "modeOfTransportation": "Electric Vehicle",
-      "milesTraveled": 44,
-      "cO2Reduced": 25
-    },
-    {
-      "owner": "test@gmail.com",
       "inputDate": "2019-11-13",
       "modeOfTransportation": "Telework",
-      "milesTraveled": 25,
-      "cO2Reduced": 15
+      "milesTraveled": 25.00,
+      "cO2Reduced": 18.85,
+      "fuelSaved": 0.9
     },
     {
       "owner": "test@gmail.com",
       "inputDate": "2019-11-14",
       "modeOfTransportation": "Public Transportation",
-      "milesTraveled": 30,
-      "cO2Reduced": 19
+      "milesTraveled": 20.00,
+      "cO2Reduced": 15.08,
+      "fuelSaved": 0.77
     },
     {
       "owner": "test@gmail.com",
       "inputDate": "2019-11-15",
       "modeOfTransportation": "Carpool",
-      "milesTraveled": 60,
-      "cO2Reduced": 30
-    },
-    {
-      "owner": "test@gmail.com",
-      "inputDate": "2019-11-16",
-      "modeOfTransportation": "Electric Vehicle",
-      "milesTraveled": 22,
-      "cO2Reduced": 13
-    },
-    {
-      "owner": "test@gmail.com",
-      "inputDate": "2019-11-17",
-      "modeOfTransportation": "Alternative Fuel Vehicle",
-      "milesTraveled": 12,
-      "cO2Reduced": 8
+      "milesTraveled": 60.00,
+      "cO2Reduced": 45.23,
+      "fuelSaved": 2.31
     }
   ],
 
@@ -95,7 +75,7 @@
       "year": 2016,
       "MPG": 24,
       "fuelSpending": 1800,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     },
     {
@@ -106,7 +86,7 @@
       "year": 2018,
       "MPG": 26,
       "fuelSpending": 1700,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     },
     {
@@ -117,7 +97,7 @@
       "year": 2019,
       "MPG": 26,
       "fuelSpending": 1600,
-      "type": "gas",
+      "type": "Gas",
       "owner": "test@gmail.com"
     }
   ],

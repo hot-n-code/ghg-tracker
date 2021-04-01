@@ -33,9 +33,8 @@ class CreateUser extends React.Component {
 
   submit(data) {
     /** Gathers user's data and adds it to the userCollection */
-    const { name, goal } = data;
+    const { name, image, goal } = data;
     const email = Meteor.user().username;
-    const image = 'https://moonvillageassociation.org/wp-content/uploads/2018/06/default-profile-picture1.jpg';
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
       swal('Error', 'You already have a created user');
@@ -82,6 +81,9 @@ class CreateUser extends React.Component {
                     <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
+                    <TextField id='image' name='image' required showInlineError={true} placeholder={'image'}/>
+                  </Form.Group>
+                  <Form.Group widths={'equal'}>
                   </Form.Group>
                   <SubmitField value='Add' onClick={this.handleClick}/>
                 </Segment>
@@ -101,7 +103,8 @@ CreateUser.propTypes = {
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(Users.userPublicationName);
   return {
-    ready: sub1.ready(),
+    ready: sub1.ready() && sub2.ready(),
   };
 })(CreateUser);

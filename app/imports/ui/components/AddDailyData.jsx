@@ -3,20 +3,24 @@ import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
-import { AutoForm, DateField, ErrorsField, NumField, SelectField, SubmitField } from 'uniforms-semantic';
-import { Button, Loader, Modal } from 'semantic-ui-react';
+import { AutoForm, DateField, ErrorsField, NumField, RadioField, SelectField, SubmitField } from 'uniforms-semantic';
+import { Button, Form, Header, Loader, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { computeCO2Reduced, getAltTransportation } from '../utilities/GlobalFunctions';
+import { getDailyGHG, getMilesTraveled, getDateToday } from '../utilities/DailyGHGData';
+import { altSelectFieldOptions } from '../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   inputDate: Date,
   modeOfTransportation: String,
-  milesTraveled: Number,
+  distanceTraveled: Number,
+  unit: {
+    type: String,
+    allowedValues: ['mi', 'km'],
+  },
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -37,10 +41,13 @@ class AddDailyData extends React.Component {
 
   // On submit, insert data.
   submit(data, formRef) {
-    const { inputDate, modeOfTransportation, milesTraveled } = data;
-    const cO2Reduced = computeCO2Reduced(milesTraveled, modeOfTransportation, this.props.vehicles);
+    const { inputDate, modeOfTransportation, distanceTraveled, unit } = data;
+    const milesTraveled = getMilesTraveled(distanceTraveled, unit).toFixed(2);
+    const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
+    const cO2Reduced = dailyGHG.cO2Reduced;
+    const fuelSaved = dailyGHG.fuelSaved;
     const owner = Meteor.user().username;
-    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced }, (error) => {
+    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -62,24 +69,31 @@ class AddDailyData extends React.Component {
   // Render the form.
   renderModal() {
     let formRef = null;
+
     return (
-      <Modal size='mini'
+      <Modal size='tiny'
              closeIcon
              open={this.state.modalOpen}
              onClose={this.handleModalClose}
              onOpen={this.handleModalOpen}
              trigger={<Button>Add Data</Button>}
       >
-        <Modal.Header>Add Daily Data</Modal.Header>
+        <Modal.Header>Add Transportation Data</Modal.Header>
         <Modal.Content>
           <AutoForm ref={ref => { formRef = ref; }}
                     schema={bridge}
                     onSubmit={data => { this.submit(data, formRef); }}>
             <DateField name='inputDate'
-                       max={new Date(Date.now())}/>
+                       max={getDateToday()}/>
             <SelectField name='modeOfTransportation'
-                         allowedValues={_.pluck(this.props.vehicles, 'make').concat(getAltTransportation())}/>
-            <NumField name='milesTraveled'/>
+                         allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
+            <Form.Group inline>
+              <NumField name='distanceTraveled'/>
+              <RadioField label={null} name='unit'/>
+            </Form.Group>
+            <Header>
+              <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>
+            </Header>
             <SubmitField value='Submit'/>
             <ErrorsField/>
           </AutoForm>
@@ -98,9 +112,8 @@ AddDailyData.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const subscription = Meteor.subscribe(Vehicle.userPublicationName);
-  const email = Meteor.user().username;
   return {
-    vehicles: Vehicle.collection.find({ owner: email }).fetch(),
+    vehicles: Vehicle.collection.find({}).fetch(),
     ready: subscription.ready(),
   };
 })(AddDailyData);
