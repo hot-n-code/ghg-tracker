@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { Stuffs } from '../../api/stuff/Stuff.js';
-import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
+import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
+import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
-import { Make } from '../../api/make/Make';
+import { Make } from '../../api/vehicle/make/Make';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /* eslint-disable no-console */
