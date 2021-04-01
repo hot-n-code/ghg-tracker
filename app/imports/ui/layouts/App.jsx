@@ -36,7 +36,6 @@ import Pcmore from '../pages/Pcmore';
 import WhatIf from '../components/WhatIf';
 import UserDataPage from '../pages/UserDataPage';
 
-
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
   render() {
