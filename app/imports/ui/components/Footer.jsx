@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
-import { withRouter, NavLink } from 'react-router-dom';
-import { Dropdown, Grid, GridColumn, Image, List, Menu } from 'semantic-ui-react';
-import { Roles } from 'meteor/alanning:roles';
+import { withRouter } from 'react-router-dom';
+import { Grid, GridColumn, Image, List } from 'semantic-ui-react';
 
 const logo = '../images/hei.png';
 
