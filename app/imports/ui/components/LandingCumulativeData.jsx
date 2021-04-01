@@ -1,8 +1,6 @@
 import React from 'react';
 import { Header, Button, Image, Grid } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import { _ } from 'meteor/underscore';
-import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
 
 const paddingStyle = { padding: '20px' };
 const cloud = '../images/landing-page/cloud-trans-blank.png';
