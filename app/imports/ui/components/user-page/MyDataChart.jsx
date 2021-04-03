@@ -3,9 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { Grid } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
 import { withTracker } from 'meteor/react-meteor-data';
+import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
-import PropTypes from 'prop-types';
 
 // Pie chart of the all time mileage for each mode of transportation for a specific user
 
