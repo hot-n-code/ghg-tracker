@@ -9,18 +9,15 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Users } from '../../../api/user/UserCollection';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 
 /** Create a schema to specify the structure of the data to appear in the form. */
-const makeSchema = (allVehicles) => new SimpleSchema({
+const makeSchema = () => new SimpleSchema({
   email: { type: String, label: 'Email', optional: true },
   name: { type: String, label: 'Name', optional: true },
   goal: { type: String, label: 'Goal', optional: true },
   image: { type: String, label: 'Picture URL', optional: true },
-  vehicles: { type: Array, label: 'Vehicles', optional: true },
-  'vehicles.$': { type: String, allowedValues: allVehicles },
 });
 
 /** Renders the createUser Page: what appears after the user logs in. */
@@ -57,14 +54,8 @@ class CreateUser extends React.Component {
 
   /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
   renderPage() {
-    const email = Meteor.user().username;
-    const allVehicles = _.pluck(UserVehicle.collection.find().fetch(), 'user');
-    const formSchema = makeSchema(allVehicles);
+    const formSchema = makeSchema();
     const bridge = new SimpleSchema2Bridge(formSchema);
-    const vehicles = _.pluck(UserVehicle.collection.find({ profile: email }).fetch(), 'model');
-    const user = Users.collection.findOne({ email });
-    // Model with all the user information.
-    const model = _.extend({}, user, { vehicles });
     let fRef = null;
     return (
         <div style={paddingStyle}>
@@ -72,7 +63,7 @@ class CreateUser extends React.Component {
             <Grid.Column>
               <Header as="h2" textAlign="center">User Creation</Header>
               <AutoForm ref={ref => { fRef = ref; }}
-                        model={model} schema={bridge} onSubmit={data => this.submit(data, fRef)}>
+                        schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
                   <Form.Group widths={'equal'}>
                     <TextField id='name' name='name' required showInlineError={true} placeholder={'name'}/>
@@ -102,9 +93,8 @@ CreateUser.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Users.userPublicationName);
+  const sub1 = Meteor.subscribe(Users.userPublicationName);
   return {
-    ready: sub1.ready() && sub2.ready(),
+    ready: sub1.ready(),
   };
 })(CreateUser);

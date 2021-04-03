@@ -12,8 +12,6 @@ class UserCollection {
       email: String,
       image: String,
       password: String,
-      vehicles: { type: Array, optional: true },
-      'vehicles.$': { type: String },
     }, { tracker: Tracker });
 
     this.collection.attachSchema(this.schema);

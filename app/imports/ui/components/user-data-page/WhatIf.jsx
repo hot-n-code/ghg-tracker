@@ -7,7 +7,7 @@ import { Button, Form, Header, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../../api/vehicle/VehicleCollection';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG, getDateToday, getMilesTraveled } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
 
@@ -139,10 +139,10 @@ WhatIf.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const userData = Meteor.subscribe(DailyUserData.userPublicationName);
-  const userVehicle = Meteor.subscribe(Vehicle.userPublicationName);
+  const userVehicle = Meteor.subscribe(UserVehicle.userPublicationName);
   return {
     userData: DailyUserData.collection.find({}).fetch(),
-    vehicles: Vehicle.collection.find({}).fetch(),
+    vehicles: UserVehicle.collection.find({}).fetch(),
     ready: userData.ready() && userVehicle.ready(),
   };
 })(WhatIf);

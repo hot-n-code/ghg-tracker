@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../api/vehicle/VehicleCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Make } from '../../api/vehicle/make/Make';
@@ -25,15 +24,13 @@ function addDailyUserData(dailyData) {
 // VehicleCollection
 function addVehicle(vehicle) {
   console.log(`  Defining vehicle ${vehicle.owner}`);
-  Vehicle.collection.insert(vehicle);
+  UserVehicle.collection.insert(vehicle);
 }
 
 // UserCollection
-function addUser({ name, goal, email, image, password, vehicles }) {
+function addUser({ name, goal, email, image, password }) {
   console.log(`  Defining profile ${email}`);
   Users.collection.insert({ name, goal, email, image, password });
-  // Add interests and projects.
-  vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
 }
 
 // MakeCollection
@@ -66,7 +63,7 @@ if (DailyUserData.collection.find().count() === 0) {
 }
 
 // VehicleCollection
-if (Vehicle.collection.find().count() === 0) {
+if (UserVehicle.collection.find().count() === 0) {
   if (Meteor.settings.defaultVehicle) {
     console.log('Creating default Vehicle.');
     Meteor.settings.defaultVehicle.map(vehicle => addVehicle(vehicle));
