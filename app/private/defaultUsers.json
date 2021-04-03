@@ -14,60 +14,60 @@
     "name": "Uno",
     "goal": "reduce CO2 production",
     "email": "uno@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Dos",
     "goal": "reduce CO2 production",
     "email": "dos@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Tres",
     "goal": "reduce CO2 production",
     "email": "tres@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Cuatro",
     "goal": "reduce CO2 production",
     "email": "cuatro@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Cinco",
     "goal": "reduce CO2 production",
     "email": "cinco@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Seis",
     "goal": "reduce CO2 production",
     "email": "seis@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Siete",
     "goal": "reduce CO2 production",
     "email": "siete@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Ocho",
     "goal": "reduce CO2 production",
     "email": "ocho@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Nueve",
     "goal": "reduce CO2 production",
     "email": "nueve@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   },
   {
     "name": "Diez",
     "goal": "reduce CO2 production",
     "email": "diez@hotncode.com",
-    "image": "../images/default/defaultPFP.png"
+    "image": "../images/default/default-pfp.png"
   }
 ]
