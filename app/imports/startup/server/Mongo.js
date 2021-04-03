@@ -9,57 +9,29 @@ import { Makes } from '../../api/vehicle/make/MakeCollection';
 
 const getData = (filename) => JSON.parse(Assets.getText(filename));
 
-// UserCollection
-function addUser({ name, goal, email, image }) {
-  Users.collection.insert({ name, goal, email, image });
-}
-
-if (Users.collection.find().count() === 0) {
-  if (Meteor.isServer) {
-    console.log('Creating the default profiles.');
-    getData('defaultUsers.json').map(individualUser => addUser(individualUser));
-    console.log(` Number of default profiles created: ${Users.collection.find().count()}`);
+if (Meteor.isServer) {
+  if (Users.collection.find().count() === 0) {
+    getData('defaultUsers.json').map(individualUser => Users.collection.insert(individualUser));
   }
-}
 
-// MakeCollection
-function addMake({ make, logo }) {
-  Makes.collection.insert({ make, logo });
-}
-
-if (Makes.collection.find().count() === 0) {
-  if (Meteor.isServer) {
-    console.log('Creating default makes.');
-    getData('defaultMakes.json').map(makes => addMake(makes));
-    console.log(` Number of default makes created: ${Makes.collection.find().count()}`);
+  if (Makes.collection.find().count() === 0) {
+    getData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
   }
-}
 
-// VehicleCollection
-function addVehicle(vehicle) {
-  UserVehicle.collection.insert(vehicle);
-}
-
-if (UserVehicle.collection.find().count() === 0) {
-  if (Meteor.isServer) {
-    console.log('Creating default user vehicles.');
-    getData('defaultUserVehicles.json').map(vehicle => addVehicle(vehicle));
-    console.log(` Number of default user vehicles created: ${UserVehicle.collection.find().count()}`);
+  if (UserVehicle.collection.find().count() === 0) {
+    getData('defaultUserVehicles.json').map(vehicle => UserVehicle.collection.insert(vehicle));
   }
-}
 
-// DailyUserDataCollection
-function addDailyUserData(dailyData) {
-  // console.log(`  Defining Daily User Data on: ${dailyData.inputDate}`);
-  DailyUserData.collection.insert(dailyData);
-}
-
-if (DailyUserData.collection.find().count() === 0) {
-  if (Meteor.isServer) {
-    console.log('Creating default daily user data.');
-    getData('defaultDailyUserData.json').map(dailyData => addDailyUserData(dailyData));
-    console.log(` Number of default user vehicles created: ${DailyUserData.collection.find().count()}`);
+  if (DailyUserData.collection.find().count() === 0) {
+    getData('defaultDailyUserData.json').map(dailyData => DailyUserData.collection.insert(dailyData));
   }
+
+  console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
+  console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
+  console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
+  console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
+} else {
+  console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
 }
 
 // ------------ TO DELETE ------------ //
