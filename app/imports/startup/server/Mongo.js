@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Make } from '../../api/vehicle/make/Make';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
@@ -24,7 +24,7 @@ function addDailyUserData(dailyData) {
 // VehicleCollection
 function addVehicle(vehicle) {
   console.log(`  Defining vehicle ${vehicle.owner}`);
-  Vehicle.collection.insert(vehicle);
+  UserVehicle.collection.insert(vehicle);
 }
 
 // UserCollection
@@ -63,7 +63,7 @@ if (DailyUserData.collection.find().count() === 0) {
 }
 
 // VehicleCollection
-if (Vehicle.collection.find().count() === 0) {
+if (UserVehicle.collection.find().count() === 0) {
   if (Meteor.settings.defaultVehicle) {
     console.log('Creating default Vehicle.');
     Meteor.settings.defaultVehicle.map(vehicle => addVehicle(vehicle));

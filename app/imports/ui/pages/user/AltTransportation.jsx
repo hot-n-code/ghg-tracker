@@ -4,7 +4,7 @@ import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../../api/vehicle/VehicleCollection';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import AltVehicleCard from '../../components/user-page/AltVehicleCard';
 
 class AltTransportation extends React.Component {
@@ -52,11 +52,11 @@ export default withTracker(() => {
   // KEEP FOR REFERENCE: Get access to Stuff documents.
   const currentUser = Meteor.user() ? Meteor.user().username : '';
   const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
-  const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
+  const subscription2 = Meteor.subscribe(UserVehicle.userPublicationName);
   return {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: subscription.ready() && subscription2.ready(),
     data: DailyUserData.collection.find({ owner: currentUser }).fetch(),
-    vehicles: Vehicle.collection.find({ owner: currentUser }).fetch(),
+    vehicles: UserVehicle.collection.find({ owner: currentUser }).fetch(),
   };
 })(AltTransportation);

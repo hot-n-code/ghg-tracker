@@ -17,7 +17,7 @@ import {
 } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../../api/vehicle/VehicleCollection';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG, getMilesTraveled, getDateToday } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
 
@@ -129,9 +129,9 @@ EditDailyData.propTypes = {
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
   const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
-  const subscription2 = Meteor.subscribe(Vehicle.userPublicationName);
+  const subscription2 = Meteor.subscribe(UserVehicle.userPublicationName);
   return {
-    vehicles: Vehicle.collection.find({}).fetch(),
+    vehicles: UserVehicle.collection.find({}).fetch(),
     dailies: DailyUserData.collection.find({}).fetch(),
     ready: subscription.ready() && subscription2.ready(),
   };

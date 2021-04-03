@@ -3,10 +3,10 @@ import SimpleSchema from 'simpl-schema';
 import { Tracker } from 'meteor/tracker';
 
 /** Encapsulates state and variable values for this collection. */
-class VehicleCollection {
+class UserVehicleCollection {
   constructor() {
     // The name of this collection.
-    this.name = 'VehicleCollection';
+    this.name = 'UserVehicleCollection';
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
@@ -35,4 +35,4 @@ class VehicleCollection {
   }
 }
 
-export const Vehicle = new VehicleCollection();
+export const UserVehicle = new UserVehicleCollection();

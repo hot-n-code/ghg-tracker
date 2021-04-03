@@ -15,7 +15,7 @@ import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Vehicle } from '../../../api/vehicle/VehicleCollection';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { Make } from '../../../api/vehicle/make/Make';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
 
@@ -82,7 +82,7 @@ class AddVehicleModal extends React.Component {
     const get = this.getMPGType(make, model, year);
     const MPG = get[0];
     const type = get[1];
-    Vehicle.collection.insert(
+    UserVehicle.collection.insert(
       { make, model, logo, price, year, MPG, fuelSpending, type, owner },
       error => {
         if (error) {
@@ -222,7 +222,7 @@ AddVehicleModal.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(Vehicle.userPublicationName);
+  const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Make.userPublicationName);
   const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
