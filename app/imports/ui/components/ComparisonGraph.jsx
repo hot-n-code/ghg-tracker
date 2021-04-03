@@ -3,8 +3,8 @@ import { Meteor } from 'meteor/meteor';
 import { Grid } from 'semantic-ui-react';
 import { Bar } from 'react-chartjs-2';
 import { withTracker } from 'meteor/react-meteor-data';
-import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-import PropTypes from "prop-types";
+import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
+import PropTypes from 'prop-types';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
