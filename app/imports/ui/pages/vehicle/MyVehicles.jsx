@@ -4,7 +4,6 @@ import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { Make } from '../../../api/vehicle/make/Make';
 import VehicleList from '../../components/vehicle-page/VehicleList';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
 
@@ -48,10 +47,9 @@ MyVehicles.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Make.userPublicationName);
-  const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
     AllVehicles: AllVehicle.collection.find({}).fetch(),
-    ready: sub1.ready() && sub2.ready() && sub3.ready(),
+    ready: sub1.ready() && sub2.ready(),
   };
 })(MyVehicles);

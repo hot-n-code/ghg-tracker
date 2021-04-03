@@ -16,7 +16,7 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { Make } from '../../../api/vehicle/make/Make';
+import { Makes } from '../../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
 
 /** Create a schema to specify the structure of the data to appear in the form. */
@@ -76,7 +76,7 @@ class AddVehicleModal extends React.Component {
     const { make, model, price, year, fuelSpending } = data;
     const owner = Meteor.user().username;
     // LOGO
-    const temp = _.pluck(Make.collection.find({ make: make }).fetch(), 'logo');
+    const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
     // MPG
     const get = this.getMPGType(make, model, year);
@@ -223,7 +223,7 @@ AddVehicleModal.propTypes = {
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Make.userPublicationName);
+  const sub2 = Meteor.subscribe(Makes.userPublicationName);
   const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
     AllVehicles: AllVehicle.collection.find({}).fetch(),

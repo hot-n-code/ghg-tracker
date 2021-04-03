@@ -87,38 +87,5 @@
       "type": "Gas",
       "owner": "test@gmail.com"
     }
-  ],
-
-  "defaultMakes": [
-    {
-      "make": "Nissan",
-      "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
-      "owner": "admin@foo.com"
-    },
-    {
-      "make": "Honda",
-      "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
-      "owner": "admin@foo.com"
-    },
-    {
-      "make": "Toyota",
-      "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
-      "owner": "admin@foo.com"
-    },
-    {
-      "make": "Tesla",
-      "logo": "https://www.freepnglogos.com/uploads/tesla-logo-png-black-1.png",
-      "owner": "admin@foo.com"
-    },
-    {
-      "make": "Ford",
-      "logo": "https://www.freepnglogos.com/uploads/ford-logo-transparent-8.png",
-      "owner": "admin@foo.com"
-    },
-    {
-      "make": "Volkswagen",
-      "logo": "https://www.freepnglogos.com/uploads/vw-png-logo/volkswagen-auto-eps-png-logo-vector-22.png",
-      "owner": "admin@foo.com"
-    }
   ]
 }

@@ -3,13 +3,14 @@ import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
-import { Make } from '../../api/vehicle/make/Make';
+import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /* eslint-disable no-console */
 
 const getData = (filename) => JSON.parse(Assets.getText(filename));
 
+// Insert functions
 // UserCollection
 function addUser({ name, goal, email, image }) {
   Users.collection.insert({ name, goal, email, image });
@@ -20,6 +21,19 @@ if (Users.collection.find().count() === 0) {
     console.log('Creating the default profiles');
     getData('defaultUsers.json').map(individualUser => addUser(individualUser));
     console.log(` Number of default profiles created: ${Users.collection.find().count()}`);
+  }
+}
+
+// MakeCollection
+function addMake({ make, logo }) {
+  Makes.collection.insert({ make, logo });
+}
+
+if (Makes.collection.find().count() === 0) {
+  if (Meteor.isServer) {
+    console.log('Creating default makes');
+    getData('defaultMakes.json').map(makes => addMake(makes));
+    console.log(` Number of default makes created: ${Makes.collection.find().count()}`);
   }
 }
 
@@ -41,12 +55,6 @@ function addDailyUserData(dailyData) {
 function addVehicle(vehicle) {
   // console.log(`  Defining vehicle ${vehicle.owner}`);
   UserVehicle.collection.insert(vehicle);
-}
-
-// MakeCollection
-function addMake(data) {
-  // console.log(`  Defining make ${data.make}`);
-  Make.collection.insert(data);
 }
 
 // AllVehicleCollection
@@ -77,14 +85,6 @@ if (UserVehicle.collection.find().count() === 0) {
   if (Meteor.settings.defaultVehicle) {
     console.log('Creating default Vehicle.');
     Meteor.settings.defaultVehicle.map(vehicle => addVehicle(vehicle));
-  }
-}
-
-// MakeCollection
-if (Make.collection.find().count() === 0) {
-  if (Meteor.settings.defaultMakes) {
-    console.log('Creating default make.');
-    Meteor.settings.defaultMakes.map(makes => addMake(makes));
   }
 }
 
