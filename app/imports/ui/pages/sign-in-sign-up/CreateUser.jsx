@@ -25,13 +25,17 @@ class CreateUser extends React.Component {
   /** Redirecting. */
   handleClick = () => {
     // eslint-disable-next-line
-    document.location.href = '#/create-vehicle';
+    document.location.href = '#/user-page';
   }
 
   submit(data) {
     /** Gathers user's data and adds it to the userCollection */
-    const { name, image, goal } = data;
+    const { name, goal } = data;
+    let { image } = data;
     const email = Meteor.user().username;
+    if (image === undefined) {
+      image = 'https://png.pngtree.com/png-vector/20191026/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1870181.jpg';
+    }
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
       swal('Error', 'You already have a created user');
@@ -72,7 +76,7 @@ class CreateUser extends React.Component {
                     <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
-                    <TextField id='image' name='image' required showInlineError={true} placeholder={'image'}/>
+                    <TextField id='image' name='image' showInlineError={true} placeholder={'image'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
                   </Form.Group>

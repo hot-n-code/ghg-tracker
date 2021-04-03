@@ -11,7 +11,6 @@ class UserCollection {
       goal: String,
       email: String,
       image: String,
-      password: String,
     }, { tracker: Tracker });
 
     this.collection.attachSchema(this.schema);
