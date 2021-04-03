@@ -5,7 +5,6 @@ import { Roles } from 'meteor/alanning:roles';
 /* eslint-disable no-console */
 
 function createUser(email, password, role) {
-  console.log(`  Creating user ${email}.`);
   const userID = Accounts.createUser({
     username: email,
     email: email,
@@ -23,6 +22,7 @@ if (Meteor.users.find().count() === 0) {
     const defaultAccounts = JSON.parse(Assets.getText('defaultAccounts.json'));
     console.log('Creating the default accounts(s)');
     defaultAccounts.map(({ email, password, role }) => createUser(email, password, role));
+    console.log(` Number of default users created: ${Meteor.users.find().count()}`);
   } else {
     console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
   }

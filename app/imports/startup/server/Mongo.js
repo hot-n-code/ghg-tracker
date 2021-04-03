@@ -8,40 +8,50 @@ import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
 /* eslint-disable no-console */
 
+const getData = (filename) => JSON.parse(Assets.getText(filename));
+
+// UserCollection
+function addUser({ name, goal, email, image }) {
+  Users.collection.insert({ name, goal, email, image });
+}
+
+if (Users.collection.find().count() === 0) {
+  if (Meteor.isServer) {
+    console.log('Creating the default profiles');
+    getData('defaultUsers.json').map(individualUser => addUser(individualUser));
+    console.log(` Number of default profiles created: ${Users.collection.find().count()}`);
+  }
+}
+
+// ------------ UNDER CONSTRUCTION ------------ //
 /** Initialize the database with a default data document. */
 // StuffsCollection
 function addData(data) {
-  console.log(`  Adding: ${data.name} (${data.owner})`);
+  // console.log(`  Adding: ${data.name} (${data.owner})`);
   Stuffs.collection.insert(data);
 }
 
 // DailyUserDataCollection
 function addDailyUserData(dailyData) {
-  console.log(`  Defining Daily User Data on: ${dailyData.inputDate}`);
+  // console.log(`  Defining Daily User Data on: ${dailyData.inputDate}`);
   DailyUserData.collection.insert(dailyData);
 }
 
 // VehicleCollection
 function addVehicle(vehicle) {
-  console.log(`  Defining vehicle ${vehicle.owner}`);
+  // console.log(`  Defining vehicle ${vehicle.owner}`);
   UserVehicle.collection.insert(vehicle);
-}
-
-// UserCollection
-function addUser({ name, goal, email, image, password }) {
-  console.log(`  Defining profile ${email}`);
-  Users.collection.insert({ name, goal, email, image, password });
 }
 
 // MakeCollection
 function addMake(data) {
-  console.log(`  Defining make ${data.make}`);
+  // console.log(`  Defining make ${data.make}`);
   Make.collection.insert(data);
 }
 
 // AllVehicleCollection
 function addAllVehicle(vehicle) {
-  console.log(`  Defining all vehicle ${vehicle.make}`);
+  // console.log(`  Defining all vehicle ${vehicle.make}`);
   AllVehicle.collection.insert(vehicle);
 }
 
@@ -67,14 +77,6 @@ if (UserVehicle.collection.find().count() === 0) {
   if (Meteor.settings.defaultVehicle) {
     console.log('Creating default Vehicle.');
     Meteor.settings.defaultVehicle.map(vehicle => addVehicle(vehicle));
-  }
-}
-
-// UserCollection
-if (Users.collection.find().count() === 0) {
-  if (Meteor.settings.defaultUser) {
-    console.log('Creating the default profiles');
-    Meteor.settings.defaultUser.map(individualUser => addUser(individualUser));
   }
 }
 
