@@ -3,7 +3,6 @@ import { Stuffs } from '../../api/stuff-to-delete/Stuff';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Vehicle } from '../../api/vehicle/VehicleCollection';
-import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Make } from '../../api/vehicle/make/Make';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 
@@ -33,8 +32,6 @@ Meteor.publish(Vehicle.userPublicationName, function publish() {
   }
   return this.ready();
 });
-
-Meteor.publish(UserVehicle.userPublicationName, () => UserVehicle.collection.find());
 
 Meteor.publish(Make.userPublicationName, () => Make.collection.find());
 

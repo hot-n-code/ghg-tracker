@@ -14,7 +14,6 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { Vehicle } from '../../../api/vehicle/VehicleCollection';
 import { Make } from '../../../api/vehicle/make/Make';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
@@ -162,12 +161,11 @@ CreateVehicle.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Vehicle.userPublicationName);
-  const sub3 = Meteor.subscribe(Make.userPublicationName);
-  const sub4 = Meteor.subscribe(AllVehicle.userPublicationName);
+  const sub1 = Meteor.subscribe(Vehicle.userPublicationName);
+  const sub2 = Meteor.subscribe(Make.userPublicationName);
+  const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
   return {
     AllVehicles: AllVehicle.collection.find({}).fetch(),
-    ready: sub1.ready() && sub2.ready() && sub3.ready() && sub4.ready(),
+    ready: sub1.ready() && sub2.ready() && sub3.ready(),
   };
 })(CreateVehicle);
