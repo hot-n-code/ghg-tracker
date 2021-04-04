@@ -7,11 +7,10 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import PropTypes from 'prop-types';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
-import {getDateToday} from "../utilities/DailyGHGData";
 
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
 const ComparisonGraph = (props) => {
-    const today = getDateToday().toDateString();
+    // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
         "October", "November", "December"];
     const date = new Date();
@@ -56,7 +55,7 @@ const ComparisonGraph = (props) => {
                              yAxes: [{
                                  scaleLabel: {
                                      display: true,
-                                     labelString: 'CO2 Reduced',
+                                     labelString: 'Pounds of CO2',
                                  },
                              }],
                              xAxes: [{
