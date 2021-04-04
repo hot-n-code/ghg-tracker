@@ -11,6 +11,7 @@ import MyDataChart from '../../components/user-page/MyDataChart';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { getDateToday } from '../../utilities/DailyGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import ComparisonGraph from '../../components/ComparisonGraph';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -33,6 +34,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
+                <ComparisonGraph/>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.users}/>
