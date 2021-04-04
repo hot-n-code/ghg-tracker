@@ -1,0 +1,26 @@
+[
+  {
+    "owner": "test@gmail.com",
+    "inputDate": "2019-11-13",
+    "modeOfTransportation": "Telework",
+    "milesTraveled": 25.00,
+    "cO2Reduced": 18.85,
+    "fuelSaved": 0.9
+  },
+  {
+    "owner": "test@gmail.com",
+    "inputDate": "2019-11-14",
+    "modeOfTransportation": "Public Transportation",
+    "milesTraveled": 20.00,
+    "cO2Reduced": 15.08,
+    "fuelSaved": 0.77
+  },
+  {
+    "owner": "test@gmail.com",
+    "inputDate": "2019-11-15",
+    "modeOfTransportation": "Carpool",
+    "milesTraveled": 60.00,
+    "cO2Reduced": 45.23,
+    "fuelSaved": 2.31
+  }
+]

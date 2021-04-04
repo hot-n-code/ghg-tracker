@@ -11,7 +11,6 @@ class MakeCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      owner: String,
       make: String,
       logo: String,
     }, { tracker: Tracker });
@@ -23,4 +22,4 @@ class MakeCollection {
   }
 }
 
-export const Make = new MakeCollection();
+export const Makes = new MakeCollection();

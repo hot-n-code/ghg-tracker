@@ -6,7 +6,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
 import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-import { Users } from '../../../api/user/UserCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 
 class UserDataPage extends React.Component {
@@ -48,9 +47,8 @@ UserDataPage.propTypes = {
 
 export default withTracker(() => {
   const sub1 = Meteor.subscribe(DailyUserData.userPublicationName);
-  const sub2 = Meteor.subscribe(Users.userPublicationName);
   return {
     dailyData: DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch(),
-    ready: sub1.ready() && sub2.ready(),
+    ready: sub1.ready(),
   };
 })(UserDataPage);
