@@ -18,7 +18,7 @@ const graphObject = {
   carpool: 'Carpool',
   evHybrid: 'EVHybrid',
   transportationTypes: ['Telework', 'Public Transportation', 'Biking',
-      'Walk', 'Carpool', 'EVHybrid'],
+      'Walk', 'Carpool', 'EV/Hybrid'],
   graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
 };
 
