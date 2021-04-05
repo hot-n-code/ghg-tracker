@@ -7,6 +7,7 @@ import SmartDataTable from 'react-smart-data-table';
 import { Redirect } from 'react-router-dom';
 // Collection that we are accessing
 import { Users } from '../../../api/user/UserCollection';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
 /** Renders a table containing all of the users profiles. Use <User> to render each row. */
@@ -108,13 +109,15 @@ class AdminProfileList extends React.Component {
 AdminProfileList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
+  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
-
 export default withTracker(() => {
-  const subscription = Meteor.subscribe(Users.adminPublicationName);
+  const UserSubscription = Meteor.subscribe(Users.adminPublicationName);
+  const VehicleSubscription = Meteor.subscrobe(UserVehicle.adminPublicationName);
   return {
     users: Users.collection.find({}, { sort: { lastName: 1 } }).fetch(),
-    ready: subscription.ready(),
+    vehicles: UserVehicle.collection.find({}, { sort: { name: 1 } }).fetch(),
+    ready: UserSubscription.ready() && VehicleSubscription.ready(),
   };
 })(AdminProfileList);
