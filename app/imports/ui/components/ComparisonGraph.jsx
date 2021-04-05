@@ -14,11 +14,17 @@ const ComparisonGraph = (props) => {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
         "October", "November", "December"];
     const date = new Date();
-    const getByMonth = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
+    const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
-    const userGHGData = getCumulativeGHG(getByMonth);
+    const userGHGData = getCumulativeGHG(getByMonthIndividual);
     const totalCO2Reduced = userGHGData.cO2Reduced;
     const totalCO2Produced = userGHGData.cO2Produced;
+    const getByMonthAll = _.filter(props.allUserData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
+    const allGHGData = getCumulativeGHG(getByMonthAll);
+    const allCO2Reduced = allGHGData.cO2Reduced;
+    const allCO2Produced = allGHGData.cO2Produced;
+    console.log(props.allUserData);
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
@@ -34,7 +40,7 @@ const ComparisonGraph = (props) => {
                 backgroundColor: '#985575',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
-                data: [30, 0],
+                data: [allCO2Reduced, allCO2Produced],
             },
         ],
     };
@@ -74,12 +80,15 @@ const ComparisonGraph = (props) => {
 
 ComparisonGraph.propTypes = {
     userData: PropTypes.array.isRequired,
+    allUserData: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+    const user = Meteor.user().username;
     return {
-        userData: DailyUserData.collection.find({}).fetch(),
-        ready: subscription1.ready(),
+        userData: DailyUserData.collection.find({ owner: user }).fetch(),
+        allUserData: DailyUserData.collection.find({}).fetch(),
+        ready: subscription2.ready(),
     };
 })(ComparisonGraph);
