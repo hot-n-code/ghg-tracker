@@ -44,6 +44,12 @@ Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
 
 Meteor.publish(DailyUserData.cumulativePublicationName, () => DailyUserData.collection.find());
 
+Meteor.publish(UserVehicle.adminPublicationName, () => UserVehicle.collection.find());
+
+Meteor.publish(Makes.adminPublicationName, () => Makes.collection.find());
+
+Meteor.publish(AllVehicle.adminPublicationName, () => AllVehicle.collection.find());
+
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {
