@@ -67,7 +67,7 @@
 }
 .background-all {
   background-image: url('images/wave_transparent.png');
-  background-color: #f9f8eb;
+  background-color: white;
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -111,7 +111,7 @@
 }
 
 body {
-  background-color: #f9f8eb;
+  background-color: white;
   background-size: cover;
   z-index: -999;
   margin: 0;
