@@ -34,7 +34,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                {/*<ComparisonGraph/>*/}
+                <ComparisonGraph/>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.users}/>
