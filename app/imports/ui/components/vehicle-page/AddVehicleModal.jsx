@@ -1,8 +1,7 @@
-import React from 'react';
-import { Button, Segment, Header, Form, Loader } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Button, Segment, Header, Form } from 'semantic-ui-react';
 import {
   AutoForm,
-  TextField,
   SubmitField,
   NumField,
   SelectField,
@@ -32,24 +31,24 @@ const makeSchema = () => new SimpleSchema({
         'Volkswagen',
       ],
     },
-    model: String,
+    model: {
+      type: String,
+      allowedValues: [
+          '',
+      ],
+    },
     price: Number,
     year: Number,
     fuelSpending: Number,
-    // MPG: Number,
-    // type: {
-    //   type: String,
-    //   allowedValues: ['gas', 'ev', 'hybrid'],
-    // },
   });
 
-class AddVehicleModal extends React.Component {
-  getMPGType(make, model, year) {
+const AddVehicleModal = (props) => {
+  const getMPGType = (make, model, year) => {
     const search = {
       miles: '',
       type: '',
     };
-    const totalCars = this.props.AllVehicles;
+    const totalCars = props.AllVehicles;
     const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
     search.miles = find[0];
     if (find[0] > 0) {
@@ -58,28 +57,23 @@ class AddVehicleModal extends React.Component {
       search.type = 'EV/Hybrid';
     }
     return [search.miles, search.type];
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSelected: false,
-    };
-  }
-
-  addVehicleModalHandler = openStatus => {
-    this.setState({ isSelected: openStatus });
   };
 
+   const populateCar = (make) => {
+    const totalCars = props.AllVehicles;
+    const cars = _.uniq(_.pluck(_.where(totalCars, { Make: make }), 'Model'));
+    return cars;
+  };
+  const [test, setTest] = useState(false);
   /** On submit, insert the data. */
-  submit(data, formRef) {
+  function submit(data, formRef) {
     const { make, model, price, year, fuelSpending } = data;
     const owner = Meteor.user().username;
     // LOGO
     const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
     // MPG
-    const get = this.getMPGType(make, model, year);
+    const get = getMPGType(make, model, year);
     const MPG = get[0];
     const type = get[1];
     UserVehicle.collection.insert(
@@ -94,20 +88,9 @@ class AddVehicleModal extends React.Component {
       },
     );
   }
-
-  render() {
-    return this.props.ready ? (
-      this.renderPage()
-    ) : (
-      <Loader active>Getting data</Loader>
-    );
-  }
-
-  /** Render the form. Use Uniforms: https://github.com/vazco/uniforms */
-  renderPage() {
+    const xd = populateCar('Honda');
     const formSchema = makeSchema();
     const bridge = new SimpleSchema2Bridge(formSchema);
-    const isSelected = this.state.isSelected;
     let formRef = null;
     // Animation variants
     const overlay = {
@@ -134,15 +117,15 @@ class AddVehicleModal extends React.Component {
             circular
             icon='add'
             size='massive'
-            onClick={() => this.addVehicleModalHandler(true)}
+            onClick={() => setTest(true)}
           />
         </motion.div>
 
         <AnimatePresence
           exitBeforeEnter
-          onExitComplete={() => this.addVehicleModalHandler(false)}
+          onExitComplete={() => setTest(false)}
         >
-          {isSelected && (
+          {test && (
             <motion.div
               className='add-vehicle-overlay'
               variants={overlay}
@@ -157,7 +140,7 @@ class AddVehicleModal extends React.Component {
                   </Header>
                   <motion.div
                     className='add-vehicle-close-btn'
-                    onClick={() => this.addVehicleModalHandler(false)}
+                    onClick={() => setTest(false)}
                   >
                     &#10005;
                   </motion.div>
@@ -171,16 +154,12 @@ class AddVehicleModal extends React.Component {
                       formRef = ref;
                     }}
                     schema={bridge}
-                    onSubmit={data => this.submit(data, formRef)}
+                    onSubmit={data => submit(data, formRef)}
                   >
                     <Segment>
                       <Form.Group widths={'equal'}>
-                        <SelectField name='make' />
-                        <TextField
-                          name='model'
-                          showInlineError={true}
-                          placeholder={'Model of Vehicle'}
-                        />
+                        <SelectField name='make'/>
+                        <SelectField name='model' allowedValues={xd}/>
                       </Form.Group>
                       <Form.Group widths={'equal'}>
                         <NumField
@@ -211,8 +190,7 @@ class AddVehicleModal extends React.Component {
         </AnimatePresence>
       </AnimateSharedLayout>
     );
-  }
-}
+};
 
 AddVehicleModal.propTypes = {
   ready: PropTypes.bool.isRequired,
