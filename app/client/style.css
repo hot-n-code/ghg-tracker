@@ -1,6 +1,6 @@
 /* NAVBAR */
 .ui.attached.menu {
-  background: #5c8d89;
+  background: #FC4A1A;
   margin-bottom: 0px;
   padding: 0px;
 }
@@ -67,7 +67,7 @@
 }
 .background-all {
   background-image: url('images/wave_transparent.png');
-  background-color: white;
+  background-color: #f9f8fa;
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -132,7 +132,7 @@ h6 {
 
 .footer {
   margin-top: 14px;
-  background-color: #5c8d89;
+  background-color: #4abdac;
   bottom: 0;
   left: 0;
   right: 0;

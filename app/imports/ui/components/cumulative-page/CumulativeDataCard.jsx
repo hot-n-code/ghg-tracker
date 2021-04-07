@@ -42,22 +42,22 @@ class CumulativeDataCard extends React.Component {
     const eImpactData = [
       {
         title: 'Vehicle Miles Travel Reduced',
-        img: '/images/cumulative-page/car.png',
+        img: '/images/colored-clipart/car3.png',
         data: '0',
       },
       {
         title: 'Green House Gas (GHG) Reduced',
-        img: 'https://img.icons8.com/ios/100/000000/potted-plant.png',
+        img: '/images/colored-clipart/2.png',
         data: '0',
       },
       {
         title: 'Green House Gas (GHG) Produced',
-        img: '/images/cumulative-page/C.png',
+        img: '/images/colored-clipart/5.png',
         data: '0',
       },
       {
         title: 'Gallons of Gas Saved',
-        img: '/images/cumulative-page/gas.png',
+        img: '/images/colored-clipart/3.png',
         data: '0',
       },
 
