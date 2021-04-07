@@ -6,27 +6,31 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
-import { getDateToday } from '../utilities/DailyGHGData';
 
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
  * users may also edit their data of their entries.
  * */
 const MyNumbers = (props) => {
-    const today = getDateToday().toDateString();
-    const hoursTelework = _.size(_.where(props.dailyData, { modeOfTransportation: 'Telework' }));
-    const ghgData = getCumulativeGHG(props.dailyData);
+    const date = new Date();
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+        "October", "November", "December"];
+    console.log(props.dailyData);
+    const getByMonthIndividual = _.filter(props.dailyData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
+    const ghgData = getCumulativeGHG(getByMonthIndividual);
     const totalCO2Reduced = ghgData.cO2Reduced;
     const totalMiles = ghgData.VMTReduced;
     const totalFuelSaved = ghgData.fuelSaved;
     const totalGHGProduced = ghgData.cO2Produced;
+    const hoursTelework = _.size(_.where(props.dailyData, { modeOfTransportation: 'Telework' }));
     return (
             <div className='background-total-user-data'>
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
-                            My numbers as of
+                            My numbers for
                             <br/>
-                            {today}</Header>
+                            {months[date.getMonth()]} {date.getFullYear()} </Header>
                         <hr/>
                     </Grid.Column>
                 </Grid>

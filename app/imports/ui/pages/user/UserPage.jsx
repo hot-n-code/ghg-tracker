@@ -11,6 +11,7 @@ import { getDateToday } from '../../utilities/DailyGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import MyNumbers from "../../components/MyNumbers";
+import ComparisonGraphAll from "../../components/ComparisonGraphAll";
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
