@@ -51,7 +51,7 @@ class CreateVehicle extends React.Component {
       miles: '',
       type: '',
     };
-    const totalCars = this.props.AllVehicles[0].Vehicles;
+    const totalCars = this.props.AllVehicles;
     const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
     search.miles = find[0];
     if (find[0] > 0) {
