@@ -17,8 +17,8 @@ const ComparisonGraph = (props) => {
     const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
     const userGHGData = getCumulativeGHG(getByMonthIndividual);
-    const totalCO2Reduced = userGHGData.cO2Reduced;
-    const totalCO2Produced = userGHGData.cO2Produced;
+    export const totalCO2Reduced = userGHGData.cO2Reduced;
+    export const totalCO2Produced = userGHGData.cO2Produced;
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
@@ -36,12 +36,12 @@ const ComparisonGraph = (props) => {
         <Grid>
             <Grid.Column>
                 <Bar data={stateAll}
-                     height={300} width={400}
+                     height={300} width={500}
                      options={{
                          maintainAspectRatio: false,
                          title: {
                              display: true,
-                             text: '',
+                             text: 'My GHG Statistics',
                              fontSize: 30,
                          },
                          scales: {
