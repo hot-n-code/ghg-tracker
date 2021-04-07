@@ -11,8 +11,6 @@ import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
 const ComparisonGraph = (props) => {
     // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-        "October", "November", "December"];
     const date = new Date();
     const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
