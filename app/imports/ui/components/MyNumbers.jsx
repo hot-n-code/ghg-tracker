@@ -14,7 +14,6 @@ const MyNumbers = (props) => {
     const date = new Date();
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
         "October", "November", "December"];
-    console.log(props.dailyData);
     const getByMonthIndividual = _.filter(props.dailyData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
     const ghgData = getCumulativeGHG(getByMonthIndividual);
@@ -28,9 +27,7 @@ const MyNumbers = (props) => {
                 <Grid stackable columns={3}>
                     <Grid.Column width={16}>
                         <Header as='h1' textAlign='center'>
-                            My numbers for
-                            <br/>
-                            {months[date.getMonth()]} {date.getFullYear()} </Header>
+                            My {months[date.getMonth()]} {date.getFullYear()} GHG Breakdown </Header>
                         <hr/>
                     </Grid.Column>
                 </Grid>

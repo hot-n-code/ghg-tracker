@@ -18,6 +18,7 @@ const paddingStyle = { padding: 20 };
  * users may also edit their data of their entries.
  * */
 class UserPage extends React.Component {
+
     render() {
         return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
     }
@@ -31,9 +32,18 @@ class UserPage extends React.Component {
       const totalFuelSaved = ghgData.fuelSaved;
       const totalGHGProduced = ghgData.cO2Produced;
 
-        return (
+      const date = new Date();
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
+          "October", "November", "December"];
+      return (
             <div className='background-all'>
             <Container style={paddingStyle}>
+                <Grid>
+                    <Grid.Column width={16}>
+                        <Header as='h1' textAlign='center'>My {months[date.getMonth()]} {date.getFullYear()} Statistics
+                        </Header>
+                    </Grid.Column>
+                </Grid>
                 <UserVCumulative/>
                 <Grid stackable columns={2}>
                     <Grid.Column>
