@@ -35,7 +35,7 @@ if (Meteor.isServer) {
   console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
   console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
   console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
-  console.log(`   AllVehicleDataCollection: ${AllVehicle.collection.find().count()} vehicles`);
+  console.log(`   AllVehicleCollection: ${AllVehicle.collection.find().count()} vehicles`);
 } else {
   console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
 }
