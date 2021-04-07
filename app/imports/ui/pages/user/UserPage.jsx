@@ -11,7 +11,7 @@ import { getDateToday } from '../../utilities/DailyGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import MyNumbers from "../../components/MyNumbers";
-import ComparisonGraphAll from "../../components/ComparisonGraphAll";
+import UserVCumulative from "../../components/UserVCumulative";
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -34,7 +34,7 @@ class UserPage extends React.Component {
         return (
             <div className='background-all'>
             <Container style={paddingStyle}>
-                <ComparisonGraph/>
+                <UserVCumulative/>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.users}/>
@@ -42,7 +42,8 @@ class UserPage extends React.Component {
                     <Grid.Column>
                         <Card fluid>
                             <Card.Content>
-                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>My Mileage Summary</Header>
+                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month's
+                                    Mileage Summary</Header>
                                 <MyDataChart/>
                             </Card.Content>
                         </Card>

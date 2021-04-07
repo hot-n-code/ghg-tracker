@@ -71,8 +71,9 @@ ComparisonGraph.propTypes = {
 
 export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const user = Meteor.user().username;
     return {
-        userData: DailyUserData.collection.find({}).fetch(),
+        userData: DailyUserData.collection.find({ owner: user }).fetch(),
         ready: subscription1.ready(),
     };
 })(ComparisonGraph);

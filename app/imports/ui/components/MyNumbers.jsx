@@ -85,8 +85,9 @@ MyNumbers.propTypes = {
 
 export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const user = Meteor.user().username;
     return {
-        dailyData: DailyUserData.collection.find({}).fetch(),
+        dailyData: DailyUserData.collection.find({ owner: user }).fetch(),
         ready: subscription1.ready(),
     };
 })(MyNumbers);
