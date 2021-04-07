@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react';
 import { Bar } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Users } from '../../api/user/UserCollection';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import PropTypes from 'prop-types';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
@@ -12,16 +13,17 @@ import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 const ComparisonGraphAll = (props) => {
     // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
     const date = new Date();
+    const numUsers = _.size(props.users);
     const getByMonthAll = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
     const allGHGData = getCumulativeGHG(getByMonthAll);
-    const allCO2Reduced = allGHGData.cO2Reduced;
-    const allCO2Produced = allGHGData.cO2Produced;
+    const allCO2Reduced = (allGHGData.cO2Reduced / numUsers).toFixed(2);
+    const allCO2Produced = (allGHGData.cO2Produced / numUsers).toFixed(2);
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
             {
-                label: 'Me',
+                label: 'Cumulative User GHG Data (Average)',
                 backgroundColor: '#5c8d89',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
@@ -34,7 +36,7 @@ const ComparisonGraphAll = (props) => {
         <Grid>
             <Grid.Column>
                 <Bar data={stateAll}
-                     height={300} width={500}
+                     height={300} width={400}
                      options={{
                          maintainAspectRatio: false,
                          title: {
@@ -65,12 +67,15 @@ const ComparisonGraphAll = (props) => {
 
 ComparisonGraphAll.propTypes = {
     userData: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
     const subscription1 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+    const subscription2 = Meteor.subscribe(Users.adminPublicationName);
     return {
         userData: DailyUserData.collection.find({}).fetch(),
-        ready: subscription1.ready(),
+        users: Users.collection.find({}).fetch(),
+        ready: subscription1.ready() && subscription2.ready(),
     };
 })(ComparisonGraphAll);

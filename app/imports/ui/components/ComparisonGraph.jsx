@@ -36,12 +36,12 @@ const ComparisonGraph = (props) => {
         <Grid>
             <Grid.Column>
                 <Bar data={stateAll}
-                     height={300} width={500}
+                     height={300} width={400}
                      options={{
                          maintainAspectRatio: false,
                          title: {
                              display: true,
-                             text: 'My CO2 Reduction Effort for ' + months[date.getMonth()] + ' ' + date.getFullYear(),
+                             text: '',
                              fontSize: 30,
                          },
                          scales: {

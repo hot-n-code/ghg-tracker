@@ -8,8 +8,10 @@ const UserVCumulative = () => {
     // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
     return (
         <Grid>
-            <Grid.Column>
+            <Grid.Column width={8}>
                 <ComparisonGraph/>
+            </Grid.Column>
+            <Grid.Column width={8}>
                 <ComparisonGraphAll/>
             </Grid.Column>
         </Grid>
