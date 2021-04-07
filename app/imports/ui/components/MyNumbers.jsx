@@ -22,7 +22,7 @@ const MyNumbers = (props) => {
     const totalMiles = ghgData.VMTReduced;
     const totalFuelSaved = ghgData.fuelSaved;
     const totalGHGProduced = ghgData.cO2Produced;
-    const hoursTelework = _.size(_.where(props.dailyData, { modeOfTransportation: 'Telework' }));
+    const hoursTelework = _.size(_.where(getByMonthIndividual, { modeOfTransportation: 'Telework' }));
     return (
             <div className='background-total-user-data'>
                 <Grid stackable columns={3}>
