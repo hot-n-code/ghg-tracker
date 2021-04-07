@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Segment, Header, Form } from 'semantic-ui-react';
-import {
-  AutoForm,
-  SubmitField,
-  NumField,
-  SelectField,
-} from 'uniforms-semantic';
+import { Button, Header } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import SimpleSchema from 'simpl-schema';
 import { Meteor } from 'meteor/meteor';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
@@ -17,30 +9,6 @@ import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { Makes } from '../../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
-
-/** Create a schema to specify the structure of the data to appear in the form. */
-const makeSchema = () => new SimpleSchema({
-    make: {
-      type: String,
-      allowedValues: [
-        'Toyota',
-        'Honda',
-        'Nissan',
-        'Tesla',
-        'Ford',
-        'Volkswagen',
-      ],
-    },
-    model: {
-      type: String,
-      allowedValues: [
-          '',
-      ],
-    },
-    price: Number,
-    year: Number,
-    fuelSpending: Number,
-  });
 
 const AddVehicleModal = (props) => {
   const getMPGType = (make, model, year) => {
@@ -63,6 +31,11 @@ const AddVehicleModal = (props) => {
     const totalCars = props.AllVehicles;
     const cars = _.uniq(_.pluck(_.where(totalCars, { Make: make }), 'Model'));
     return cars;
+  };
+  const populateYear = (make, model) => {
+    const totalCars = props.AllVehicles;
+    const year = _.uniq(_.pluck(_.where(totalCars, { Make: make, Model: model }), 'Year'));
+    return year;
   };
   const [test, setTest] = useState(false);
   /** On submit, insert the data. */
@@ -88,10 +61,24 @@ const AddVehicleModal = (props) => {
       },
     );
   }
-    const xd = populateCar('Honda');
-    const formSchema = makeSchema();
-    const bridge = new SimpleSchema2Bridge(formSchema);
-    let formRef = null;
+    // const xd = populateCar('Honda');
+  const [dropMake, setDropMake] = useState(['Toyota', 'Honda', 'Nissan', 'Tesla', 'Ford', 'Volkswagen']);
+  const [dropModel, setDropModel] = useState(() => populateCar('Honda'));
+  const [dropYear, setDropYear] = useState(() => ['2020']);
+  const [finalMake, setFinalMake] = useState(() => '');
+  const [finalModel, setFinalModel] = useState(() => '');
+  const [finalYear, setFinalYear] = useState(() => '');
+  const changeModel = e => {
+    setFinalMake(e.target.value);
+    setDropModel(populateCar(e.target.value));
+  };
+  const changeYear = e => {
+    setFinalModel(e.target.value);
+    setDropYear(populateYear(finalMake, e.target.value));
+  };
+  const endYear = e => {
+    setFinalYear(e.target.value);
+  };
     // Animation variants
     const overlay = {
       visible: { opacity: 1 },
@@ -149,40 +136,27 @@ const AddVehicleModal = (props) => {
                   className='add-vehicle-form'
                   layoutId='add-vehicle-toggle'
                 >
-                  <AutoForm
-                    ref={ref => {
-                      formRef = ref;
-                    }}
-                    schema={bridge}
-                    onSubmit={data => submit(data, formRef)}
-                  >
-                    <Segment>
-                      <Form.Group widths={'equal'}>
-                        <SelectField name='make'/>
-                        <SelectField name='model' allowedValues={xd}/>
-                      </Form.Group>
-                      <Form.Group widths={'equal'}>
-                        <NumField
-                          name='price'
-                          showInlineError={true}
-                          placeholder={'Price of Vehicle'}
-                        />
-                        <NumField
-                          name='year'
-                          showInlineError={true}
-                          placeholder={'Year'}
-                        />
-                      </Form.Group>
-                      <Form.Group>
-                        <NumField
-                            name='fuelSpending'
-                            showInlineError={true}
-                            placeholder={'Yearly Fuel Spending'}
-                        />
-                      </Form.Group>
-                      <SubmitField value='Submit' />
-                    </Segment>
-                  </AutoForm>
+                  <select onChange={changeModel}>
+                    {dropMake.map((make, key) => (
+                      <option value={make} key={key}>
+                        {make}
+                      </option>
+                        ))}
+                  </select>
+                  <select onChange={changeYear}>
+                    {dropModel.map((model, key) => (
+                        <option value={model} key={key}>
+                          {model}
+                        </option>
+                    ))}
+                  </select>
+                  <select onChange={endYear}>
+                    {dropYear.map((year, key) => (
+                        <option value={year} key={key}>
+                          {year}
+                        </option>
+                    ))}
+                  </select>
                 </motion.div>
               </motion.div>
             </motion.div>
