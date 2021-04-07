@@ -9,16 +9,14 @@ import PropTypes from 'prop-types';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
-const ComparisonGraph = (props) => {
+const ComparisonGraphAll = (props) => {
     // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-        "October", "November", "December"];
     const date = new Date();
-    const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
+    const getByMonthAll = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
-    const userGHGData = getCumulativeGHG(getByMonthIndividual);
-    const totalCO2Reduced = userGHGData.cO2Reduced;
-    const totalCO2Produced = userGHGData.cO2Produced;
+    const allGHGData = getCumulativeGHG(getByMonthAll);
+    const allCO2Reduced = allGHGData.cO2Reduced;
+    const allCO2Produced = allGHGData.cO2Produced;
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
@@ -27,7 +25,7 @@ const ComparisonGraph = (props) => {
                 backgroundColor: '#5c8d89',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
-                data: [totalCO2Reduced, totalCO2Produced],
+                data: [allCO2Reduced, allCO2Produced],
             },
         ],
     };
@@ -41,7 +39,7 @@ const ComparisonGraph = (props) => {
                          maintainAspectRatio: false,
                          title: {
                              display: true,
-                             text: 'My CO2 Reduction Effort for ' + months[date.getMonth()] + ' ' + date.getFullYear(),
+                             text: '',
                              fontSize: 30,
                          },
                          scales: {
@@ -65,14 +63,14 @@ const ComparisonGraph = (props) => {
     );
 };
 
-ComparisonGraph.propTypes = {
+ComparisonGraphAll.propTypes = {
     userData: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const subscription1 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
     return {
         userData: DailyUserData.collection.find({}).fetch(),
         ready: subscription1.ready(),
     };
-})(ComparisonGraph);
+})(ComparisonGraphAll);
