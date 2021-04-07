@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
 import { Header, Button } from 'semantic-ui-react';
-import { getVehicleYearsList, getVehicle } from '../../utilities/vehicleDropdown';
+import {
+  getVehicleYearsList,
+  getVehicle,
+} from '../../utilities/vehicleDropdown';
 import { sampleVehicles } from '../../utilities/sampleData';
 
 /** Renders a single vehicle card. */
@@ -40,8 +43,7 @@ const VehicleCard = ({ vehicle }) => {
       sampleVehicles,
       sampleVehicle => sampleVehicle.model === model,
     );
-    const defaultVehicle = _.find(
-      listModel,
+    const defaultVehicle = listModel.find(
       vehicleModel => vehicleModel.year === yearAsInt,
     );
     return defaultVehicle;
@@ -66,7 +68,7 @@ const VehicleCard = ({ vehicle }) => {
   // State
   const [selectedId, setSelectedId] = useState(null);
   const [dropdownYear, setDropdownYear] = useState(
-    initDropdownValues(Object.keys(vehicle)[6]),
+    initDropdownValues(Object.keys(vehicle)[5]),
   );
   const [dropdownModel, setDropdownModel] = useState(
     populateDropdownModel(makeList[0]),
