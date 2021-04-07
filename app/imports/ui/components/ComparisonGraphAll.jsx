@@ -50,6 +50,9 @@ const ComparisonGraphAll = (props) => {
                                      display: true,
                                      labelString: 'Pounds of CO2',
                                  },
+                                 ticks: {
+                                     beginAtZero: true
+                                 },
                              }],
                              xAxes: [{
                                  scaleLabel: {
