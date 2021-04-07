@@ -13,11 +13,18 @@ import { sampleVehicles } from '../../utilities/sampleData';
 const VehicleCard = ({ vehicle }) => {
   // Populate vehicle comparator's dropdown values and comparator vehicle values.
   const initDropdownValues = property => {
-    const sortedVehicles = _.sortBy(sampleVehicles, property);
-    const listByProperty = _.pluck(sortedVehicles, property);
-    const uniqueList = _.uniq(listByProperty);
+    const sortedVehicles = _.sortBy(sampleVehicles, 'make');
+    let uniqueList;
 
-    if (property === 'year') {
+    if (property === 'make') {
+      const listByMake = _.pluck(sortedVehicles, property);
+      uniqueList = _.uniq(listByMake);
+    } else if (property === 'year') {
+      const findByModel = sortedVehicles.filter(
+        vehicleObj => vehicleObj.model === sortedVehicles[0].model,
+      );
+      const listByYear = _.pluck(findByModel, property);
+      uniqueList = _.uniq(listByYear);
       uniqueList.reverse();
       for (let i = 0; i < uniqueList.length; i++) {
         uniqueList[i] = uniqueList[i].toString();
@@ -37,7 +44,7 @@ const VehicleCard = ({ vehicle }) => {
     return uniqueModels;
   };
 
-  const getComparatorVehicle = (year, model) => {
+  const getInitComparatorVehicle = (year, model) => {
     const yearAsInt = parseInt(year, 10);
     const listModel = _.filter(
       sampleVehicles,
@@ -74,7 +81,7 @@ const VehicleCard = ({ vehicle }) => {
     populateDropdownModel(makeList[0]),
   );
   const [comparatorVehicle, setComparatorVehicle] = useState(
-    getComparatorVehicle(dropdownYear[0], dropdownModel[0]),
+    getInitComparatorVehicle(dropdownYear[0], dropdownModel[0]),
   );
   const [selectModel, setSelectModel] = useState(dropdownModel[0]);
 
