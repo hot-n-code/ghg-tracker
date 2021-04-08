@@ -8,6 +8,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
 // import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { Users } from '../../../api/user/UserCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
@@ -21,15 +22,15 @@ class UserDataReactTable extends React.Component {
       // profileId: undefined,
     };
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.onRowClick = this.onRowClick.bind(this);
+  //  this.onRowClick = this.onRowClick.bind(this);
   }
 
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  getColumns(dailyData) {
-    return { date: dailyData.inputDate, modeOfTransportation: dailyData.modeOfTransportation, milesTraveled: dailyData.milesTraveled, c02reduced: dailyData.c02reduced };
+  getColumns(dailyData, users) {
+    return { date: dailyData.inputDate, modeOfTransportation: dailyData.modeOfTransportation, milesTraveled: dailyData.milesTraveled, c02reduced: users.c02reduced };
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -45,11 +46,11 @@ class UserDataReactTable extends React.Component {
     });
   }
 
-  onRowClick = (event, { rowData }) => {
+  // onRowClick = (event, { rowData }) => {
     // const profileId = Users.collection.findOne({ username: rowData.email })._id;
     // this.setState({ profileId: profileId, redirectToProfile: true });
-    console.log(rowData);
-  }
+   // console.log(rowData);
+  // }
 
    renderPage() {
      // if (this.state.redirectToProfile) {
@@ -82,7 +83,7 @@ class UserDataReactTable extends React.Component {
                 name="profile-list"
                 className="ui compact selectable table"
                 sortable
-                onRowClick={this.onRowClick()}
+              //  onRowClick={this.onRowClick()}
                 withToggles
                 perPage={25}
                 filterValue={filterValue}
@@ -95,15 +96,17 @@ class UserDataReactTable extends React.Component {
 
 UserDataReactTable.propTypes = {
   dailyData: PropTypes.array.isRequired,
-  // users: PropTypes.object,
+  users: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready();
   const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
+  const users = Users.collection.find({}, { sort: { inputDate: -1 } }).fetch();
   return {
     dailyData,
+    users,
     ready,
   };
 })(UserDataReactTable);
