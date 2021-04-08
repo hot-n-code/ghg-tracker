@@ -39,8 +39,8 @@ const AddVehicleModal = (props) => {
   };
   const populateMake = _.pluck(Makes.collection.find().fetch(), 'make');
   const [test, setTest] = useState(false);
-  const [dropModel, setDropModel] = useState(() => populateCar('Honda'));
-  const [dropYear, setDropYear] = useState(() => ['2020']);
+  const [dropModel, setDropModel] = useState(() => ['']);
+  const [dropYear, setDropYear] = useState(() => ['']);
   const [finalMake, setFinalMake] = useState(() => '');
   const [finalModel, setFinalModel] = useState(() => '');
   const [finalYear, setFinalYear] = useState(() => '');
@@ -151,7 +151,7 @@ const AddVehicleModal = (props) => {
                  <form onSubmit={handleSubmit}>
                    <label>
                      Make:
-                     <select onChange={changeModel} placeholder='a'>
+                     <select onChange={changeModel}>
                        {populateMake.map((make, key) => (
                            <option value={make} key={key}>
                              {make}
