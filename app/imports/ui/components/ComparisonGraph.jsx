@@ -16,16 +16,32 @@ const ComparisonGraph = (props) => {
     const userGHGData = getCumulativeGHG(getByMonthIndividual);
     const totalCO2Reduced = userGHGData.cO2Reduced;
     const totalCO2Produced = userGHGData.cO2Produced;
+
+    const getByMonthAll = _.filter(props.userDataAll, (userTrip) => {
+        return (userTrip.inputDate.getMonth() ===
+            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
+    });
+    const usersGHGData = getCumulativeGHG(getByMonthAll);
+    const allCO2Reduced = (usersGHGData.cO2Reduced / _.size(props.users)).toFixed(2);
+    const allCO2Produced = (usersGHGData.cO2Produced / _.size(props.users)).toFixed(2);
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
             {
                 label: 'Me',
                 backgroundColor: '#5c8d89',
-                barThickness: 30,
+                barThickness: 35,
                 borderColor: 'rgba(0,0,0,1)',
-                borderWidth: 2,
+                borderWidth: 1,
                 data: [totalCO2Reduced, totalCO2Produced],
+            },
+            {
+                label: 'Cumulative Data (Average)',
+                backgroundColor: '#985575',
+                barThickness: 35,
+                borderColor: 'rgba(0,0,0,1)',
+                borderWidth: 1,
+                data: [allCO2Reduced, allCO2Produced],
             },
         ],
     };
@@ -38,9 +54,7 @@ const ComparisonGraph = (props) => {
                                options={{
                                    maintainAspectRatio: false,
                                    title: {
-                                       display: true,
-                                       text: 'My GHG Statistics',
-                                       fontSize: 30,
+                                       display: false,
                                    },
                                    scales: {
                                        yAxes: [{
@@ -68,6 +82,8 @@ const ComparisonGraph = (props) => {
 
 ComparisonGraph.propTypes = {
     userData: PropTypes.array.isRequired,
+    userDataAll: PropTypes.array.isRequired,
+    users: PropTypes.array.isRequired,
 };
 
 export default (ComparisonGraph);
