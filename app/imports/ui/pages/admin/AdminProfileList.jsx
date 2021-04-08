@@ -109,15 +109,17 @@ class AdminProfileList extends React.Component {
 AdminProfileList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
-  // vehicles: PropTypes.array.isRequired,
+  userVehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
-  const UserSubscription = Meteor.subscribe(Users.adminPublicationName);
- // const VehicleSubscription = Meteor.subscrobe(UserVehicle.adminPublicationName);
+  const ready = Meteor.subscribe(Users.adminPublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+  const users = Users.collection.find({}, { sort: { lastName: 1 } }).fetch();
+  const userVehicles = UserVehicle.collection.find({}).fetch();
   return {
-    users: Users.collection.find({}, { sort: { lastName: 1 } }).fetch(),
-    // vehicles: UserVehicle.collection.find({}, { sort: { name: 1 } }).fetch(),
-    ready: UserSubscription.ready(),
+    users,
+    userVehicles,
+    ready,
   };
 })(AdminProfileList);

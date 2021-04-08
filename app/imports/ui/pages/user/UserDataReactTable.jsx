@@ -4,12 +4,11 @@ import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
 // import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
-import { Users } from '../../../api/user/UserCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
 class UserDataReactTable extends React.Component {
@@ -18,8 +17,8 @@ class UserDataReactTable extends React.Component {
 
     this.state = {
       filterValue: '',
-      redirectToProfile: false,
-      profileId: undefined,
+      // redirectToProfile: false,
+      // profileId: undefined,
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.onRowClick = this.onRowClick.bind(this);
@@ -47,64 +46,64 @@ class UserDataReactTable extends React.Component {
   }
 
   onRowClick = (event, { rowData }) => {
-    const profileId = Users.collection.findOne({ username: rowData.email })._id;
-    this.setState({ profileId: profileId, redirectToProfile: true });
+    // const profileId = Users.collection.findOne({ username: rowData.email })._id;
+    // this.setState({ profileId: profileId, redirectToProfile: true });
+    console.log(rowData);
   }
 
    renderPage() {
-     if (this.state.redirectToProfile) {
-       return <Redirect to={`/user-page/${this.state.profileId}/`}/>;
-     }
-     const {
-       filterValue,
-     } = this.state;
-    return (
-        <Container id="profileList-page">
-          <Divider hidden/>
-          <Input
-            list='filter'
-            placeholder='Filter results..'
-            icon='search'
-            type='text'
-            value={filterValue}
-            onChange={this.handleOnChange}
-            />
-          <Table size='large' celled padded striped stackable >
-            <Table.Header fullWidth>
-              <Table.Row>
-                <Table.HeaderCell textAlign='center'>
-                  <Header as='h1' textAlign='center'>My Transportation History</Header>
-                  <Header as='h1' textAlign='center'><AddDailyData/><WhatIf/></Header>
-                </Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
-          </Table>
-          <SmartDataTable
-            data={this.props.dailyData.map(this.getColumns) }
-            name="profile-list"
-            className="ui compact selectable table"
-            sortable
-            onRowClick={this.onRowClick()}
-            withToggles
-            perPage={25}
-            filterValue={filterValue}
-          />
-          <Divider hidden/>
-        </Container>
-   );
+     // if (this.state.redirectToProfile) {
+     //   return <Redirect to={`/user-page/${this.state.profileId}/`}/>;
+     // }
+     const { filterValue } = this.state;
+     return (
+         <Container id="profileList-page">
+           <Divider hidden/>
+           <Input
+               list='filter'
+               placeholder='Filter results..'
+               icon='search'
+               type='text'
+               value={filterValue}
+               onChange={this.handleOnChange}
+           />
+           <Table size='large' celled padded striped stackable >
+             <Table.Header fullWidth>
+               <Table.Row>
+                 <Table.HeaderCell textAlign='center'>
+                   <Header as='h1' textAlign='center'>My Transportation History</Header>
+                   <Header as='h1' textAlign='center'><AddDailyData/><WhatIf/></Header>
+                 </Table.HeaderCell>
+               </Table.Row>
+             </Table.Header>
+           </Table>
+           <SmartDataTable
+                data={this.props.dailyData.map(this.getColumns) }
+                name="profile-list"
+                className="ui compact selectable table"
+                sortable
+                onRowClick={this.onRowClick()}
+                withToggles
+                perPage={25}
+                filterValue={filterValue}
+           />
+           <Divider hidden/>
+         </Container>
+     );
   }
 }
 
 UserDataReactTable.propTypes = {
   dailyData: PropTypes.array.isRequired,
-  users: PropTypes.object,
+  // users: PropTypes.object,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const sub1 = Meteor.subscribe(DailyUserData.userPublicationName);
+  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready();
+  const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
   return {
-    dailyData: DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch(),
-    ready: sub1.ready(),
+    dailyData,
+    ready,
   };
 })(UserDataReactTable);
