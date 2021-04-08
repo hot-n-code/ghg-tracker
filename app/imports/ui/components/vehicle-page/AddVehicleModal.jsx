@@ -12,6 +12,7 @@ import { Makes } from '../../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
 
 const AddVehicleModal = (props) => {
+  // getMPGType function that gets the MPG and type from user input(make, model, year)
   const getMPGType = (make, model, year) => {
     const search = {
       miles: '',
@@ -27,17 +28,19 @@ const AddVehicleModal = (props) => {
     }
     return [search.miles, search.type];
   };
-
-   const populateCar = (make) => {
+  // populates all models from a specific make
+   const populateModel = (make) => {
     const totalCars = props.AllVehicles;
     const cars = _.uniq(_.pluck(_.where(totalCars, { Make: make }), 'Model'));
     return cars;
   };
+   // populates all years from a specific make and model
   const populateYear = (make, model) => {
     const totalCars = props.AllVehicles;
     const year = _.uniq(_.pluck(_.where(totalCars, { Make: make, Model: model }), 'Year'));
     return year;
   };
+  // convert array into select react format
   const convert = (arr) => {
     const selectList = [];
     arr.forEach(function (element) {
@@ -45,6 +48,7 @@ const AddVehicleModal = (props) => {
     });
     return selectList;
   };
+  // initial hooks
   const populateMake = _.pluck(Makes.collection.find().fetch(), 'make');
   const populateTestMake = convert(populateMake);
   const [test, setTest] = useState(false);
@@ -55,6 +59,7 @@ const AddVehicleModal = (props) => {
   const [finalYear, setFinalYear] = useState(() => '');
   const [finalPrice, setFinalPrice] = useState(() => '');
   const [finalSpending, setFinalSpending] = useState(() => '');
+  // submit function that adds user input to uservehicle collection
   const handleSubmit = (event) => {
     event.preventDefault();
     const make = finalMake;
@@ -77,26 +82,33 @@ const AddVehicleModal = (props) => {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Vehicle added successfully', 'success');
+            setDropYear([{ label: '', value: '' }]);
+            setDropModel([{ label: '', value: '' }]);
+            setFinalPrice('');
+            setFinalSpending('');
           }
         },
     );
   };
+  // ref and hooks of model select field
   const modelRef = useRef();
-  const initialFormState = { mySelectKey: null };
-  const [resetModel, setResetModel] = useState(initialFormState);
-
+  const modelFormState = { mySelectKey: null };
+  const [resetModel, setResetModel] = useState(modelFormState);
+  // ref and hooks of year select field
   const yearRef = useRef();
   const yearFormState = { mySelectKey: null };
   const [resetYear, setResetYear] = useState(yearFormState);
+  // reset functions - credit: Andrea Ligios
   const resetModelForm = () => {
-    setResetModel(initialFormState);
+    setResetModel(modelFormState);
   };
   const resetYearForm = () => {
-    setResetYear(initialFormState);
+    setResetYear(yearFormState);
   };
+  // onchange function that changes the model dropdown
   const changeModel = e => {
     setFinalMake(e.value);
-    const desc = _.sortBy(populateCar(e.value), function (num) {
+    const desc = _.sortBy(populateModel(e.value), function (num) {
       return num;
     });
     const selectModel = modelRef.current.state.value;
@@ -112,6 +124,7 @@ const AddVehicleModal = (props) => {
     const change = convert(desc);
     setDropModel(change);
   };
+  // onchange function that changes the year dropdown
   const changeYear = e => {
     setResetModel({ ...resetModel, mySelectKey: e.value });
     setFinalModel(e.value);
@@ -125,6 +138,7 @@ const AddVehicleModal = (props) => {
     }
     setDropYear(convert(desc.reverse()));
   };
+  // onchange function that converts and stores the year
   const setYear = e => {
     setResetYear({ ...resetYear, mySelectKey: e.value });
     const yearAsInt = parseInt(e.value, 10);
@@ -138,7 +152,7 @@ const AddVehicleModal = (props) => {
 
     const modal = {
       hidden: {
-        y: '-200vh',
+        y: '-100vh',
         opacity: 0,
       },
       visible: {
@@ -197,7 +211,7 @@ const AddVehicleModal = (props) => {
                          name="make"
                          isSearchable={true}
                          onChange={changeModel}
-                         placeholder={'Type Make'}
+                         placeholder={'Make'}
                      />
                    </label>
                    <br/>
@@ -211,7 +225,7 @@ const AddVehicleModal = (props) => {
                          name="model"
                          isSearchable={true}
                          onChange={changeYear}
-                         placeholder={'Type Model'}
+                         placeholder={'Model'}
                          value={dropModel.filter(({ value }) => value === resetModel.mySelectKey)}
                      />
                    </label>
@@ -226,7 +240,7 @@ const AddVehicleModal = (props) => {
                          name="year"
                          isSearchable={true}
                          onChange={setYear}
-                         placeholder={'Type Year'}
+                         placeholder={'Year'}
                          value={dropYear.filter(({ value }) => value === resetYear.mySelectKey)}
                      />
                    </label>

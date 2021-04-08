@@ -330,6 +330,9 @@ td {
 .add-vehicle-overlay {
   z-index: 2;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.7);
   top: 0;
   left: 0;
@@ -347,8 +350,8 @@ td {
   justify-content: space-around;
   padding: 1rem 3rem;
   margin: 10% 30%;
-  width: 40%;
-  height: 50%;
+  width: 70%;
+  height: 80%;
   max-width: 100%;
 }
 
