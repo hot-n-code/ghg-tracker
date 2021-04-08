@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Select from 'react-select';
-import { Button, Header } from 'semantic-ui-react';
+import { Button, Header, Input } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
@@ -55,7 +55,8 @@ const AddVehicleModal = (props) => {
   const [finalYear, setFinalYear] = useState(() => '');
   const [finalPrice, setFinalPrice] = useState(() => '');
   const [finalSpending, setFinalSpending] = useState(() => '');
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     const make = finalMake;
     const model = finalModel;
     const price = finalPrice;
@@ -76,39 +77,56 @@ const AddVehicleModal = (props) => {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Vehicle added successfully', 'success');
-            setFinalPrice('');
-            setFinalSpending('');
           }
         },
     );
   };
-  const selectInputRef = useRef();
+  const modelRef = useRef();
   const initialFormState = { mySelectKey: null };
-  const [reset, setReset] = useState(initialFormState);
-  const resetForm = () => {
-    setReset(initialFormState);
+  const [resetModel, setResetModel] = useState(initialFormState);
+
+  const yearRef = useRef();
+  const yearFormState = { mySelectKey: null };
+  const [resetYear, setResetYear] = useState(yearFormState);
+  const resetModelForm = () => {
+    setResetModel(initialFormState);
+  };
+  const resetYearForm = () => {
+    setResetYear(initialFormState);
   };
   const changeModel = e => {
     setFinalMake(e.value);
     const desc = _.sortBy(populateCar(e.value), function (num) {
       return num;
     });
-    const select = selectInputRef.current.state.value;
-    if (select != null) {
-      resetForm();
+    const selectModel = modelRef.current.state.value;
+    if (selectModel != null) {
+      resetModelForm();
+      setFinalModel('');
+    }
+    const selectYear = yearRef.current.state.value;
+    if (selectYear != null) {
+      resetYearForm();
+      setFinalYear('');
     }
     const change = convert(desc);
     setDropModel(change);
   };
   const changeYear = e => {
-    setReset({ ...reset, mySelectKey: e.value });
+    setResetModel({ ...resetModel, mySelectKey: e.value });
     setFinalModel(e.value);
     const desc = _.sortBy(populateYear(finalMake, e.value), function (num) {
         return num;
     });
+    const selectYear = yearRef.current.state.value;
+    if (selectYear != null) {
+      resetYearForm();
+      setFinalYear('');
+    }
     setDropYear(convert(desc.reverse()));
   };
   const setYear = e => {
+    setResetYear({ ...resetYear, mySelectKey: e.value });
     const yearAsInt = parseInt(e.value, 10);
     setFinalYear(yearAsInt);
   };
@@ -170,49 +188,67 @@ const AddVehicleModal = (props) => {
                   layoutId='add-vehicle-toggle'
                 >
                  <form onSubmit={handleSubmit}>
-                   <Select
-                    className="basic-single"
-                    classNamePrefix="select"
-                    options={populateTestMake}
-                    name="make"
-                    isSearchable={true}
-                    onChange={changeModel}
-                    placeholder={'Type Make'}
-                   />
-                   <br/>
-                   <Select
-                       ref={selectInputRef}
-                       className="basic-single"
-                       classNamePrefix="select"
-                       options={dropModel}
-                       name="model"
-                       isSearchable={true}
-                       onChange={changeYear}
-                       placeholder={'Type Model'}
-                       value={dropModel.filter(({ value }) => value === reset.mySelectKey)}
-                   />
-                   <br/>
-                   <Select
-                       className="basic-single"
-                       classNamePrefix="select"
-                       options={dropYear}
-                       name="year"
-                       isSearchable={true}
-                       onChange={setYear}
-                       placeholder={'Type Year'}
-                   />
+                   <label>
+                     Make:
+                     <Select
+                         className="basic-single"
+                         classNamePrefix="select"
+                         options={populateTestMake}
+                         name="make"
+                         isSearchable={true}
+                         onChange={changeModel}
+                         placeholder={'Type Make'}
+                     />
+                   </label>
                    <br/>
                    <label>
-                     Price:
-                     <input type='text' value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
+                     Model:
+                     <Select
+                         ref={modelRef}
+                         className="basic-single"
+                         classNamePrefix="select"
+                         options={dropModel}
+                         name="model"
+                         isSearchable={true}
+                         onChange={changeYear}
+                         placeholder={'Type Model'}
+                         value={dropModel.filter(({ value }) => value === resetModel.mySelectKey)}
+                     />
                    </label>
+                   <br/>
+                   <label>
+                     Year:
+                     <Select
+                         ref={yearRef}
+                         className="basic-single"
+                         classNamePrefix="select"
+                         options={dropYear}
+                         name="year"
+                         isSearchable={true}
+                         onChange={setYear}
+                         placeholder={'Type Year'}
+                         value={dropYear.filter(({ value }) => value === resetYear.mySelectKey)}
+                     />
+                   </label>
+                   <br/>
+                   <br/>
+                     <label>
+                       Price:
+                       <br/>
+                       <Input placeholder='Price' value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
+                     </label>
+                   <br/>
                    <br/>
                    <label>
                      Yearly Spending:
-                     <input type='text' value={finalSpending} onChange={e => setFinalSpending(e.target.value)} />
+                     <br/>
+                     <Input placeholder='Yearly Spending' value={finalSpending} onChange={e => setFinalSpending(e.target.value)} />
                    </label>
                    <br/>
-                   <input type='submit' value='Submit'/>
+                   <br/>
+                   <button className="ui button" value='Submit'>
+                     Submit
+                   </button>
                  </form>
                 </motion.div>
               </motion.div>
