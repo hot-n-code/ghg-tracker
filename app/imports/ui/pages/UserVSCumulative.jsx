@@ -1,12 +1,12 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Grid, Container } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
 import ComparisonGraph from '../components/ComparisonGraph';
 import ComparisonGraphAll from '../components/ComparisonGraphAll';
-import PropTypes from "prop-types";
-import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../api/user/UserCollection';
-import { DailyUserData } from "../../api/user/ghg-data/DailyUserDataCollection";
+import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 
 const UserVSCumulative = (props) => {
     return (

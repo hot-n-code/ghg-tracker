@@ -11,10 +11,11 @@ const ComparisonGraphAll = (props) => {
     const date = new Date();
     const numUsers = _.size(props.users);
     const getByMonthAll = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
-        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
+    });
     const allGHGData = getCumulativeGHG(getByMonthAll);
-    export const allCO2Reduced = (allGHGData.cO2Reduced / numUsers).toFixed(2);
-    export const allCO2Produced = (allGHGData.cO2Produced / numUsers).toFixed(2);
+    const allCO2Reduced = (allGHGData.cO2Reduced / numUsers).toFixed(2);
+    const allCO2Produced = (allGHGData.cO2Produced / numUsers).toFixed(2);
     const stateAll = {
         labels: ['Carbon Reduced', 'Carbon Produced'],
         datasets: [
@@ -35,12 +36,13 @@ const ComparisonGraphAll = (props) => {
                 <HorizontalBar data={stateAll}
                      height={300}
                      width={100}
-                     options={{
-                         maintainAspectRatio: false,
-                         title: {
-                             display: true,
-                             text: 'Community GHG Statistics',
-                             fontSize: 30,
+                     options={
+                         {
+                           maintainAspectRatio: false,
+                           title: {
+                               display: true,
+                               text: 'Community GHG Statistics',
+                               fontSize: 30,
                          },
                          scales: {
                              yAxes: [{
@@ -49,7 +51,7 @@ const ComparisonGraphAll = (props) => {
                                      labelString: '',
                                  },
                                  ticks: {
-                                     beginAtZero: true
+                                     beginAtZero: true,
                                  },
                              }],
                              xAxes: [{

@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Grid } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
+import { _ } from 'meteor/underscore';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
@@ -22,7 +23,10 @@ const graphObject = {
 };
 
 const MyDataChart = (props) => {
-  const teleworkData = getCumulativePerMode(props.userData, graphObject.telework, props.vehicles);
+  const date = new Date();
+  const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()); });
+    const teleworkData = getCumulativePerMode(props.userData, graphObject.telework, props.vehicles);
   const totalTelework = teleworkData.VMTReduced.toFixed(2);
   const aVData = getCumulativePerMode(props.userData, graphObject.evHybrid, props.vehicles);
   const totalAV = aVData.VMTReduced.toFixed(2);

@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Container, Loader, Card, Button, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import { NavLink } from 'react-router-dom';
 import { Users } from '../../../api/user/UserCollection';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import ProfileCard from '../../components/user-page/ProfileCard';
@@ -11,8 +12,7 @@ import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { getDateToday } from '../../utilities/DailyGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
-import MyNumbers from "../../components/MyNumbers";
-import { NavLink } from "react-router-dom";
+import MyNumbers from '../../components/MyNumbers';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -33,10 +33,10 @@ class UserPage extends React.Component {
       const totalFuelSaved = ghgData.fuelSaved;
       const totalGHGProduced = ghgData.cO2Produced;
 
-      const date = new Date();
-      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-          "October", "November", "December"];
-      return (
+        const date = new Date();
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+            'October', 'November', 'December'];
+        return (
             <div className='background-all'>
             <Container style={paddingStyle}>
                 <Grid>
@@ -56,7 +56,7 @@ class UserPage extends React.Component {
                     <Grid.Column>
                         <Card fluid>
                             <Card.Content>
-                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month's
+                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month&apos;s
                                     Mileage Summary</Header>
                                 <MyDataChart userData={this.props.dailyData}/>
                             </Card.Content>

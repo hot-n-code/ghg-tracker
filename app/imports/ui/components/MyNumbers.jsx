@@ -9,10 +9,11 @@ import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
  * */
 const MyNumbers = (props) => {
     const date = new Date();
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
-        "October", "November", "December"];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+        'October', 'November', 'December'];
     const getByMonthIndividual = _.filter(props.dailyData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
-        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()) });
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
+    });
     const ghgData = getCumulativeGHG(getByMonthIndividual);
     const totalCO2Reduced = ghgData.cO2Reduced;
     const totalMiles = ghgData.VMTReduced;
