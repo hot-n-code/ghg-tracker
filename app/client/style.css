@@ -57,7 +57,7 @@
 }
 .landing-data {
   background-color: #a7d7c5;
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -66,7 +66,7 @@
   background-attachment: scroll;
 }
 .background-all {
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-color: #f9f8fa;
   background-size: 100% 30%;
   background-repeat: repeat-x;
@@ -79,7 +79,7 @@
 }
 
 .background-feedback-widget {
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-color: #f9f8eb;
   background-size: 100% 30%;
   background-repeat: repeat-x;
@@ -93,7 +93,7 @@
 }
 
 .background-all-about {
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-color: #f9f8eb;
   background-size: 100% 20%;
   background-repeat: repeat-x;
