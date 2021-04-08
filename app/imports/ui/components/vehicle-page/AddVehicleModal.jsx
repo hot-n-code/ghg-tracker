@@ -37,8 +37,8 @@ const AddVehicleModal = (props) => {
     const year = _.uniq(_.pluck(_.where(totalCars, { Make: make, Model: model }), 'Year'));
     return year;
   };
+  const populateMake = _.pluck(Makes.collection.find().fetch(), 'make');
   const [test, setTest] = useState(false);
-  const [dropMake] = useState(['Toyota', 'Honda', 'Nissan', 'Tesla', 'Ford', 'Volkswagen']);
   const [dropModel, setDropModel] = useState(() => populateCar('Honda'));
   const [dropYear, setDropYear] = useState(() => ['2020']);
   const [finalMake, setFinalMake] = useState(() => '');
@@ -52,14 +52,12 @@ const AddVehicleModal = (props) => {
     const price = finalPrice;
     const year = finalYear;
     const fuelSpending = finalSpending;
-    setFinalPrice('');
-    setFinalSpending('');
     const owner = Meteor.user().username;
     // LOGO
     const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
     // MPG
-    const get = getMPGType(make, model, year);
+    const get = getMPGType(finalMake, model, year);
     const MPG = get[0];
     const type = get[1];
     UserVehicle.collection.insert(
@@ -69,13 +67,18 @@ const AddVehicleModal = (props) => {
             swal('Error', error.message, 'error');
           } else {
             swal('Success', 'Vehicle added successfully', 'success');
+            setFinalPrice('');
+            setFinalSpending('');
           }
         },
     );
   };
   const changeModel = e => {
     setFinalMake(e.target.value);
-    setDropModel(populateCar(e.target.value));
+    const desc = _.sortBy(populateCar(e.target.value), function (num) {
+      return num;
+    });
+    setDropModel(desc);
   };
   const changeYear = e => {
     setFinalModel(e.target.value);
@@ -84,7 +87,7 @@ const AddVehicleModal = (props) => {
     });
     setDropYear(desc.reverse());
   };
-  const endYear = e => {
+  const setYear = e => {
     const yearAsInt = parseInt(e.target.value, 10);
     setFinalYear(yearAsInt);
   };
@@ -96,7 +99,7 @@ const AddVehicleModal = (props) => {
 
     const modal = {
       hidden: {
-        y: '-100vh',
+        y: '-200vh',
         opacity: 0,
       },
       visible: {
@@ -148,8 +151,8 @@ const AddVehicleModal = (props) => {
                  <form onSubmit={handleSubmit}>
                    <label>
                      Make:
-                     <select onChange={changeModel}>
-                       {dropMake.map((make, key) => (
+                     <select onChange={changeModel} placeholder='a'>
+                       {populateMake.map((make, key) => (
                            <option value={make} key={key}>
                              {make}
                            </option>
@@ -170,7 +173,7 @@ const AddVehicleModal = (props) => {
                    <br/>
                    <label>
                      Year:
-                     <select onChange={endYear}>
+                     <select onChange={setYear}>
                        {dropYear.map((year, key) => (
                            <option value={year} key={key}>
                              {year}
