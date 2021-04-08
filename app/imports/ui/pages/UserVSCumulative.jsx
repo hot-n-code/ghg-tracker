@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Container, Header } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
+import { _ } from 'meteor/underscore';
 import { Users } from '../../api/user/UserCollection';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import WhatIf from '../components/user-data-page/WhatIf';
@@ -17,7 +18,7 @@ const UserVSCumulative = (props) => {
     const date = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
         'October', 'November', 'December'];
-    const getThisMonth = _.filter(props.userData, (userTrip) => {
+    const getThisMonth = _.filter(props.dailyData, (userTrip) => {
         return (userTrip.inputDate.getMonth() ===
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
@@ -37,7 +38,8 @@ const UserVSCumulative = (props) => {
     const lastMonthsGHGData = getCumulativeGHG(getLastMonth);
     const lastMonthCO2Produced = lastMonthsGHGData.cO2Produced;
 
-    const increase = thisMonthCO2Produced - lastMonthCO2Produced;
+    const increase = thisMonthCO2Produced - lastMonthCO2Produced !== 0 ? thisMonthCO2Produced - lastMonthCO2Produced : '';
+    console.log(thisMonthCO2Produced);
     let result;
     if (increase > 0 && lastMonthCO2Produced !== 0) {
         result = 'Your CO2 Production is up ' + ((increase / lastMonthCO2Produced) * 100).toFixed(2)
@@ -46,8 +48,10 @@ const UserVSCumulative = (props) => {
         result = 'Your CO2 Production is down ' +
             (((lastMonthCO2Produced - thisMonthCO2Produced) / lastMonthCO2Produced) * 100).toFixed(2) +
             '% from last month. Keep up the good work!';
+    } else if (lastMonthCO2Produced === 0 && increase > 0) {
+        result = increase;
     } else {
-        result = 'No CO2 Production data available.';
+        result = 'No CO2 Production data available for this user.';
     }
     return (
         <Container style={paddingStyle}>
