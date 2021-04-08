@@ -1,11 +1,7 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid } from 'semantic-ui-react';
-import { Bar } from 'react-chartjs-2';
+import { HorizontalBar } from 'react-chartjs-2';
 import { _ } from 'meteor/underscore';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Users } from '../../api/user/UserCollection';
-import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import PropTypes from 'prop-types';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 
@@ -24,6 +20,7 @@ const ComparisonGraphAll = (props) => {
         datasets: [
             {
                 label: 'Cumulative User GHG Data (Average)',
+                barThickness: 30,
                 backgroundColor: '#5c8d89',
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 2,
@@ -35,8 +32,9 @@ const ComparisonGraphAll = (props) => {
     return (
         <Grid>
             <Grid.Column>
-                <Bar data={stateAll}
-                     height={300} width={500}
+                <HorizontalBar data={stateAll}
+                     height={300}
+                     width={100}
                      options={{
                          maintainAspectRatio: false,
                          title: {
@@ -48,7 +46,7 @@ const ComparisonGraphAll = (props) => {
                              yAxes: [{
                                  scaleLabel: {
                                      display: true,
-                                     labelString: 'Pounds of CO2',
+                                     labelString: '',
                                  },
                                  ticks: {
                                      beginAtZero: true
@@ -57,7 +55,7 @@ const ComparisonGraphAll = (props) => {
                              xAxes: [{
                                  scaleLabel: {
                                      display: true,
-                                     labelString: 'GHG Data',
+                                     labelString: 'Pounds of CO2',
                                  },
                              }],
                          },
@@ -73,12 +71,4 @@ ComparisonGraphAll.propTypes = {
     users: PropTypes.array.isRequired,
 };
 
-export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
-    const subscription2 = Meteor.subscribe(Users.adminPublicationName);
-    return {
-        userData: DailyUserData.collection.find({}).fetch(),
-        users: Users.collection.find({}).fetch(),
-        ready: subscription1.ready() && subscription2.ready(),
-    };
-})(ComparisonGraphAll);
+export default (ComparisonGraphAll);

@@ -1,10 +1,7 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
-import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -77,14 +74,6 @@ const MyNumbers = (props) => {
 
 MyNumbers.propTypes = {
     dailyData: PropTypes.array.isRequired,
-    ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-    const user = Meteor.user().username;
-    return {
-        dailyData: DailyUserData.collection.find({ owner: user }).fetch(),
-        ready: subscription1.ready(),
-    };
-})(MyNumbers);
+export default (MyNumbers);

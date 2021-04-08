@@ -36,6 +36,7 @@ import WhatIf from '../components/user-data-page/WhatIf';
 import UserDataPage from '../pages/user/UserDataPage';
 import AdminProfileList from '../pages/admin/AdminProfileList';
 import UserDataReactTable from '../pages/user/UserDataReactTable';
+import UserVSCumulative from '../pages/UserVSCumulative';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -68,6 +69,7 @@ class App extends React.Component {
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <ProtectedRoute path='/history' component={UserDataPage} />
+            <ProtectedRoute path='/comparison' component={UserVSCumulative} />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />
           </Switch>

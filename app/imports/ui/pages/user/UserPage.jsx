@@ -1,9 +1,10 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Container, Loader, Card } from 'semantic-ui-react';
+import { Grid, Header, Container, Loader, Card, Button, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Users } from '../../../api/user/UserCollection';
+import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
@@ -11,7 +12,7 @@ import { getDateToday } from '../../utilities/DailyGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import MyNumbers from "../../components/MyNumbers";
-import UserVCumulative from '../../components/UserVCumulative';
+import { NavLink } from "react-router-dom";
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -39,12 +40,15 @@ class UserPage extends React.Component {
             <div className='background-all'>
             <Container style={paddingStyle}>
                 <Grid>
-                    <Grid.Column width={16}>
-                        <Header as='h1' textAlign='center'>My {months[date.getMonth()]} {date.getFullYear()} Statistics
+                    <Grid.Column width={16} textAlign='center'>
+                        <Header as='h1'>My {months[date.getMonth()]} {date.getFullYear()} Statistics
                         </Header>
+                        <Header as='h1'>Compare your numbers to the community!
+                        </Header>
+                        <Button size='medium' as={NavLink} activeClassName='active' exact
+                                to='/comparison'>Compare</Button>
                     </Grid.Column>
                 </Grid>
-                <UserVCumulative/>
                 <Grid stackable columns={2}>
                     <Grid.Column>
                         <ProfileCard profile={this.props.users}/>
@@ -54,7 +58,7 @@ class UserPage extends React.Component {
                             <Card.Content>
                                 <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month's
                                     Mileage Summary</Header>
-                                <MyDataChart/>
+                                <MyDataChart userData={this.props.dailyData}/>
                             </Card.Content>
                         </Card>
                     </Grid.Column>
@@ -111,7 +115,7 @@ class UserPage extends React.Component {
                   </Grid>
                 </div>
               </div>
-              <MyNumbers/>
+              <MyNumbers dailyData={this.props.dailyData}/>
             </Container>
             </div>
         );
@@ -121,6 +125,7 @@ class UserPage extends React.Component {
 UserPage.propTypes = {
     users: PropTypes.object,
     vehicles: PropTypes.array.isRequired,
+    dailyData: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
