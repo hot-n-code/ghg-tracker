@@ -43,10 +43,6 @@ class UserPage extends React.Component {
                     <Grid.Column width={16} textAlign='center'>
                         <Header as='h1'>My {months[date.getMonth()]} {date.getFullYear()} Statistics
                         </Header>
-                        <Header as='h1'>Compare your numbers to the community!
-                        </Header>
-                        <Button size='medium' as={NavLink} activeClassName='active' exact
-                                to='/comparison'>Compare</Button>
                     </Grid.Column>
                 </Grid>
                 <Grid stackable columns={2}>
@@ -116,6 +112,19 @@ class UserPage extends React.Component {
                 </div>
               </div>
               <MyNumbers dailyData={this.props.dailyData}/>
+                <div style={{ paddingTop: '30px' }}/>
+                <Grid>
+                  <Grid.Column width={16} textAlign='center'>
+                      <Card fluid>
+                          <Card.Content>
+                              <Header as='h1'>Compare your numbers to the community!
+                              </Header>
+                              <Button size='medium' as={NavLink} activeClassName='active' exact
+                                      to='/comparison'>Compare</Button>
+                          </Card.Content>
+                      </Card>
+                   </Grid.Column>
+                </Grid>
             </Container>
             </div>
         );
