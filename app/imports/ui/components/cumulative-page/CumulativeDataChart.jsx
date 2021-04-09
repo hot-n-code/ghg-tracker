@@ -26,7 +26,7 @@ const CumulativeDataChart = (props) => {
         altData.Carpool += 1;
       } else if (otherAltTransportation.includes(data.modeOfTransportation)) {
         altData.Other += 1;
-      } else if (data.cO2Reduced > 0) {
+      } else if (data.modeType === 'EV/Hybrid' > 0) {
           altData.EVHybrid += 1;
         } else {
           altData.GasVehicle += 1;

@@ -6,6 +6,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 // Pie chart of the all time mileage for each mode of transportation for a specific user
 
@@ -22,17 +23,17 @@ const graphObject = {
 };
 
 const MyDataChart = (props) => {
-  const teleworkData = getCumulativePerMode(props.userData, graphObject.telework);
+  const teleworkData = getCumulativePerMode(props.userData, graphObject.telework, props.vehicles);
   const totalTelework = teleworkData.VMTReduced;
-  const aVData = getCumulativePerMode(props.userData, graphObject.evHybrid);
+  const aVData = getCumulativePerMode(props.userData, graphObject.evHybrid, props.vehicles);
   const totalAV = aVData.VMTReduced;
-  const bikingData = getCumulativePerMode(props.userData, graphObject.biking);
+  const bikingData = getCumulativePerMode(props.userData, graphObject.biking, props.vehicles);
   const totalBiking = bikingData.VMTReduced;
-  const walkingData = getCumulativePerMode(props.userData, graphObject.walking);
+  const walkingData = getCumulativePerMode(props.userData, graphObject.walking, props.vehicles);
   const totalWalking = walkingData.VMTReduced;
-  const carpoolData = getCumulativePerMode(props.userData, graphObject.carpool);
+  const carpoolData = getCumulativePerMode(props.userData, graphObject.carpool, props.vehicles);
   const totalCarpool = carpoolData.VMTReduced;
-  const ptData = getCumulativePerMode(props.userData, graphObject.pTransportation);
+  const ptData = getCumulativePerMode(props.userData, graphObject.pTransportation, props.vehicles);
   const totalPT = ptData.VMTReduced;
   const stateAll = {
       labels: graphObject.transportationTypes,
@@ -52,14 +53,17 @@ const MyDataChart = (props) => {
 
 MyDataChart.propTypes = {
   userData: PropTypes.array.isRequired,
+  vehicles: PropTypes.array.isRequired,
 };
 
 export default withTracker(() => {
-  const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-  const ready = subscription1.ready();
+  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.userPublicationName).ready();
   const userData = DailyUserData.collection.find({}).fetch();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
       userData,
+      vehicles,
       ready,
   };
 })(MyDataChart);

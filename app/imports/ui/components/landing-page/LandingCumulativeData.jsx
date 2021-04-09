@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: '20px' };
 const cloud = '../images/landing-page/cloud-trans-5.png';
@@ -17,7 +18,7 @@ class LandingCumulativeData extends React.Component {
 
   renderPage() {
     // Get daily data
-    const ghgData = getCumulativeGHG(this.props.dailyData);
+    const ghgData = getCumulativeGHG(this.props.dailyData, this.props.vehicles);
     const totalCO2Reduced = ghgData.cO2Reduced;
 
     return (
@@ -50,14 +51,18 @@ class LandingCumulativeData extends React.Component {
 }
 LandingCumulativeData.propTypes = {
   dailyData: PropTypes.array.isRequired,
-  users: PropTypes.object,
+  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+  const dailyData = DailyUserData.collection.find({}).fetch();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
-    dailyData: DailyUserData.collection.find({}).fetch(),
-    ready: subscriptionDailyUser.ready(),
+    dailyData,
+    vehicles,
+    ready,
   };
 })(LandingCumulativeData);
