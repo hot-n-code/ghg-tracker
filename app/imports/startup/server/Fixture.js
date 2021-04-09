@@ -52,11 +52,11 @@ const writeJSON = () => {
   data.defaultAccounts = getAccounts;
   data.defaultUsers = getUsers;
 
-  writeFile('default-data.json', JSON.stringify(data, null, 2), (err) => {
+  writeFile('random-data.json', JSON.stringify(data, null, 2), (err) => {
     if (err) throw err;
   });
 
-  readFile('default-data.json', (err, read) => {
+  readFile('random-data.json', (err, read) => {
     if (err) throw err;
     console.log(JSON.parse(read));
   });
