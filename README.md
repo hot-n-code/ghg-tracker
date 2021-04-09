@@ -1,13 +1,4 @@
-### AUTHORS:
-- [Anna Campainha](https://github.com/annacampainha)
-- [Chak Hon Lam](https://github.com/chakhon)
-- [Daphne Tapia](https://github.com/dmtapia)
-- [Jackie Wong](https://github.com/jackiewong99)
-- [Michael Gainey](https://github.com/micgainey)
-- [Sophia Cruz](https://github.com/sophiaelizecruz)
-- [Timothy Huo](https://github.com/timothyhuo1)
-- [Khyla Rabang](https://github.com/vrabang)
-- [Yiwen Chen](https://github.com/yiwenc22)
+### AUTHOR: [Hot-N-Code](https://hot-n-code.github.io/)
 
 ---
 
