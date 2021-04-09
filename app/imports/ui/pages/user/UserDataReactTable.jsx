@@ -8,7 +8,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
 // import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-import { Users } from '../../../api/user/UserCollection';
+// import { Users } from '../../../api/user/UserCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
