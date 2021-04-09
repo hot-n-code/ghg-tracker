@@ -1,4 +1,4 @@
-name: hot-n-code ghg-tracker
+name: hot-n-code-ghg-tracker
 
 on:
   push:
