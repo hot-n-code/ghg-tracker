@@ -5,16 +5,12 @@
  * author(s):   Daphne Marie Tapia, Chak Hon Lam
  */
 import { _ } from 'meteor/underscore';
-
-// Common conversion factor of 8,887 grams of CO2 emissions per gallon of gasoline consumed (Federal Register 2010)
-export const gHGPerGallon = 19.6;
-
-// The weighted average combined fuel economy for cars and light trucks in 2017 (FHWA 2019)
-// Read more: https://www.epa.gov/energy/greenhouse-gases-equivalencies-calculator-calculations-and-references
-export const averageAutoMPG = 22.3;
-
-// An array of all the Alternative Transportation modes that are not EV/Hybrid vehicles
-export const altTransportation = ['Biking', 'Carpool', 'Public Transportation', 'Telework', 'Walking'];
+import {
+  altSelectFieldOptions,
+  averageAutoMPG,
+  gHGPerGallon,
+  kmToMiFactor,
+} from './GlobalVariables';
 
 /**
  * Returns an object with attributes equal to climate-related metrics based on the user input data
@@ -36,7 +32,7 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
 
   // If the user has a regular gas vehicle,
   if (maxMPG > 0) {
-    autoMPG = (altTransportation.includes(modeOfTransportation) ||
+    autoMPG = (altSelectFieldOptions.includes(modeOfTransportation) ||
         getVehicle(modeOfTransportation, userVehicles).type === 'EV/Hybrid') ?
         maxMPG : -getVehicle(modeOfTransportation, userVehicles).MPG;
   } else {
@@ -49,4 +45,26 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
   eImpactDaily.cO2Reduced = (fuelSaved * gHGPerGallon).toFixed(2);
 
   return eImpactDaily;
+};
+
+/**
+ * Returns the value of the distance traveled in miles
+ * @param distanceTraveled, number of distance traveled by user
+ * @param unit, distance unit: mi - miles, km - kilometers
+ * @returns {*|number}
+ */
+export const getMilesTraveled = (distanceTraveled, unit) => ((unit === 'mi') ?
+    distanceTraveled : distanceTraveled * kmToMiFactor);
+
+/**
+ * Returns today's date, used in add/edit daily data forms
+ * @param distanceTraveled, number of distance traveled by user
+ * @param unit, distance unit: mi - miles, km - kilometers
+ * @returns {*|number}
+ */
+export const getDateToday = () => {
+  const today = new Date();
+  today.setHours(11, 59, 59, 99);
+
+  return today;
 };

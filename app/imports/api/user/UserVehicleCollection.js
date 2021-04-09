@@ -10,10 +10,23 @@ class UserVehicleCollection {
     // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema({
-      user: String,
-      model: String,
-    }, { tracker: Tracker });
+    this.schema = new SimpleSchema(
+      {
+        make: String,
+        model: String,
+        owner: String,
+        logo: String,
+        price: Number,
+        year: Number,
+        MPG: Number,
+        fuelSpending: Number,
+        type: {
+          type: String,
+          allowedValues: ['Gas', 'EV/Hybrid'],
+        },
+      },
+      { tracker: Tracker },
+    );
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
     // Define names for publications and subscriptions

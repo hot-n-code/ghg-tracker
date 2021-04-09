@@ -1,0 +1,189 @@
+[
+  {
+    "make": "Toyota",
+    "model": "Corolla",
+    "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
+    "price": 17000,
+    "year": 2016,
+    "MPG": 32,
+    "fuelSpending": 1450,
+    "type": "Gas",
+    "owner": "test@gmail.com"
+  },
+  {
+    "make": "Honda",
+    "model": "Civic",
+    "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
+    "price": 19000,
+    "year": 2015,
+    "MPG": 32,
+    "fuelSpending": 1400,
+    "type": "Gas",
+    "owner": "test@gmail.com"
+  },
+  {
+    "make": "Nissan",
+    "model": "Sentra",
+    "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
+    "price": 26410,
+    "year": 2019,
+    "MPG": 32,
+    "fuelSpending": 1250,
+    "type": "Gas",
+    "owner": "test@gmail.com"
+  },
+  {
+    "make": "Alfa",
+    "model": "Romeo 4C",
+    "logo": "https://www.freepnglogos.com/uploads/alfa-romeo-car-logo-png-brand-image-29.png",
+    "price": 67150,
+    "year": 2020,
+    "MPG": 28,
+    "fuelSpending": 1900,
+    "type": "Gas",
+    "owner": "uno@hotncode.com"
+  },
+  {
+    "make": "Audi",
+    "model": "A6",
+    "logo": "https://www.freepnglogos.com/uploads/audi-logo-8.png",
+    "price": 48500,
+    "year": 2017,
+    "MPG": 28,
+    "fuelSpending": 2100,
+    "type": "Gas",
+    "owner": "dos@hotncode.com"
+  },
+  {
+    "make": "Tesla",
+    "model": "Model S Standard Range",
+    "logo": "https://www.freepnglogos.com/uploads/tesla-logo-png-black-1.png",
+    "price": 79990,
+    "year": 2020,
+    "MPG": -999,
+    "fuelSpending": 600,
+    "type": "EV/Hybrid",
+    "owner": "tres@hotncode.com"
+  },
+  {
+    "make": "Dodge",
+    "model": "Caliber",
+    "logo": "https://www.freepnglogos.com/uploads/cummins-png-logo/dodge-cummins-png-logo-28.png",
+    "price": 13925,
+    "year": 2008,
+    "MPG": 26,
+    "fuelSpending": 1650,
+    "type": "Gas",
+    "owner": "tres@hotncode.com"
+  },
+  {
+    "make": "Mercedes-Benz",
+    "model": "C230 Kompressor",
+    "logo": "https://www.freepnglogos.com/uploads/mercedes-benz-car-logo-png-brand-image-1.png",
+    "price": 27990,
+    "year": 2003,
+    "MPG": 24,
+    "fuelSpending": 2200,
+    "type": "Gas",
+    "owner": "cuatro@hotncode.com"
+  },
+  {
+    "make": "Volvo",
+    "model": "XC40 AWD BEV",
+    "logo": "https://www.freepnglogos.com/uploads/volvo-car-logo-png-brand-image-20.png",
+    "price": 53990,
+    "year": 2021,
+    "MPG": -999,
+    "fuelSpending": 850,
+    "type": "EV/Hybrid",
+    "owner": "cinco@hotncode.com"
+  },
+  {
+    "make": "Fiat",
+    "model": "500",
+    "logo": "https://www.freepnglogos.com/uploads/fiat-logo-fiat-car-symbol-png-11.png",
+    "price": 16245,
+    "year": 2019,
+    "MPG": 30,
+    "fuelSpending": 1750,
+    "type": "Gas",
+    "owner": "seis@hotncode.com"
+  },
+  {
+    "make": "Porsche",
+    "model": "Boxster",
+    "logo": "https://www.freepnglogos.com/uploads/porsche-logo-4.png",
+    "price": 9850,
+    "year": 1999,
+    "MPG": 20,
+    "fuelSpending": 3100,
+    "type": "Gas",
+    "owner": "seis@hotncode.com"
+  },
+  {
+    "make": "Lamborghini",
+    "model": "Gallardo Coupe",
+    "logo": "https://www.freepnglogos.com/uploads/lamborghini-logo-png/lamborghini-logo-gallery-italian-car-logos-0.png",
+    "price": 181900,
+    "year": 2013,
+    "MPG": 16,
+    "fuelSpending": 3252,
+    "type": "Gas",
+    "owner": "siete@hotncode.com"
+  },
+  {
+    "make": "Nissan",
+    "model": "Altima",
+    "logo": "https://www.freepnglogos.com/uploads/nissan-logo-23.png",
+    "price": 17289,
+    "year": 2003,
+    "MPG": 23,
+    "fuelSpending": 1250,
+    "type": "Gas",
+    "owner": "ocho@hotncode.com"
+  },
+  {
+    "make": "Suzuki",
+    "model": "Swift",
+    "logo": "https://www.freepnglogos.com/uploads/suzuki-png-logo/suzuki-motorcycle-brands-logo-specs-history-png-logo-13.png",
+    "price": 2260,
+    "year": 1995,
+    "MPG": 40,
+    "fuelSpending": 1100,
+    "type": "Gas",
+    "owner": "ocho@hotncode.com"
+  },
+  {
+    "make": "Toyota",
+    "model": "RAV4 EV",
+    "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png",
+    "price": 42000,
+    "year": 2002,
+    "MPG": -999,
+    "fuelSpending": 850,
+    "type": "EV/Hybrid",
+    "owner": "ocho@hotncode.com"
+  },
+  {
+    "make": "Mazda",
+    "model": "3 5-Door",
+    "logo": "https://www.freepnglogos.com/uploads/mazda-logo-0.png",
+    "price": 17750,
+    "year": 2015,
+    "MPG": 33,
+    "fuelSpending": 1300,
+    "type": "Gas",
+    "owner": "nueve@hotncode.com"
+  },
+  {
+    "make": "Honda",
+    "model": "Fit EV",
+    "logo": "https://www.freepnglogos.com/uploads/honda-logo-png/honda-png-transparent-honda-images-plus-4.png",
+    "price": 36625,
+    "year": 2014,
+    "MPG": -999,
+    "fuelSpending": 550,
+    "type": "EV/Hybrid",
+    "owner": "diez@hotncode.com"
+  }
+]

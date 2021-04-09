@@ -12,29 +12,28 @@ import {
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import MyVehicles from '../pages/MyVehicles';
-import ListStuff from '../pages/ListStuff';
-import ListStuffAdmin from '../pages/ListStuffAdmin';
-import AddStuff from '../pages/AddStuff';
-import AboutPage from '../pages/AboutPage';
-import FeedBack from '../pages/FeedBack';
-import UsersCumulativePage from '../pages/UsersCumulativePage';
-import EditStuff from '../pages/EditStuff';
+import MyVehicles from '../pages/vehicle/MyVehicles';
+import ListStuff from '../pages/stuff-to-delete/ListStuff';
+import ListStuffAdmin from '../pages/stuff-to-delete/ListStuffAdmin';
+import AddStuff from '../pages/stuff-to-delete/AddStuff';
+import AboutPage from '../pages/about-feedback/AboutPage';
+import FeedBack from '../pages/about-feedback/FeedBack';
+import UsersCumulativePage from '../pages/cumulative/UsersCumulativePage';
+import EditStuff from '../pages/stuff-to-delete/EditStuff';
 import NotFound from '../pages/NotFound';
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
-import Signout from '../pages/Signout';
-import AdminUserList from '../pages/AdminUserList';
-import DataAdminPage from '../pages/DataAdminPage';
-import CreateUser from '../pages/CreateUser';
-import UserPage from '../pages/UserPage';
-import AltTransportation from '../pages/AltTransportation';
-import CreateVehicle from '../pages/CreateVehicle';
-import HEmore from '../pages/HEmore';
-import Asbmore from '../pages/Asbmore';
-import Pcmore from '../pages/Pcmore';
-import WhatIf from '../components/WhatIf';
-import UserDataPage from '../pages/UserDataPage';
+import Signin from '../pages/sign-in-sign-up/Signin';
+import Signup from '../pages/sign-in-sign-up/Signup';
+import Signout from '../pages/sign-in-sign-up/Signout';
+import AdminUserList from '../pages/admin/AdminUserList';
+import DataAdminPage from '../pages/admin/DataAdminPage';
+import CreateUser from '../pages/sign-in-sign-up/CreateUser';
+import UserPage from '../pages/user/UserPage';
+import AltTransportation from '../pages/user/AltTransportation';
+import HEmore from '../pages/about-feedback/HEmore';
+import Asbmore from '../pages/about-feedback/Asbmore';
+import Pcmore from '../pages/about-feedback/Pcmore';
+import WhatIf from '../components/user-data-page/WhatIf';
+import UserDataPage from '../pages/user/UserDataPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -63,9 +62,9 @@ class App extends React.Component {
             <ProtectedRoute path='/list' component={ListStuff} />
             <ProtectedRoute path='/add' component={AddStuff} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
-            <ProtectedRoute path='/create-vehicle' component={CreateVehicle} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/edit/:_id' component={EditStuff} />
+            <ProtectedRoute path='/history' component={UserDataPage} />
             <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />
           </Switch>

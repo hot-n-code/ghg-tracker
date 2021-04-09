@@ -19,7 +19,17 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-
+.cloud-box #cloud-carbon {
+  position: absolute;
+  font-size: 60px;
+  transform: translate(40%, -310%);
+  color: aliceblue;
+  z-index: 5;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+  text-size-adjust: none;
+}
 .background-total-user-data {
   background-color: white;
   border: thin solid lightgray;
@@ -153,22 +163,14 @@ h6 {
 }
 
 /* MY VEHICLES PAGE */
-
-/* Search bar */
-#root > div > div:nth-child(2) > div > div:nth-child(2) > div {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 #root
   > div
   > div.vehicle-list-container.background-all
   > div
-  > div:nth-child(3)
+  > div:nth-child(2)
   > div
-  > div
-  > div.vehicle-list-item {
+  > div.ui.stackable.three.column.grid
+  > div {
   display: flex;
   justify-content: center;
 }
@@ -188,10 +190,13 @@ h6 {
   justify-content: space-around;
 }
 
-.vehicle-card-header,
-.vehicle-card-expand-header {
-  padding-top: 20px;
+.vehicle-card-header {
+  margin-top: 20px;
   align-self: center;
+}
+
+.vehicle-card-expand-header {
+  margin-top: 8px;
 }
 
 .vehicle-card-description,
@@ -199,8 +204,7 @@ h6 {
   padding-top: 20px;
 }
 
-.vehicle-card-description span,
-.vehicle-card-expand-description span {
+.vehicle-card-description .vehicle-card-label {
   font-weight: bold;
   padding-right: 10px;
 }
@@ -210,12 +214,17 @@ h6 {
   font-size: 16px;
 }
 
-div.vehicle-card-logo > img,
-.vehicle-card-expand-logo img {
+div.vehicle-card-logo > img {
   height: 100%;
   width: 100%;
   object-fit: contain;
   max-height: 201px;
+}
+
+.vehicle-card-expand-logo img {
+  object-fit: contain;
+  width: 201px;
+  height: 201px;
 }
 
 .vehicle-card-btn {
@@ -231,7 +240,6 @@ div.vehicle-card-logo > img,
   left: 0;
   width: 100%;
   height: 100%;
-  cursor: pointer;
 }
 
 .vehicle-card-expand {
@@ -240,13 +248,77 @@ div.vehicle-card-logo > img,
   border-radius: 20px !important;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   padding: 1rem 3rem;
-  margin: 10% 40%;
-  cursor: pointer;
-  width: 20%;
+  margin: 10% 30%;
+  width: 40%;
   height: 60%;
   max-width: 100%;
+}
+
+.vehicle-card-expand-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.vehicle-card-expand-col {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30px;
+}
+
+.vehicle-card-expand-content-wrapper {
+  flex-grow: 1;
+}
+
+.vehicle-card-expand-header-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.vehicle-card-expand-stats,
+td {
+  border: none;
+  font-size: 14px;
+  text-align: left;
+  padding-top: 10px;
+}
+
+.vehicle-card-expand-stats td {
+  padding-right: 20px;
+}
+
+.vehicle-card-expand-label {
+  font-weight: bold;
+}
+
+.vehicle-card-expand-close-btn {
+  background-color: rgba(167, 215, 197, 0.5);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  margin-left: 95%;
+  margin-right: 14px;
+  margin-bottom: 0;
+  padding: 8px 13px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s all ease-in;
+}
+
+.vehicle-card-expand-close-btn:hover {
+  background-color: rgba(167, 215, 197, 0.8);
+  color: rgb(255, 255, 255);
+}
+
+.vehicle-card-expand-close-btn:focus,
+.vehicle-card-expand-close-btn:active {
+  background-color: rgb(130, 184, 178);
+  color: rgb(255, 255, 255);
 }
 
 .vehicle-card-expand-description {
@@ -258,6 +330,9 @@ div.vehicle-card-logo > img,
 .add-vehicle-overlay {
   z-index: 2;
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.7);
   top: 0;
   left: 0;
@@ -275,8 +350,8 @@ div.vehicle-card-logo > img,
   justify-content: space-around;
   padding: 1rem 3rem;
   margin: 10% 30%;
-  width: 40%;
-  height: 50%;
+  width: 70%;
+  height: 80%;
   max-width: 100%;
 }
 
@@ -304,7 +379,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .add-vehicle-close-btn:focus,
 .add-vehicle-close-btn:active {
-  background-color: rgb(92, 141, 137);
+  background-color: rgb(130, 184, 178);
   color: rgb(255, 255, 255);
 }
 
@@ -328,8 +403,8 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
   background-color: rgb(55, 116, 156);
   margin-top: 30px;
   position: fixed;
-  top: 85%;
-  left: 85%;
+  top: 65%;
+  left: 95%;
   transition: 0.3s all ease-out;
 }
 
