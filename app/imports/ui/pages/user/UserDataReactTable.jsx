@@ -29,8 +29,8 @@ class UserDataReactTable extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  getColumns(dailyData, users) {
-    return { date: dailyData.inputDate, modeOfTransportation: dailyData.modeOfTransportation, milesTraveled: dailyData.milesTraveled, c02reduced: users.c02reduced };
+  getColumns(dailyData) {
+    return { date: dailyData.inputDate, modeOfTransportation: dailyData.modeOfTransportation, milesTraveled: dailyData.milesTraveled, c02reduced: dailyData.c02reduced };
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -103,10 +103,8 @@ UserDataReactTable.propTypes = {
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready();
   const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
-  const users = Users.collection.find({}, { sort: { inputDate: -1 } }).fetch();
   return {
     dailyData,
-    users,
     ready,
   };
 })(UserDataReactTable);
