@@ -7,6 +7,7 @@ import AddDailyData from '../../components/user-data-page/AddDailyData';
 import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 class UserDataPage extends React.Component {
   render() {
@@ -26,12 +27,13 @@ class UserDataPage extends React.Component {
                <Table.HeaderCell>Mode of Transportation</Table.HeaderCell>
                <Table.HeaderCell>Total Miles</Table.HeaderCell>
                <Table.HeaderCell>CO2 Reduced</Table.HeaderCell>
+               <Table.HeaderCell>Fuel Saved</Table.HeaderCell>
                <Table.HeaderCell/>
                <Table.HeaderCell/>
              </Table.Row>
            </Table.Header>
            <Table.Body>
-             {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value}/>)}
+             {this.props.dailyData.map((value) => <HistoryRowData key={value._id} transportationData={value} vehicles={this.props.vehicles}/>)}
            </Table.Body>
          </Table>
        </div>
@@ -41,14 +43,18 @@ class UserDataPage extends React.Component {
 
 UserDataPage.propTypes = {
   dailyData: PropTypes.array.isRequired,
-  users: PropTypes.object,
+  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const sub1 = Meteor.subscribe(DailyUserData.userPublicationName);
+  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.userPublicationName).ready();
+  const dailyData = DailyUserData.collection.find({}).fetch();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
-    dailyData: DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch(),
-    ready: sub1.ready(),
+    dailyData,
+    vehicles,
+    ready,
   };
 })(UserDataPage);

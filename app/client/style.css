@@ -1,6 +1,6 @@
 /* NAVBAR */
 .ui.attached.menu {
-  background: #5c8d89;
+  background: #FC4A1A;
   margin-bottom: 0px;
   padding: 0px;
 }
@@ -57,7 +57,7 @@
 }
 .landing-data {
   background-color: #a7d7c5;
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -66,8 +66,8 @@
   background-attachment: scroll;
 }
 .background-all {
-  background-image: url('images/wave_transparent.png');
-  background-color: #f9f8eb;
+  background-image: url('images/waves/gray1.png');
+  background-color: #f9f8fa;
   background-size: 100% 30%;
   background-repeat: repeat-x;
   z-index: -999;
@@ -79,7 +79,7 @@
 }
 
 .background-feedback-widget {
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-color: #f9f8eb;
   background-size: 100% 30%;
   background-repeat: repeat-x;
@@ -93,7 +93,7 @@
 }
 
 .background-all-about {
-  background-image: url('images/wave_transparent.png');
+  background-image: url('images/waves/gray1.png');
   background-color: #f9f8eb;
   background-size: 100% 20%;
   background-repeat: repeat-x;
@@ -111,7 +111,7 @@
 }
 
 body {
-  background-color: #f9f8eb;
+  background-color: white;
   background-size: cover;
   z-index: -999;
   margin: 0;
@@ -132,7 +132,7 @@ h6 {
 
 .footer {
   margin-top: 14px;
-  background-color: #5c8d89;
+  background-color: #4abdac;
   bottom: 0;
   left: 0;
   right: 0;

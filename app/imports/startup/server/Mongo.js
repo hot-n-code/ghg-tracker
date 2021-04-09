@@ -28,7 +28,7 @@ if (Meteor.isServer) {
   }
 
   if (AllVehicle.collection.find().count() === 0) {
-    getData('defaultAllVehicles.json').map(dailyData => AllVehicle.collection.insert(dailyData));
+    getData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
   }
 
   console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);

@@ -10,6 +10,7 @@ import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { getDateToday } from '../../utilities/DailyGHGData';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -23,7 +24,7 @@ class UserPage extends React.Component {
     renderPage() {
       const today = getDateToday().toDateString();
       const hoursTelework = _.size(_.where(this.props.dailyData, { modeOfTransportation: 'Telework' }));
-      const ghgData = getCumulativeGHG(this.props.dailyData);
+      const ghgData = getCumulativeGHG(this.props.dailyData, this.props.vehicles);
       const totalCO2Reduced = ghgData.cO2Reduced;
       const totalMiles = ghgData.VMTReduced;
       const totalFuelSaved = ghgData.fuelSaved;
@@ -61,38 +62,38 @@ class UserPage extends React.Component {
                   <Grid stackable columns={5} divided>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/gas.png"
+                              margin: '0 auto' }} src="/images/colored-clipart/3.png"
                                  size='small' alt="filler placement for eventual graph"/>
                           <Header as='h1' textAlign='center'>Total Fuel Saved</Header>
-                          <Header as='h2' textAlign='center'>{totalFuelSaved} gallons</Header>
+                          <Header as='h2' textAlign='center'>{totalFuelSaved.toFixed(2)} gallons</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/speedometer.png"
+                              margin: '0 auto' }} src="/images/colored-clipart/1.png"
                                  size='small' alt="filler placement for eventual graph"/>
                           <Header as='h1' textAlign='center'>Alternative Miles</Header>
                           <Header as='h2' textAlign='center'>{totalMiles} miles</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="https://img.icons8.com/ios/100/000000/potted-plant.png"
+                              margin: '0 auto' }} src="/images/colored-clipart/2.png"
                                  size='small' alt="CO2"/>
                           <Header as='h1' textAlign='center'>Total CO2 Reduced</Header>
-                          <Header as='h2' textAlign='center'>{totalCO2Reduced} lbs</Header>
+                          <Header as='h2' textAlign='center'>{totalCO2Reduced.toFixed(2)} lbs</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/home.png"
+                              margin: '0 auto' }} src="/images/colored-clipart/4.png"
                                  size='small' alt="home"/>
                           <Header as='h1' textAlign='center'>Days Worked at Home</Header>
                           <Header as='h2' textAlign='center'>{hoursTelework} day(s)</Header>
                       </Grid.Column>
                       <Grid.Column>
                           <Image style={{ display: 'block',
-                              margin: '0 auto' }} src="/images/co2.png"
+                              margin: '0 auto' }} src="/images/colored-clipart/5.png"
                                  size='small' alt="biking"/>
                           <Header as='h1' textAlign='center'>Total CO2 Produced</Header>
-                          <Header as='h2' textAlign='center'>{totalGHGProduced} lb(s)</Header>
+                          <Header as='h2' textAlign='center'>{totalGHGProduced.toFixed(2)} lb(s)</Header>
                       </Grid.Column>
                   </Grid>
                 </div>
@@ -106,17 +107,23 @@ class UserPage extends React.Component {
 UserPage.propTypes = {
     dailyData: PropTypes.array.isRequired,
     users: PropTypes.object,
+    vehicles: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(({ match }) => {
     const userId = match.params._id;
     const getUser = Meteor.users.findOne(userId);
-    const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-    const subscription2 = Meteor.subscribe(Users.userPublicationName);
+    const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+        Meteor.subscribe(Users.userPublicationName).ready() &&
+        Meteor.subscribe(UserVehicle.userPublicationName).ready();
+    const dailyData = DailyUserData.collection.find({}).fetch();
+    const users = Users.collection.findOne({ username: getUser });
+    const vehicles = UserVehicle.collection.find({}).fetch();
     return {
-        dailyData: DailyUserData.collection.find({}).fetch(),
-        users: Users.collection.findOne({ username: getUser }),
-        ready: subscription1.ready() && subscription2.ready(),
+        dailyData,
+        users,
+        vehicles,
+        ready,
     };
 })(UserPage);

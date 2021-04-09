@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { getDailyGHG, getMilesTraveled, getDateToday } from '../../utilities/DailyGHGData';
+import { getMilesTraveled, getDateToday, getModeType } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -43,11 +43,9 @@ class AddDailyData extends React.Component {
   submit(data, formRef) {
     const { inputDate, modeOfTransportation, distanceTraveled, unit } = data;
     const milesTraveled = getMilesTraveled(distanceTraveled, unit).toFixed(2);
-    const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
-    const cO2Reduced = dailyGHG.cO2Reduced;
-    const fuelSaved = dailyGHG.fuelSaved;
+    const modeType = getModeType(modeOfTransportation, this.props.vehicles);
     const owner = Meteor.user().username;
-    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved }, (error) => {
+    DailyUserData.collection.insert({ owner, inputDate, modeOfTransportation, milesTraveled, modeType }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -111,9 +109,10 @@ AddDailyData.propTypes = {
 
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
-  const subscription = Meteor.subscribe(UserVehicle.userPublicationName);
+  const ready = Meteor.subscribe(UserVehicle.userPublicationName).ready();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
-    vehicles: UserVehicle.collection.find({}).fetch(),
-    ready: subscription.ready(),
+    vehicles,
+    ready,
   };
 })(AddDailyData);

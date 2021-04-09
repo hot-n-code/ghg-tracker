@@ -14,7 +14,7 @@ class NavBar extends React.Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const menuStyle = { background: '#5c8d89' };
+    const menuStyle = { background: '#4abdac' };
     const menuItem = { bottom: '28px' };
     const menuItem2 = { bottom: '14px' };
     return (
