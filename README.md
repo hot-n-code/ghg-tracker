@@ -151,6 +151,6 @@ meteor npm run lint
 
 
 
-![ci-badge](https://github.com/hot-n-code/ghg-tracker/workflows/ci-meteor-application-template-react/badge.svg)
+![ci-badge](https://github.com/hot-n-code/ghg-tracker/workflows/hot-n-code-ghg-tracker/badge.svg)
 
 For details, please see http://ics-software-engineering.github.io/meteor-application-template-react/
