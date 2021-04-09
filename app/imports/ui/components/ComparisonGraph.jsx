@@ -7,13 +7,12 @@ import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
 const ComparisonGraph = (props) => {
-    // NEXT: ADD CUMULATIVE, ADD POPUP THAT WARNS/CONGRATULATES USER BASED ON COMPARISON
     const date = new Date();
     const getByMonthIndividual = _.filter(props.userData, (userTrip) => {
         return (userTrip.inputDate.getMonth() ===
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
-    const userGHGData = getCumulativeGHG(getByMonthIndividual);
+    const userGHGData = getCumulativeGHG(getByMonthIndividual, props.vehicles);
     const totalCO2Reduced = userGHGData.cO2Reduced;
     const totalCO2Produced = userGHGData.cO2Produced;
 
@@ -21,7 +20,7 @@ const ComparisonGraph = (props) => {
         return (userTrip.inputDate.getMonth() ===
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
-    const usersGHGData = getCumulativeGHG(getByMonthAll);
+    const usersGHGData = getCumulativeGHG(getByMonthAll, props.allVehicles);
     const allCO2Reduced = (usersGHGData.cO2Reduced / _.size(props.users)).toFixed(2);
     const allCO2Produced = (usersGHGData.cO2Produced / _.size(props.users)).toFixed(2);
     const stateAll = {
@@ -84,6 +83,8 @@ ComparisonGraph.propTypes = {
     userData: PropTypes.array.isRequired,
     userDataAll: PropTypes.array.isRequired,
     users: PropTypes.array.isRequired,
+    vehicles: PropTypes.array.isRequired,
+    allVehicles: PropTypes.array.isRequired,
 };
 
 export default (ComparisonGraph);

@@ -8,13 +8,13 @@ import { Users } from '../../api/user/UserCollection';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import WhatIf from '../components/user-data-page/WhatIf';
 import ComparisonGraph from '../components/ComparisonGraph';
-import {getCumulativeGHG} from "../utilities/CumulativeGHGData";
+import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
+import { UserVehicle } from '../../api/user/UserVehicleCollection';
 
 
 const paddingStyle = { padding: 20 };
 
 const UserVSCumulative = (props) => {
-    // NEXT: GRAB LAST MONTH'S DATA
     const date = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
         'October', 'November', 'December'];
@@ -22,7 +22,7 @@ const UserVSCumulative = (props) => {
         return (userTrip.inputDate.getMonth() ===
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
-    const thisMonthGHGData = getCumulativeGHG(getThisMonth);
+    const thisMonthGHGData = getCumulativeGHG(getThisMonth, props.vehicles);
     const thisMonthCO2Produced = thisMonthGHGData.cO2Produced;
 
     const getLastMonth = _.filter(props.dailyData, (userTrip) => {
@@ -35,11 +35,10 @@ const UserVSCumulative = (props) => {
         }
     });
 
-    const lastMonthsGHGData = getCumulativeGHG(getLastMonth);
+    const lastMonthsGHGData = getCumulativeGHG(getLastMonth, props.allVehicles);
     const lastMonthCO2Produced = lastMonthsGHGData.cO2Produced;
 
     const increase = thisMonthCO2Produced - lastMonthCO2Produced !== 0 ? thisMonthCO2Produced - lastMonthCO2Produced : '';
-    console.log(thisMonthCO2Produced);
     let result;
     if (increase > 0 && lastMonthCO2Produced !== 0) {
         result = 'Your CO2 Production is up ' + ((increase / lastMonthCO2Produced) * 100).toFixed(2)
@@ -59,7 +58,8 @@ const UserVSCumulative = (props) => {
                 <Grid.Column textAlign='center' width={16}>
                     <Header as='h1'>My GHG Statistics vs HEI Community</Header>
                     <Header as='h1'>{months[date.getMonth()]} {date.getFullYear()}</Header>
-                    <ComparisonGraph userData={props.dailyData} userDataAll={props.dailyDataAll} users={props.users}/>
+                    <ComparisonGraph userData={props.dailyData} userDataAll={props.dailyDataAll} users={props.users}
+                                     vehicles={props.vehicles} allVehicles={props.allVehicles}/>
                 </Grid.Column>
             </Grid>
             <Grid stackable>
@@ -77,6 +77,8 @@ UserVSCumulative.propTypes = {
     users: PropTypes.array,
     dailyData: PropTypes.array,
     dailyDataAll: PropTypes.array.isRequired,
+    vehicles: PropTypes.array.isRequired,
+    allVehicles: PropTypes.array.isRequired,
     ready: PropTypes.bool.isRequired,
 };
 
@@ -84,11 +86,16 @@ export default withTracker(() => {
     const subscription1 = Meteor.subscribe(Users.adminPublicationName);
     const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
     const subscription3 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const subscription4 = Meteor.subscribe(UserVehicle.userPublicationName);
+    const subscription5 = Meteor.subscribe(UserVehicle.adminPublicationName);
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
         users: Users.collection.find({}).fetch(),
         dailyData: DailyUserData.collection.find({ owner: currentUser }).fetch(),
         dailyDataAll: DailyUserData.collection.find({}).fetch(),
-        ready: subscription1.ready() && subscription2.ready() && subscription3.ready(),
+        vehicles: UserVehicle.collection.find({ owner: currentUser }).fetch(),
+        allVehicles: UserVehicle.collection.find({}).fetch({}),
+        ready: subscription1.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready()
+            && subscription5.ready(),
     };
 })(UserVSCumulative);
