@@ -1,16 +1,15 @@
-import { Container, Divider, Loader, Header, Input, Table } from 'semantic-ui-react';
 import React from 'react';
+import { Container, Divider, Loader, Header, Input } from 'semantic-ui-react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
-// import { Redirect } from 'react-router-dom';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
-// import HistoryRowData from '../../components/user-data-page/HistoryRowData';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
-// import { Users } from '../../../api/user/UserCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { getDailyGHG } from '../../utilities/DailyGHGData';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {
@@ -18,19 +17,23 @@ class UserDataReactTable extends React.Component {
 
     this.state = {
       filterValue: '',
-      // redirectToProfile: false,
-      // profileId: undefined,
     };
     this.handleOnChange = this.handleOnChange.bind(this);
-  //  this.onRowClick = this.onRowClick.bind(this);
   }
 
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  getColumns(dailyData) {
-    return { date: dailyData.inputDate, modeOfTransportation: dailyData.modeOfTransportation, milesTraveled: dailyData.milesTraveled, c02reduced: dailyData.c02reduced };
+  getColumns(dailyData, vehicles) {
+    const data = {};
+    data.date = dailyData.inputDate.toLocaleString();
+    data.modeOfTransportation = dailyData.modeOfTransportation;
+    data.milesTraveled = dailyData.milesTraveled;
+    const eImpactDaily = getDailyGHG(data.milesTraveled, data.modeOfTransportation, vehicles);
+    data.cO2Redcued = eImpactDaily.cO2Reduced;
+    data.fuelSaved = eImpactDaily.fuelSaved;
+    return data;
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -46,20 +49,14 @@ class UserDataReactTable extends React.Component {
     });
   }
 
-  // onRowClick = (event, { rowData }) => {
-    // const profileId = Users.collection.findOne({ username: rowData.email })._id;
-    // this.setState({ profileId: profileId, redirectToProfile: true });
-   // console.log(rowData);
-  // }
-
    renderPage() {
-     // if (this.state.redirectToProfile) {
-     //   return <Redirect to={`/user-page/${this.state.profileId}/`}/>;
-     // }
      const { filterValue } = this.state;
      return (
          <Container id="profileList-page">
-           <Divider hidden/>
+           <Divider hidden vertical/>
+           <Header as='h1' textAlign='center'>My Transportation History</Header>
+           <AddDailyData/>
+           <WhatIf/>
            <Input
                list='filter'
                placeholder='Filter results..'
@@ -68,23 +65,12 @@ class UserDataReactTable extends React.Component {
                value={filterValue}
                onChange={this.handleOnChange}
            />
-           <Table size='large' celled padded striped stackable >
-             <Table.Header fullWidth>
-               <Table.Row>
-                 <Table.HeaderCell textAlign='center'>
-                   <Header as='h1' textAlign='center'>My Transportation History</Header>
-                   <Header as='h1' textAlign='center'><AddDailyData/><WhatIf/></Header>
-                 </Table.HeaderCell>
-               </Table.Row>
-             </Table.Header>
-           </Table>
+           <Divider hidden/>
            <SmartDataTable
-                data={this.props.dailyData.map(this.getColumns) }
+                data={this.props.dailyData.map(data => this.getColumns(data, this.props.vehicles)) }
                 name="profile-list"
                 className="ui compact selectable table"
                 sortable
-              //  onRowClick={this.onRowClick()}
-                withToggles
                 perPage={25}
                 filterValue={filterValue}
            />
@@ -96,15 +82,18 @@ class UserDataReactTable extends React.Component {
 
 UserDataReactTable.propTypes = {
   dailyData: PropTypes.array.isRequired,
-  users: PropTypes.object,
+  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready();
+  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.userPublicationName).ready();
   const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
     dailyData,
+    vehicles,
     ready,
   };
 })(UserDataReactTable);
