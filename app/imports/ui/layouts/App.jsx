@@ -24,7 +24,7 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/sign-in-sign-up/Signin';
 import Signup from '../pages/sign-in-sign-up/Signup';
 import Signout from '../pages/sign-in-sign-up/Signout';
-import AdminUserList from '../pages/admin/AdminUserList';
+// import AdminUserList from '../pages/admin/AdminUserList';
 import DataAdminPage from '../pages/admin/DataAdminPage';
 import CreateUser from '../pages/sign-in-sign-up/CreateUser';
 import UserPage from '../pages/user/UserPage';
@@ -34,6 +34,8 @@ import Asbmore from '../pages/about-feedback/Asbmore';
 import Pcmore from '../pages/about-feedback/Pcmore';
 import WhatIf from '../components/user-data-page/WhatIf';
 import UserDataPage from '../pages/user/UserDataPage';
+import AdminProfileList from '../pages/admin/AdminProfileList';
+import UserDataReactTable from '../pages/user/UserDataReactTable';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -53,9 +55,10 @@ class App extends React.Component {
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
             <ProtectedRoute path='/admin-data' component={DataAdminPage} />
-            <ProtectedRoute path='/admin' component={AdminUserList} />
+            <ProtectedRoute path='/admin' component={AdminProfileList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
+            <ProtectedRoute path='/user-react-page/'component={UserDataReactTable} />
             <ProtectedRoute path='/what-if/' component={WhatIf} />
             <ProtectedRoute path='/alt' component={AltTransportation} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
