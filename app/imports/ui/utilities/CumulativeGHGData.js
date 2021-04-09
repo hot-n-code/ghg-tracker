@@ -73,6 +73,7 @@ export const getCumulativePerMode = (dailyData, mode, userVehicles) => {
 export const getCumulativeGHG = (dailyData, userVehicles) => {
   const eImpact = {};
 
+
   const cO2Data = getCO2Data(dailyData, userVehicles);
   eImpact.cO2Reduced = cO2Data.reduced;
   eImpact.cO2Produced = Math.abs(cO2Data.produced);
