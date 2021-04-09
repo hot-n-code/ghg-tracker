@@ -19,7 +19,7 @@ class LandingCumulativeData extends React.Component {
   renderPage() {
     // Get daily data
     const ghgData = getCumulativeGHG(this.props.dailyData, this.props.vehicles);
-    const totalCO2Reduced = ghgData.cO2Reduced;
+    const totalCO2Reduced = ghgData.cO2Reduced.toFixed(2);
 
     return (
         <div className='landing-data' style={paddingStyle}>
