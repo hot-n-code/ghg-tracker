@@ -5,8 +5,14 @@ import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { readFile } from 'fs';
 
 /* eslint-disable no-console */
+
+readFile('random-data.json', (err, read) => {
+  if (err) throw err;
+  console.log(JSON.parse(read));
+});
 
 const getData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
 
