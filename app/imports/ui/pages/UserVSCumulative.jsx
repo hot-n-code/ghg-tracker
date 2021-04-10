@@ -74,7 +74,7 @@ const UserVSCumulative = (props) => {
             <Grid stackable>
                 <Grid.Column textAlign='center' width={16}>
                     <Header as='h1'>{result}</Header>
-                    <Header as='h1'>Start reducing your GHG Emissions today!</Header>
+                    <Header as='h1'>Want more alternative transportation options?</Header>
                     <WhatIf/>
                 </Grid.Column>
             </Grid>
