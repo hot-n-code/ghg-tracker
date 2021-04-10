@@ -6,7 +6,6 @@ import { _ } from 'meteor/underscore';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
 
 // Pie chart of the all time mileage for each mode of transportation for a specific user
-
 const graphObject = {
   telework: 'Telework',
   pTransportation: 'Public Transportation',
@@ -15,15 +14,15 @@ const graphObject = {
   carpool: 'Carpool',
   evHybrid: 'EVHybrid',
   transportationTypes: ['Telework', 'Public Transportation', 'Biking',
-      'Walk', 'Carpool', 'EV/Hybrid'],
-  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
+      'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
+  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FF69B4'],
 };
 
 const MyDataChart = (props) => {
   const date = new Date();
   const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
         date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()); });
-    const teleworkData = getCumulativePerMode(getByMonthIndividual, graphObject.telework, props.vehicles);
+  const teleworkData = getCumulativePerMode(getByMonthIndividual, graphObject.telework, props.vehicles);
   const totalTelework = teleworkData.VMTReduced.toFixed(2);
   const aVData = getCumulativePerMode(getByMonthIndividual, graphObject.evHybrid, props.vehicles);
   const totalAV = aVData.VMTReduced.toFixed(2);
@@ -35,9 +34,16 @@ const MyDataChart = (props) => {
   const totalCarpool = carpoolData.VMTReduced.toFixed(2);
   const ptData = getCumulativePerMode(getByMonthIndividual, graphObject.pTransportation, props.vehicles);
   const totalPT = ptData.VMTReduced.toFixed(2);
+
+  const totalCar = _.where(getByMonthIndividual, { modeType: 'Gas' });
+  let gasTotal = 0;
+  totalCar.forEach((obj) => {
+      gasTotal += obj.milesTraveled;
+  });
   const stateAll = {
       labels: graphObject.transportationTypes,
-      datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV],
+      datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV,
+              gasTotal.toFixed(2)],
           backgroundColor: graphObject.graphColors,
       }],
   };
