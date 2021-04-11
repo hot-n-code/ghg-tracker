@@ -16,29 +16,28 @@ const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${fi
 if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
     randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
+    console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
   }
 
   if (Makes.collection.find().count() === 0) {
     getAssetsData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
+    console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
   }
 
   if (UserVehicle.collection.find().count() === 0) {
     randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
+    console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
   }
 
   if (DailyUserData.collection.find().count() === 0) {
     randomData.defaultDailyUserData.map(dailyData => DailyUserData.collection.insert(dailyData));
+    console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
   }
 
   if (AllVehicle.collection.find().count() === 0) {
     getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
+    console.log(`   AllVehicleCollection: ${AllVehicle.collection.find().count()} vehicles`);
   }
-
-  console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
-  console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
-  console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
-  console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
-  console.log(`   AllVehicleCollection: ${AllVehicle.collection.find().count()} vehicles`);
 } else {
   console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
 }
