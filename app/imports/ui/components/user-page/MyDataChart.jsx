@@ -24,17 +24,17 @@ const graphObject = {
 
 const MyDataChart = (props) => {
   const teleworkData = getCumulativePerMode(props.userData, graphObject.telework, props.vehicles);
-  const totalTelework = teleworkData.VMTReduced;
+  const totalTelework = teleworkData.VMTReduced.toFixed(2);
   const aVData = getCumulativePerMode(props.userData, graphObject.evHybrid, props.vehicles);
-  const totalAV = aVData.VMTReduced;
+  const totalAV = aVData.VMTReduced.toFixed(2);
   const bikingData = getCumulativePerMode(props.userData, graphObject.biking, props.vehicles);
-  const totalBiking = bikingData.VMTReduced;
+  const totalBiking = bikingData.VMTReduced.toFixed(2);
   const walkingData = getCumulativePerMode(props.userData, graphObject.walking, props.vehicles);
-  const totalWalking = walkingData.VMTReduced;
+  const totalWalking = walkingData.VMTReduced.toFixed(2);
   const carpoolData = getCumulativePerMode(props.userData, graphObject.carpool, props.vehicles);
-  const totalCarpool = carpoolData.VMTReduced;
+  const totalCarpool = carpoolData.VMTReduced.toFixed(2);
   const ptData = getCumulativePerMode(props.userData, graphObject.pTransportation, props.vehicles);
-  const totalPT = ptData.VMTReduced;
+  const totalPT = ptData.VMTReduced.toFixed(2);
   const stateAll = {
       labels: graphObject.transportationTypes,
       datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV],

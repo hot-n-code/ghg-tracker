@@ -24,7 +24,8 @@ const getCO2Data = (dailyData, userVehicles) => {
   });
 };
 
-const getFuelSavedTotal = (dailyData, userVehicles) => dailyData.map(data => getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).fuelSaved)
+const getFuelSavedTotal = (dailyData, userVehicles) => dailyData.filter(({ modeType }) => modeType !== 'Gas')
+    .map(data => getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).fuelSaved)
     .reduce((a, b) => a + b, 0);
 
 /**
