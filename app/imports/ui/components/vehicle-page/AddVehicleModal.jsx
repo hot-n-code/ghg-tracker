@@ -59,6 +59,7 @@ const AddVehicleModal = (props) => {
   const [finalYear, setFinalYear] = useState(() => '');
   const [finalPrice, setFinalPrice] = useState(() => '');
   const [finalSpending, setFinalSpending] = useState(() => '');
+  const [finalName, setFinalName] = useState(() => '');
   // submit function that adds user input to uservehicle collection
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -68,6 +69,11 @@ const AddVehicleModal = (props) => {
     const year = finalYear;
     const fuelSpending = finalSpending;
     const owner = Meteor.user().username;
+    let name = finalName;
+    if (name == null) {
+      console.log('test');
+      name = `${year}${' '}${make}${' '}${model}`;
+    }
     // LOGO
     const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
@@ -76,7 +82,7 @@ const AddVehicleModal = (props) => {
     const MPG = get[0];
     const type = get[1];
     UserVehicle.collection.insert(
-        { make, model, logo, price, year, MPG, fuelSpending, type, owner },
+        { make, model, logo, price, year, MPG, fuelSpending, type, owner, name },
         error => {
           if (error) {
             swal('Error', error.message, 'error');
@@ -243,6 +249,13 @@ const AddVehicleModal = (props) => {
                          placeholder={'Year'}
                          value={dropYear.filter(({ value }) => value === resetYear.mySelectKey)}
                      />
+                   </label>
+                   <br/>
+                   <br/>
+                   <label>
+                     Vehicle Name (Optional):
+                     <br/>
+                     <Input placeholder='Vehicle Name' value={finalName} onChange={e => setFinalName(e.target.value)} />
                    </label>
                    <br/>
                    <br/>

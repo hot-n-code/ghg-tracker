@@ -52,7 +52,7 @@ const createPeople = () => {
  * Creates 1 to (maxQuantity.vehiclesPerUser) number of fake vehicles per user
  * @param accounts, an array of accounts
  * @returns array with objects containing:
- *      { make, model, logo, price, year, MPG, fuelSpending, type, owner }
+ *      { name, make, model, logo, price, year, MPG, fuelSpending, type, owner }
  */
 const createUserVehicles = (accounts) => {
   const vehicles = JSON.parse(Assets.getText('default-data/defaultAllVehicles.json'));
@@ -91,6 +91,7 @@ const createUserVehicles = (accounts) => {
 
         type: ((vehicle.Mpg < 0) ? 'EV/Hybrid' : 'Gas'),
         owner: account.email,
+        name: `${vehicle.Year}${' '}${vehicle.Make}${' '}${vehicle.Model}`,
       });
     }
   });
