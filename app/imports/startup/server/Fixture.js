@@ -1,18 +1,20 @@
 import faker from 'faker';
 import { writeFileSync } from 'fs';
+import { getDateToday, getModeType } from '../../ui/utilities/DailyGHGData';
+import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../../ui/utilities/GlobalVariables';
 
 /**
  * Defines the max amount of elements per collection
  * @type {{vehiclesPerUser: number, dailyUserDataPerUser: number, users: number}}
  */
-const maxValues = {
-  users: 3,
-  dailyUserDataPerUser: 100,
+const maxQuantity = {
+  users: 1,
+  dailyUserDataPerUser: 14,
   vehiclesPerUser: 3,
 };
 
 /**
- * Creates (maxValues.users) number of fake people
+ * Creates (maxQuantity.users) number of fake people
  * @returns array with objects containing:
  *    { name, email, password, goal, image }
  */
@@ -24,8 +26,15 @@ const createPeople = () => {
     'save more fuel',
   ];
 
-  const people = [];
-  for (let iter = 0; iter < maxValues.users; iter++) {
+  const people = [{
+    name: 'test',
+    goal: 'convert to renewable energy',
+    email: 'test@gmail.com',
+    password: 'foo',
+    image: 'http://pngimg.com/uploads/pluto_disney/pluto_disney_PNG45.png',
+  }];
+
+  for (let iter = 0; iter < maxQuantity.users; iter++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
     const goalNumber = faker.helpers.randomize(possibleGoals);
@@ -41,7 +50,7 @@ const createPeople = () => {
 };
 
 /**
- * Creates 1 to (maxValues.vehiclesPerUser) number of fake vehicles per user
+ * Creates 1 to (maxQuantity.vehiclesPerUser) number of fake vehicles per user
  * @param accounts, an array of accounts
  * @returns array with objects containing:
  *      { make, model, logo, price, year, MPG, fuelSpending, type, owner }
@@ -64,7 +73,7 @@ const createUserVehicles = (accounts) => {
 
   const userVehicles = [];
   accounts.forEach(function (account) {
-    const numVehicle = faker.datatype.number({ min: 1, max: maxValues.vehiclesPerUser });
+    const numVehicle = faker.datatype.number({ min: 1, max: maxQuantity.vehiclesPerUser });
     for (let iter = 1; iter <= numVehicle; iter++) {
       const vehicle = faker.helpers.randomize(vehicles);
       userVehicles.push({
@@ -96,36 +105,124 @@ const createUserVehicles = (accounts) => {
  * @returns array with objects containing:
  *    { location, distanceMiles, owner }
  */
-const createFixedDistances = (accounts) => {
+const createSavedDistances = (accounts) => {
   const possibleDistances = [{
     location: 'work',
-    distanceMiles: faker.datatype.float({ min: 0.5, max: 40 }),
+    distanceMiles: Number(faker.datatype.float({ min: 0.5, max: 40 })),
   }, {
     location: 'school',
-    distanceMiles: faker.datatype.float({ min: 0.5, max: 30 }),
+    distanceMiles: Number(faker.datatype.float({ min: 0.5, max: 30 })),
   }, {
     location: 'grocery',
-    distanceMiles: faker.datatype.float({ min: 0.5, max: 10 }),
+    distanceMiles: Number(faker.datatype.float({ min: 0.5, max: 10 })),
   }];
 
-  const fixedDistances = [];
+  const savedDistances = [];
   accounts.forEach(function (account) {
     for (let iter = 0; iter < possibleDistances.length; iter++) {
-      const fixedDistance = possibleDistances[iter];
-      fixedDistances.push({
-        location: fixedDistance.location,
-        distanceMiles: fixedDistance.distanceMiles,
+      const savedDistance = possibleDistances[iter];
+      savedDistances.push({
+        location: savedDistance.location,
+        distanceMiles: savedDistance.distanceMiles,
         owner: account.email,
       });
     }
   });
 
-  return fixedDistances;
+  return savedDistances;
+};
+
+/**
+ * Creates (maxQuantity.dailyUserData) number of fake daily user data per user
+ * @param accounts
+ * @param savedDistances
+ * @param userVehicles
+ * @returns array with objects containing:
+ *    { inputDate, modeOfTransportation, modeType, milesTraveled, owner }
+ */
+const createDailyUserData = (accounts, savedDistances, userVehicles) => {
+  const dailyUserData = [];
+
+  accounts.forEach(function (account) {
+    const today = getDateToday();
+    const tempDate = new Date(today);
+    tempDate.setHours(0, 0, 0, 0);
+
+    // get the type of regular trip based on saved distances
+    const regularTripName = faker.helpers.randomize(['work', 'school']);
+    const regularTrip = savedDistances.find(({ location }) => location === regularTripName);
+
+    // get periodic trip
+    const periodicTrip = savedDistances.find(({ location }) => location === 'grocery');
+
+    const getModeAndType = (distance) => {
+      let reasonableAlt;
+      if (distance < 1) {
+        reasonableAlt = altSelectFieldOptions;
+      } else if (distance <= 15) {
+        reasonableAlt = altNoEVWalking;
+      } else {
+        reasonableAlt = altNoEVWalkingBiking;
+      }
+
+      // get user's vehicles, concatenate array with alt transportation
+      const modesOfTransportation = userVehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
+      const mode = faker.helpers.randomize(modesOfTransportation);
+
+      return ({
+        name: mode,
+        type: getModeType(mode, userVehicles),
+      });
+    };
+
+    for (let iter = 0; iter < maxQuantity.dailyUserDataPerUser; iter++) {
+      // compute day before date of last pushed daily user data
+      const newDate = new Date(tempDate);
+      newDate.setDate(tempDate.getDate() - 1);
+
+      // on Sundays, periodic trip
+      if (newDate.getDay() === 0) {
+        const modeAndType = getModeAndType(periodicTrip.distanceMiles);
+        dailyUserData.push({
+          inputDate: newDate,
+          modeOfTransportation: modeAndType.name,
+          modeType: modeAndType.type,
+          milesTraveled: periodicTrip.distanceMiles,
+          owner: account.email,
+        });
+      // on Saturdays, either go on trip or stay at home
+      } else if (newDate.getDay() === 6) {
+        const goOnTrip = faker.datatype.boolean();
+        const randomMiles = faker.datatype.float({ min: 0.5, max: 50 });
+        const modeAndType = getModeAndType(randomMiles);
+        if (goOnTrip) {
+          dailyUserData.push({
+            inputDate: newDate,
+            modeOfTransportation: modeAndType.name,
+            modeType: modeAndType.type,
+            milesTraveled: randomMiles,
+            owner: account.email,
+          });
+        }
+      // on weekdays, go to regular trip
+      } else {
+        const modeAndType = getModeAndType(regularTrip.distanceMiles);
+        dailyUserData.push({
+          inputDate: newDate,
+          modeOfTransportation: modeAndType.name,
+          modeType: modeAndType.type,
+          milesTraveled: regularTrip.distanceMiles,
+          owner: account.email,
+        });
+      }
+      tempDate.setDate(newDate.getDate());
+    }
+  });
+  return dailyUserData;
 };
 
 /**
  * Creates the JSON file that contains the fake data for the collections
- * @returns {string}
  */
 const writeJSON = () => {
   const data = {};
@@ -144,8 +241,18 @@ const writeJSON = () => {
   }));
 
   data.defaultUserVehicles = createUserVehicles(data.defaultAccounts);
-  data.defaultFixedDistances = createFixedDistances(data.defaultAccounts);
+  data.defaultSavedDistances = createSavedDistances(data.defaultAccounts);
+  data.defaultDailyUserData = createDailyUserData(
+      data.defaultAccounts,
+      data.defaultSavedDistances,
+      data.defaultUserVehicles,
+      );
 
+  // add admin account to defaultAccounts
+  data.defaultAccounts.push({
+    email: 'admin@foo.com',
+    password: 'changeme',
+  });
   writeFileSync('random-data.json', JSON.stringify(data, null, 2), (err) => {
     if (err) throw err;
   });
