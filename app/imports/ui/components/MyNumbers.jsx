@@ -20,7 +20,6 @@ const MyNumbers = (props) => {
     const totalMiles = ghgData.VMTReduced;
     const totalFuelSaved = ghgData.fuelSaved;
     const totalGHGProduced = ghgData.cO2Produced;
-    console.log(ghgData);
     return (
         <div className='background-total-user-data'>
             <Grid stackable columns={3}>
