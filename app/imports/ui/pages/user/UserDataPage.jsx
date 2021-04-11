@@ -50,7 +50,7 @@ UserDataPage.propTypes = {
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
       Meteor.subscribe(UserVehicle.userPublicationName).ready();
-  const dailyData = DailyUserData.collection.find({}).fetch();
+  const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
   const vehicles = UserVehicle.collection.find({}).fetch();
   return {
     dailyData,
