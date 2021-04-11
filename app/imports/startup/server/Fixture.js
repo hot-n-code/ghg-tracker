@@ -1,6 +1,6 @@
 import faker from 'faker';
 import { writeFileSync } from 'fs';
-import { getDateToday, getModeType } from '../../ui/utilities/DailyGHGData';
+import { getModeType } from '../../ui/utilities/DailyGHGData';
 import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../../ui/utilities/GlobalVariables';
 
 /**
@@ -143,9 +143,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
   const dailyUserData = [];
 
   accounts.forEach(function (account) {
-    const today = getDateToday();
-    const tempDate = new Date(today);
-    tempDate.setHours(0, 0, 0, 0);
+    const tempDate = new Date(2021, 0, 1, 0, 0, 0, 0);
 
     // get the type of regular trip based on saved distances
     const regularTripName = faker.helpers.randomize(['work', 'school']);
@@ -178,7 +176,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
     for (let iter = 0; iter < maxQuantity.dailyUserDataPerUser; iter++) {
       // compute day before date of last pushed daily user data
       const newDate = new Date(tempDate);
-      newDate.setDate(tempDate.getDate() - 1);
+      newDate.setDate(tempDate.getDate() + 1);
 
       // on Sundays, periodic trip
       if (newDate.getDay() === 0) {
