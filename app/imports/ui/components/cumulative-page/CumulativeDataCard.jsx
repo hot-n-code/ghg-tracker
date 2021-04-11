@@ -91,8 +91,8 @@ CumulativeDataCard.propTypes = {
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.userPublicationName).ready();
+  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
   const dailyUserData = DailyUserData.collection.find({}).fetch();
   const vehicles = UserVehicle.collection.find({}).fetch();
   return {

@@ -8,8 +8,8 @@ import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../
  * @type {{vehiclesPerUser: number, dailyUserDataPerUser: number, users: number}}
  */
 const maxQuantity = {
-  users: 1,
-  dailyUserDataPerUser: 14,
+  users: 20,
+  dailyUserDataPerUser: 100,
   vehiclesPerUser: 3,
 };
 
@@ -37,12 +37,11 @@ const createPeople = () => {
   for (let iter = 0; iter < maxQuantity.users; iter++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-    const goalNumber = faker.helpers.randomize(possibleGoals);
     people.push({
       name: faker.name.findName(firstName, lastName),
       email: faker.internet.email(firstName, lastName),
       password: faker.internet.password(),
-      goal: possibleGoals[goalNumber],
+      goal: faker.helpers.randomize(possibleGoals),
       image: faker.internet.avatar(),
     });
   }
@@ -166,7 +165,8 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
       }
 
       // get user's vehicles, concatenate array with alt transportation
-      const modesOfTransportation = userVehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
+      const vehicles = userVehicles.filter(({ owner }) => owner === account.email);
+      const modesOfTransportation = vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
       const mode = faker.helpers.randomize(modesOfTransportation);
 
       return ({
@@ -225,10 +225,11 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
  * Creates the JSON file that contains the fake data for the collections
  */
 const writeJSON = () => {
-  const data = {};
   const people = createPeople();
+  const accounts = {};
+  const data = {};
 
-  data.defaultAccounts = people.map(person => ({
+  accounts.defaultAccounts = people.map(person => ({
     email: person.email,
     password: person.password,
   }));
@@ -240,19 +241,24 @@ const writeJSON = () => {
     image: person.image,
   }));
 
-  data.defaultUserVehicles = createUserVehicles(data.defaultAccounts);
-  data.defaultSavedDistances = createSavedDistances(data.defaultAccounts);
+  data.defaultUserVehicles = createUserVehicles(accounts.defaultAccounts);
+  data.defaultSavedDistances = createSavedDistances(accounts.defaultAccounts);
   data.defaultDailyUserData = createDailyUserData(
-      data.defaultAccounts,
+      accounts.defaultAccounts,
       data.defaultSavedDistances,
       data.defaultUserVehicles,
       );
 
   // add admin account to defaultAccounts
-  data.defaultAccounts.push({
+  accounts.defaultAccounts.push({
     email: 'admin@foo.com',
     password: 'changeme',
   });
+
+  writeFileSync('random-accounts.json', JSON.stringify(accounts, null, 2), (err) => {
+    if (err) throw err;
+  });
+
   writeFileSync('random-data.json', JSON.stringify(data, null, 2), (err) => {
     if (err) throw err;
   });

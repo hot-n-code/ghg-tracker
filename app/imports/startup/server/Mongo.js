@@ -1,40 +1,37 @@
 import { Meteor } from 'meteor/meteor';
+import { readFileSync } from 'fs';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
-import { readFile } from 'fs';
 
 /* eslint-disable no-console */
 
-readFile('random-data.json', (err, read) => {
-  if (err) throw err;
-  console.log(JSON.parse(read));
-});
+const randomData = JSON.parse(readFileSync('random-data.json'));
 
-const getData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
+const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
 
 if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
-    getData('defaultUsers.json').map(individualUser => Users.collection.insert(individualUser));
+    randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
   }
 
   if (Makes.collection.find().count() === 0) {
-    getData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
+    getAssetsData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
   }
 
   if (UserVehicle.collection.find().count() === 0) {
-    getData('defaultUserVehicles.json').map(vehicle => UserVehicle.collection.insert(vehicle));
+    randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
   }
 
   if (DailyUserData.collection.find().count() === 0) {
-    getData('defaultDailyUserData.json').map(dailyData => DailyUserData.collection.insert(dailyData));
+    randomData.defaultDailyUserData.map(dailyData => DailyUserData.collection.insert(dailyData));
   }
 
   if (AllVehicle.collection.find().count() === 0) {
-    getData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
+    getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
   }
 
   console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
