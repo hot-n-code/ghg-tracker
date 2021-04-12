@@ -36,7 +36,7 @@ const ComparisonGraph = (props) => {
             },
             {
                 label: 'Cumulative Data (Average)',
-                backgroundColor: '#985575',
+                backgroundColor: '#FF69B4',
                 barThickness: 35,
                 borderColor: 'rgba(0,0,0,1)',
                 borderWidth: 1,
