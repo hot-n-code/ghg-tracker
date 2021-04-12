@@ -35,7 +35,6 @@ class CumulativeDataCard extends React.Component {
           return altData;
       });
         const cumulativeGHG = getCumulativeGHG(this.props.dailyUserData, this.props.vehicles);
-        console.log(cumulativeGHG);
         eImpact[0].data = sumData(altData, 'milesTraveled');
         eImpact[1].data = cumulativeGHG.cO2Reduced.toFixed(1);
         eImpact[2].data = cumulativeGHG.cO2Produced.toFixed(1);
