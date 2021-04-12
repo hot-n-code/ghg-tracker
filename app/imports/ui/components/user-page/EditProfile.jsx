@@ -73,7 +73,6 @@ class EditProfile extends React.Component {
                      <SubmitField value='Submit'/>
                      <ErrorsField/>
                      <HiddenField name='email'/>
-                     <HiddenField name='vehicles'/>
                     </AutoForm>
                 </Modal.Content>
             </Modal>

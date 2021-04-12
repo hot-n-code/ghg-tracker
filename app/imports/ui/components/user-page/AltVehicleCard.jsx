@@ -43,7 +43,7 @@ class AltVehicleCard extends React.Component {
             </Card.Header>
             <Card.Description>
               <span className={'alt-vehicle-card-label'}>Total Miles: </span>
-              {transportationData.VMTReduced}
+              {transportationData.VMTReduced.toFixed(2)}
               <br/>
               <span className={'alt-vehicle-card-label'}>CO2 Reduced: </span>
               {transportationData.cO2Reduced.toFixed(2)}

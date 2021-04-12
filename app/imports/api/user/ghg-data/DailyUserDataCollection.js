@@ -22,7 +22,7 @@ class DailyUserDataCollection {
       milesTraveled: Number,
       modeType: {
         type: String,
-        allowedValues: ['Gas', 'EVHybrid', 'Alt'],
+        allowedValues: ['Gas', 'EV/Hybrid', 'Alt'],
       },
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
