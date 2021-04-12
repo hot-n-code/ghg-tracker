@@ -28,8 +28,8 @@ const UserVSCumulative = (props) => {
 
     let result;
     if (thisMonthCO2Produced > 0 && (thisMonthCO2Reduced === 0 || thisMonthCO2Reduced < thisMonthCO2Produced)) {
-            result = 'Uh-oh. Looks like you`&apos;`re producing more emissions rather than reducing them.' +
-                'Maybe consider a form of alternative transportation?';
+            result = 'Uh-oh. It looks like you are producing more emissions rather than reducing them.' +
+                ' Maybe consider a form of alternative transportation?';
         } else if (thisMonthCO2Reduced > thisMonthCO2Produced){
             result = 'Your CO2 reduction efforts are paying off! You have reduced ' + thisMonthCO2Reduced +
                 ' lbs of CO2. Keep up the good work!';
