@@ -8,18 +8,14 @@ import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
 const ComparisonGraph = (props) => {
     const date = new Date();
-    const getByMonthIndividual = _.filter(props.userData, (userTrip) => {
-        return (userTrip.inputDate.getMonth() ===
-            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
-    });
+    const getByMonthIndividual = _.filter(props.userData, (userTrip) => (userTrip.inputDate.getMonth() ===
+            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()));
     const userGHGData = getCumulativeGHG(getByMonthIndividual, props.vehicles);
     const totalCO2Reduced = (userGHGData.cO2Reduced).toFixed(2);
     const totalCO2Produced = (userGHGData.cO2Produced).toFixed(2);
 
-    const getByMonthAll = _.filter(props.userDataAll, (userTrip) => {
-        return (userTrip.inputDate.getMonth() ===
-            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
-    });
+    const getByMonthAll = _.filter(props.userDataAll, (userTrip) => (userTrip.inputDate.getMonth() ===
+            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()));
     const usersGHGData = getCumulativeGHG(getByMonthAll, props.allVehicles);
     const allCO2Reduced = (usersGHGData.cO2Reduced / _.size(props.users)).toFixed(2);
     const allCO2Produced = (usersGHGData.cO2Produced / _.size(props.users)).toFixed(2);

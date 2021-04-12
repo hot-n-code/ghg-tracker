@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import {Grid, Container, Header, Card, Image, Button, Loader} from 'semantic-ui-react';
+import { Grid, Container, Header, Card, Image, Button, Loader } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
@@ -23,10 +23,8 @@ class UserVSCumulative extends React.Component {
     const date = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
         'October', 'November', 'December'];
-    const getThisMonth = _.filter(this.props.dailyData, (userTrip) => {
-        return (userTrip.inputDate.getMonth() ===
-            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
-    });
+    const getThisMonth = _.filter(this.props.dailyData, (userTrip) => (userTrip.inputDate.getMonth() ===
+            date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()));
     const thisMonthGHGData = getCumulativeGHG(getThisMonth, this.props.vehicles);
     const thisMonthCO2Produced = thisMonthGHGData.cO2Produced;
     const thisMonthCO2Reduced = thisMonthGHGData.cO2Reduced;
@@ -35,8 +33,8 @@ class UserVSCumulative extends React.Component {
             result = 'Uh-oh. It looks like you are producing more emissions rather than reducing them.' +
                 ' Maybe consider a form of alternative transportation?';
         } else if (thisMonthCO2Reduced > thisMonthCO2Produced) {
-            result = 'Your CO2 reduction efforts are paying off! You have reduced ' + thisMonthCO2Reduced +
-                ' lbs of CO2. Keep up the good work!';
+            result = `Your CO2 reduction efforts are paying off! You have reduced ${thisMonthCO2Reduced
+                } lbs of CO2. Keep up the good work!`;
         } else {
             result = 'No pounds of CO2 reduced available for this user. Start adding in your trips!';
         }

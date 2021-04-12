@@ -20,8 +20,8 @@ const graphObject = {
 
 const MyDataChart = (props) => {
   const date = new Date();
-  const getByMonthIndividual = _.filter(props.userData, (userTrip) => { return (userTrip.inputDate.getMonth() ===
-        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()); });
+  const getByMonthIndividual = _.filter(props.userData, (userTrip) => (userTrip.inputDate.getMonth() ===
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()));
   const teleworkData = getCumulativePerMode(getByMonthIndividual, graphObject.telework, props.vehicles);
   const totalTelework = teleworkData.VMTReduced.toFixed(2);
   const aVData = getCumulativePerMode(getByMonthIndividual, graphObject.evHybrid, props.vehicles);
