@@ -10,7 +10,6 @@ import ComparisonGraph from '../../components/ComparisonGraph';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
-
 const paddingStyle = { padding: 20 };
 const rideStyle = { height: '200px', width: '300px' };
 
@@ -25,12 +24,11 @@ const UserVSCumulative = (props) => {
     const thisMonthGHGData = getCumulativeGHG(getThisMonth, props.vehicles);
     const thisMonthCO2Produced = thisMonthGHGData.cO2Produced;
     const thisMonthCO2Reduced = thisMonthGHGData.cO2Reduced;
-
     let result;
     if (thisMonthCO2Produced > 0 && (thisMonthCO2Reduced === 0 || thisMonthCO2Reduced < thisMonthCO2Produced)) {
             result = 'Uh-oh. It looks like you are producing more emissions rather than reducing them.' +
                 ' Maybe consider a form of alternative transportation?';
-        } else if (thisMonthCO2Reduced > thisMonthCO2Produced){
+        } else if (thisMonthCO2Reduced > thisMonthCO2Produced) {
             result = 'Your CO2 reduction efforts are paying off! You have reduced ' + thisMonthCO2Reduced +
                 ' lbs of CO2. Keep up the good work!';
         } else {
