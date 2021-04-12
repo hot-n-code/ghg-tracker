@@ -30,7 +30,7 @@ const ComparisonGraph = (props) => {
                 label: 'Me',
                 backgroundColor: '#5c8d89',
                 barThickness: 35,
-                borderColor: 'rgba(0,0,0,1)',
+                borderColor: 'rgba(0,0,0,0)',
                 borderWidth: 1,
                 data: [totalCO2Reduced, totalCO2Produced],
             },
