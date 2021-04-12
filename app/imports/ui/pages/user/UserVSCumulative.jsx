@@ -36,7 +36,7 @@ class UserVSCumulative extends React.Component {
             result = `Your CO2 reduction efforts are paying off! You have reduced ${thisMonthCO2Reduced
                 } lbs of CO2. Keep up the good work!`;
         } else {
-            result = 'No pounds of CO2 reduced available for this user. Start adding in your trips!';
+            result = 'No pounds of CO2 reduced available for this month. Start adding in your trips!';
         }
     return (
         <Container style={paddingStyle}>
