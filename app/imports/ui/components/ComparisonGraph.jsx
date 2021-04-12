@@ -21,6 +21,7 @@ const ComparisonGraph = (props) => {
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
     const usersGHGData = getCumulativeGHG(getByMonthAll, props.allVehicles);
+    console.log(props.vehicles);
     const allCO2Reduced = (usersGHGData.cO2Reduced / _.size(props.users)).toFixed(2);
     const allCO2Produced = (usersGHGData.cO2Produced / _.size(props.users)).toFixed(2);
     const stateAll = {

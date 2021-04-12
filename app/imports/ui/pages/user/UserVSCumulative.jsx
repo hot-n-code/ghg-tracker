@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Container, Header, Card, Image, Button } from 'semantic-ui-react';
+import {Grid, Container, Header, Card, Image, Button, Loader} from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
@@ -13,15 +13,21 @@ import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 const paddingStyle = { padding: 20 };
 const rideStyle = { height: '200px', width: '300px' };
 
-const UserVSCumulative = (props) => {
+class UserVSCumulative extends React.Component {
+
+  render() {
+        return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
+   }
+
+  renderPage() {
     const date = new Date();
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
         'October', 'November', 'December'];
-    const getThisMonth = _.filter(props.dailyData, (userTrip) => {
+    const getThisMonth = _.filter(this.props.dailyData, (userTrip) => {
         return (userTrip.inputDate.getMonth() ===
             date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear());
     });
-    const thisMonthGHGData = getCumulativeGHG(getThisMonth, props.vehicles);
+    const thisMonthGHGData = getCumulativeGHG(getThisMonth, this.props.vehicles);
     const thisMonthCO2Produced = thisMonthGHGData.cO2Produced;
     const thisMonthCO2Reduced = thisMonthGHGData.cO2Reduced;
     let result;
@@ -40,8 +46,9 @@ const UserVSCumulative = (props) => {
                 <Grid.Column textAlign='center' width={16}>
                     <Header as='h1'>My GHG Statistics vs HEI Community</Header>
                     <Header as='h1'>{months[date.getMonth()]} {date.getFullYear()}</Header>
-                    <ComparisonGraph userData={props.dailyData} userDataAll={props.dailyDataAll} users={props.users}
-                                     vehicles={props.vehicles} allVehicles={props.allVehicles}/>
+                    <ComparisonGraph userData={this.props.dailyData} userDataAll={this.props.dailyDataAll}
+                                     users={this.props.users}
+                                     vehicles={this.props.vehicles} allVehicles={this.props.allVehicles}/>
                 </Grid.Column>
             </Grid>
             <Grid stackable>
@@ -140,8 +147,9 @@ const UserVSCumulative = (props) => {
                 </Grid.Column>
             </Grid>
         </Container>
-    );
-};
+        );
+    }
+}
 
 UserVSCumulative.propTypes = {
     users: PropTypes.array,
