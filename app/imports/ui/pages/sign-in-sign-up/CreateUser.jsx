@@ -70,7 +70,8 @@ class CreateUser extends React.Component {
                         schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
                   <Form.Group widths={'equal'}>
-                    <TextField id='name' name='name' required showInlineError={true} placeholder={'name'}/>
+                    <TextField id='name' label="First Name" name='name' required showInlineError={true} placeholder={'first name'}/>
+                    <TextField id='name' label="Last Name" name='name' required showInlineError={true} placeholder={'last name'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
                     <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>
