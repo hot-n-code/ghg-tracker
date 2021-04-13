@@ -6,7 +6,7 @@ import { AutoForm, DateField, ErrorsField, NumField, RadioField, SelectField, Su
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG, getDateToday, getMilesTraveled } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';

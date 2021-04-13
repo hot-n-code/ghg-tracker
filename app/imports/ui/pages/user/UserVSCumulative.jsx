@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { Users } from '../../../api/user/UserCollection';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';

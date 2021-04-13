@@ -1,11 +1,12 @@
 import { Meteor } from 'meteor/meteor';
 import { readFileSync } from 'fs';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
-import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
 /* eslint-disable no-console */
 
@@ -27,6 +28,11 @@ if (Meteor.isServer) {
   if (UserVehicle.collection.find().count() === 0) {
     randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
     console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
+  }
+
+  if (UserSavedDistances.collection.find().count() === 0) {
+    randomData.defaultSavedDistances.map(dailyData => UserSavedDistances.collection.insert(dailyData));
+    console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.collection.find().count()} saved distances`);
   }
 
   if (DailyUserData.collection.find().count() === 0) {
@@ -54,7 +60,7 @@ function addData(data) {
 // StuffsCollection
 if (Stuffs.collection.find().count() === 0) {
   if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
+    // console.log('Creating default data.');
     Meteor.settings.defaultData.map(data => addData(data));
   }
 }
