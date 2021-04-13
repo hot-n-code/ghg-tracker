@@ -55,8 +55,8 @@ class App extends React.Component {
             <Route path='/hemore' component={HEmore} />
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
-            <ProtectedRoute path='/admin-data' component={DataAdminPage} />
-            <ProtectedRoute path='/admin' component={AdminProfileList} />
+            <AdminProtectedRoute path='/admin-data' component={DataAdminPage} />
+            <AdminProtectedRoute path='/admin' component={AdminProfileList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
             <ProtectedRoute path='/user-react-page/' component={UserDataReactTable} />
