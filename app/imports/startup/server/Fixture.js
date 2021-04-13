@@ -248,6 +248,7 @@ const writeJSON = () => {
   accounts.defaultAccounts.push({
     email: 'admin@foo.com',
     password: 'changeme',
+    role: 'admin',
   });
 
   writeFileSync('random-accounts.json', JSON.stringify(accounts, null, 2), (err) => {
