@@ -28,7 +28,7 @@ import Signout from '../pages/sign-in-sign-up/Signout';
 import DataAdminPage from '../pages/admin/DataAdminPage';
 import CreateUser from '../pages/sign-in-sign-up/CreateUser';
 import UserPage from '../pages/user/UserPage';
-import AltTransportation from '../pages/user/AltTransportation';
+import AltTransportation from '../pages/stuff-to-delete/AltTransportation';
 import HEmore from '../pages/about-feedback/HEmore';
 import Asbmore from '../pages/about-feedback/Asbmore';
 import Pcmore from '../pages/about-feedback/Pcmore';
