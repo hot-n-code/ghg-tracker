@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import AltVehicleCard from '../../components/user-page/AltVehicleCard';
+import LeafWidget from '../../components/LeafWidget';
 
 class AltTransportation extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -32,6 +33,7 @@ class AltTransportation extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <AltVehicleCard userData={userData} userVehicles={userVehicles}/>
+              <LeafWidget userData={userData} userVehicles={userVehicles}/>
             </Grid.Column>
           </Grid>
         </div>
