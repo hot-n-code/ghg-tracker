@@ -53,8 +53,6 @@ class Signup extends React.Component {
                 <Segment padded color='gray'>
                   <Form onSubmit={this.submit}>
                     <Form.Group widths='equal'>
-                    </Form.Group>
-                    <Form.Group widths='equal'>
                       <Form.Input
                           required
                           label='Email'
