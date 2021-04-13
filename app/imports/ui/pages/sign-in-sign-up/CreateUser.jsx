@@ -34,7 +34,7 @@ class CreateUser extends React.Component {
     let { image } = data;
     const email = Meteor.user().username;
     if (image === undefined) {
-      image = 'https://png.pngtree.com/png-vector/20191026/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1870181.jpg';
+      image = '/images/default/default-pfp.png';
     }
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
