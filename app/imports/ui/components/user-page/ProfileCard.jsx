@@ -28,7 +28,7 @@ const ProfileCard = ({ profile }) => (
             <AddDailyData/>
             <WhatIf/>
             <Button as={NavLink} activeClassName="active" exact
-                    to="/history">History</Button>
+                    to="/user-react-page">History</Button>
           </div>
         </Card.Content>
     </Card>
