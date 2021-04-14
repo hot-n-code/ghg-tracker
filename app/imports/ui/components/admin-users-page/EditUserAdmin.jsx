@@ -6,9 +6,17 @@ import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import swal from 'sweetalert';
 import { AutoForm, ErrorsField, SubmitField, HiddenField, TextField } from 'uniforms-semantic';
+import SimpleSchema from 'simpl-schema';
 import { Users } from '../../../api/user/UserCollection';
 
-const bridge = new SimpleSchema2Bridge(Users.schema);
+const formSchema = new SimpleSchema({
+  firstName: String,
+  lastName: String,
+  email: String,
+  owner: String,
+});
+
+const bridge = new SimpleSchema2Bridge(formSchema);
 
 // Modal for editing a user
 class EditUserAdmin extends React.Component {
@@ -26,8 +34,9 @@ class EditUserAdmin extends React.Component {
 
   // On successful submit, update data.
   submit(data) {
-    const { name, email, password, _id } = data;
-    Users.collection.update(_id, { $set: { name, email, password } }, (error) => {
+    const name = `${data.firstName} ${data.lastName}`;
+    const { email, _id } = data;
+    Users.collection.update(_id, { $set: { name, email } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -61,9 +70,9 @@ class EditUserAdmin extends React.Component {
             <AutoForm schema={bridge}
                       onSubmit={data => this.submit(data)}
                       model={doc}>
-              <TextField name='name' placeholder={'Name'}/>
+              <TextField name='firstName' placeholder={'First Name'}/>
+              <TextField name='lastName' placeholder={'Last Name'}/>
               <TextField name='email' placeholder={'Email'}/>
-              <TextField name='password' placeholder={'New Password'}/>
               <SubmitField value='Submit'/>
               <ErrorsField/>
               <HiddenField name='email'/>
