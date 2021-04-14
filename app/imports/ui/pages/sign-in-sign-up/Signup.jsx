@@ -55,22 +55,6 @@ class Signup extends React.Component {
                     <Form.Group widths='equal'>
                       <Form.Input
                           required
-                          label='First name'
-                          name='first name'
-                          placeholder='First name'
-                          onChange={this.handleChange}
-                      />
-                      <Form.Input
-                          required
-                          label='Last name'
-                          name='last name'
-                          placeholder='Last name'
-                          onChange={this.handleChange}
-                      />
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                      <Form.Input
-                          required
                           label='Email'
                           icon='user'
                           iconPosition='left'
