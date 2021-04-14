@@ -1,17 +1,27 @@
 import { Meteor } from 'meteor/meteor';
 import { readFileSync } from 'fs';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
-import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
 /* eslint-disable no-console */
 
 const randomData = JSON.parse(readFileSync('random-data.json'));
 
 const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
+
+if (UserSavedDistances.count() === 0) {
+  if (randomData.defaultSavedDistances) {
+    randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
+  }
+  console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
+}
+
+// ---- to edit after this line ---- //
 
 if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
@@ -54,7 +64,7 @@ function addData(data) {
 // StuffsCollection
 if (Stuffs.collection.find().count() === 0) {
   if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
+    // console.log('Creating default data.');
     Meteor.settings.defaultData.map(data => addData(data));
   }
 }

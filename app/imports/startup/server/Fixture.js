@@ -8,7 +8,7 @@ import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../
  * @type {{vehiclesPerUser: number, dailyUserDataPerUser: number, users: number}}
  */
 const maxQuantity = {
-  users: 20,
+  users: 0,
   dailyUserDataPerUser: 100,
   vehiclesPerUser: 3,
 };
@@ -40,7 +40,7 @@ const createPeople = () => {
     people.push({
       name: faker.name.findName(firstName, lastName),
       email: faker.internet.email(firstName, lastName),
-      password: faker.internet.password(),
+      password: 'foo',
       goal: faker.helpers.randomize(possibleGoals),
       image: faker.internet.avatar(),
     });

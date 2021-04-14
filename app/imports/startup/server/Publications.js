@@ -1,14 +1,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff';
-import { DailyUserData } from '../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
 // User-level publication
-Meteor.publish(Stuffs.userPublicationName, () => Stuffs.collection.find());
-
 Meteor.publish(DailyUserData.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -33,13 +32,19 @@ Meteor.publish(UserVehicle.userPublicationName, function publish() {
   return this.ready();
 });
 
+Meteor.publish(UserSavedDistances.userPublicationName, function publish() {
+  if (this.userId) {
+    const username = Meteor.users.findOne(this.userId).username;
+    return UserSavedDistances.collection.find({ owner: username });
+  }
+  return this.ready();
+});
+
 Meteor.publish(Makes.userPublicationName, () => Makes.collection.find());
 
 Meteor.publish(AllVehicle.userPublicationName, () => AllVehicle.collection.find());
 
 // Admin-level publication
-Meteor.publish(Stuffs.adminPublicationName, () => Stuffs.collection.find());
-
 Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
 
 Meteor.publish(DailyUserData.cumulativePublicationName, () => DailyUserData.collection.find());
@@ -49,6 +54,15 @@ Meteor.publish(UserVehicle.adminPublicationName, () => UserVehicle.collection.fi
 Meteor.publish(Makes.adminPublicationName, () => Makes.collection.find());
 
 Meteor.publish(AllVehicle.adminPublicationName, () => AllVehicle.collection.find());
+
+Meteor.publish(UserSavedDistances, () => UserSavedDistances.collection.find());
+
+// ------------ TO DELETE ------------ //
+// User-level publication
+Meteor.publish(Stuffs.userPublicationName, () => Stuffs.collection.find());
+
+// Admin-level publication
+Meteor.publish(Stuffs.adminPublicationName, () => Stuffs.collection.find());
 
 // alanning:roles publication
 // Recommended code to publish roles for each user.
