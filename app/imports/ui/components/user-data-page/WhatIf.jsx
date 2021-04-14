@@ -93,7 +93,7 @@ const WhatIf = (props) => {
           <DateField name='inputDate'
                      max={getDateToday()}/>
           <SelectField name='modeOfTransportation'
-                       allowedValues={props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
+                       allowedValues={props.vehicles.map((vehicle) => `${vehicle.name}`).concat(altSelectFieldOptions)}/>
           <Form.Group inline>
             <NumField name='distanceTraveled'/>
             <RadioField label={null} name='unit'/>
