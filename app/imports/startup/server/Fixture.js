@@ -91,7 +91,7 @@ const createUserVehicles = (accounts) => {
 
         type: ((vehicle.Mpg < 0) ? 'EV/Hybrid' : 'Gas'),
         owner: account.email,
-        name: `${vehicle.Year}${' '}${vehicle.Make}${' '}${vehicle.Model}`,
+        name: `${vehicle.Year} ${vehicle.Make} ${vehicle.Model}`,
       });
     }
   });
@@ -166,7 +166,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
 
       // get user's vehicles, concatenate array with alt transportation
       const vehicles = userVehicles.filter(({ owner }) => owner === account.email);
-      const modesOfTransportation = vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
+      const modesOfTransportation = vehicles.map((vehicle) => `${vehicle.year} ${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
       const mode = faker.helpers.randomize(modesOfTransportation);
 
       return ({

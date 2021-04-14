@@ -52,8 +52,6 @@ class AddDailyData extends React.Component {
         swal('Success', 'Data added successfully', 'success').then(() => {
           this.handleModalClose();
           formRef.reset();
-          // eslint-disable-next-line no-undef
-          window.location.reload();
         });
       }
     });

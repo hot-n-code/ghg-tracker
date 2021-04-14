@@ -18,7 +18,7 @@ import {
  * @param userVehicles, all vehicles owned by current user
  * @returns {vehicle}
  */
-export const getVehicle = (makeModel, userVehicles) => (userVehicles.find(({ make, model }) => makeModel === (`${make} ${model}`)));
+export const getVehicle = (makeModel, userVehicles) => (userVehicles.find(({ name }) => makeModel === (`${name}`)));
 
 /**
  *
