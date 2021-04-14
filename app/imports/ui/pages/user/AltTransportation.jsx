@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import AltVehicleCard from '../../components/user-page/AltVehicleCard';
 

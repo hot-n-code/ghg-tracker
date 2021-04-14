@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';

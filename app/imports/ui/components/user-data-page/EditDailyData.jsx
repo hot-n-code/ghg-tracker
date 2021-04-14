@@ -16,7 +16,7 @@ import {
   SubmitField,
 } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getMilesTraveled, getDateToday, getModeType } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';

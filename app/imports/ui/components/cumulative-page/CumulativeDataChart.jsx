@@ -4,7 +4,7 @@ import { Grid, Header } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Pie } from 'react-chartjs-2';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 
 // Displaying a pie chart of the mode of transportation from DailyUserData collection
 const CumulativeDataChart = (props) => {

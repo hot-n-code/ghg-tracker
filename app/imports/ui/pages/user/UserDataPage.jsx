@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
 import HistoryRowData from '../../components/user-data-page/HistoryRowData';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
