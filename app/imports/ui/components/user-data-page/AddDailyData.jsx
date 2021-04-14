@@ -82,13 +82,14 @@ class AddDailyData extends React.Component {
           <AutoForm ref={ref => { formRef = ref; }}
                     schema={bridge}
                     onSubmit={data => { this.submit(data, formRef); }}>
-            <DateField name='inputDate'
+            <DateField id='add-data-date-button'
+                       name='inputDate'
                        max={getDateToday()}/>
-            <SelectField name='modeOfTransportation'
+            <SelectField id='transportation-selector' name='modeOfTransportation'
                          allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
             <Form.Group inline>
-              <NumField name='distanceTraveled'/>
-              <RadioField label={null} name='unit'/>
+              <NumField id='miles-field' name='distanceTraveled'/>
+              <RadioField id='radio-label-field' label={null} name='unit'/>
             </Form.Group>
             <Header>
               <Header.Subheader><b>Note:</b> For &apos;<i>Telework</i>&apos;, key in the distance (roundtrip) between home and workplace.</Header.Subheader>

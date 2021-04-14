@@ -56,6 +56,7 @@ export default class Signin extends React.Component {
                 <Segment padded color='grey'>
                   <Form onSubmit={this.submit}>
                     <Form.Input
+                        id='signin-form-email'
                         label='Email'
                         icon='user'
                         iconPosition='left'
@@ -65,6 +66,7 @@ export default class Signin extends React.Component {
                         onChange={this.handleChange}
                     />
                     <Form.Input
+                        id='signin-form-password'
                         label='Password'
                         icon='lock'
                         iconPosition='left'
@@ -73,7 +75,7 @@ export default class Signin extends React.Component {
                         type='password'
                         onChange={this.handleChange}
                     />
-                    <Form.Button primary animated>
+                    <Form.Button primary animated id='signin-form-submit'>
                       <Button.Content visible>Submit</Button.Content>
                       <Button.Content hidden>
                         <Icon name='arrow right'/>

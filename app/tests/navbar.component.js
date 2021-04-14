@@ -13,7 +13,6 @@ class NavBar {
 
   async gotoSigninPage(testController) {
     await this.ensureLogout(testController);
-    await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-in');
   }
 
@@ -33,8 +32,27 @@ class NavBar {
   /** Pull down login menu, go to sign up page. */
   async gotoSignupPage(testController) {
     await this.ensureLogout(testController);
-    await testController.click('#login-dropdown');
     await testController.click('#login-dropdown-sign-up');
+  }
+
+  async gotoAboutPage(testController) {
+    await testController.click('#about-page');
+  }
+
+  async gotoCumulativeDataPage(testController) {
+    await testController.click('#cumulative-page');
+  }
+
+  async gotoProfilePage(testController) {
+    await testController.click('#profile-page');
+  }
+
+  async gotoHistoryPage(testController) {
+    await testController.click('#history-page');
+  }
+
+  async gotoVehiclePage(testController) {
+    await testController.click('#vehicle-page');
   }
 }
 

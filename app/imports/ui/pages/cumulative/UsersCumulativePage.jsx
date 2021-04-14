@@ -4,7 +4,7 @@ import CumulativeDataCard from '../../components/cumulative-page/CumulativeDataC
 import CumulativeDataChart from '../../components/cumulative-page/CumulativeDataChart';
 
 const UsersCumulativePage = () => (
-        <div className='background-all'>
+        <div className='background-all' id='cumulative-page'>
           <div style={{ paddingBottom: '80px' }}>
             <Container>
               <Grid.Column>

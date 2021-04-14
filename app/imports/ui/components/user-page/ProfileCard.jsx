@@ -25,7 +25,7 @@ const ProfileCard = ({ profile }) => (
             </Card.Meta>
           <div>
             <EditProfile profileID={profile._id}/>
-            <AddDailyData/>
+            <AddDailyData id='add-data-button'/>
             <WhatIf/>
             <Button as={NavLink} activeClassName="active" exact
                     to="/user-react-page">History</Button>

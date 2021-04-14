@@ -20,17 +20,18 @@ class NavBar extends React.Component {
     return (
         <div>
         <Menu pointing secondary stackable borderless attached='top' style={menuStyle}>
-        <Menu.Item as={NavLink} activeClassName='' exact to='/'>
+        <Menu.Item id="landing-page" as={NavLink} activeClassName='' exact to='/'>
           <Image src={cornerLogo} size='small' padding={0} />
         </Menu.Item>
         {this.props.currentUser && Roles.userIsInRole(Meteor.userId(), 'admin') === false ? (
             // eslint-disable-next-line react/jsx-key
             [
-              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>Profile</Menu.Item>,
-              <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>Vehicles</Menu.Item>,
+              <Menu.Item id='profile-page' style={menuItem} as={NavLink} activeClassName='active' exact to='/user-page' key='user-page' onClick={this.handleItemClick}>Profile</Menu.Item>,
+              <Menu.Item id='vehicle-page' style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>Vehicles</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
-                <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-react-page' key='user-react-page' onClick={this.handleItemClick}>Transportation History</Menu.Item>,
+              // eslint-disable-next-line max-len
+                <Menu.Item id='history-page' style={menuItem} as={NavLink} activeClassName='active' exact to='/user-react-page' key='user-react-page' onClick={this.handleItemClick}>Transportation History</Menu.Item>,
             ]
         ) : ''}
           {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
@@ -41,8 +42,8 @@ class NavBar extends React.Component {
             <Menu.Item>
             {this.props.currentUser === '' ? (
                 <Menu pointing secondary borderless stackable style={menuStyle}>
-                  <Menu.Item as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>CUMULATIVE DATA</Menu.Item>
-                  <Menu.Item as={NavLink} activeClassName='active' exact to='/about' key='about' onClick={this.handleItemClick}>ABOUT HEI</Menu.Item>
+                  <Menu.Item id='cumulative-page' as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>CUMULATIVE DATA</Menu.Item>
+                  <Menu.Item id='about-page' as={NavLink} activeClassName='active' exact to='/about' key='about' onClick={this.handleItemClick}>ABOUT HEI</Menu.Item>
                   <Menu.Item id='login-dropdown-sign-up' name='Join' as={NavLink} exact to='/signup' content='JOIN' onClick={this.handleItemClick}/>
                   <Menu.Item id='login-dropdown-sign-in' name='Signin' as={NavLink} exact to='/signin' content='SIGN IN' onClick={this.handleItemClick}/>
                 </Menu>
