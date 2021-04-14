@@ -493,7 +493,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
     width: 100%;
     height: 100%;
     transform: translate(0, 100%);
-    background: #4d6de3;
+    background: #228B22;
 }
 
 .leaf-box .leaf-water_wave {
@@ -504,13 +504,13 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .leaf-box .leaf-water_wave_back {
     right: 0;
-    fill: #c7eeff;
+    fill: #006400;
     animation: wave-back 1.4s infinite linear;
 }
 
 .leaf-box .leaf-water_wave_front {
     left: 0;
-    fill: #4d6de3;
+    fill: #228B22;
     margin-bottom: -1px;
     animation: wave-front .7s infinite linear;
 }

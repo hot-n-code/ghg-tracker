@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
@@ -25,7 +25,7 @@ class AltTransportation extends React.Component {
 
     return (
         <div className='background-all'>
-          <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+          <Grid centered stackable columns={3} className={'my-vehicles-grid'}>
             <Grid.Column>
               <Header as='h1' textAlign='center'>
                 Alternative Transportation
@@ -33,7 +33,10 @@ class AltTransportation extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <AltVehicleCard userData={userData} userVehicles={userVehicles}/>
-              <LeafWidget userData={userData} userVehicles={userVehicles}/>
+            </Grid.Column>
+            <Grid.Column>
+              <Container><LeafWidget userData={userData} userVehicles={userVehicles}/>
+              </Container>
             </Grid.Column>
           </Grid>
         </div>
