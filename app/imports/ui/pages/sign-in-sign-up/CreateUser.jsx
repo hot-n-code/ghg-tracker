@@ -33,7 +33,7 @@ class CreateUser extends React.Component {
     const { goal } = data;
     let { image } = data;
     const email = Meteor.user().username;
-    const name = `${firstName} ${lastName}`;
+    const name = `${data.firstName} ${data.lastName}`;
     if (image === undefined) {
       image = '/images/default/default-pfp.png';
     }
