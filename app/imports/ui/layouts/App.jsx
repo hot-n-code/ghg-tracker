@@ -12,29 +12,24 @@ import {
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
-import MyVehicles from '../pages/MyVehicles';
-import ListStuff from '../pages/ListStuff';
-import ListStuffAdmin from '../pages/ListStuffAdmin';
-import AddStuff from '../pages/AddStuff';
-import AboutPage from '../pages/AboutPage';
-import FeedBack from '../pages/FeedBack';
-import UsersCumulativePage from '../pages/UsersCumulativePage';
-import EditStuff from '../pages/EditStuff';
+import MyVehicles from '../pages/vehicle/MyVehicles';
+import AboutPage from '../pages/about-feedback/AboutPage';
+import FeedBack from '../pages/about-feedback/FeedBack';
+import UsersCumulativePage from '../pages/cumulative/UsersCumulativePage';
 import NotFound from '../pages/NotFound';
-import Signin from '../pages/Signin';
-import Signup from '../pages/Signup';
-import Signout from '../pages/Signout';
-import AdminUserList from '../pages/AdminUserList';
-import DataAdminPage from '../pages/DataAdminPage';
-import CreateUser from '../pages/CreateUser';
-import UserPage from '../pages/UserPage';
-import AltTransportation from '../pages/AltTransportation';
-import CreateVehicle from '../pages/CreateVehicle';
-import HEmore from '../pages/HEmore';
-import Asbmore from '../pages/Asbmore';
-import Pcmore from '../pages/Pcmore';
-import WhatIf from '../components/WhatIf';
-import UserDataPage from '../pages/UserDataPage';
+import Signin from '../pages/sign-in-sign-up/Signin';
+import Signup from '../pages/sign-in-sign-up/Signup';
+import Signout from '../pages/sign-in-sign-up/Signout';
+import CreateUser from '../pages/sign-in-sign-up/CreateUser';
+import UserPage from '../pages/user/UserPage';
+import AltTransportation from '../pages/user/AltTransportation';
+import HEmore from '../pages/about-feedback/HEmore';
+import Asbmore from '../pages/about-feedback/Asbmore';
+import Pcmore from '../pages/about-feedback/Pcmore';
+import WhatIf from '../components/user-data-page/WhatIf';
+import AdminProfileList from '../pages/admin/AdminProfileList';
+import UserDataReactTable from '../pages/user/UserDataReactTable';
+import UserVSCumulative from '../pages/user/UserVSCumulative';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 class App extends React.Component {
@@ -45,7 +40,6 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             <Route exact path='/' component={Landing} />
-            <Route exact path='/user-data-page' component={UserDataPage} />
             <Route path='/signin' component={Signin} />
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
@@ -53,20 +47,16 @@ class App extends React.Component {
             <Route path='/hemore' component={HEmore} />
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
-            <ProtectedRoute path='/admin-data' component={DataAdminPage} />
-            <ProtectedRoute path='/admin' component={AdminUserList} />
+            <AdminProtectedRoute path='/admin' component={AdminProfileList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
+            <ProtectedRoute path='/user-react-page/' component={UserDataReactTable} />
             <ProtectedRoute path='/what-if/' component={WhatIf} />
             <ProtectedRoute path='/alt' component={AltTransportation} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
-            <ProtectedRoute path='/list' component={ListStuff} />
-            <ProtectedRoute path='/add' component={AddStuff} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
-            <ProtectedRoute path='/create-vehicle' component={CreateVehicle} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
-            <ProtectedRoute path='/edit/:_id' component={EditStuff} />
-            <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
+            <ProtectedRoute path='/comparison' component={UserVSCumulative} />
             <Route component={NotFound} />
           </Switch>
           <Footer />

@@ -1,98 +1,70 @@
 import { Meteor } from 'meteor/meteor';
-import { Stuffs } from '../../api/stuff/Stuff.js';
-import { DailyUserData } from '../../api/ghg-data/DailyUserDataCollection';
-import { Vehicle } from '../../api/vehicle/VehicleCollection';
+import { readFileSync } from 'fs';
+import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
+import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
-import { Make } from '../../api/make/Make';
+import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
 /* eslint-disable no-console */
 
+const randomData = JSON.parse(readFileSync('random-data.json'));
+
+const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
+
+if (UserSavedDistances.count() === 0) {
+  if (randomData.defaultSavedDistances) {
+    randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
+  }
+  console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
+}
+
+// ---- to edit after this line ---- //
+
+if (Meteor.isServer) {
+  if (Users.collection.find().count() === 0) {
+    randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
+    console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
+  }
+
+  if (Makes.collection.find().count() === 0) {
+    getAssetsData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
+    console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
+  }
+
+  if (UserVehicle.collection.find().count() === 0) {
+    randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
+    console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
+  }
+
+  if (DailyUserData.collection.find().count() === 0) {
+    randomData.defaultDailyUserData.map(dailyData => DailyUserData.collection.insert(dailyData));
+    console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
+  }
+
+  if (AllVehicle.collection.find().count() === 0) {
+    getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
+    console.log(`   AllVehicleCollection: ${AllVehicle.collection.find().count()} vehicles`);
+  }
+} else {
+  console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
+}
+
+// ------------ TO DELETE ------------ //
 /** Initialize the database with a default data document. */
 // StuffsCollection
 function addData(data) {
-  console.log(`  Adding: ${data.name} (${data.owner})`);
+  // console.log(`  Adding: ${data.name} (${data.owner})`);
   Stuffs.collection.insert(data);
-}
-
-// DailyUserDataCollection
-function addDailyUserData(dailyData) {
-  console.log(`  Defining Daily User Data on: ${dailyData.inputDate}`);
-  DailyUserData.collection.insert(dailyData);
-}
-
-// VehicleCollection
-function addVehicle(vehicle) {
-  console.log(`  Defining vehicle ${vehicle.owner}`);
-  Vehicle.collection.insert(vehicle);
-}
-
-// UserCollection
-function addUser({ name, goal, email, image, vehicles }) {
-  console.log(`  Defining profile ${email}`);
-  Users.collection.insert({ name, goal, email, image });
-  // Add interests and projects.
-  vehicles.map(vehicle => UserVehicle.collection.insert({ user: email, model: vehicle }));
-}
-
-// MakeCollection
-function addMake(data) {
-  console.log(`  Defining make ${data.make}`);
-  Make.collection.insert(data);
-}
-
-// AllVehicleCollection
-function addAllVehicle(vehicle) {
-  console.log(`  Defining all vehicle ${vehicle.make}`);
-  AllVehicle.collection.insert(vehicle);
 }
 
 /** Initialize the collection if empty. */
 // StuffsCollection
 if (Stuffs.collection.find().count() === 0) {
   if (Meteor.settings.defaultData) {
-    console.log('Creating default data.');
+    // console.log('Creating default data.');
     Meteor.settings.defaultData.map(data => addData(data));
-  }
-}
-
-// DailyUserDataCollection
-if (DailyUserData.collection.find().count() === 0) {
-  if (Meteor.settings.defaultDailyUserData) {
-    console.log('Creating default data.');
-    Meteor.settings.defaultDailyUserData.map(dailyData => addDailyUserData(dailyData));
-  }
-}
-
-// VehicleCollection
-if (Vehicle.collection.find().count() === 0) {
-  if (Meteor.settings.defaultVehicle) {
-    console.log('Creating default Vehicle.');
-    Meteor.settings.defaultVehicle.map(vehicle => addVehicle(vehicle));
-  }
-}
-
-// UserCollection
-if (Users.collection.find().count() === 0) {
-  if (Meteor.settings.defaultUser) {
-    console.log('Creating the default profiles');
-    Meteor.settings.defaultUser.map(individualUser => addUser(individualUser));
-  }
-}
-
-// MakeCollection
-if (Make.collection.find().count() === 0) {
-  if (Meteor.settings.defaultMakes) {
-    console.log('Creating default make.');
-    Meteor.settings.defaultMakes.map(makes => addMake(makes));
-  }
-}
-
-// AllVehicleCollection
-if (AllVehicle.collection.find().count() === 0) {
-  if (Meteor.settings.Vehicles) {
-    console.log('Creating default Vehicle.');
-    Meteor.settings.Vehicles.map(vehicle => addAllVehicle(vehicle));
   }
 }

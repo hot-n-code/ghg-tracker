@@ -1,8 +1,8 @@
 import React from 'react';
 import { Header } from 'semantic-ui-react';
-import LandingNewsFeed from '../components/LandingNewsFeed';
-import LandingCumulativeData from '../components/LandingCumulativeData';
-import LandingDescription from '../components/LandingDescription';
+import LandingNewsFeed from '../components/landing-page/LandingNewsFeed';
+import LandingCumulativeData from '../components/landing-page/LandingCumulativeData';
+import LandingDescription from '../components/landing-page/LandingDescription';
 
 const menuStyle = { height: '500px' };
 const padding = { paddingTop: '100px' };

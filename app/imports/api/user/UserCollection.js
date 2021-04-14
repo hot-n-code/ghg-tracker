@@ -11,8 +11,6 @@ class UserCollection {
       goal: String,
       email: String,
       image: String,
-      vehicles: { type: Array, optional: true },
-      'vehicles.$': { type: String },
     }, { tracker: Tracker });
 
     this.collection.attachSchema(this.schema);
