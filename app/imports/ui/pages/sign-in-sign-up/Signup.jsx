@@ -47,47 +47,43 @@ class Signup extends React.Component {
                 marginLeft: 'auto',
                 paddingBottom: '40px',
                 paddingTop: '40px',
-                width: '800px',
+                width: '400px',
               }}>
                 <Header as='h2' textAlign='center'>Start tracking your greenhouse gas emissions!</Header>
-                <Segment padded color='gray'>
-                  <Form onSubmit={this.submit}>
-                    <Form.Group widths='equal'>
-                      <Form.Input
-                          required
-                          label='Email'
-                          icon='user'
-                          iconPosition='left'
-                          name='email'
-                          type='email'
-                          placeholder='Email address'
-                          onChange={this.handleChange}
-                      />
-                      <Form.Input
-                          required
-                          label='Confirm email'
-                          placeholder='Please retype your email'
-                      />
-                    </Form.Group>
-                    <Form.Group widths='equal'>
-                      <Form.Input
-                          required
-                          label='Password'
-                          icon='lock'
-                          iconPosition='left'
-                          name='password'
-                          placeholder='Password'
-                          type='password'
-                          onChange={this.handleChange}
-                      />
-                      <Form.Input
-                          required
-                          label='Confirm password'
-                          placeholder='Please retype your password'
-                          type='password'
-                      />
-                    </Form.Group>
-                    <Form.Button primary animated content='Submit'>
+                <Segment padded>
+                  <Form size='small' onSubmit={this.submit}>
+                    <Form.Input
+                        required
+                        label='Email'
+                        icon='user'
+                        iconPosition='left'
+                        name='email'
+                        type='email'
+                        placeholder='Email address'
+                        onChange={this.handleChange}
+                    />
+                    <Form.Input
+                        required
+                        label='Confirm email'
+                        placeholder='Please retype your email'
+                    />
+                    <Form.Input
+                        required
+                        label='Password'
+                        icon='lock'
+                        iconPosition='left'
+                        name='password'
+                        placeholder='Password'
+                        type='password'
+                        onChange={this.handleChange}
+                    />
+                    <Form.Input
+                        required
+                        label='Confirm password'
+                        placeholder='Please retype your password'
+                        type='password'
+                    />
+                    <Form.Button primary animated>
                       <Button.Content visible>Submit</Button.Content>
                       <Button.Content hidden>
                         <Icon name='arrow right'/>

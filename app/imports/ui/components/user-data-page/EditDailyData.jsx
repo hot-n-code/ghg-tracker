@@ -93,7 +93,7 @@ class EditDailyData extends React.Component {
               <DateField name='inputDate'
                          max={getDateToday()}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.name}`).concat(altSelectFieldOptions)}/>
               <Form.Group inline>
                 <NumField decimal label='Distance Traveled' name='milesTraveled'/>
                 <RadioField label={null} name='unit'/>

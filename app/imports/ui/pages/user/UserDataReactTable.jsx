@@ -10,6 +10,8 @@ import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG } from '../../utilities/DailyGHGData';
+import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
+import EditDailyData from '../../components/user-data-page/EditDailyData';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {
@@ -27,7 +29,8 @@ class UserDataReactTable extends React.Component {
 
   getColumns(dailyData, vehicles) {
     const data = {};
-    data.date = dailyData.inputDate.toLocaleString();
+    data._id = dailyData._id;
+    data.date = dailyData.inputDate.toLocaleDateString();
     data.modeOfTransportation = dailyData.modeOfTransportation;
     data.milesTraveled = dailyData.milesTraveled;
     const eImpactDaily = getDailyGHG(data.milesTraveled, data.modeOfTransportation, vehicles);
@@ -35,6 +38,12 @@ class UserDataReactTable extends React.Component {
     data.fuelSaved = eImpactDaily.fuelSaved;
     return data;
   }
+
+  emptyTable = () => (
+    <Header textAlign='center'>
+      Key in your first trip to see how you&apos;re helping to save the environment!
+    </Header>
+  )
 
   handleOnChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => {
@@ -51,6 +60,25 @@ class UserDataReactTable extends React.Component {
 
    renderPage() {
      const { filterValue } = this.state;
+
+     const otherHeaders = {
+       _id: {
+         invisible: true,
+       },
+       edit: {
+         text: ' ',
+         sortable: false,
+         filterable: false,
+         transform: (value, index, row) => <EditDailyData transportationID={row._id}/>,
+       },
+       delete: {
+         text: ' ',
+         sortable: false,
+         filterable: false,
+         transform: (value, index, row) => <DeleteDailyData transportationID={row._id}/>,
+       },
+     };
+
      return (
          <Container id="profileList-page">
            <Divider hidden vertical/>
@@ -71,8 +99,11 @@ class UserDataReactTable extends React.Component {
                 name="profile-list"
                 className="ui compact selectable table"
                 sortable
+                onRowClick={this.onRowClick}
                 perPage={25}
                 filterValue={filterValue}
+                headers={otherHeaders}
+                emptyTable={this.emptyTable()}
            />
            <Divider hidden/>
          </Container>

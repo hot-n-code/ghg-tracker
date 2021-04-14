@@ -10,7 +10,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Users } from '../../../api/user/UserCollection';
 
-const paddingStyle = { padding: 20 };
+const paddingStyle = {
+  marginRight: 'auto',
+  marginLeft: 'auto',
+  paddingBottom: '40px',
+  paddingTop: '40px',
+  width: '600px',
+};
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = () => new SimpleSchema({
@@ -66,7 +72,7 @@ class CreateUser extends React.Component {
         <div style={paddingStyle}>
           <Grid container centered>
             <Grid.Column>
-              <Header as="h2" textAlign="center">User Creation</Header>
+              <Header as="h2" textAlign="center">Create Your Profile</Header>
               <AutoForm ref={ref => { fRef = ref; }}
                         schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
