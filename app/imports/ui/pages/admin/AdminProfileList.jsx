@@ -8,6 +8,8 @@ import { Redirect } from 'react-router-dom';
 // Collection that we are accessing
 import { Users } from '../../../api/user/UserCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import DeleteUser from '../../components/admin-users-page/DeleteUser';
+import EditUserAdmin from '../../components/admin-users-page/EditUserAdmin';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
 /** Renders a table containing all of the users profiles. Use <User> to render each row. */
@@ -52,6 +54,23 @@ class AdminProfileList extends React.Component {
   }
 
   renderPage() {
+    const otherHeaders = {
+      _id: {
+        invisible: true,
+      },
+      edit: {
+        text: ' ',
+        sortable: false,
+        filterable: false,
+        transform: (value, index, row) => <EditUserAdmin userID={row._id}/>,
+      },
+      delete: {
+        text: ' ',
+        sortable: false,
+        filterable: false,
+        transform: (value, index, row) => <DeleteUser userID={row._id}/>,
+      },
+    };
     // if row has been clicked, redirect to user page
     if (this.state.redirectToProfile) {
       return <Redirect to={`/admin-profile/${this.state.profileId}/`}/>;
@@ -86,6 +105,7 @@ class AdminProfileList extends React.Component {
              className="ui compact selectable table"
              sortable
              onRowClick={this.onRowClick}
+             headers={otherHeaders}
              withToggles
              perPage={25}
              filterValue={filterValue}
