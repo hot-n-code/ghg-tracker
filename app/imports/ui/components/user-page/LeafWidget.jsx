@@ -10,7 +10,7 @@ class LeafWidget extends React.Component {
     super(props);
     this.data = getCumulativeGHG(this.props.userData, this.props.userVehicles);
     this.startPer = 0;
-    this.endPer = this.data.cO2Reduced % 48;
+    this.endPer = ((this.data.cO2Reduced % 48) / 48) * 100;
     this.state = { percent: 0 };
   }
 
@@ -26,7 +26,7 @@ class LeafWidget extends React.Component {
   }
 
   fill() {
-    if (this.startPer >= this.endPer) {
+    if (this.startPer.toFixed(1) === this.endPer.toFixed(1)) {
       clearInterval(this.elementID);
     } else {
       this.setState({
