@@ -7,6 +7,9 @@ import { Makes } from '../../api/vehicle/make/MakeCollection';
 import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
 import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
+UserSavedDistances.publish();
+
+// ---- to edit after this line --- //
 // User-level publication
 Meteor.publish(DailyUserData.userPublicationName, function () {
   if (this.userId) {
@@ -32,14 +35,6 @@ Meteor.publish(UserVehicle.userPublicationName, function publish() {
   return this.ready();
 });
 
-Meteor.publish(UserSavedDistances.userPublicationName, function publish() {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return UserSavedDistances.collection.find({ owner: username });
-  }
-  return this.ready();
-});
-
 Meteor.publish(Makes.userPublicationName, () => Makes.collection.find());
 
 Meteor.publish(AllVehicle.userPublicationName, () => AllVehicle.collection.find());
@@ -54,8 +49,6 @@ Meteor.publish(UserVehicle.adminPublicationName, () => UserVehicle.collection.fi
 Meteor.publish(Makes.adminPublicationName, () => Makes.collection.find());
 
 Meteor.publish(AllVehicle.adminPublicationName, () => AllVehicle.collection.find());
-
-Meteor.publish(UserSavedDistances, () => UserSavedDistances.collection.find());
 
 // ------------ TO DELETE ------------ //
 // User-level publication
