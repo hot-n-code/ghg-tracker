@@ -27,7 +27,6 @@ import HEmore from '../pages/about-feedback/HEmore';
 import Asbmore from '../pages/about-feedback/Asbmore';
 import Pcmore from '../pages/about-feedback/Pcmore';
 import WhatIf from '../components/user-data-page/WhatIf';
-import UserDataPage from '../pages/user/UserDataPage';
 import AdminProfileList from '../pages/admin/AdminProfileList';
 import UserDataReactTable from '../pages/user/UserDataReactTable';
 import UserVSCumulative from '../pages/user/UserVSCumulative';
@@ -41,7 +40,6 @@ class App extends React.Component {
           <NavBar />
           <Switch>
             <Route exact path='/' component={Landing} />
-            <Route exact path='/user-data-page' component={UserDataPage} />
             <Route path='/signin' component={Signin} />
             <Route path='/signup' component={Signup} />
             <Route path='/signout' component={Signout} />
@@ -58,7 +56,6 @@ class App extends React.Component {
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
-            <ProtectedRoute path='/history' component={UserDataPage} />
             <ProtectedRoute path='/comparison' component={UserVSCumulative} />
             <Route component={NotFound} />
           </Switch>
