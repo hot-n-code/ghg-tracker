@@ -24,7 +24,6 @@ import NotFound from '../pages/NotFound';
 import Signin from '../pages/sign-in-sign-up/Signin';
 import Signup from '../pages/sign-in-sign-up/Signup';
 import Signout from '../pages/sign-in-sign-up/Signout';
-// import AdminUserList from '../pages/admin/AdminUserList';
 import DataAdminPage from '../pages/admin/DataAdminPage';
 import CreateUser from '../pages/sign-in-sign-up/CreateUser';
 import UserPage from '../pages/user/UserPage';
@@ -55,7 +54,6 @@ class App extends React.Component {
             <Route path='/hemore' component={HEmore} />
             <Route path='/asbmore' component={Asbmore} />
             <Route path='/pcmore' component={Pcmore} />
-            <AdminProtectedRoute path='/admin-data' component={DataAdminPage} />
             <AdminProtectedRoute path='/admin' component={AdminProfileList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
             <ProtectedRoute path='/user-page/' component={UserPage} />
@@ -63,14 +61,10 @@ class App extends React.Component {
             <ProtectedRoute path='/what-if/' component={WhatIf} />
             <ProtectedRoute path='/alt' component={AltTransportation} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
-            <ProtectedRoute path='/list' component={ListStuff} />
-            <ProtectedRoute path='/add' component={AddStuff} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
             <ProtectedRoute path='/feedback' component={FeedBack} />
-            <ProtectedRoute path='/edit/:_id' component={EditStuff} />
             <ProtectedRoute path='/history' component={UserDataPage} />
             <ProtectedRoute path='/comparison' component={UserVSCumulative} />
-            <AdminProtectedRoute path='/admin' component={ListStuffAdmin} />
             <Route component={NotFound} />
           </Switch>
           <Footer />

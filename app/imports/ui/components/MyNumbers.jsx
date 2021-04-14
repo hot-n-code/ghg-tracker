@@ -43,7 +43,7 @@ const MyNumbers = (props) => {
                             margin: '0 auto' }} src="/images/colored-clipart/1.png"
                                size='small' alt="filler placement for eventual graph"/>
                         <Header as='h1' textAlign='center'>Alternative Miles</Header>
-                        <Header as='h2' textAlign='center'>{totalMiles} miles</Header>
+                        <Header as='h2' textAlign='center'>{totalMiles.toFixed(2)} miles</Header>
                     </Grid.Column>
                     <Grid.Column>
                         <Image style={{ display: 'block',
