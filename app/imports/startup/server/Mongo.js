@@ -14,6 +14,15 @@ const randomData = JSON.parse(readFileSync('random-data.json'));
 
 const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
 
+if (UserSavedDistances.count() === 0) {
+  if (randomData.defaultSavedDistances) {
+    randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
+  }
+  console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
+}
+
+// ---- to edit after this line ---- //
+
 if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
     randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
@@ -28,11 +37,6 @@ if (Meteor.isServer) {
   if (UserVehicle.collection.find().count() === 0) {
     randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
     console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
-  }
-
-  if (UserSavedDistances.collection.find().count() === 0) {
-    randomData.defaultSavedDistances.map(dailyData => UserSavedDistances.collection.insert(dailyData));
-    console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.collection.find().count()} saved distances`);
   }
 
   if (DailyUserData.collection.find().count() === 0) {
