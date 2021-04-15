@@ -33,6 +33,10 @@ class AdminProfileList extends React.Component {
     return { user: users.image, name: users.name, email: users.email, goal: users.goal, vehicles: users.vehicles };
   }
 
+  getVehicles(userVehicles) {
+    return { vehicles: userVehicles.vehicles };
+  }
+
   handleOnChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => {
       if (name === 'numResults') this.setNewData();
@@ -109,14 +113,17 @@ class AdminProfileList extends React.Component {
 AdminProfileList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
+  userVehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
   const ready = Meteor.subscribe(Users.adminPublicationName).ready() &&
       Meteor.subscribe(UserVehicle.adminPublicationName).ready();
   const users = Users.collection.find({}, { sort: { lastName: 1 } }).fetch();
+  const userVehicles = UserVehicle.collection.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     users,
+    userVehicles,
     ready,
   };
 })(AdminProfileList);
