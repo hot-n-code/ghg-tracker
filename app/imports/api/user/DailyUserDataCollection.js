@@ -20,8 +20,10 @@ class DailyUserDataCollection {
       inputDate: Date,
       modeOfTransportation: String,
       milesTraveled: Number,
-      cO2Reduced: Number,
-      fuelSaved: Number,
+      modeType: {
+        type: String,
+        allowedValues: ['Gas', 'EV/Hybrid', 'Alt'],
+      },
     }, { tracker: Tracker });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

@@ -1,14 +1,21 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header } from 'semantic-ui-react';
+import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import CumulativeCard from './CumulativeCard';
+import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
+import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 class CumulativeDataCard extends React.Component {
+
   render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
+  }
+
+  renderPage() {
       const sumData = (arr, key) => _.reduce(_.pluck(arr, key), function (sum, num) { return sum + num; }, 0).toFixed(1);
 
       const CalculateCumulative = (dailyUser, impactArr) => {
@@ -32,32 +39,33 @@ class CumulativeDataCard extends React.Component {
           }
           return altData;
       });
+        const cumulativeGHG = getCumulativeGHG(this.props.dailyUserData, this.props.vehicles);
         eImpact[0].data = sumData(altData, 'milesTraveled');
-        eImpact[1].data = sumData(altData, 'cO2Reduced');
-        eImpact[2].data = sumData(gasData, 'cO2Reduced') * -1;
-        eImpact[3].data = (eImpact[0].data / 20).toFixed(1);
+        eImpact[1].data = cumulativeGHG.cO2Reduced.toFixed(1);
+        eImpact[2].data = cumulativeGHG.cO2Produced.toFixed(1);
+        eImpact[3].data = cumulativeGHG.fuelSaved.toFixed(1);
         return eImpact;
     };
 
     const eImpactData = [
       {
         title: 'Vehicle Miles Travel Reduced',
-        img: '/images/cumulative-page/car.png',
+        img: '/images/colored-clipart/car3.png',
         data: '0',
       },
       {
         title: 'Green House Gas (GHG) Reduced',
-        img: 'https://img.icons8.com/ios/100/000000/potted-plant.png',
+        img: '/images/colored-clipart/2.png',
         data: '0',
       },
       {
         title: 'Green House Gas (GHG) Produced',
-        img: '/images/cumulative-page/C.png',
+        img: '/images/colored-clipart/5.png',
         data: '0',
       },
       {
         title: 'Gallons of Gas Saved',
-        img: '/images/cumulative-page/gas.png',
+        img: '/images/colored-clipart/3.png',
         data: '0',
       },
 
@@ -84,12 +92,18 @@ class CumulativeDataCard extends React.Component {
 }
 CumulativeDataCard.propTypes = {
   dailyUserData: PropTypes.array.isRequired,
+  vehicles: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+  const dailyUserData = DailyUserData.collection.find({}).fetch();
+  const vehicles = UserVehicle.collection.find({}).fetch();
   return {
-    dailyUserData: DailyUserData.collection.find({}).fetch(),
-    ready: subscriptionDailyUser.ready(),
+    dailyUserData,
+    vehicles,
+    ready,
   };
 })(CumulativeDataCard);

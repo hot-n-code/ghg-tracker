@@ -12,6 +12,7 @@ class UserVehicleCollection {
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema(
       {
+        name: String,
         make: String,
         model: String,
         owner: String,

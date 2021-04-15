@@ -35,3 +35,7 @@ export const altTransportationLabels = altTransportation.map(alt => alt.label);
 
 // An array of Alternative Transportation labels without 'EV/Hybrid'
 export const altSelectFieldOptions = altTransportationLabels.filter(label => label !== 'EV/Hybrid');
+
+export const altNoEVWalking = altSelectFieldOptions.filter(label => label !== 'Walking');
+
+export const altNoEVWalkingBiking = altNoEVWalking.filter(label => label !== 'Biking');

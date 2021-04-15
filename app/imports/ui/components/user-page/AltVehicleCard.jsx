@@ -32,7 +32,7 @@ class AltVehicleCard extends React.Component {
     /** Pass value of display */
     let state = this.state.display;
     /** Get data depending on state */
-    const transportationData = getCumulativePerMode(this.props.userData, transportation[state]);
+    const transportationData = getCumulativePerMode(this.props.userData, transportation[state], this.props.userVehicles);
 
     return (
         <Card centered link className={'alt-vehicle-card'}>
@@ -43,13 +43,13 @@ class AltVehicleCard extends React.Component {
             </Card.Header>
             <Card.Description>
               <span className={'alt-vehicle-card-label'}>Total Miles: </span>
-              {transportationData.VMTReduced}
+              {transportationData.VMTReduced.toFixed(2)}
               <br/>
               <span className={'alt-vehicle-card-label'}>CO2 Reduced: </span>
-              {transportationData.cO2Reduced}
+              {transportationData.cO2Reduced.toFixed(2)}
               <br/>
               <span className={'alt-vehicle-card-label'}>Fuel Saved: </span>
-              {transportationData.fuelSaved}
+              {transportationData.fuelSaved.toFixed(2)}
             </Card.Description>
             <br/>
             <Button color='black' onClick={() => { this.nextState(state -= 1); }}>

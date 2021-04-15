@@ -10,12 +10,18 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Users } from '../../../api/user/UserCollection';
 
-const paddingStyle = { padding: 20 };
+const paddingStyle = {
+  marginRight: 'auto',
+  marginLeft: 'auto',
+  paddingBottom: '40px',
+  paddingTop: '40px',
+  width: '600px',
+};
 
 /** Create a schema to specify the structure of the data to appear in the form. */
 const makeSchema = () => new SimpleSchema({
-  email: { type: String, label: 'Email', optional: true },
-  name: { type: String, label: 'Name', optional: true },
+  firstName: { type: String, label: 'First Name', optional: true },
+  lastName: { type: String, label: 'Last Name', optional: true },
   goal: { type: String, label: 'Goal', optional: true },
   image: { type: String, label: 'Picture URL', optional: true },
 });
@@ -30,11 +36,12 @@ class CreateUser extends React.Component {
 
   submit(data) {
     /** Gathers user's data and adds it to the userCollection */
-    const { name, goal } = data;
+    const { goal } = data;
     let { image } = data;
     const email = Meteor.user().username;
+    const name = `${data.firstName} ${data.lastName}`;
     if (image === undefined) {
-      image = 'https://png.pngtree.com/png-vector/20191026/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1870181.jpg';
+      image = '/images/default/default-pfp.png';
     }
     const allUser = _.pluck(Users.collection.find().fetch(), 'email');
     if (allUser.includes(email)) {
@@ -65,12 +72,13 @@ class CreateUser extends React.Component {
         <div style={paddingStyle}>
           <Grid container centered>
             <Grid.Column>
-              <Header as="h2" textAlign="center">User Creation</Header>
+              <Header as="h2" textAlign="center">Create Your Profile</Header>
               <AutoForm ref={ref => { fRef = ref; }}
                         schema={bridge} onSubmit={data => this.submit(data, fRef)}>
                 <Segment>
                   <Form.Group widths={'equal'}>
-                    <TextField id='name' name='name' required showInlineError={true} placeholder={'name'}/>
+                    <TextField id='firstName' name='firstName' required showInlineError={true} placeholder={'first name'}/>
+                    <TextField id='lastName' name='lastName' required showInlineError={true} placeholder={'last name'}/>
                   </Form.Group>
                   <Form.Group widths={'equal'}>
                     <TextField id='goal' name='goal' required showInlineError={true} placeholder={'goal'}/>

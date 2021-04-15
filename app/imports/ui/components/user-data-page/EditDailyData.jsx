@@ -16,9 +16,9 @@ import {
   SubmitField,
 } from 'uniforms-semantic';
 import SimpleSchema from 'simpl-schema';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { getDailyGHG, getMilesTraveled, getDateToday } from '../../utilities/DailyGHGData';
+import { getMilesTraveled, getDateToday, getModeType } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
 
 // Initializes a schema that specifies the structure of the data to appear in the form.
@@ -31,8 +31,6 @@ const formSchema = new SimpleSchema({
     allowedValues: ['mi', 'km'],
     defaultValue: 'mi',
   },
-  cO2Reduced: Number,
-  fuelSaved: Number,
   owner: String,
 });
 
@@ -56,10 +54,8 @@ class EditDailyData extends React.Component {
   submit(data) {
     const { inputDate, modeOfTransportation, unit, _id } = data;
     const milesTraveled = getMilesTraveled(data.milesTraveled, unit).toFixed(2);
-    const dailyGHG = getDailyGHG(milesTraveled, modeOfTransportation, this.props.vehicles);
-    const cO2Reduced = dailyGHG.cO2Reduced;
-    const fuelSaved = dailyGHG.fuelSaved;
-    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, cO2Reduced, fuelSaved } }, (error) => {
+    const modeType = getModeType(modeOfTransportation, this.props.vehicles);
+    DailyUserData.collection.update(_id, { $set: { inputDate, modeOfTransportation, milesTraveled, modeType } }, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -97,7 +93,7 @@ class EditDailyData extends React.Component {
               <DateField name='inputDate'
                          max={getDateToday()}/>
               <SelectField name='modeOfTransportation'
-                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.make} ${vehicle.model}`).concat(altSelectFieldOptions)}/>
+                           allowedValues={this.props.vehicles.map((vehicle) => `${vehicle.name}`).concat(altSelectFieldOptions)}/>
               <Form.Group inline>
                 <NumField decimal label='Distance Traveled' name='milesTraveled'/>
                 <RadioField label={null} name='unit'/>
@@ -107,8 +103,6 @@ class EditDailyData extends React.Component {
               </Header>
               <SubmitField value='Submit'/>
               <ErrorsField/>
-              <HiddenField name='cO2Reduced'/>
-              <HiddenField name='fuelSaved'/>
               <HiddenField name='owner'/>
             </AutoForm>
           </Modal.Content>
@@ -128,11 +122,13 @@ EditDailyData.propTypes = {
 
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
-  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
-  const subscription2 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.userPublicationName).ready();
+  const vehicles = UserVehicle.collection.find({}).fetch();
+  const dailies = DailyUserData.collection.find({}).fetch();
   return {
-    vehicles: UserVehicle.collection.find({}).fetch(),
-    dailies: DailyUserData.collection.find({}).fetch(),
-    ready: subscription.ready() && subscription2.ready(),
+    vehicles,
+    dailies,
+    ready,
   };
 })(EditDailyData);

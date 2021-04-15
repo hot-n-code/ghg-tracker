@@ -1,14 +1,11 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
-import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { _ } from 'meteor/underscore';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
 
 // Pie chart of the all time mileage for each mode of transportation for a specific user
-
 const graphObject = {
   telework: 'Telework',
   pTransportation: 'Public Transportation',
@@ -17,26 +14,36 @@ const graphObject = {
   carpool: 'Carpool',
   evHybrid: 'EVHybrid',
   transportationTypes: ['Telework', 'Public Transportation', 'Biking',
-      'Walk', 'Carpool', 'EVHybrid'],
-  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575'],
+      'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
+  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FF69B4'],
 };
 
 const MyDataChart = (props) => {
-  const teleworkData = getCumulativePerMode(props.userData, graphObject.telework);
-  const totalTelework = teleworkData.VMTReduced;
-  const aVData = getCumulativePerMode(props.userData, graphObject.evHybrid);
-  const totalAV = aVData.VMTReduced;
-  const bikingData = getCumulativePerMode(props.userData, graphObject.biking);
-  const totalBiking = bikingData.VMTReduced;
-  const walkingData = getCumulativePerMode(props.userData, graphObject.walking);
-  const totalWalking = walkingData.VMTReduced;
-  const carpoolData = getCumulativePerMode(props.userData, graphObject.carpool);
-  const totalCarpool = carpoolData.VMTReduced;
-  const ptData = getCumulativePerMode(props.userData, graphObject.pTransportation);
-  const totalPT = ptData.VMTReduced;
+  const date = new Date();
+  const getByMonthIndividual = _.filter(props.userData, (userTrip) => (userTrip.inputDate.getMonth() ===
+        date.getMonth() && userTrip.inputDate.getFullYear() === date.getFullYear()));
+  const teleworkData = getCumulativePerMode(getByMonthIndividual, graphObject.telework, props.vehicles);
+  const totalTelework = teleworkData.VMTReduced.toFixed(2);
+  const aVData = getCumulativePerMode(getByMonthIndividual, graphObject.evHybrid, props.vehicles);
+  const totalAV = aVData.VMTReduced.toFixed(2);
+  const bikingData = getCumulativePerMode(getByMonthIndividual, graphObject.biking, props.vehicles);
+  const totalBiking = bikingData.VMTReduced.toFixed(2);
+  const walkingData = getCumulativePerMode(getByMonthIndividual, graphObject.walking, props.vehicles);
+  const totalWalking = walkingData.VMTReduced.toFixed(2);
+  const carpoolData = getCumulativePerMode(getByMonthIndividual, graphObject.carpool, props.vehicles);
+  const totalCarpool = carpoolData.VMTReduced.toFixed(2);
+  const ptData = getCumulativePerMode(getByMonthIndividual, graphObject.pTransportation, props.vehicles);
+  const totalPT = ptData.VMTReduced.toFixed(2);
+
+  const totalCar = _.where(getByMonthIndividual, { modeType: 'Gas' });
+  let gasTotal = 0;
+  totalCar.forEach((obj) => {
+      gasTotal += obj.milesTraveled;
+  });
   const stateAll = {
       labels: graphObject.transportationTypes,
-      datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV],
+      datasets: [{ data: [totalTelework, totalPT, totalBiking, totalWalking, totalCarpool, totalAV,
+              gasTotal.toFixed(2)],
           backgroundColor: graphObject.graphColors,
       }],
   };
@@ -52,14 +59,7 @@ const MyDataChart = (props) => {
 
 MyDataChart.propTypes = {
   userData: PropTypes.array.isRequired,
+  vehicles: PropTypes.array.isRequired,
 };
 
-export default withTracker(() => {
-  const subscription1 = Meteor.subscribe(DailyUserData.userPublicationName);
-  const ready = subscription1.ready();
-  const userData = DailyUserData.collection.find({}).fetch();
-  return {
-      userData,
-      ready,
-  };
-})(MyDataChart);
+export default (MyDataChart);
