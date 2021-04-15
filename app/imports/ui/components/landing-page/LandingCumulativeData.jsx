@@ -32,7 +32,7 @@ class LandingCumulativeData extends React.Component {
             <Grid.Column>
               <div className='cloud-box'>
                 <Image src={cloud}/>
-                <Header as='h2' id='cloud-carbon'> {totalCO2Reduced} LBS.</Header>
+                <span> {totalCO2Reduced} LBS.</span>
               </div>
             </Grid.Column>
             <Grid.Column>
