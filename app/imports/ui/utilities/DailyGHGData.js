@@ -10,6 +10,7 @@ import {
   averageAutoMPG,
   gHGPerGallon,
   kmToMiFactor,
+  miToKmFactor,
 } from './GlobalVariables';
 
 /**
@@ -67,6 +68,15 @@ export const getDailyGHG = (milesTraveled, modeOfTransportation, userVehicles) =
  */
 export const getMilesTraveled = (distanceTraveled, unit) => ((unit === 'mi') ?
     distanceTraveled : distanceTraveled * kmToMiFactor);
+
+/**
+ * Returns the value of the distance traveled in kilometers
+ * @param distanceTraveled, number of distance traveled by user
+ * @param unit, distance unit: mi - miles, km - kilometers
+ * @returns {*|number}
+ */
+export const getKilometersTraveled = (distanceTraveled, unit) => ((unit === 'km') ?
+    distanceTraveled : distanceTraveled * miToKmFactor);
 
 /**
  * Returns today's date, used in add/edit daily data forms
