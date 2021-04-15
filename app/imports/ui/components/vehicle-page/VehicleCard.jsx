@@ -171,8 +171,14 @@ const VehicleCard = ({ vehicle }) => {
                 <Header as='h1'>{`${year} ${make} ${model}`}</Header>
               ) : (
                 <>
-                  <Header as='h1'>{`${name}'s`}</Header>
-                  <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                  <Header
+                    as='h1'
+                    className='vehicle-card-header-name'
+                  >{`${name}'s`}</Header>
+                  <Header
+                    as='h1'
+                    className='vehicle-card-header-vehicle'
+                  >{`${year} ${make} ${model}`}</Header>
                 </>
               )}
             </motion.div>
