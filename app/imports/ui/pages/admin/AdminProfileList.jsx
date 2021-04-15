@@ -7,7 +7,7 @@ import SmartDataTable from 'react-smart-data-table';
 import { Redirect } from 'react-router-dom';
 // Collection that we are accessing
 import { Users } from '../../../api/user/UserCollection';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { AllVehicle } from '../../../api/user/AllVehicleCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 
 /** Renders a table containing all of the users profiles. Use <User> to render each row. */
@@ -118,9 +118,9 @@ AdminProfileList.propTypes = {
 };
 export default withTracker(() => {
   const ready = Meteor.subscribe(Users.adminPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+      Meteor.subscribe(AllVehicle.adminPublicationName).ready();
   const users = Users.collection.find({}, { sort: { lastName: 1 } }).fetch();
-  const userVehicles = UserVehicle.collection.find({}, { sort: { lastName: 1 } }).fetch();
+  const userVehicles = AllVehicle.collection.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     users,
     userVehicles,
