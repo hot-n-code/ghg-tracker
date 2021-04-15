@@ -83,7 +83,7 @@ class UserDataReactTable extends React.Component {
          <Container id="profileList-page">
            <Divider hidden vertical/>
            <Header as='h1' textAlign='center'>My Transportation History</Header>
-           <AddDailyData/>
+           <AddDailyData vehicles={this.props.vehicles}/>
            <WhatIf/>
            <Input
                list='filter'
@@ -97,7 +97,7 @@ class UserDataReactTable extends React.Component {
            <SmartDataTable
                 data={this.props.dailyData.map(data => this.getColumns(data, this.props.vehicles)) }
                 name="profile-list"
-                className="ui compact selectable table"
+                className="ui compact table"
                 sortable
                 onRowClick={this.onRowClick}
                 perPage={25}

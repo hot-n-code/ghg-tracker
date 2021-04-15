@@ -8,7 +8,7 @@ import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../
  * @type {{vehiclesPerUser: number, dailyUserDataPerUser: number, users: number}}
  */
 const maxQuantity = {
-  users: 0,
+  users: 20,
   dailyUserDataPerUser: 100,
   vehiclesPerUser: 3,
 };
