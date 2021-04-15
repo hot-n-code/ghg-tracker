@@ -19,17 +19,38 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-.cloud-box #cloud-carbon {
-  position: absolute;
-  font-size: 60px;
-  transform: translate(40%, -310%);
+#cloud-carbon {
+  padding-top: 40px;
   color: aliceblue;
-  z-index: 5;
+  font-size: 40px;
+}
+
+.cloud-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cloud-box-container {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  background-image: url('images/landing-page/cloud-trans-5.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0;
+  margin: 0;
+}
+
+.cloud-box-text {
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0px;
-  text-size-adjust: none;
+  text-align: center;
 }
+
 .background-total-user-data {
   background-color: white;
   border: thin solid lightgray;
