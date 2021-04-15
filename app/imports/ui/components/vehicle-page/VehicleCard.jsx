@@ -14,6 +14,7 @@ const VehicleCard = ({ vehicle }) => {
   // Destructure the 'vehicle' prop.
   const {
     _id,
+    name,
     year,
     make,
     model,
@@ -166,7 +167,7 @@ const VehicleCard = ({ vehicle }) => {
               className='vehicle-card-header'
               layoutId={`vehicle-card-header-${_id}`}
             >
-              <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+              <Header as='h1'>{`${name}`}</Header>
             </motion.div>
             <motion.div
               className='vehicle-card-description'
