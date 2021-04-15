@@ -1,6 +1,6 @@
 /* NAVBAR */
 .ui.attached.menu {
-  background: #FC4A1A;
+  background: #fc4a1a;
   margin-bottom: 0px;
   padding: 0px;
 }
@@ -164,13 +164,13 @@ h6 {
 
 /* MY VEHICLES PAGE */
 #root
-> div
-> div.vehicle-list-container.background-all
-> div
-> div:nth-child(2)
-> div
-> div.ui.stackable.three.column.grid
-> div {
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(2)
+  > div
+  > div.ui.stackable.three.column.grid
+  > div {
   display: flex;
   justify-content: center;
 }
@@ -192,7 +192,7 @@ h6 {
 
 .vehicle-card-header {
   margin-top: 20px;
-  align-self: center;
+  align-self: flex-start;
 }
 
 .vehicle-card-expand-header {
@@ -249,8 +249,8 @@ div.vehicle-card-logo > img {
   display: flex;
   flex-direction: column;
   padding: 1rem 3rem;
-  margin: 10% 30%;
-  width: 40%;
+  margin: 10% 27%;
+  width: 45%;
   height: 60%;
   max-width: 100%;
 }
@@ -266,6 +266,7 @@ div.vehicle-card-logo > img {
   display: flex;
   flex-direction: column;
   padding: 0 30px;
+  width: 50%;
 }
 
 .vehicle-card-expand-content-wrapper {
@@ -384,16 +385,16 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 #root
-> div
-> div.vehicle-list-container.background-all
-> div
-> div:nth-child(3)
-> div
-> div.add-vehicle-overlay
-> div
-> div.add-vehicle-form
-> form
-> div {
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div.add-vehicle-overlay
+  > div
+  > div.add-vehicle-form
+  > form
+  > div {
   border: none;
   box-shadow: none;
 }
