@@ -164,13 +164,13 @@ h6 {
 
 /* MY VEHICLES PAGE */
 #root
-  > div
-  > div.vehicle-list-container.background-all
-  > div
-  > div:nth-child(2)
-  > div
-  > div.ui.stackable.three.column.grid
-  > div {
+> div
+> div.vehicle-list-container.background-all
+> div
+> div:nth-child(2)
+> div
+> div.ui.stackable.three.column.grid
+> div {
   display: flex;
   justify-content: center;
 }
@@ -384,16 +384,16 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 #root
-  > div
-  > div.vehicle-list-container.background-all
-  > div
-  > div:nth-child(3)
-  > div
-  > div.add-vehicle-overlay
-  > div
-  > div.add-vehicle-form
-  > form
-  > div {
+> div
+> div.vehicle-list-container.background-all
+> div
+> div:nth-child(3)
+> div
+> div.add-vehicle-overlay
+> div
+> div.add-vehicle-form
+> form
+> div {
   border: none;
   box-shadow: none;
 }
@@ -449,7 +449,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 .alt-vehicle-card-label {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 /* Leaf Widget */

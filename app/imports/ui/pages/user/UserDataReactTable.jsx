@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG } from '../../utilities/DailyGHGData';
+import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
+import EditDailyData from '../../components/user-data-page/EditDailyData';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {
@@ -27,7 +29,8 @@ class UserDataReactTable extends React.Component {
 
   getColumns(dailyData, vehicles) {
     const data = {};
-    data.date = dailyData.inputDate.toLocaleString();
+    data._id = dailyData._id;
+    data.date = dailyData.inputDate.toLocaleDateString();
     data.modeOfTransportation = dailyData.modeOfTransportation;
     data.milesTraveled = dailyData.milesTraveled;
     const eImpactDaily = getDailyGHG(data.milesTraveled, data.modeOfTransportation, vehicles);
@@ -35,6 +38,12 @@ class UserDataReactTable extends React.Component {
     data.fuelSaved = eImpactDaily.fuelSaved;
     return data;
   }
+
+  emptyTable = () => (
+    <Header textAlign='center'>
+      Key in your first trip to see how you&apos;re helping to save the environment!
+    </Header>
+  )
 
   handleOnChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => {
@@ -51,11 +60,27 @@ class UserDataReactTable extends React.Component {
 
    renderPage() {
      const { filterValue } = this.state;
+
+     const otherHeaders = {
+       _id: {
+         invisible: true,
+       },
+       actions: {
+         text: ' ',
+         sortable: false,
+         filterable: false,
+         transform: (value, index, row) => <div>
+               <EditDailyData transportationID={row._id} vehicles={this.props.vehicles}/>
+               <DeleteDailyData transportationID={row._id}/>
+             </div>,
+       },
+     };
+
      return (
          <Container id="profileList-page">
            <Divider hidden vertical/>
            <Header as='h1' textAlign='center'>My Transportation History</Header>
-           <AddDailyData/>
+           <AddDailyData vehicles={this.props.vehicles}/>
            <WhatIf/>
            <Input
                list='filter'
@@ -69,10 +94,13 @@ class UserDataReactTable extends React.Component {
            <SmartDataTable
                 data={this.props.dailyData.map(data => this.getColumns(data, this.props.vehicles)) }
                 name="profile-list"
-                className="ui compact selectable table"
+                className="ui compact table"
                 sortable
+                onRowClick={this.onRowClick}
                 perPage={25}
                 filterValue={filterValue}
+                headers={otherHeaders}
+                emptyTable={this.emptyTable()}
            />
            <Divider hidden/>
          </Container>

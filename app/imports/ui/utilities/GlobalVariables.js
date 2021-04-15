@@ -8,6 +8,9 @@ export const averageAutoMPG = 22.3;
 // Kilometers to Miles Conversion Factor
 export const kmToMiFactor = 0.621371;
 
+// Miles to Kilometers Conversion Factor
+export const miToKmFactor = 1.609344;
+
 // An array of all the Alternative Transportation modes that are not EV/Hybrid vehicles
 export const altTransportation = [
   {
@@ -35,3 +38,7 @@ export const altTransportationLabels = altTransportation.map(alt => alt.label);
 
 // An array of Alternative Transportation labels without 'EV/Hybrid'
 export const altSelectFieldOptions = altTransportationLabels.filter(label => label !== 'EV/Hybrid');
+
+export const altNoEVWalking = altSelectFieldOptions.filter(label => label !== 'Walking');
+
+export const altNoEVWalkingBiking = altNoEVWalking.filter(label => label !== 'Biking');

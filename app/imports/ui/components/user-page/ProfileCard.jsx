@@ -2,9 +2,8 @@ import React from 'react';
 import { Button, Card, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
-import EditProfile from './EditProfile';
-import AddDailyData from '../user-data-page/AddDailyData';
 import WhatIf from '../user-data-page/WhatIf';
+import EditProfile from './EditProfile';
 
 // Renders the profile card component containing the user's data
 const ProfileCard = ({ profile }) => (
@@ -25,10 +24,9 @@ const ProfileCard = ({ profile }) => (
             </Card.Meta>
           <div>
             <EditProfile profileID={profile._id}/>
-            <AddDailyData/>
             <WhatIf/>
             <Button as={NavLink} activeClassName="active" exact
-                    to="/history">History</Button>
+                    to="/user-react-page">History</Button>
           </div>
         </Card.Content>
     </Card>

@@ -1,16 +1,21 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header } from 'semantic-ui-react';
+import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { DailyUserData } from '../../../api/user/ghg-data/DailyUserDataCollection';
+import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import CumulativeCard from './CumulativeCard';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 
 class CumulativeDataCard extends React.Component {
+
   render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
+  }
+
+  renderPage() {
       const sumData = (arr, key) => _.reduce(_.pluck(arr, key), function (sum, num) { return sum + num; }, 0).toFixed(1);
 
       const CalculateCumulative = (dailyUser, impactArr) => {
@@ -88,11 +93,12 @@ class CumulativeDataCard extends React.Component {
 CumulativeDataCard.propTypes = {
   dailyUserData: PropTypes.array.isRequired,
   vehicles: PropTypes.array.isRequired,
+  ready: PropTypes.bool.isRequired,
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.userPublicationName).ready();
+  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
+      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
   const dailyUserData = DailyUserData.collection.find({}).fetch();
   const vehicles = UserVehicle.collection.find({}).fetch();
   return {

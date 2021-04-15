@@ -30,12 +30,12 @@ class NavBar extends React.Component {
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/my-vehicles' key='my-vehicles' onClick={this.handleItemClick}>Vehicles</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/alt' key='alt' onClick={this.handleItemClick}>Alternative Transportation</Menu.Item>,
               <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>,
-                <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-data-page' key='user-data-page' onClick={this.handleItemClick}>Transportation History</Menu.Item>,
+                <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/user-react-page' key='user-react-page' onClick={this.handleItemClick}>Transportation History</Menu.Item>,
             ]
         ) : ''}
-          {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
+          {this.props.currentUser && Roles.userIsInRole(Meteor.userId(), 'admin') ? (
           [<Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/admin' key='admin' onClick={this.handleItemClick}>User List</Menu.Item>,
-           <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/admin-data' key='admin-data' onClick={this.handleItemClick}> Admin Cumulative Data</Menu.Item>]
+            <Menu.Item style={menuItem} as={NavLink} activeClassName='active' exact to='/cumulative' key='cumulative' onClick={this.handleItemClick}>Cumulative Data</Menu.Item>]
           ) : ''}
           <Menu.Item position='right'>
             <Menu.Item>
