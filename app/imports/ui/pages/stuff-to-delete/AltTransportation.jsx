@@ -1,11 +1,12 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import AltVehicleCard from '../../components/user-page/AltVehicleCard';
+import LeafWidget from '../../components/user-page/LeafWidget';
 
 class AltTransportation extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -24,7 +25,7 @@ class AltTransportation extends React.Component {
 
     return (
         <div className='background-all'>
-          <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+          <Grid centered stackable columns={3} className={'my-vehicles-grid'}>
             <Grid.Column>
               <Header as='h1' textAlign='center'>
                 Alternative Transportation
@@ -32,6 +33,10 @@ class AltTransportation extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <AltVehicleCard userData={userData} userVehicles={userVehicles}/>
+            </Grid.Column>
+            <Grid.Column>
+              <Container><LeafWidget userData={userData} userVehicles={userVehicles}/>
+              </Container>
             </Grid.Column>
           </Grid>
         </div>
