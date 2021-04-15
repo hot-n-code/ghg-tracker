@@ -11,6 +11,27 @@ import { sampleVehicles } from '../../utilities/sampleData';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
+  // Destructure the 'vehicle' prop.
+  const {
+    _id,
+    year,
+    make,
+    model,
+    logo,
+    price,
+    MPG,
+    fuelSpending,
+    type,
+  } = vehicle;
+
+  // Extract 'make' and 'year' property names
+  const makeProperty = Object.keys(vehicle).find(
+    property => property === 'make',
+  );
+  const yearProperty = Object.keys(vehicle).find(
+    property => property === 'year',
+  );
+
   // Populate vehicle comparator's dropdown values and comparator vehicle values.
   const initDropdownValues = property => {
     const sortedVehicles = _.sortBy(sampleVehicles, 'make');
@@ -45,32 +66,19 @@ const VehicleCard = ({ vehicle }) => {
   };
 
   const getInitComparatorVehicle = () => {
-    const make = initDropdownValues(Object.keys(vehicle)[1])[0];
-    const model = getModelList(make)[0];
-    const year = initDropdownValues(Object.keys(vehicle)[5])[0];
-    const yearAsInt = parseInt(year, 10);
+    const initMakeList = initDropdownValues(makeProperty);
+    const initModel = getModelList(initMakeList[0]);
+    const initYear = initDropdownValues(yearProperty);
+    const yearAsInt = parseInt(initYear[0], 10);
     const listModel = _.filter(
       sampleVehicles,
-      sampleVehicle => sampleVehicle.model === model,
+      sampleVehicle => sampleVehicle.model === initModel[0],
     );
     const defaultVehicle = listModel.find(
       vehicleModel => vehicleModel.year === yearAsInt,
     );
     return defaultVehicle;
   };
-
-  // Destructure the 'vehicle' prop.
-  const {
-    _id,
-    year,
-    make,
-    model,
-    logo,
-    price,
-    MPG,
-    fuelSpending,
-    type,
-  } = vehicle;
 
   // State
   const [selectedId, setSelectedId] = useState(null);
@@ -83,10 +91,10 @@ const VehicleCard = ({ vehicle }) => {
   // Vehicle card handler
   const vehicleCardHandler = status => {
     if (status === true) {
-      const initMakeList = initDropdownValues(Object.keys(vehicle)[1]);
+      const initMakeList = initDropdownValues(makeProperty);
       setSelectedId(_id);
       setMakeList(initMakeList);
-      setDropdownYear(initDropdownValues(Object.keys(vehicle)[5]));
+      setDropdownYear(initDropdownValues(yearProperty));
       setDropdownModel(getModelList(initMakeList[0]));
       setComparatorVehicle(getInitComparatorVehicle);
       setSelectModel(dropdownModel[0]);
