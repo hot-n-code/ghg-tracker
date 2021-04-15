@@ -65,17 +65,14 @@ class UserDataReactTable extends React.Component {
        _id: {
          invisible: true,
        },
-       edit: {
+       actions: {
          text: ' ',
          sortable: false,
          filterable: false,
-         transform: (value, index, row) => <EditDailyData transportationID={row._id}/>,
-       },
-       delete: {
-         text: ' ',
-         sortable: false,
-         filterable: false,
-         transform: (value, index, row) => <DeleteDailyData transportationID={row._id}/>,
+         transform: (value, index, row) => <div>
+               <EditDailyData transportationID={row._id} vehicles={this.props.vehicles}/>
+               <DeleteDailyData transportationID={row._id}/>
+             </div>,
        },
      };
 

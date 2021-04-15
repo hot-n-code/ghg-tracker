@@ -10,7 +10,7 @@ import {
   SelectField,
   SubmitField,
 } from 'uniforms-semantic';
-import { Button, Divider, Form, Header, Loader, Modal } from 'semantic-ui-react';
+import { Button, Divider, Form, Loader, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
@@ -99,9 +99,7 @@ const AddDailyData = (props) => {
   const handleDistanceForm = () => (distanceForm ?
           <div>
             <Divider/>
-            <Header>
-              <Header.Subheader>For &apos;<i>Telework</i>&apos;, key in the distance between home and workplace.</Header.Subheader>
-            </Header>
+            For &apos;<i>Telework</i>&apos;, key in the distance between home and workplace.
             <Form.Group inline>
               <Form.Input label='Distance traveled (one-way)'
                           value={distance}
@@ -153,7 +151,7 @@ const AddDailyData = (props) => {
              onSubmit={data => { handleSubmit(data); }}
              style = {{ fontSize: '13px' }}
       >
-        <Modal.Header>Add Transportation Data</Modal.Header>
+        <Modal.Header>Add Daily Data</Modal.Header>
         <Modal.Content>
           <DateField name='inputDate'
                      max={getDateToday()}
