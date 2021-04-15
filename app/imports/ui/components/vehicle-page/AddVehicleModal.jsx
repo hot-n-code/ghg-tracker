@@ -70,9 +70,8 @@ const AddVehicleModal = (props) => {
     const fuelSpending = finalSpending;
     const owner = Meteor.user().username;
     let name = finalName;
-    if (name == null) {
-      console.log('test');
-      name = `${year}${' '}${make}${' '}${model}`;
+    if (name === '') {
+      name = `${year} ${make} ${model}`;
     }
     // LOGO
     const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
@@ -92,6 +91,7 @@ const AddVehicleModal = (props) => {
             setDropModel([{ label: '', value: '' }]);
             setFinalPrice('');
             setFinalSpending('');
+            setFinalName('');
           }
         },
     );

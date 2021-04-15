@@ -11,6 +11,28 @@ import { sampleVehicles } from '../../utilities/sampleData';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
+  // Destructure the 'vehicle' prop.
+  const {
+    _id,
+    name,
+    year,
+    make,
+    model,
+    logo,
+    price,
+    MPG,
+    fuelSpending,
+    type,
+  } = vehicle;
+
+  // Extract 'make' and 'year' property names
+  const makeProperty = Object.keys(vehicle).find(
+    property => property === 'make',
+  );
+  const yearProperty = Object.keys(vehicle).find(
+    property => property === 'year',
+  );
+
   // Populate vehicle comparator's dropdown values and comparator vehicle values.
   const initDropdownValues = property => {
     const sortedVehicles = _.sortBy(sampleVehicles, 'make');
@@ -34,7 +56,7 @@ const VehicleCard = ({ vehicle }) => {
     return uniqueList;
   };
 
-  const populateDropdownModel = currentMake => {
+  const getModelList = currentMake => {
     const filteredMakeList = _.filter(
       sampleVehicles,
       sampleVehicle => sampleVehicle.make === currentMake,
@@ -44,11 +66,14 @@ const VehicleCard = ({ vehicle }) => {
     return uniqueModels;
   };
 
-  const getInitComparatorVehicle = (year, model) => {
-    const yearAsInt = parseInt(year, 10);
+  const getInitComparatorVehicle = () => {
+    const initMakeList = initDropdownValues(makeProperty);
+    const initModel = getModelList(initMakeList[0]);
+    const initYear = initDropdownValues(yearProperty);
+    const yearAsInt = parseInt(initYear[0], 10);
     const listModel = _.filter(
       sampleVehicles,
-      sampleVehicle => sampleVehicle.model === model,
+      sampleVehicle => sampleVehicle.model === initModel[0],
     );
     const defaultVehicle = listModel.find(
       vehicleModel => vehicleModel.year === yearAsInt,
@@ -56,35 +81,33 @@ const VehicleCard = ({ vehicle }) => {
     return defaultVehicle;
   };
 
-  // Destructure the 'vehicle' prop.
-  const {
-    _id,
-    name,
-    year,
-    make,
-    model,
-    logo,
-    price,
-    MPG,
-    fuelSpending,
-    type,
-  } = vehicle;
-
-  // Get list of vehicle makes.
-  const makeList = initDropdownValues(Object.keys(vehicle)[1]);
-
   // State
   const [selectedId, setSelectedId] = useState(null);
-  const [dropdownYear, setDropdownYear] = useState(
-    initDropdownValues(Object.keys(vehicle)[5]),
-  );
-  const [dropdownModel, setDropdownModel] = useState(
-    populateDropdownModel(makeList[0]),
-  );
-  const [comparatorVehicle, setComparatorVehicle] = useState(
-    getInitComparatorVehicle(dropdownYear[0], dropdownModel[0]),
-  );
-  const [selectModel, setSelectModel] = useState(dropdownModel[0]);
+  const [makeList, setMakeList] = useState([]);
+  const [dropdownYear, setDropdownYear] = useState([]);
+  const [dropdownModel, setDropdownModel] = useState([]);
+  const [comparatorVehicle, setComparatorVehicle] = useState(null);
+  const [selectModel, setSelectModel] = useState(null);
+
+  // Vehicle card handler
+  const vehicleCardHandler = status => {
+    if (status === true) {
+      const initMakeList = initDropdownValues(makeProperty);
+      setSelectedId(_id);
+      setMakeList(initMakeList);
+      setDropdownYear(initDropdownValues(yearProperty));
+      setDropdownModel(getModelList(initMakeList[0]));
+      setComparatorVehicle(getInitComparatorVehicle);
+      setSelectModel(dropdownModel[0]);
+    } else {
+      setSelectedId(null);
+      setMakeList([]);
+      setDropdownYear([]);
+      setDropdownModel([]);
+      setComparatorVehicle(null);
+      setSelectModel(null);
+    }
+  };
 
   // Dropdown handlers
   const dropdownYearHandler = e => {
@@ -95,7 +118,7 @@ const VehicleCard = ({ vehicle }) => {
   };
 
   const dropdownMakeHandler = e => {
-    const modelList = populateDropdownModel(e.target.value);
+    const modelList = getModelList(e.target.value);
     const yearList = getVehicleYearsList(modelList[0], sampleVehicles);
     const newVehicle = getVehicle(
       parseInt(yearList[0], 10),
@@ -127,7 +150,7 @@ const VehicleCard = ({ vehicle }) => {
           scale: 1.04,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
-        onClick={() => setSelectedId(_id)}
+        onClick={() => vehicleCardHandler(true)}
       >
         <div className='vehicle-card-container'>
           <motion.div
@@ -191,7 +214,7 @@ const VehicleCard = ({ vehicle }) => {
             <motion.div className='vehicle-card-expand' layoutId={selectedId}>
               <motion.p
                 className='vehicle-card-expand-close-btn'
-                onClick={() => setSelectedId(null)}
+                onClick={() => vehicleCardHandler(false)}
               >
                 &#10005;
               </motion.p>
