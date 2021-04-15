@@ -166,7 +166,7 @@ const VehicleCard = ({ vehicle }) => {
               className='vehicle-card-header'
               layoutId={`vehicle-card-header-${_id}`}
             >
-              <Header as='h1'>{`${name}`}</Header>
+              <Header as='h1'>{`${year} ${make} ${model}`}</Header>
             </motion.div>
             <motion.div
               className='vehicle-card-description'
