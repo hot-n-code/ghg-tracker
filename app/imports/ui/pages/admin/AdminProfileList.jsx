@@ -7,8 +7,9 @@ import SmartDataTable from 'react-smart-data-table';
 import { Redirect } from 'react-router-dom';
 // Collection that we are accessing
 import { Users } from '../../../api/user/UserCollection';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+// import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
+import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
 
 /** Renders a table containing all of the users profiles. Use <User> to render each row. */
 class AdminProfileList extends React.Component {
@@ -29,8 +30,13 @@ class AdminProfileList extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
+  // vehicles: users.vehicles
   getColumns(users) {
-    return { user: users.image, name: users.name, email: users.email, goal: users.goal, vehicles: users.vehicles };
+    return { user: users.image, name: users.name, email: users.email, goal: users.goal };
+  }
+
+  getVehicles(userVehicles) {
+    return { vehicles: userVehicles.vehicles };
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -59,6 +65,17 @@ class AdminProfileList extends React.Component {
     const {
       filterValue,
     } = this.state;
+    const otherHeaders = {
+      _id: {
+        invisible: true,
+      },
+      delete: {
+        text: ' ',
+        sortable: false,
+        filterable: false,
+        transform: (value, index, row) => <DeleteDailyData transportationID={row._id}/>,
+      },
+    };
    return (
        <Container id="profileList-page">
          <Divider hidden/>
@@ -87,8 +104,9 @@ class AdminProfileList extends React.Component {
              sortable
              onRowClick={this.onRowClick}
              withToggles
-             perPage={25}
+             perPage={10}
              filterValue={filterValue}
+             headers={otherHeaders}
              parseImg={{
                style: {
                  border: '1px solid #ddd',
@@ -109,14 +127,16 @@ class AdminProfileList extends React.Component {
 AdminProfileList.propTypes = {
   // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
+//  userVehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
-  const ready = Meteor.subscribe(Users.adminPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+  const ready = Meteor.subscribe(Users.adminPublicationName).ready();
   const users = Users.collection.find({}, { sort: { lastName: 1 } }).fetch();
+ // const userVehicles = UserVehicle.collection.find({}, { sort: { owner: 1 } }).fetch();
   return {
     users,
+ //   userVehicles,
     ready,
   };
 })(AdminProfileList);
