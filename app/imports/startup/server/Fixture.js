@@ -145,7 +145,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
   const today = getDateToday();
 
   accounts.forEach(function (account) {
-    const tempDate = today;
+    const tempDate = new Date(today.getTime());
 
     // get the type of regular trip based on saved distances
     const regularTripName = faker.helpers.randomize(['work', 'school']);
