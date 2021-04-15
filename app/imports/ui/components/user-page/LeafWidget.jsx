@@ -10,14 +10,14 @@ class LeafWidget extends React.Component {
     super(props);
     this.data = getCumulativeGHG(this.props.userData, this.props.userVehicles);
     this.startPer = 0;
-    this.endPer = ((this.data.cO2Reduced % 48) / 48) * 100;
+    this.endPer = ((this.data.cO2Reduced.toFixed(1) % 48) / 48) * 100;
     this.state = { percent: 0 };
   }
 
   componentDidMount() {
     this.elementID = setInterval(
         () => this.fill(),
-        10,
+        60,
     );
   }
 
@@ -28,9 +28,13 @@ class LeafWidget extends React.Component {
   fill() {
     if (this.startPer.toFixed(1) === this.endPer.toFixed(1)) {
       clearInterval(this.elementID);
-    } else {
+    } else if (this.endPer - this.startPer <= this.endPer * 0.03) {
       this.setState({
         percent: this.startPer += 0.1,
+      });
+    } else {
+      this.setState({
+        percent: this.startPer += 1,
       });
     }
   }
@@ -54,7 +58,10 @@ class LeafWidget extends React.Component {
           </svg>
           <Card.Content>
             <Card.Description>
-              You are {(this.endPer).toFixed(1)}% to the next tree
+              <span className={'alt-vehicle-card-label'}>
+                You are {this.endPer.toFixed(1)}% to saving another 48 lbs of CO2
+                It will take a tree one year to absorb more than 48 pounds of CO2!
+              </span>
             </Card.Description>
             <div className="leaf-box">
               <div className="leaf-percent">
@@ -70,10 +77,12 @@ class LeafWidget extends React.Component {
                 </svg>
               </div>
             </div>
-          </Card.Content>
-          <Card.Description>
+            <Card.Description className={'alt-vehicle-card-label'}>
+            <span className={'alt-vehicle-card-label'}>
             It would&apos;ve took ~{(this.data.cO2Reduced / 48).toFixed(0)} tree to absorb that much CO2 in a year!
-          </Card.Description>
+            </span>
+            </Card.Description>
+          </Card.Content>
         </Card>
     );
   }

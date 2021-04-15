@@ -471,11 +471,11 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 .leaf-box {
-    height: 280px;
-    width: 280px;
-    position: absolute;
+    height: 187px;
+    width: 187px;
+    position: relative;
     left: 50%;
-    top: 50%;
+    top: 25%;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background: #020438;
@@ -495,7 +495,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
     align-items: center;
     justify-content: center;
     color: #fff;
-    font-size: 64px;
+    font-size: 32px;
 }
 
 .leaf-box .leaf-water {
