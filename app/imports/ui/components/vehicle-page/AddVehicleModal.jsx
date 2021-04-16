@@ -8,7 +8,7 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { Makes } from '../../../api/vehicle/make/MakeCollection';
+import { VehicleMakes } from '../../../api/vehicle/VehicleMakeCollection';
 import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 const AddVehicleModal = (props) => {
@@ -49,7 +49,7 @@ const AddVehicleModal = (props) => {
     return selectList;
   };
   // initial hooks
-  const populateMake = _.pluck(Makes.collection.find().fetch(), 'make');
+  const populateMake = _.pluck(VehicleMakes.find({}).fetch(), 'make');
   const populateTestMake = convert(populateMake);
   const [test, setTest] = useState(false);
   const [dropModel, setDropModel] = useState(() => [{ label: '', value: '' }]);
@@ -74,7 +74,7 @@ const AddVehicleModal = (props) => {
       name = `${year} ${make} ${model}`;
     }
     // LOGO
-    const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
+    const temp = _.pluck(VehicleMakes.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
     // MPG
     const get = getMPGType(finalMake, model, year);
@@ -295,7 +295,7 @@ AddVehicleModal.propTypes = {
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Makes.userPublicationName);
+  const sub2 = VehicleMakes.subscribeVehicleMake();
   const sub3 = AllVehicles.subscribeAllVehicle();
   return {
     allVehicles: AllVehicles.find({}).fetch(),

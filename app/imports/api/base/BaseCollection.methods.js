@@ -6,15 +6,15 @@ import { Users } from '../user/UserCollection';
 import { DailyUserData } from '../user/DailyUserDataCollection';
 import { UserVehicle } from '../user/UserVehicleCollection';
 import { AllVehicles } from '../vehicle/AllVehicleCollection';
-import { Makes } from '../vehicle/make/MakeCollection';
+import { VehicleMakes } from '../vehicle/VehicleMakeCollection';
 
 const allCollections = [
+    AllVehicles,
+    VehicleMakes,
     Users,
     UserSavedDistances,
     DailyUserData,
     UserVehicle,
-    AllVehicles,
-    Makes,
 ];
 
 export const defineMethod = new ValidatedMethod({

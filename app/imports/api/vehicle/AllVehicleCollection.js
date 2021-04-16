@@ -35,7 +35,7 @@ class AllVehicleCollection extends BaseCollection {
       updateData.Make = Model;
     }
     if (_.isNumber(Mpg)) {
-      updateData.Year = Mpg;
+      updateData.Mpg = Mpg;
     }
     this._collection.update(docID, { $set: updateData });
   }

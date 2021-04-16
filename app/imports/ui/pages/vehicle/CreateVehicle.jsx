@@ -15,7 +15,7 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
-import { Makes } from '../../../api/vehicle/make/MakeCollection';
+import { VehicleMakes } from '../../../api/vehicle/VehicleMakeCollection';
 import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 const paddingStyle = { padding: 20 };
@@ -67,7 +67,7 @@ class CreateVehicle extends React.Component {
     const { make, model, price, year, fuelSpending } = data;
     const owner = Meteor.user().username;
     // LOGO
-    const temp = _.pluck(Makes.collection.find({ make: make }).fetch(), 'logo');
+    const temp = _.pluck(VehicleMakes.find({ make: make }).fetch(), 'logo');
     const logo = temp[0];
     // MPG
     const get = this.getMPGType(make, model, year);
@@ -162,7 +162,7 @@ CreateVehicle.propTypes = {
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(Makes.userPublicationName);
+  const sub2 = VehicleMakes.subscribeVehicleMake();
   const sub3 = AllVehicles.subscribeAllVehicle();
   return {
     allVehicles: AllVehicles.find({}).fetch(),

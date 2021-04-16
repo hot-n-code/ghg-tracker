@@ -4,7 +4,7 @@ import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
-import { Makes } from '../../api/vehicle/make/MakeCollection';
+import { VehicleMakes } from '../../api/vehicle/VehicleMakeCollection';
 import { AllVehicles } from '../../api/vehicle/AllVehicleCollection';
 import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
@@ -14,16 +14,21 @@ const randomData = JSON.parse(readFileSync('random-data.json'));
 
 const getAssetsData = (filename) => JSON.parse(Assets.getText(`default-data/${filename}`));
 
+if (AllVehicles.count() === 0) {
+  getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicles.define(vehicle));
+  console.log(`   AllVehicleCollection: ${AllVehicles.count()} vehicles`);
+}
+
+if (VehicleMakes.count() === 0) {
+  getAssetsData('defaultMakes.json').map(make => VehicleMakes.define(make));
+  console.log(`   MakeCollection: ${VehicleMakes.count()} makes`);
+}
+
 if (UserSavedDistances.count() === 0) {
   if (randomData.defaultSavedDistances) {
     randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
   }
   console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
-}
-
-if (AllVehicles.count() === 0) {
-  getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicles.define(vehicle));
-  console.log(`   AllVehicleCollection: ${AllVehicles.count()} vehicles`);
 }
 
 // ---- to edit after this line ---- //
@@ -32,11 +37,6 @@ if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
     randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
     console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
-  }
-
-  if (Makes.collection.find().count() === 0) {
-    getAssetsData('defaultMakes.json').map(makes => Makes.collection.insert(makes));
-    console.log(`   MakeCollection: ${Makes.collection.find().count()} makes`);
   }
 
   if (UserVehicle.collection.find().count() === 0) {
