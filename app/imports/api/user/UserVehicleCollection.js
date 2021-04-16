@@ -84,7 +84,7 @@ class UserVehicleCollection extends BaseCollection {
         }
         return this.ready();
       });
-      
+
       Meteor.publish(userVehiclePublications.userVehicleCumulative, () => instance._collection.find());
     }
   }
