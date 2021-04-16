@@ -7,7 +7,7 @@ import { _ } from 'meteor/underscore';
 import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import CumulativeCard from './CumulativeCard';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 class CumulativeDataCard extends React.Component {
 
@@ -98,9 +98,9 @@ CumulativeDataCard.propTypes = {
 
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+      UserVehicles.subscribeUserVehicleCumulative().ready();
   const dailyUserData = DailyUserData.collection.find({}).fetch();
-  const vehicles = UserVehicle.collection.find({}).fetch();
+  const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyUserData,
     vehicles,

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: '20px' };
 
@@ -41,7 +41,7 @@ class LandingCumulativeData extends React.Component {
           <br/>
           <Header as='h2' textAlign='center'> Make A Difference Today.
             <br/>
-            <div style={{ paddingTop: '16px' }}></div>
+            <div style={{ paddingTop: '16px' }}/>
             <Button className="ui massive blue button" position='centered' as={NavLink} activeClassName="active" exact
                     to="/signup">Sign Up</Button>
           </Header>
@@ -57,9 +57,9 @@ LandingCumulativeData.propTypes = {
 
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
+      UserVehicles.subscribeUserVehicleCumulative().ready();
   const dailyData = DailyUserData.collection.find({}).fetch();
-  const vehicles = UserVehicle.collection.find({}).fetch();
+  const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyData,
     vehicles,

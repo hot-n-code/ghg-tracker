@@ -8,7 +8,7 @@ import { Users } from '../../../api/user/UserCollection';
 import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 const rideStyle = { height: '200px', width: '300px' };
@@ -162,15 +162,15 @@ export default withTracker(() => {
     const subscription1 = Meteor.subscribe(Users.adminPublicationName);
     const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
     const subscription3 = Meteor.subscribe(DailyUserData.userPublicationName);
-    const subscription4 = Meteor.subscribe(UserVehicle.userPublicationName);
-    const subscription5 = Meteor.subscribe(UserVehicle.adminPublicationName);
+    const subscription4 = UserVehicles.subscribeUserVehicle();
+    const subscription5 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
         users: Users.collection.find({}).fetch(),
         dailyData: DailyUserData.collection.find({ owner: currentUser }).fetch(),
         dailyDataAll: DailyUserData.collection.find({}).fetch(),
-        vehicles: UserVehicle.collection.find({ owner: currentUser }).fetch(),
-        allVehicles: UserVehicle.collection.find({}).fetch({}),
+        vehicles: UserVehicles.find({ owner: currentUser }).fetch(),
+        allVehicles: UserVehicles.find({}).fetch({}),
         ready: subscription1.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready()
             && subscription5.ready(),
     };

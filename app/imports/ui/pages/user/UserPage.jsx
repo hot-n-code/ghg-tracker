@@ -8,8 +8,8 @@ import { Users } from '../../../api/user/UserCollection';
 import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
 import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import MyNumbers from '../../components/MyNumbers';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -81,10 +81,10 @@ export default withTracker(({ match }) => {
     const getUser = Meteor.users.findOne(userId);
     const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
         Meteor.subscribe(Users.userPublicationName).ready() &&
-        Meteor.subscribe(UserVehicle.userPublicationName).ready();
+        UserVehicles.subscribeUserVehicle().ready();
     const dailyData = DailyUserData.collection.find({}).fetch();
     const users = Users.collection.findOne({ username: getUser });
-    const vehicles = UserVehicle.collection.find({}).fetch();
+    const vehicles = UserVehicles.find({}).fetch();
     return {
         dailyData,
         users,

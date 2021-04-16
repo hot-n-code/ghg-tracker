@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
 import SimpleSchema from 'simpl-schema';
 import { _ } from 'meteor/underscore';
 import BaseCollection from '../base/BaseCollection';
@@ -7,7 +6,7 @@ import { VehicleMakes } from '../vehicle/VehicleMakeCollection';
 
 export const userVehiclePublications = {
   userVehicle: 'UserVehicle',
-  userVehicleAdmin: 'UserVehicleAdmin',
+  userVehicleCumulative: 'UserVehicleCumulative',
 };
 
 class UserVehicleCollection extends BaseCollection {
@@ -135,8 +134,8 @@ class UserVehicleCollection extends BaseCollection {
       });
 
       /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
-      Meteor.publish(userVehiclePublications.userVehicleAdmin, function publish() {
-        if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+      Meteor.publish(userVehiclePublications.userVehicleCumulative, function publish() {
+        if (this.userId) {
           return instance._collection.find();
         }
         return this.ready();
@@ -151,9 +150,9 @@ class UserVehicleCollection extends BaseCollection {
     return null;
   }
 
-  subscribeUserVehicleAdmin() {
+  subscribeUserVehicleCumulative() {
     if (Meteor.isClient) {
-      return Meteor.subscribe(userVehiclePublications.userVehicleAdmin);
+      return Meteor.subscribe(userVehiclePublications.userVehicleCumulative);
     }
     return null;
   }
