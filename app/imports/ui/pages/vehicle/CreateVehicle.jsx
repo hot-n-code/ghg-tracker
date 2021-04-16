@@ -16,7 +16,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { Makes } from '../../../api/vehicle/make/MakeCollection';
-import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
+import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 
@@ -51,7 +51,7 @@ class CreateVehicle extends React.Component {
       miles: '',
       type: '',
     };
-    const totalCars = this.props.AllVehicles;
+    const totalCars = this.props.allVehicles;
     const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
     search.miles = find[0];
     if (find[0] > 0) {
@@ -155,7 +155,7 @@ class CreateVehicle extends React.Component {
 
 CreateVehicle.propTypes = {
   ready: PropTypes.bool.isRequired,
-  AllVehicles: PropTypes.array.isRequired,
+  allVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -163,9 +163,9 @@ export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Makes.userPublicationName);
-  const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
+  const sub3 = AllVehicles.subscribeAllVehicle();
   return {
-    AllVehicles: AllVehicle.collection.find({}).fetch(),
+    allVehicles: AllVehicles.find({}).fetch(),
     ready: sub1.ready() && sub2.ready() && sub3.ready(),
   };
 })(CreateVehicle);

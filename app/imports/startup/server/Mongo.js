@@ -5,7 +5,7 @@ import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
-import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { AllVehicles } from '../../api/vehicle/AllVehicleCollection';
 import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
 /* eslint-disable no-console */
@@ -19,6 +19,11 @@ if (UserSavedDistances.count() === 0) {
     randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
   }
   console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
+}
+
+if (AllVehicles.count() === 0) {
+  getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicles.define(vehicle));
+  console.log(`   AllVehicleCollection: ${AllVehicles.count()} vehicles`);
 }
 
 // ---- to edit after this line ---- //
@@ -44,10 +49,6 @@ if (Meteor.isServer) {
     console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);
   }
 
-  if (AllVehicle.collection.find().count() === 0) {
-    getAssetsData('defaultAllVehicles.json').map(vehicle => AllVehicle.collection.insert(vehicle));
-    console.log(`   AllVehicleCollection: ${AllVehicle.collection.find().count()} vehicles`);
-  }
 } else {
   console.log('Cannot initialize the database! Make sure Meteor is running in server environment');
 }

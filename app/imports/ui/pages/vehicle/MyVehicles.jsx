@@ -5,7 +5,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import VehicleList from '../../components/vehicle-page/VehicleList';
-import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
+import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
@@ -41,15 +41,15 @@ class MyVehicles extends React.Component {
 /** Require an array of Vehicle documents in the props. */
 MyVehicles.propTypes = {
   ready: PropTypes.bool.isRequired,
-  AllVehicles: PropTypes.array.isRequired,
+  allVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
-  const sub2 = Meteor.subscribe(AllVehicle.userPublicationName);
+  const sub2 = AllVehicles.subscribeAllVehicle();
   return {
-    AllVehicles: AllVehicle.collection.find({}).fetch(),
+    allVehicles: AllVehicles.find({}).fetch(),
     ready: sub1.ready() && sub2.ready(),
   };
 })(MyVehicles);

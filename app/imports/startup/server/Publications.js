@@ -4,10 +4,19 @@ import { DailyUserData } from '../../api/user/DailyUserDataCollection';
 import { Users } from '../../api/user/UserCollection';
 import { UserVehicle } from '../../api/user/UserVehicleCollection';
 import { Makes } from '../../api/vehicle/make/MakeCollection';
-import { AllVehicle } from '../../api/vehicle/AllVehicleCollection';
+import { AllVehicles } from '../../api/vehicle/AllVehicleCollection';
 import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 
-UserSavedDistances.publish();
+const allCollections = [
+  AllVehicles,
+  // Makes,
+  // Users,
+  // DailyUserData,
+  // UserVehicle,
+  UserSavedDistances,
+];
+
+allCollections.forEach((collection) => collection.publish());
 
 // ---- to edit after this line --- //
 // User-level publication
@@ -37,8 +46,6 @@ Meteor.publish(UserVehicle.userPublicationName, function publish() {
 
 Meteor.publish(Makes.userPublicationName, () => Makes.collection.find());
 
-Meteor.publish(AllVehicle.userPublicationName, () => AllVehicle.collection.find());
-
 // Admin-level publication
 Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
 
@@ -47,8 +54,6 @@ Meteor.publish(DailyUserData.cumulativePublicationName, () => DailyUserData.coll
 Meteor.publish(UserVehicle.adminPublicationName, () => UserVehicle.collection.find());
 
 Meteor.publish(Makes.adminPublicationName, () => Makes.collection.find());
-
-Meteor.publish(AllVehicle.adminPublicationName, () => AllVehicle.collection.find());
 
 // ------------ TO DELETE ------------ //
 // User-level publication

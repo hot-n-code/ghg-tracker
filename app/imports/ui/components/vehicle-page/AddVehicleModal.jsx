@@ -9,7 +9,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { Makes } from '../../../api/vehicle/make/MakeCollection';
-import { AllVehicle } from '../../../api/vehicle/AllVehicleCollection';
+import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 const AddVehicleModal = (props) => {
   // getMPGType function that gets the MPG and type from user input(make, model, year)
@@ -18,7 +18,7 @@ const AddVehicleModal = (props) => {
       miles: '',
       type: '',
     };
-    const totalCars = props.AllVehicles;
+    const totalCars = props.allVehicles;
     const find = _.pluck(_.where(totalCars, { Make: make, Model: model, Year: year }), 'Mpg');
     search.miles = find[0];
     if (find[0] > 0) {
@@ -30,13 +30,13 @@ const AddVehicleModal = (props) => {
   };
   // populates all models from a specific make
    const populateModel = (make) => {
-    const totalCars = props.AllVehicles;
+    const totalCars = props.allVehicles;
     const cars = _.uniq(_.pluck(_.where(totalCars, { Make: make }), 'Model'));
     return cars;
   };
    // populates all years from a specific make and model
   const populateYear = (make, model) => {
-    const totalCars = props.AllVehicles;
+    const totalCars = props.allVehicles;
     const year = _.uniq(_.pluck(_.where(totalCars, { Make: make, Model: model }), 'Year'));
     return year;
   };
@@ -288,7 +288,7 @@ const AddVehicleModal = (props) => {
 
 AddVehicleModal.propTypes = {
   ready: PropTypes.bool.isRequired,
-  AllVehicles: PropTypes.array.isRequired,
+  allVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
@@ -296,9 +296,9 @@ export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
   const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
   const sub2 = Meteor.subscribe(Makes.userPublicationName);
-  const sub3 = Meteor.subscribe(AllVehicle.userPublicationName);
+  const sub3 = AllVehicles.subscribeAllVehicle();
   return {
-    AllVehicles: AllVehicle.collection.find({}).fetch(),
+    allVehicles: AllVehicles.find({}).fetch(),
     ready: sub1.ready() && sub2.ready() && sub3.ready(),
   };
 })(AddVehicleModal);
