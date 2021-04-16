@@ -14,9 +14,10 @@ import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { VehicleMakes } from '../../../api/vehicle/VehicleMakeCollection';
 import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import { userVehicleDefineMethod } from '../../../api/user/UserVehicleCollection.methods';
 
 const paddingStyle = { padding: 20 };
 
@@ -73,7 +74,7 @@ class CreateVehicle extends React.Component {
     const get = this.getMPGType(make, model, year);
     const MPG = get[0];
     const type = get[1];
-    UserVehicle.collection.insert(
+    userVehicleDefineMethod.call(
         { make, model, logo, price, year, MPG, fuelSpending, type, owner },
         error => {
           if (error) {
@@ -83,7 +84,7 @@ class CreateVehicle extends React.Component {
             formRef.reset();
           }
         },
-    );
+      );
   }
 
   render() {
@@ -161,7 +162,7 @@ CreateVehicle.propTypes = {
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const sub1 = UserVehicles.subscribeUserVehicle();
   const sub2 = VehicleMakes.subscribeVehicleMake();
   const sub3 = AllVehicles.subscribeAllVehicle();
   return {

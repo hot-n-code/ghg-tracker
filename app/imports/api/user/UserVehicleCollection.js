@@ -28,24 +28,8 @@ class UserVehicleCollection extends BaseCollection {
     }));
   }
 
-  define({ name, make, model, owner, logo, price, year, MPG, fuelSpending, type }) {
-    const docID = this._collection.insert({
-      name,
-      make,
-      model,
-      owner,
-      logo,
-      price,
-      year,
-      MPG,
-      fuelSpending,
-      type,
-    });
-    return docID;
-  }
-
-  altDefine({ name, make, model, owner, price, year, MPG, fuelSpending }) {
-    const logo = VehicleMakes.find({ make: make }).logo;
+  define({ name, make, model, owner, price, year, MPG, fuelSpending }) {
+    const logo = VehicleMakes.findOne({ make: make }).logo;
     const type = MPG < 0 ? 'EV/Hybrid' : 'Gas';
     const docID = this._collection.insert({
       name,
@@ -62,41 +46,9 @@ class UserVehicleCollection extends BaseCollection {
     return docID;
   }
 
-  update(docID, { name, make, model, logo, price, year, MPG, fuelSpending, type }) {
+  update(docID, { name, make, model, price, year, MPG, fuelSpending }) {
     const updateData = {};
-    if (name) {
-      updateData.name = name;
-    }
-    if (make) {
-      updateData.make = make;
-    }
-    if (model) {
-      updateData.model = model;
-    }
-    if (logo) {
-      updateData.logo = model;
-    }
-    if (_.isNumber(year)) {
-      updateData.year = year;
-    }
-    if (_.isNumber(price)) {
-      updateData.price = price;
-    }
-    if (_.isNumber(MPG)) {
-      updateData.MPG = MPG;
-    }
-    if (_.isNumber(fuelSpending)) {
-      updateData.fuelSpending = fuelSpending;
-    }
-    if (type) {
-      updateData.type = type;
-    }
-    this._collection.update(docID, { $set: updateData });
-  }
-
-  altUpdate(docID, { name, make, model, price, year, MPG, fuelSpending }) {
-    const updateData = {};
-    updateData.logo = VehicleMakes.find({ make: make }).logo;
+    updateData.logo = VehicleMakes.findOne({ make: make }).logo;
     updateData.type = MPG < 0 ? 'EV/Hybrid' : 'Gas';
     if (name) {
       updateData.name = name;
@@ -134,12 +86,7 @@ class UserVehicleCollection extends BaseCollection {
       });
 
       /** This subscription publishes all documents regardless of user, but only if the logged in user is the Admin. */
-      Meteor.publish(userVehiclePublications.userVehicleCumulative, function publish() {
-        if (this.userId) {
-          return instance._collection.find();
-        }
-        return this.ready();
-      });
+      Meteor.publish(userVehiclePublications.userVehicleCumulative, () => instance._collection.find());
     }
   }
 

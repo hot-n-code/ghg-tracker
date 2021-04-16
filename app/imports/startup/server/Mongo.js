@@ -33,7 +33,7 @@ if (UserSavedDistances.count() === 0) {
 
 if (UserVehicles.count() === 0) {
   if (randomData.defaultUserVehicles) {
-    randomData.defaultUserVehicles.map(vehicle => UserVehicles.altDefine(vehicle));
+    randomData.defaultUserVehicles.map(vehicle => UserVehicles.define(vehicle));
     console.log(`   UserVehicleCollection: ${UserVehicles.count()} vehicles`);
   }
 }

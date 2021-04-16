@@ -116,7 +116,7 @@ UserDataReactTable.propTypes = {
 
 export default withTracker(() => {
   const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
-      UserVehicles.ready();
+      UserVehicles.subscribeUserVehicle().ready();
   const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
   const vehicles = UserVehicles.find({}).fetch();
   return {
