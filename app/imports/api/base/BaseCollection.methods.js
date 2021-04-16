@@ -4,9 +4,9 @@ import { CallPromiseMixin } from 'meteor/didericis:callpromise-mixin';
 import { UserSavedDistances } from '../user/UserSavedDistanceCollection';
 import { Users } from '../user/UserCollection';
 import { DailyUserData } from '../user/DailyUserDataCollection';
-import { UserVehicle } from '../user/UserVehicleCollection';
 import { AllVehicles } from '../vehicle/AllVehicleCollection';
 import { VehicleMakes } from '../vehicle/VehicleMakeCollection';
+import { UserVehicles } from '../user/UserVehicleCollection';
 
 const allCollections = [
     AllVehicles,
@@ -14,7 +14,7 @@ const allCollections = [
     Users,
     UserSavedDistances,
     DailyUserData,
-    UserVehicle,
+    UserVehicles,
 ];
 
 export const defineMethod = new ValidatedMethod({

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { readFileSync } from 'fs';
 import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { DailyUserData } from '../../api/user/DailyUserDataCollection';
-import { UserVehicle } from '../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { VehicleMakes } from '../../api/vehicle/VehicleMakeCollection';
 import { AllVehicles } from '../../api/vehicle/AllVehicleCollection';
@@ -31,17 +31,19 @@ if (UserSavedDistances.count() === 0) {
   console.log(`   UserSavedDistanceCollection: ${UserSavedDistances.count()} saved distances`);
 }
 
+if (UserVehicles.count() === 0) {
+  if (randomData.defaultUserVehicles) {
+    randomData.defaultUserVehicles.map(vehicle => UserVehicles.altDefine(vehicle));
+    console.log(`   UserVehicleCollection: ${UserVehicles.count()} vehicles`);
+  }
+}
+
 // ---- to edit after this line ---- //
 
 if (Meteor.isServer) {
   if (Users.collection.find().count() === 0) {
     randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
     console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
-  }
-
-  if (UserVehicle.collection.find().count() === 0) {
-    randomData.defaultUserVehicles.map(vehicle => UserVehicle.collection.insert(vehicle));
-    console.log(`   UserVehicleCollection: ${UserVehicle.collection.find().count()} vehicles`);
   }
 
   if (DailyUserData.collection.find().count() === 0) {
