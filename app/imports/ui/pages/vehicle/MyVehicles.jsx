@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import VehicleList from '../../components/vehicle-page/VehicleList';
 import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class MyVehicles extends React.Component {
@@ -46,7 +45,7 @@ MyVehicles.propTypes = {
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  const sub1 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const sub1 = UserVehicles.subscribeUserVehicle();
   const sub2 = AllVehicles.subscribeAllVehicle();
   return {
     allVehicles: AllVehicles.find({}).fetch(),
