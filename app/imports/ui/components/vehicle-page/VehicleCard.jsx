@@ -156,7 +156,7 @@ const VehicleCard = ({ vehicle }) => {
         className='vehicle-card'
         layoutId={_id}
         whileHover={{
-          scale: 1.04,
+          scale: 1.02,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
       >
