@@ -20,7 +20,7 @@ export const userVehicleUpdateMethod = new ValidatedMethod({
   mixins: [CallPromiseMixin],
   validate: null,
   run(updateData) {
-    UserVehicles.update(updateData.id, updateData);
+    UserVehicles.update(updateData._id, updateData);
     return true;
   },
 });
