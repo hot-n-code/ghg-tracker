@@ -109,6 +109,15 @@ const VehicleCard = ({ vehicle }) => {
     }
   };
 
+  // Edit and delete button handlers
+  const onClickEditHandler = () => {
+    console.log('edit button clicked');
+  };
+
+  const onClickDeleteHandler = () => {
+    console.log('delete button clicked');
+  };
+
   // Dropdown handlers
   const dropdownYearHandler = e => {
     const yearAsInt = parseInt(e.target.value, 10);
@@ -150,9 +159,28 @@ const VehicleCard = ({ vehicle }) => {
           scale: 1.04,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
-        onClick={() => vehicleCardHandler(true)}
       >
-        <div className='vehicle-card-container'>
+        <motion.div
+          className='vehicle-card-btn-container'
+          layoutId={`vehicle-card-btn-container-${_id}`}
+        >
+          <button
+            className='vehicle-card-btn-edit'
+            onClick={onClickEditHandler}
+          >
+            Edit
+          </button>
+          <button
+            className='vehicle-card-btn-del'
+            onClick={onClickDeleteHandler}
+          >
+            Delete
+          </button>
+        </motion.div>
+        <div
+          className='vehicle-card-container'
+          onClick={() => vehicleCardHandler(true)}
+        >
           <motion.div
             className='vehicle-card-content'
             layoutId={`vehicle-card-container-${_id}`}
