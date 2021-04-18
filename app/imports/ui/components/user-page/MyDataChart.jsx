@@ -15,7 +15,7 @@ const graphObject = {
   evHybrid: 'EVHybrid',
   transportationTypes: ['Telework', 'Public Transportation', 'Biking',
       'Walk', 'Carpool', 'EV/Hybrid', 'Gas'],
-  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FF69B4'],
+  graphColors: ['#5c8d89', '#4b8796', '#4f7fa0', '#6872a0', '#846391', '#985575', '#FC4A1A'],
 };
 
 const MyDataChart = (props) => {
