@@ -28,10 +28,8 @@ const AddDailyData = (props) => {
 
   const handleModalOpen = () => setModalOpen(true);
 
-  const handleModalClose = () => setModalOpen(false);
-
-  const setStatesDefault = () => {
-    handleModalClose();
+  const handleModalClose = () => {
+    setModalOpen(false);
     setDistance('');
     setUnit('mi');
     setDistanceForm(false);
@@ -68,9 +66,9 @@ const AddDailyData = (props) => {
 
   const handleSavedDistance = (e, { value }) => {
     if (value === 'other') {
-      setDistance('');
       setDistanceForm(true);
       setLabelDistance(false);
+      setDistance(0);
     } else {
       const savedDistance = props.savedDistances.find(({ _id }) => _id === value);
       setDistance(savedDistance.distanceMiles);
@@ -126,15 +124,17 @@ const AddDailyData = (props) => {
     const inputData = {};
     inputData.inputDate = data.inputDate;
     inputData.modeOfTransportation = data.modeOfTransportation;
-    inputData.milesTraveled = getMilesTraveled(distance, unit).toFixed(2);
+    inputData.milesTraveled = (unit === 'mi') ? distance :
+        getMilesTraveled(distance, unit).toFixed(2);
     if (data.roundtrip) {
       inputData.milesTraveled *= 2;
     }
+    console.log(inputData.milesTraveled);
     inputData.modeType = getModeType(inputData.modeOfTransportation, props.vehicles);
     inputData.owner = props.owner;
     userDailyDataDefineMethod.call(inputData, (error) => (error ?
         swal('Error', error.message, 'error') :
-        swal('Success', 'Data added successfully', 'success').then(() => setStatesDefault())));
+        swal('Success', 'Data added successfully', 'success').then(() => handleModalClose())));
   };
 
   const bridge = new SimpleSchema2Bridge(formSchema);
@@ -148,7 +148,7 @@ const AddDailyData = (props) => {
              trigger={<Button>Add Data</Button>}
              as={AutoForm}
              schema={bridge}
-             onSubmit={data => { handleSubmit(data); }}
+             onSubmit={data => handleSubmit(data)}
              style = {{ fontSize: '13px' }}
       >
         <Modal.Header>Add Daily Data</Modal.Header>

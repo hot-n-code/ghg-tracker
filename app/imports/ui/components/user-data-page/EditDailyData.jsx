@@ -24,10 +24,8 @@ const EditDailyData = (props) => {
 
   const handleModalOpen = () => setModalOpen(true);
 
-  const handleModalClose = () => setModalOpen(false);
-
-  const setStatesDefault = () => {
-    handleModalClose();
+  const handleModalClose = () => {
+    setModalOpen(false);
     setDistance(doc.milesTraveled);
     setUnit('mi');
     setDistanceForm(true);
@@ -123,14 +121,15 @@ const EditDailyData = (props) => {
     updateData.inputDate = data.inputDate;
     updateData.modeOfTransportation = data.modeOfTransportation;
     updateData._id = data._id;
-    updateData.milesTraveled = getMilesTraveled(distance, unit).toFixed(2);
+    updateData.milesTraveled = (unit === 'mi') ? distance :
+        getMilesTraveled(distance, unit).toFixed(2);
     if (data.roundtrip) {
       updateData.milesTraveled *= 2;
     }
     updateData.modeType = getModeType(updateData.modeOfTransportation, props.vehicles);
-    userDailyDataUpdateMethod.call(updateData._id, { $set: updateData }, (error) => (error ?
+    userDailyDataUpdateMethod.call(updateData, (error) => (error ?
         swal('Error', error.message, 'error') :
-        swal('Success', 'Data edited successfully', 'success').then(() => setStatesDefault())));
+        swal('Success', 'Data edited successfully', 'success').then(() => handleModalClose())));
   };
 
   const bridge = new SimpleSchema2Bridge(formSchema);
