@@ -4,8 +4,8 @@ import SimpleSchema from 'simpl-schema';
 import { check } from 'meteor/check';
 import BaseCollection from '../base/BaseCollection';
 import { UserVehicles } from './UserVehicleCollection';
-import { DailyUserData } from './DailyUserDataCollection';
 import { UserSavedDistances } from './UserSavedDistanceCollection';
+import { UserDailyData } from './UserDailyDataCollection';
 
 export const userPublications = {
   user: 'User',
@@ -55,7 +55,7 @@ class UserCollection extends BaseCollection {
     // userVehicles.forEach(function (vehicle) {
     //  userVehicleRemoveItMethod.call(vehicle._id);
     // });
-    const userDailyData = (DailyUserData.collection.find({ owner: doc.email })).fetch();
+    const userDailyData = (UserDailyData.collection.find({ owner: doc.email })).fetch();
     console.log(userDailyData);
     // userDailyData.forEach(function (dailyData) {
     //  userDailyDataRemoveItMethod(dailyData._id);

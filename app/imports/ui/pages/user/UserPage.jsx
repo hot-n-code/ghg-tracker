@@ -1,11 +1,10 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Container, Loader, Card, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
 import { Users } from '../../../api/user/UserCollection';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
 import MyNumbers from '../../components/MyNumbers';
@@ -77,10 +76,10 @@ UserPage.propTypes = {
 };
 
 export default withTracker(() => {
-    const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+    const ready = UserDailyData.subscribeUserDailyData().ready() &&
         Users.subscribeUser().ready() &&
         UserVehicles.subscribeUserVehicle().ready();
-    const dailyData = DailyUserData.collection.find({}).fetch();
+    const dailyData = UserDailyData.find({}).fetch();
     const users = Users.findOne({});
     const vehicles = UserVehicles.find({}).fetch();
     return {

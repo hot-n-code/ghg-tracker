@@ -1,10 +1,9 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Header, Button, Grid, Loader } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
@@ -56,9 +55,9 @@ LandingCumulativeData.propTypes = {
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
+  const ready = UserDailyData.subscribeUserDailyDataCumulative().ready() &&
       UserVehicles.subscribeUserVehicleCumulative().ready();
-  const dailyData = DailyUserData.collection.find({}).fetch();
+  const dailyData = UserDailyData.find({}).fetch();
   const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyData,

@@ -2,7 +2,7 @@ import React from 'react';
 import swal from 'sweetalert';
 import { Button, Icon, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { userDailyDataRemoveItMethod } from '../../../api/user/UserDailyDataCollection.methods';
 
 class DeleteDailyData extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class DeleteDailyData extends React.Component {
 
   // On successful deletion, delete data.
   delete(transportationID) {
-    DailyUserData.collection.remove(transportationID, (error) => {
+    userDailyDataRemoveItMethod.call(transportationID, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {

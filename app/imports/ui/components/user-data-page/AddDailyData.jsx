@@ -17,7 +17,7 @@ import swal from 'sweetalert';
 import { UserSavedDistances } from '../../../api/user/UserSavedDistanceCollection';
 import { getMilesTraveled, getDateToday, getKilometersTraveled, getModeType } from '../../utilities/DailyGHGData';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { userDailyDataDefineMethod } from '../../../api/user/UserDailyDataCollection.methods';
 
 const AddDailyData = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -132,7 +132,7 @@ const AddDailyData = (props) => {
     }
     inputData.modeType = getModeType(inputData.modeOfTransportation, props.vehicles);
     inputData.owner = props.owner;
-    DailyUserData.collection.insert(inputData, (error) => (error ?
+    userDailyDataDefineMethod.call(inputData, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Data added successfully', 'success').then(() => setStatesDefault())));
   };

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Container, Divider, Loader, Header, Input } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import { getDailyGHG } from '../../utilities/DailyGHGData';
@@ -115,9 +114,9 @@ UserDataReactTable.propTypes = {
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
+  const ready = UserDailyData.subscribeUserDailyData().ready() &&
       UserVehicles.subscribeUserVehicle().ready();
-  const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
+  const dailyData = UserDailyData.find({}, { sort: { inputDate: -1 } }).fetch();
   const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyData,

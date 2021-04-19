@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { Users } from '../../../api/user/UserCollection';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
@@ -160,15 +160,15 @@ UserVSCumulative.propTypes = {
 
 export default withTracker(() => {
     const subscription1 = Users.subscribeUserCumulative();
-    const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
-    const subscription3 = Meteor.subscribe(DailyUserData.userPublicationName);
+    const subscription2 = UserDailyData.subscribeUserDailyDataCumulative();
+    const subscription3 = UserDailyData.subscribeUserDailyData();
     const subscription4 = UserVehicles.subscribeUserVehicle();
     const subscription5 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
         users: Users.find({}).fetch(),
-        dailyData: DailyUserData.collection.find({ owner: currentUser }).fetch(),
-        dailyDataAll: DailyUserData.collection.find({}).fetch(),
+        dailyData: UserDailyData.find({ owner: currentUser }).fetch(),
+        dailyDataAll: UserDailyData.find({}).fetch(),
         vehicles: UserVehicles.find({ owner: currentUser }).fetch(),
         allVehicles: UserVehicles.find({}).fetch({}),
         ready: subscription1.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready()

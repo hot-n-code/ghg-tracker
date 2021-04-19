@@ -9,8 +9,9 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, BoolField, DateField, ErrorsField, SelectField, SubmitField } from 'uniforms-semantic';
 import { UserSavedDistances } from '../../../api/user/UserSavedDistanceCollection';
 import { getDateToday, getKilometersTraveled, getMilesTraveled, getModeType } from '../../utilities/DailyGHGData';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import { altSelectFieldOptions } from '../../utilities/GlobalVariables';
+import { userDailyDataUpdateMethod } from '../../../api/user/UserDailyDataCollection.methods';
 
 const EditDailyData = (props) => {
   const doc = props.dailies.find(({ _id }) => _id === props.transportationID);
@@ -127,7 +128,7 @@ const EditDailyData = (props) => {
       updateData.milesTraveled *= 2;
     }
     updateData.modeType = getModeType(updateData.modeOfTransportation, props.vehicles);
-    DailyUserData.collection.update(updateData._id, { $set: updateData }, (error) => (error ?
+    userDailyDataUpdateMethod.call(updateData._id, { $set: updateData }, (error) => (error ?
         swal('Error', error.message, 'error') :
         swal('Success', 'Data edited successfully', 'success').then(() => setStatesDefault())));
   };
@@ -187,9 +188,9 @@ EditDailyData.propTypes = {
 
 export default withTracker(() => {
   const ready = UserSavedDistances.subscribeUserSavedDistance().ready()
-      && Meteor.subscribe(DailyUserData.userPublicationName).ready();
+      && UserDailyData.subscribeUserDailyData().ready();
   const savedDistances = UserSavedDistances.find({}).fetch();
-  const dailies = DailyUserData.collection.find({}).fetch();
+  const dailies = UserDailyData.find({}).fetch();
   const owner = Meteor.user().username;
   return {
     owner,
