@@ -159,14 +159,14 @@ UserVSCumulative.propTypes = {
 };
 
 export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(Users.adminPublicationName);
+    const subscription1 = Users.subscribeUserCumulative();
     const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
     const subscription3 = Meteor.subscribe(DailyUserData.userPublicationName);
     const subscription4 = UserVehicles.subscribeUserVehicle();
     const subscription5 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
-        users: Users.collection.find({}).fetch(),
+        users: Users.find({}).fetch(),
         dailyData: DailyUserData.collection.find({ owner: currentUser }).fetch(),
         dailyDataAll: DailyUserData.collection.find({}).fetch(),
         vehicles: UserVehicles.find({ owner: currentUser }).fetch(),

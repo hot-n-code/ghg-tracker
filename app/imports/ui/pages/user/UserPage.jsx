@@ -76,14 +76,12 @@ UserPage.propTypes = {
     ready: PropTypes.bool.isRequired,
 };
 
-export default withTracker(({ match }) => {
-    const userId = match.params._id;
-    const getUser = Meteor.users.findOne(userId);
+export default withTracker(() => {
     const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
-        Meteor.subscribe(Users.userPublicationName).ready() &&
+        Users.subscribeUser().ready() &&
         UserVehicles.subscribeUserVehicle().ready();
     const dailyData = DailyUserData.collection.find({}).fetch();
-    const users = Users.collection.findOne({ username: getUser });
+    const users = Users.findOne({});
     const vehicles = UserVehicles.find({}).fetch();
     return {
         dailyData,

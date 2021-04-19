@@ -24,6 +24,13 @@ if (VehicleMakes.count() === 0) {
   console.log(`   MakeCollection: ${VehicleMakes.count()} makes`);
 }
 
+if (Users.count() === 0) {
+  if (randomData.defaultUsers) {
+    randomData.defaultUsers.map(individualUser => Users.define(individualUser));
+  }
+  console.log(`   UserCollection: ${Users.count()} profiles`);
+}
+
 if (UserSavedDistances.count() === 0) {
   if (randomData.defaultSavedDistances) {
     randomData.defaultSavedDistances.map(savedDistance => UserSavedDistances.define(savedDistance));
@@ -41,11 +48,6 @@ if (UserVehicles.count() === 0) {
 // ---- to edit after this line ---- //
 
 if (Meteor.isServer) {
-  if (Users.collection.find().count() === 0) {
-    randomData.defaultUsers.map(individualUser => Users.collection.insert(individualUser));
-    console.log(`   UserCollection: ${Users.collection.find().count()} profiles`);
-  }
-
   if (DailyUserData.collection.find().count() === 0) {
     randomData.defaultDailyUserData.map(dailyData => DailyUserData.collection.insert(dailyData));
     console.log(`   DailyUserDataCollection: ${DailyUserData.collection.find().count()} daily user data`);

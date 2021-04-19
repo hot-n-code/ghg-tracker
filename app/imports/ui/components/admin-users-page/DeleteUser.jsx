@@ -2,7 +2,7 @@ import React from 'react';
 import swal from 'sweetalert';
 import { Button, Icon, Modal } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import { Users } from '../../../api/user/UserCollection';
+import { userRemoveItMethod } from '../../../api/user/UserCollection.methods';
 
 class DeleteUser extends React.Component {
   constructor(props) {
@@ -18,15 +18,13 @@ class DeleteUser extends React.Component {
   handleModalClose = () => this.setState({ modalOpen: false });
 
   // On successful deletion, delete data.
-  delete(userID) {
-    Users.collection.remove(userID, (error) => {
+  delete() {
+    userRemoveItMethod.call(this.props.userID, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
         swal('Success', 'User deleted successfully', 'success').then(() => {
           this.handleModalClose();
-          // eslint-disable-next-line no-undef
-          window.location.reload();
         });
       }
     });
@@ -50,7 +48,7 @@ class DeleteUser extends React.Component {
                     size='tiny'
                     negative
                     labelPosition='right'
-                    onClick={() => this.delete(this.props.userID)}>
+                    onClick={() => this.delete()}>
               Delete
               <Icon name='trash alternate outline'/>
             </Button>

@@ -10,7 +10,7 @@ import { UserSavedDistances } from '../../api/user/UserSavedDistanceCollection';
 const allCollections = [
   AllVehicles,
   VehicleMakes,
-  // Users,
+  Users,
   UserVehicles,
   // DailyUserData,
   UserSavedDistances,
@@ -28,17 +28,7 @@ Meteor.publish(DailyUserData.userPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Users.userPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Users.collection.find({ email: username });
-  }
-  return this.ready();
-});
-
 // Admin-level publication
-Meteor.publish(Users.adminPublicationName, () => Users.collection.find());
-
 Meteor.publish(DailyUserData.cumulativePublicationName, () => DailyUserData.collection.find());
 
 // ------------ TO DELETE ------------ //
