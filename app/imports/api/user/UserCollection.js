@@ -6,6 +6,9 @@ import BaseCollection from '../base/BaseCollection';
 import { UserVehicles } from './UserVehicleCollection';
 import { UserSavedDistances } from './UserSavedDistanceCollection';
 import { UserDailyData } from './UserDailyDataCollection';
+import { userVehicleRemoveItMethod } from './UserVehicleCollection.methods';
+import { userDailyDataRemoveItMethod } from './UserDailyDataCollection.methods';
+import { userSavedDistanceRemoveItMethod } from './UserSavedDistanceCollection.methods';
 
 export const userPublications = {
   user: 'User',
@@ -51,20 +54,17 @@ class UserCollection extends BaseCollection {
     const doc = this.findDoc(id);
     check(doc, Object);
     const userVehicles = UserVehicles.find({ owner: doc.email }).fetch();
-    console.log(userVehicles);
-    // userVehicles.forEach(function (vehicle) {
-    //  userVehicleRemoveItMethod.call(vehicle._id);
-    // });
-    const userDailyData = (UserDailyData.collection.find({ owner: doc.email })).fetch();
-    console.log(userDailyData);
-    // userDailyData.forEach(function (dailyData) {
-    //  userDailyDataRemoveItMethod(dailyData._id);
-    // });
+    userVehicles.forEach(function (vehicle) {
+      userVehicleRemoveItMethod.call(vehicle._id);
+    });
+    const userDailyData = (UserDailyData.find({ owner: doc.email })).fetch();
+    userDailyData.forEach(function (dailyData) {
+      userDailyDataRemoveItMethod.call(dailyData._id);
+    });
     const userSavedDistances = (UserSavedDistances.find({ owner: doc.email })).fetch();
-    console.log(userSavedDistances);
-    // userSavedDistances.forEach(function (savedDistance) {
-    //  userSavedDistanceRemoveItMethod(vehicle._id);
-    // });
+    userSavedDistances.forEach(function (savedDistance) {
+      userSavedDistanceRemoveItMethod.call(savedDistance._id);
+    });
     this._collection.remove(doc._id);
     return true;
   }
