@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
-import { getCumulativeGHG } from '../utilities/CumulativeGHGData';
+import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
 
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
  * users may also edit their data of their entries.

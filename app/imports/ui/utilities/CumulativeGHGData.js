@@ -7,26 +7,31 @@
 import { altSelectFieldOptions } from './GlobalVariables';
 import { getDailyGHG } from './DailyGHGData';
 
-const getVMTReduced = (dailyData) => dailyData.filter(({ modeType }) => modeType !== 'Gas')
-      .map(data => data.milesTraveled)
-      .reduce((a, b) => a + b, 0);
+const filterDailyData = (dailyData) => {
+  const filtered = {};
+  filtered.reducedFiltered = dailyData.filter(({ modeType }) => modeType !== 'Gas');
+  filtered.producedFiltered = dailyData.filter(({ modeType }) => modeType === 'Gas');
 
-const getCO2Data = (dailyData, userVehicles) => {
-  const reducedFiltered = dailyData.filter(({ modeType }) => modeType !== 'Gas');
-  const producedFiltered = dailyData.filter(({ modeType }) => modeType === 'Gas');
-
-  const compute = (array) => array.map(data => getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).cO2Reduced)
-      .reduce((a, b) => a + b, 0);
-
-  return ({
-    reduced: compute(reducedFiltered),
-    produced: compute(producedFiltered),
-  });
+  return (filtered);
 };
 
-const getFuelSavedTotal = (dailyData, userVehicles) => dailyData.filter(({ modeType }) => modeType !== 'Gas')
-    .map(data => getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).fuelSaved)
-    .reduce((a, b) => a + b, 0);
+const getGHGData = (dailyData, userVehicles) => {
+  const filtered = filterDailyData(dailyData);
+  const computeCO2 = (array) => array.map(data => Math.abs(getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).cO2Reduced))
+      .reduce((a, b) => a + b, 0);
+  const computeFuel = (array) => array.map(data => Math.abs(getDailyGHG(data.milesTraveled, data.modeOfTransportation, userVehicles).fuelSaved))
+      .reduce((a, b) => a + b, 0);
+  const computeVMT = (array) => array.map(data => data.milesTraveled)
+      .reduce((a, b) => a + b, 0);
+  return ({
+    reducedCO2: computeCO2(filtered.reducedFiltered),
+    producedCO2: computeCO2(filtered.producedFiltered),
+    VMTReduced: computeVMT(filtered.reducedFiltered),
+    VMTProduced: computeVMT(filtered.producedFiltered),
+    fuelSaved: computeFuel(filtered.reducedFiltered),
+    fuelSpent: computeFuel(filtered.producedFiltered),
+  });
+};
 
 /**
  * Returns an object with attributes equal to climate-related metrics related to a specific mode of the transportation
@@ -36,7 +41,7 @@ const getFuelSavedTotal = (dailyData, userVehicles) => dailyData.filter(({ modeT
  * @returns {Object}
  */
 export const getCumulativePerMode = (dailyData, mode, userVehicles) => {
-  const eImpactPerMode = {};
+  const ghgPerMode = {};
   let filtered;
 
   // Retrieves relevant user data from collection, filtered by modeOfTransportation
@@ -48,21 +53,16 @@ export const getCumulativePerMode = (dailyData, mode, userVehicles) => {
     filtered = dailyData.filter(({ modeType }) => modeType === 'Gas');
   }
 
-  const cO2Data = getCO2Data(filtered, userVehicles);
-  if (mode === 'Gas') {
-    eImpactPerMode.cO2Reduced = cO2Data.reduced;
-    eImpactPerMode.cO2Produced = Math.abs(cO2Data.produced);
-    eImpactPerMode.VMTReduced = 0;
-    eImpactPerMode.fuelSaved = 0;
-  } else {
-    eImpactPerMode.cO2Reduced = cO2Data.reduced;
-    eImpactPerMode.cO2Produced = Math.abs(cO2Data.produced);
-    eImpactPerMode.VMTReduced = getVMTReduced(filtered);
-    eImpactPerMode.fuelSaved = getFuelSavedTotal(filtered, userVehicles);
-  }
-  eImpactPerMode.timesUsed = filtered.length;
+  const ghgData = getGHGData(filtered, userVehicles);
+  ghgPerMode.cO2Reduced = ghgData.reducedCO2;
+  ghgPerMode.cO2Produced = ghgData.producedCO2;
+  ghgPerMode.VMTReduced = ghgData.VMTReduced;
+  ghgPerMode.VMTProduced = ghgData.VMTProduced;
+  ghgPerMode.fuelSaved = ghgData.fuelSaved;
+  ghgPerMode.fuelSpent = ghgData.fuelSpent;
+  ghgPerMode.timesUsed = filtered.length;
 
-  return eImpactPerMode;
+  return ghgPerMode;
 };
 
 /**
@@ -71,13 +71,15 @@ export const getCumulativePerMode = (dailyData, mode, userVehicles) => {
  * @returns {Object}
  */
 export const getCumulativeGHG = (dailyData, userVehicles) => {
-  const eImpact = {};
+  const ghg = {};
 
-  const cO2Data = getCO2Data(dailyData, userVehicles);
-  eImpact.cO2Reduced = cO2Data.reduced;
-  eImpact.cO2Produced = Math.abs(cO2Data.produced);
-  eImpact.VMTReduced = getVMTReduced(dailyData);
-  eImpact.fuelSaved = getFuelSavedTotal(dailyData, userVehicles);
+  const ghgData = getGHGData(dailyData, userVehicles);
+  ghg.cO2Reduced = ghgData.reducedCO2;
+  ghg.cO2Produced = ghgData.producedCO2;
+  ghg.VMTReduced = ghgData.VMTReduced;
+  ghg.VMTProduced = ghgData.VMTProduced;
+  ghg.fuelSaved = ghgData.fuelSaved;
+  ghg.fuelSpent = ghgData.fuelSpent;
 
-  return eImpact;
+  return ghg;
 };

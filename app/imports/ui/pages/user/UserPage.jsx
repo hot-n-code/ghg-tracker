@@ -7,7 +7,7 @@ import { Users } from '../../../api/user/UserCollection';
 import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
-import MyNumbers from '../../components/MyNumbers';
+import MyNumbers from '../../components/user-page/MyNumbers';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
