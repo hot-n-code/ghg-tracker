@@ -84,6 +84,7 @@ class UserDataReactTable extends React.Component {
            <Input
                list='filter'
                placeholder='Filter results..'
+               name='filterValue'
                icon='search'
                type='text'
                value={filterValue}

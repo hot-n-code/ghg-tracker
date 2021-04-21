@@ -53,7 +53,9 @@ class AdminProfileList extends React.Component {
         text: ' ',
         sortable: false,
         filterable: false,
-        transform: (value, index, row) => <DeleteUser userID={row._id}/>,
+        transform: (value, index, row) => <div>
+          <DeleteUser userID={row._id}/>
+        </div>,
       },
     };
    return (
