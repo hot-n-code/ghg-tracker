@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Select from 'react-select';
-import { Button, Header, Input } from 'semantic-ui-react';
+import { Button, Header, Input, Loader } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
@@ -168,123 +168,130 @@ const AddVehicleModal = (props) => {
         transition: { delay: 0.2 },
       },
     };
-
-    return (
-      <AnimateSharedLayout type='crossfade'>
-        <motion.div className='add-vehicle-btn' layoutId='add-vehicle-toggle'>
-          <Button
-            circular
-            icon='add'
-            size='massive'
-            onClick={() => setTest(true)}
-          />
-        </motion.div>
-
-        <AnimatePresence
-          exitBeforeEnter
-          onExitComplete={() => setTest(false)}
-        >
-          {test && (
-            <motion.div
-              className='add-vehicle-overlay'
-              variants={overlay}
-              initial='hidden'
-              animate='visible'
-              exit='hidden'
-            >
-              <motion.div className='add-vehicle-container' variants={modal}>
-                <motion.div className='add-vehicle-header'>
-                  <Header as='h2' textAlign='center'>
-                    Create Vehicle
-                  </Header>
-                  <motion.div
-                    className='add-vehicle-close-btn'
-                    onClick={() => setTest(false)}
-                  >
-                    &#10005;
-                  </motion.div>
-                </motion.div>
-                <motion.div
-                  className='add-vehicle-form'
-                  layoutId='add-vehicle-toggle'
-                >
-                 <form onSubmit={handleSubmit}>
-                   <label>
-                     Make:
-                     <Select
-                         className="basic-single"
-                         classNamePrefix="select"
-                         options={populateTestMake}
-                         name="make"
-                         isSearchable={true}
-                         onChange={changeModel}
-                         placeholder={'Make'}
-                     />
-                   </label>
-                   <br/>
-                   <label>
-                     Model:
-                     <Select
-                         ref={modelRef}
-                         className="basic-single"
-                         classNamePrefix="select"
-                         options={dropModel}
-                         name="model"
-                         isSearchable={true}
-                         onChange={changeYear}
-                         placeholder={'Model'}
-                         value={dropModel.filter(({ value }) => value === resetModel.mySelectKey)}
-                     />
-                   </label>
-                   <br/>
-                   <label>
-                     Year:
-                     <Select
-                         ref={yearRef}
-                         className="basic-single"
-                         classNamePrefix="select"
-                         options={dropYear}
-                         name="year"
-                         isSearchable={true}
-                         onChange={setYear}
-                         placeholder={'Year'}
-                         value={dropYear.filter(({ value }) => value === resetYear.mySelectKey)}
-                     />
-                   </label>
-                   <br/>
-                   <br/>
-                   <label>
-                     Vehicle Name (Optional):
-                     <br/>
-                     <Input placeholder='Vehicle Name' value={finalName} onChange={e => setFinalName(e.target.value)} />
-                   </label>
-                   <br/>
-                   <br/>
-                     <label>
-                       Price:
-                       <br/>
-                       <Input placeholder='Price' value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
-                     </label>
-                   <br/>
-                   <br/>
-                   <label>
-                     Yearly Spending:
-                     <br/>
-                     <Input placeholder='Yearly Spending' value={finalSpending} onChange={e => setFinalSpending(e.target.value)} />
-                   </label>
-                   <br/>
-                   <br/>
-                   <button className="ui button" value='Submit'>
-                     Submit
-                   </button>
-                 </form>
-                </motion.div>
-              </motion.div>
+    const renderPage = () => (
+          <AnimateSharedLayout type='crossfade'>
+            <motion.div className='add-vehicle-btn' layoutId='add-vehicle-toggle'>
+              <Button
+                  circular
+                  icon='add'
+                  size='massive'
+                  onClick={() => setTest(true)}
+              />
             </motion.div>
-          )}
-        </AnimatePresence>
-      </AnimateSharedLayout>
-    );
+
+            <AnimatePresence
+                exitBeforeEnter
+                onExitComplete={() => setTest(false)}
+            >
+              {test && (
+                  <motion.div
+                      className='add-vehicle-overlay'
+                      variants={overlay}
+                      initial='hidden'
+                      animate='visible'
+                      exit='hidden'
+                  >
+                    <motion.div className='add-vehicle-container' variants={modal}>
+                      <motion.div className='add-vehicle-header'>
+                        <Header as='h2' textAlign='center'>
+                          Create Vehicle
+                        </Header>
+                        <motion.div
+                            className='add-vehicle-close-btn'
+                            onClick={() => setTest(false)}
+                        >
+                          &#10005;
+                        </motion.div>
+                      </motion.div>
+                      <motion.div
+                          className='add-vehicle-form'
+                          layoutId='add-vehicle-toggle'
+                      >
+                        <form onSubmit={handleSubmit}>
+                          <label>
+                            Make:
+                            <Select
+                                className="basic-single"
+                                classNamePrefix="select"
+                                options={populateTestMake}
+                                name="make"
+                                isSearchable={true}
+                                onChange={changeModel}
+                                placeholder={'Make'}
+                            />
+                          </label>
+                          <br/>
+                          <label>
+                            Model:
+                            <Select
+                                ref={modelRef}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                options={dropModel}
+                                name="model"
+                                isSearchable={true}
+                                onChange={changeYear}
+                                placeholder={'Model'}
+                                value={dropModel.filter(({ value }) => value === resetModel.mySelectKey)}
+                            />
+                          </label>
+                          <br/>
+                          <label>
+                            Year:
+                            <Select
+                                ref={yearRef}
+                                className="basic-single"
+                                classNamePrefix="select"
+                                options={dropYear}
+                                name="year"
+                                isSearchable={true}
+                                onChange={setYear}
+                                placeholder={'Year'}
+                                value={dropYear.filter(({ value }) => value === resetYear.mySelectKey)}
+                            />
+                          </label>
+                          <br/>
+                          <br/>
+                          <label>
+                            Vehicle Name (Optional):
+                            <br/>
+                            <Input placeholder='Vehicle Name' value={finalName} onChange={e => setFinalName(e.target.value)} />
+                          </label>
+                          <br/>
+                          <br/>
+                          <label>
+                            Price:
+                            <br/>
+                            <Input placeholder='Price' value={finalPrice} onChange={e => setFinalPrice(e.target.value)} />
+                          </label>
+                          <br/>
+                          <br/>
+                          <label>
+                            Yearly Spending:
+                            <br/>
+                            <Input placeholder='Yearly Spending' value={finalSpending} onChange={e => setFinalSpending(e.target.value)} />
+                          </label>
+                          <br/>
+                          <br/>
+                          <button className="ui button" value='Submit'>
+                            Submit
+                          </button>
+                        </form>
+                      </motion.div>
+                    </motion.div>
+                  </motion.div>
+              )}
+            </AnimatePresence>
+          </AnimateSharedLayout>
+      );
+  return props.ready ? (
+      renderPage()
+  ) : (
+      <div className='vehicle-loader-container'>
+        <Loader active className='vehicle-loader'>loading add vehicles button</Loader>
+      </div>
+  );
+
 };
 
 AddVehicleModal.propTypes = {
