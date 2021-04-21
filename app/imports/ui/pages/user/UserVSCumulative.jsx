@@ -164,11 +164,11 @@ export default withTracker(() => {
     const subscription3 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
-        users: Users.find({}).fetch(),
-        dailyData: UserDailyData.find({ owner: currentUser }).fetch(),
-        dailyDataAll: UserDailyData.find({}).fetch(),
-        vehicles: UserVehicles.find({ owner: currentUser }).fetch(),
-        allVehicles: UserVehicles.find({}).fetch({}),
+        users: Users.find({}, {}).fetch(),
+        dailyData: UserDailyData.find({ owner: currentUser }, {}).fetch(),
+        dailyDataAll: UserDailyData.find({}, {}).fetch(),
+        vehicles: UserVehicles.find({ owner: currentUser }, {}).fetch(),
+        allVehicles: UserVehicles.find({}, {}).fetch({}),
         ready: subscription1.ready() && subscription2.ready() && subscription3.ready(),
     };
 })(UserVSCumulative);
