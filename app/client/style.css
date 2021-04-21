@@ -482,6 +482,19 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
   font-weight: 700;
 }
 
+.vehicle-loader-container{
+  top: 20px;
+  right: 0px;
+  position: absolute;
+  width: 100%;
+}
+
+.vehicle-loader {
+  top: 0px;
+  right: 0px;
+  position: absolute;
+}
+
 /* Leaf Widget */
 *,
 *:before,
