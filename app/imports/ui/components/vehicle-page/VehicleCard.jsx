@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
 import { Header, Button } from 'semantic-ui-react';
+import swal from 'sweetalert';
+import { withTracker } from 'meteor/react-meteor-data';
 import {
   getVehicleYearsList,
   getVehicle,
 } from '../../utilities/vehicleDropdown';
 import { sampleVehicles } from '../../utilities/sampleData';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import { userVehicleRemoveItMethod } from '../../../api/user/UserVehicleCollection.methods';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
@@ -109,6 +113,16 @@ const VehicleCard = ({ vehicle }) => {
     }
   };
 
+  // Edit and delete button handlers
+  // const onClickEditHandler = () => {
+  //   userVehicleUpdateMethod.call(vehicle._id);
+  // };
+
+  const onClickDeleteHandler = () => {
+    swal('Success', 'Vehicle deleted successfully', 'success');
+    userVehicleRemoveItMethod.call(vehicle._id);
+  };
+
   // Dropdown handlers
   const dropdownYearHandler = e => {
     const yearAsInt = parseInt(e.target.value, 10);
@@ -147,12 +161,25 @@ const VehicleCard = ({ vehicle }) => {
         className='vehicle-card'
         layoutId={_id}
         whileHover={{
-          scale: 1.04,
+          scale: 1.02,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
-        onClick={() => vehicleCardHandler(true)}
       >
-        <div className='vehicle-card-container'>
+        <motion.div
+          className='vehicle-card-btn-container'
+          layoutId={`vehicle-card-btn-container-${_id}`}
+        >
+          <button
+            className='vehicle-card-btn-del'
+            onClick={onClickDeleteHandler}
+          >
+            Delete
+          </button>
+        </motion.div>
+        <div
+          className='vehicle-card-container'
+          onClick={() => vehicleCardHandler(true)}
+        >
           <motion.div
             className='vehicle-card-content'
             layoutId={`vehicle-card-container-${_id}`}
@@ -374,6 +401,15 @@ const VehicleCard = ({ vehicle }) => {
 /** Individual vehicle data is passed in as an object in props. */
 VehicleCard.propTypes = {
   vehicle: PropTypes.object.isRequired,
+  allUserVehicles: PropTypes.array.isRequired,
 };
 
-export default VehicleCard;
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+export default withTracker(() => {
+  // Ensure that minimongo is populated with all collections prior to running render().
+  const sub1 = UserVehicles.subscribeUserVehicle();
+  return {
+    allUserVehicles: UserVehicles.find({}).fetch(),
+    ready: sub1.ready(),
+  };
+})(VehicleCard);

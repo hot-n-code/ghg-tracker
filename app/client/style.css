@@ -211,6 +211,43 @@ h6 {
   justify-content: space-around;
 }
 
+.vehicle-card-btn-edit,
+.vehicle-card-btn-del {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  margin: 0 5px;
+  padding: 3px 2px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-out;
+}
+
+.vehicle-card-btn-edit {
+  color: rgb(150, 150, 150);
+}
+
+.vehicle-card-btn-edit:hover {
+  color: rgb(95, 95, 95);
+}
+
+.vehicle-card-btn-edit:focus,
+.vehicle-card-btn-edit:active {
+  color: rgb(70, 70, 70);
+}
+
+.vehicle-card-btn-del {
+  color: rgb(255, 112, 112);
+}
+
+.vehicle-card-btn-del:hover {
+  color: rgb(247, 57, 57);
+}
+
+.vehicle-card-btn-del:focus,
+.vehicle-card-btn-del:active {
+  color: rgb(201, 54, 54);
+}
+
 .vehicle-card-header {
   margin-top: 20px;
   align-self: flex-start;
