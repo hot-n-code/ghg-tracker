@@ -7,9 +7,7 @@ GHG Tracker is a web application designed to track the carbon footprint that res
 
 This app allows users to update their daily mode of transportation and track the effect of each time they use a mode of transportation. The user will have a custom profile by adding their cars, alternative modes of transportation (bike, walk, bus, etc.), personal goals, and a history of their data. By using real data from all models and makes of cars, as the user continues to use the app, it will update and calculate the total amount of carbon produced, reduced, fuel saved and total miles traveled.
 
----
-
-### CHANGELOG:
+For more information about this project, please visit our organization's webpage: [Hot-N-Code](https://hot-n-code.github.io/)
 
 ---
 
@@ -40,72 +38,34 @@ The first time you run the app, it will create some default users and data. Here
 ```
 meteor npm run start
 
-> meteor-application-template-react@ start /Users/annacampainha/GitHub/ghg-tracker/app
+> meteor-application-template-react@ start /Users/dmtapia/Desktop/ghg-tracker/app
 > meteor --no-release-check --exclude-archs web.browser.legacy,web.cordova --settings ../config/settings.development.json
 
-[[[[[ ~/GitHub/ghg-tracker/app ]]]]]          
+[[[[[ ~/Desktop/ghg-tracker/app ]]]]]          
 
 => Started proxy.                             
 => Started MongoDB.                           
-W20210331-19:23:40.111(-7)? (STDERR) Note: you are using a pure-JavaScript implementation of bcrypt.
-W20210331-19:23:40.156(-7)? (STDERR) While this implementation will work correctly, it is known to be
-W20210331-19:23:40.156(-7)? (STDERR) approximately three times slower than the native implementation.
-W20210331-19:23:40.156(-7)? (STDERR) In order to use the native implementation instead, run
-W20210331-19:23:40.156(-7)? (STDERR) 
-W20210331-19:23:40.157(-7)? (STDERR)   meteor npm install --save bcrypt
-W20210331-19:23:40.157(-7)? (STDERR) 
-W20210331-19:23:40.157(-7)? (STDERR) in the root directory of your application.
-I20210331-19:23:42.223(-7)? Creating the default user(s)
-I20210331-19:23:42.223(-7)?   Creating user admin@foo.com.
-I20210331-19:23:42.499(-7)?   Creating user test@gmail.com.
-I20210331-19:23:42.731(-7)?   Creating user john@foo.com.
-I20210331-19:23:42.980(-7)? Creating default data.
-I20210331-19:23:42.981(-7)?   Adding: Basket (john@foo.com)
-I20210331-19:23:43.023(-7)?   Adding: Bicycle (john@foo.com)
-I20210331-19:23:43.026(-7)?   Adding: Banana (admin@foo.com)
-I20210331-19:23:43.027(-7)?   Adding: Boogie Board (admin@foo.com)
-I20210331-19:23:43.030(-7)? Creating default data.
-I20210331-19:23:43.030(-7)?   Defining Daily User Data on: 2019-11-13
-I20210331-19:23:43.066(-7)?   Defining Daily User Data on: 2019-11-14
-I20210331-19:23:43.067(-7)?   Defining Daily User Data on: 2019-11-15
-I20210331-19:23:43.070(-7)? Creating default Vehicle.
-I20210331-19:23:43.070(-7)?   Defining vehicle test@gmail.com
-I20210331-19:23:43.108(-7)?   Defining vehicle test@gmail.com
-I20210331-19:23:43.110(-7)?   Defining vehicle test@gmail.com
-I20210331-19:23:43.113(-7)? Creating the default profiles
-I20210331-19:23:43.113(-7)?   Defining profile test@gmail.com
-I20210331-19:23:43.188(-7)?   Defining profile john@foo.com
-I20210331-19:23:43.195(-7)? Creating default make.
-I20210331-19:23:43.196(-7)?   Defining make Nissan
-I20210331-19:23:43.228(-7)?   Defining make Honda
-I20210331-19:23:43.230(-7)?   Defining make Toyota
-I20210331-19:23:43.231(-7)?   Defining make Tesla
-I20210331-19:23:43.234(-7)?   Defining make Ford
-I20210331-19:23:43.236(-7)?   Defining make Volkswagen
-I20210331-19:23:43.388(-7)? Monti APM: completed instrumenting the app
+W20210422-16:05:58.849(-10)? (STDERR) Note: you are using a pure-JavaScript implementation of bcrypt.
+W20210422-16:05:58.870(-10)? (STDERR) While this implementation will work correctly, it is known to be
+W20210422-16:05:58.870(-10)? (STDERR) approximately three times slower than the native implementation.
+W20210422-16:05:58.870(-10)? (STDERR) In order to use the native implementation instead, run
+W20210422-16:05:58.870(-10)? (STDERR) 
+W20210422-16:05:58.870(-10)? (STDERR)   meteor npm install --save bcrypt
+W20210422-16:05:58.871(-10)? (STDERR) 
+W20210422-16:05:58.871(-10)? (STDERR) in the root directory of your application.
+I20210422-16:06:04.444(-10)? Initializing database!
+I20210422-16:06:09.327(-10)?    users: 22 accounts
+I20210422-16:06:24.432(-10)?    AllVehicleCollection: 28334 vehicles
+I20210422-16:06:24.657(-10)?    MakeCollection: 80 makes
+I20210422-16:06:24.799(-10)?    UserCollection: 21 profiles
+I20210422-16:06:24.956(-10)?    UserSavedDistanceCollection: 63 saved distances
+I20210422-16:06:25.159(-10)?    UserVehicleCollection: 49 vehicles
+I20210422-16:06:26.298(-10)?    DailyUserDataCollection: 1951 daily user data
+I20210422-16:06:26.931(-10)? Monti APM: completed instrumenting the app
 => Started your app.
 
 => App running at: http://localhost:3000/
 ```
-
-After running the application you must populate the vehicle database that holds MPG for most vehicles. To do this, run:
-
-```
-meteor npm run populate
-```
-
-You should get the following message:
-
-```
-> meteor-application-template-react@ populate /home/michael/Documents/GitHub/ghg-tracker/app
-> mongoimport --host 127.0.0.1:3001 --db meteor --collection AllVehicleCollection --file ../config/vehicle_data.json
-
-2021-03-31T18:01:22.488-1000	connected to: 127.0.0.1:3001
-2021-03-31T18:01:23.086-1000	imported 1 document
-
-```
-NOTE: if you skip this step adding vehicles will not work or give you an error.
-
 ---
 ### Note Regarding "bcrypt warning":
 
@@ -128,7 +88,11 @@ On some operating systems (particularly Windows), installing bcrypt is much more
 
 ### Viewing the Running Application
 
-If all goes well, the template application will appear at [http://localhost:3000](http://localhost:3000).  You can login using the credentials in [settings.development.json](https://github.com/athleticheck/athleticheck/blob/master/config/settings.development.json), or else register a new account.
+If all goes well, the template application will appear at [http://localhost:3000](http://localhost:3000). You can log-in as:
+* Test User: test@gmail.com (foo);
+* Admin User: admin@foo.com (changeme);
+* Any of the emails on the User List (log-in as admin to access) using the same password as Test User;
+* Or, by creating your own account (Note: Because this application is still being developed, please use a fake email for your safety.)
 
 ---
 ### ESLint
@@ -139,8 +103,6 @@ You can verify that the code obeys our coding standards by running ESLint over t
 meteor npm run lint
 ```
 ---
-
-
 
 ![ci-badge](https://github.com/hot-n-code/ghg-tracker/workflows/hot-n-code-ghg-tracker/badge.svg)
 
