@@ -25,7 +25,8 @@ const ProfileCard = ({ profile }) => (
           <div>
             <EditProfile profileID={profile._id}/>
             <WhatIf/>
-            <Button as={NavLink} activeClassName="active" exact
+            <Button color='black'
+                    as={NavLink} activeClassName="active" exact
                     to="/user-react-page">History</Button>
           </div>
         </Card.Content>

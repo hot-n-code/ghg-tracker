@@ -56,7 +56,7 @@ class UserPage extends React.Component {
                           <Card.Content>
                               <Header as='h1'>Compare your numbers to the community!
                               </Header>
-                              <Button size='medium' as={ NavLink } activeClassName='active' exact
+                              <Button color='black' size='medium' as={ NavLink } activeClassName='active' exact
                                       to='/comparison'>Compare</Button>
                           </Card.Content>
                       </Card>
