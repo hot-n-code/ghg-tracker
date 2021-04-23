@@ -11,7 +11,7 @@ import { getDailyGHG } from '../../utilities/DailyGHGData';
 import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
 import EditDailyData from '../../components/user-data-page/EditDailyData';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
-import SavedDistances from '../../components/user-data-page/SavedDistances';
+import SavedDistances from '../../components/user-data-page/saved-distances/SavedDistances';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {

@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Button, Form, Icon, Loader, Modal, Popup, Table } from 'semantic-ui-react';
 import swal from 'sweetalert';
-import { UserSavedDistances } from '../../../api/user/UserSavedDistanceCollection';
-import { getKilometersTraveled, getMilesTraveled } from '../../utilities/DailyGHGData';
-import { userSavedDistanceDefineMethod } from '../../../api/user/UserSavedDistanceCollection.methods';
+import { UserSavedDistances } from '../../../../api/user/UserSavedDistanceCollection';
+import { getMilesTraveled } from '../../../utilities/DailyGHGData';
+import { userSavedDistanceDefineMethod } from '../../../../api/user/UserSavedDistanceCollection.methods';
+import SavedDistanceItem from './SavedDistanceItem';
 
 const SavedDistances = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -58,7 +59,7 @@ const SavedDistances = (props) => {
                       onChange={handleLocationName}
           />
         </Table.Cell>
-        <Table.Cell singleLine>
+        <Table.Cell>
           <Form.Group inline>
             <Form.Input placeholder='Distance (one way)'
                         value={distance}
@@ -85,8 +86,8 @@ const SavedDistances = (props) => {
         <Table.Cell textAlign='right'>
           <Popup content='Submit'
                  size='mini'
-                 trigger={<Icon color='black'
-                                name='add'
+                 trigger={<Icon color='green'
+                                name='check'
                                 style={{ cursor: 'pointer' }}
                                 onClick={handleSubmit}
                  />}
@@ -131,15 +132,7 @@ const SavedDistances = (props) => {
           <Table basic='very' fixed>
             <Table.Body>
               {props.savedDistances.map((savedDistance, index) => (
-                    <Table.Row key={index}>
-                      <Table.Cell width={5}>{savedDistance.location}</Table.Cell>
-                      <Table.Cell width={5}>{savedDistance.distanceMiles} mi ({getKilometersTraveled(savedDistance.distanceMiles, 'mi').toFixed(2)} km)</Table.Cell>
-                      <Table.Cell width={2}/>
-                      <Table.Cell textAlign='right' width={2}>
-                        <Icon style={{ cursor: 'pointer' }} name='edit outline'/>
-                        <Icon style={{ cursor: 'pointer' }} name='trash alternate outline'/>
-                      </Table.Cell>
-                    </Table.Row>
+                    <SavedDistanceItem savedDistance={savedDistance} key={index}/>
                 ))}
               {showAddForm()}
             </Table.Body>
