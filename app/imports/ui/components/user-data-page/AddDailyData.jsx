@@ -68,7 +68,6 @@ const AddDailyData = (props) => {
     if (value === 'other') {
       setDistanceForm(true);
       setLabelDistance(false);
-      setDistance(0);
     } else {
       const savedDistance = props.savedDistances.find(({ _id }) => _id === value);
       setDistance(savedDistance.distanceMiles);
@@ -87,12 +86,7 @@ const AddDailyData = (props) => {
 
   const handleDistance = (e, { value }) => setDistance(value);
 
-  const handleUnit = (e, { value }) => {
-    setUnit(value);
-    setDistance((value === 'mi') ?
-        getMilesTraveled(distance, unit).toFixed(2) :
-        getKilometersTraveled(distance, unit).toFixed(2));
-  };
+  const handleUnit = (e, { value }) => setUnit(value);
 
   const handleDistanceForm = () => (distanceForm ?
           <div>
@@ -129,7 +123,6 @@ const AddDailyData = (props) => {
     if (data.roundtrip) {
       inputData.milesTraveled *= 2;
     }
-    console.log(inputData.milesTraveled);
     inputData.modeType = getModeType(inputData.modeOfTransportation, props.vehicles);
     inputData.owner = props.owner;
     userDailyDataDefineMethod.call(inputData, (error) => (error ?
@@ -145,7 +138,7 @@ const AddDailyData = (props) => {
              open={modalOpen}
              onClose={handleModalClose}
              onOpen={handleModalOpen}
-             trigger={<Button>Add Data</Button>}
+             trigger={<Button color='black'>Add Data</Button>}
              as={AutoForm}
              schema={bridge}
              onSubmit={data => handleSubmit(data)}

@@ -83,12 +83,7 @@ const EditDailyData = (props) => {
 
   const handleDistance = (e, { value }) => setDistance(value);
 
-  const handleUnit = (e, { value }) => {
-    setUnit(value);
-    setDistance((value === 'mi') ?
-        getMilesTraveled(distance, unit).toFixed(2) :
-        getKilometersTraveled(distance, unit).toFixed(2));
-  };
+  const handleUnit = (e, { value }) => setUnit(value);
 
   const handleDistanceForm = () => (distanceForm ?
           <div>

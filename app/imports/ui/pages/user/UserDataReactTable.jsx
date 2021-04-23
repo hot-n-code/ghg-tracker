@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Divider, Loader, Header, Input } from 'semantic-ui-react';
+import { Container, Divider, Loader, Header, Input, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -11,6 +11,7 @@ import { getDailyGHG } from '../../utilities/DailyGHGData';
 import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
 import EditDailyData from '../../components/user-data-page/EditDailyData';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import SavedDistances from '../../components/user-data-page/SavedDistances';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {
@@ -79,21 +80,29 @@ class UserDataReactTable extends React.Component {
          <Container id="profileList-page">
            <Divider hidden vertical/>
            <Header as='h1' textAlign='center'>My Transportation History</Header>
-           <AddDailyData vehicles={this.props.vehicles}/>
-           <WhatIf/>
-           <Input
-               list='filter'
-               placeholder='Filter results..'
-               name='filterValue'
-               icon='search'
-               type='text'
-               value={filterValue}
-               onChange={this.handleOnChange}
-           />
+           <Grid container columns={2}>
+             <Grid.Column verticalAlign='middle'>
+               <AddDailyData vehicles={this.props.vehicles}/>
+               <WhatIf/>
+               <SavedDistances/>
+             </Grid.Column>
+             <Grid.Column floated='right' textAlign='right' verticalAlign='middle'>
+               <Input
+                   list='filter'
+                   placeholder='Filter results..'
+                   name='filterValue'
+                   icon='search'
+                   type='text'
+                   value={filterValue}
+                   onChange={this.handleOnChange}
+               />
+             </Grid.Column>
+           </Grid>
+
            <Divider hidden/>
            <SmartDataTable
                 data={this.props.dailyData.map(data => this.getColumns(data, this.props.vehicles)) }
-                name="profile-list"
+                name="daily-data-list"
                 className="ui compact table"
                 sortable
                 onRowClick={this.onRowClick}

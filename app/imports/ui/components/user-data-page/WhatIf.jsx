@@ -70,7 +70,6 @@ const WhatIf = (props) => {
     if (value === 'other') {
       setDistanceForm(true);
       setLabelDistance(false);
-      setDistance(0);
     } else {
       const savedDistance = props.savedDistances.find(({ _id }) => _id === value);
       setDistance(savedDistance.distanceMiles);
@@ -89,12 +88,7 @@ const WhatIf = (props) => {
 
   const handleDistance = (e, { value }) => setDistance(value);
 
-  const handleUnit = (e, { value }) => {
-    setUnit(value);
-    setDistance((value === 'mi') ?
-        getMilesTraveled(distance, unit).toFixed(2) :
-        getKilometersTraveled(distance, unit).toFixed(2));
-  };
+  const handleUnit = (e, { value }) => setUnit(value);
 
   const handleDistanceForm = () => (distanceForm ?
           <div>
@@ -123,7 +117,6 @@ const WhatIf = (props) => {
   );
 
   const submit = (data, formRef) => {
-    console.log('test');
     const inputData = {};
     inputData.inputDate = 0;
     inputData.modeOfTransportation = data.modeOfTransportation;
@@ -193,7 +186,7 @@ const WhatIf = (props) => {
   return props.ready ? (
     <Modal size='tiny'
            closeIcon
-           trigger={<Button>What If</Button>}
+           trigger={<Button color='black'>What If</Button>}
            onClose={() => setFirstOpen(false)}
            onOpen={() => setFirstOpen(true)}
            open={firstOpen}
