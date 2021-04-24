@@ -211,9 +211,8 @@ h6 {
   justify-content: space-around;
 }
 
-.vehicle-card-btn-edit,
 .vehicle-card-btn-del {
-  background-color: rgb(255, 255, 255);
+  background-color: inherit;
   border: none;
   margin: 0 5px;
   padding: 3px 2px;
@@ -519,7 +518,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
   font-weight: 700;
 }
 
-.vehicle-loader-container{
+.vehicle-loader-container {
   top: 20px;
   right: 0px;
   position: absolute;
