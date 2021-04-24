@@ -152,7 +152,7 @@ class UserVSCumulative extends React.Component {
 }
 
 UserVSCumulative.propTypes = {
-    users: PropTypes.array,
+    users: PropTypes.array.isRequired,
     dailyData: PropTypes.array.isRequired,
     dailyDataAll: PropTypes.array.isRequired,
     vehicles: PropTypes.array.isRequired,
@@ -165,12 +165,18 @@ export default withTracker(() => {
     const subscription2 = UserDailyData.subscribeUserDailyDataCumulative();
     const subscription3 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
+    const users = Users.find({}, {}).fetch();
+    const dailyData = UserDailyData.find({ owner: currentUser }, {}).fetch();
+    const dailyDataAll = UserDailyData.find({}, {}).fetch();
+    const vehicles = UserVehicles.find({ owner: currentUser }, {}).fetch();
+    const allVehicles = UserVehicles.find({}, {}).fetch({});
+    const ready = subscription1.ready() && subscription2.ready() && subscription3.ready();
     return {
-        users: Users.find({}, {}).fetch(),
-        dailyData: UserDailyData.find({ owner: currentUser }, {}).fetch(),
-        dailyDataAll: UserDailyData.find({}, {}).fetch(),
-        vehicles: UserVehicles.find({ owner: currentUser }, {}).fetch(),
-        allVehicles: UserVehicles.find({}, {}).fetch({}),
-        ready: subscription1.ready() && subscription2.ready() && subscription3.ready(),
+        users,
+        dailyData,
+        dailyDataAll,
+        vehicles,
+        allVehicles,
+        ready,
     };
 })(UserVSCumulative);
