@@ -9,6 +9,7 @@ import { _ } from 'meteor/underscore';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Users } from '../../../api/user/UserCollection';
+import { userDefineMethod } from '../../../api/user/UserCollection.methods';
 
 const paddingStyle = {
   marginRight: 'auto',
@@ -43,11 +44,11 @@ class CreateUser extends React.Component {
     if (image === undefined) {
       image = '/images/default/default-pfp.png';
     }
-    const allUser = _.pluck(Users.collection.find().fetch(), 'email');
+    const allUser = _.pluck(this.props.allUsers, 'email');
     if (allUser.includes(email)) {
       swal('Error', 'You already have a created user');
     } else {
-      Users.collection.insert({ name, goal, email, image },
+      userDefineMethod.call({ name, goal, email, image },
           (error) => {
             if (error) {
               swal('Error', error.message, 'error');
@@ -99,14 +100,17 @@ class CreateUser extends React.Component {
 }
 
 CreateUser.propTypes = {
+  allUsers: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = Meteor.subscribe(Users.userPublicationName);
+  const sub1 = Users.subscribeUser();
+  const allUsers = Users.find({}).fetch();
   return {
+    allUsers,
     ready: sub1.ready(),
   };
 })(CreateUser);

@@ -1,11 +1,12 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Grid, Header, Loader } from 'semantic-ui-react';
+import { Container, Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import AltVehicleCard from '../../components/user-page/AltVehicleCard';
+import LeafWidget from '../../components/user-page/LeafWidget';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 class AltTransportation extends React.Component {
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -24,7 +25,7 @@ class AltTransportation extends React.Component {
 
     return (
         <div className='background-all'>
-          <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
+          <Grid centered stackable columns={3} className={'my-vehicles-grid'}>
             <Grid.Column>
               <Header as='h1' textAlign='center'>
                 Alternative Transportation
@@ -32,6 +33,10 @@ class AltTransportation extends React.Component {
             </Grid.Column>
             <Grid.Column>
               <AltVehicleCard userData={userData} userVehicles={userVehicles}/>
+            </Grid.Column>
+            <Grid.Column>
+              <Container><LeafWidget userData={userData} userVehicles={userVehicles}/>
+              </Container>
             </Grid.Column>
           </Grid>
         </div>
@@ -51,12 +56,12 @@ AltTransportation.propTypes = {
 export default withTracker(() => {
   // KEEP FOR REFERENCE: Get access to Stuff documents.
   const currentUser = Meteor.user() ? Meteor.user().username : '';
-  const subscription = Meteor.subscribe(DailyUserData.userPublicationName);
-  const subscription2 = Meteor.subscribe(UserVehicle.userPublicationName);
+  const subscription = UserDailyData.subscribeUserDailyData();
+  const subscription2 = UserVehicles.subscribeUserVehicle();
   return {
     // KEEP FOR REFERENCE: stuffs: Stuffs.collection.find({}).fetch(),
     ready: subscription.ready() && subscription2.ready(),
-    data: DailyUserData.collection.find({ owner: currentUser }).fetch(),
-    vehicles: UserVehicle.collection.find({ owner: currentUser }).fetch(),
+    data: UserDailyData.find({ owner: currentUser }).fetch(),
+    vehicles: UserVehicles.find({ owner: currentUser }).fetch(),
   };
 })(AltTransportation);

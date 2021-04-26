@@ -1,17 +1,17 @@
 import React from 'react';
-import { Container, Divider, Loader, Header, Input } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor';
+import { Container, Divider, Loader, Header, Input, Grid } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
 import AddDailyData from '../../components/user-data-page/AddDailyData';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import { getDailyGHG } from '../../utilities/DailyGHGData';
 import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
 import EditDailyData from '../../components/user-data-page/EditDailyData';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import SavedDistances from '../../components/user-data-page/saved-distances/SavedDistances';
 
 class UserDataReactTable extends React.Component {
   constructor(props) {
@@ -65,17 +65,14 @@ class UserDataReactTable extends React.Component {
        _id: {
          invisible: true,
        },
-       edit: {
+       actions: {
          text: ' ',
          sortable: false,
          filterable: false,
-         transform: (value, index, row) => <EditDailyData transportationID={row._id}/>,
-       },
-       delete: {
-         text: ' ',
-         sortable: false,
-         filterable: false,
-         transform: (value, index, row) => <DeleteDailyData transportationID={row._id}/>,
+         transform: (value, index, row) => <div>
+               <EditDailyData transportationID={row._id} vehicles={this.props.vehicles}/>
+               <DeleteDailyData transportationID={row._id}/>
+             </div>,
        },
      };
 
@@ -83,21 +80,30 @@ class UserDataReactTable extends React.Component {
          <Container id="profileList-page">
            <Divider hidden vertical/>
            <Header as='h1' textAlign='center'>My Transportation History</Header>
-           <AddDailyData/>
-           <WhatIf/>
-           <Input
-               list='filter'
-               placeholder='Filter results..'
-               icon='search'
-               type='text'
-               value={filterValue}
-               onChange={this.handleOnChange}
-           />
+           <Grid container columns={2}>
+             <Grid.Column verticalAlign='middle'>
+               <AddDailyData vehicles={this.props.vehicles}/>
+               <WhatIf/>
+               <SavedDistances/>
+             </Grid.Column>
+             <Grid.Column floated='right' textAlign='right' verticalAlign='middle'>
+               <Input
+                   list='filter'
+                   placeholder='Filter results..'
+                   name='filterValue'
+                   icon='search'
+                   type='text'
+                   value={filterValue}
+                   onChange={this.handleOnChange}
+               />
+             </Grid.Column>
+           </Grid>
+
            <Divider hidden/>
            <SmartDataTable
                 data={this.props.dailyData.map(data => this.getColumns(data, this.props.vehicles)) }
-                name="profile-list"
-                className="ui compact selectable table"
+                name="daily-data-list"
+                className="ui compact table"
                 sortable
                 onRowClick={this.onRowClick}
                 perPage={25}
@@ -118,10 +124,10 @@ UserDataReactTable.propTypes = {
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.userPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.userPublicationName).ready();
-  const dailyData = DailyUserData.collection.find({}, { sort: { inputDate: -1 } }).fetch();
-  const vehicles = UserVehicle.collection.find({}).fetch();
+  const ready = UserDailyData.subscribeUserDailyData().ready() &&
+      UserVehicles.subscribeUserVehicle().ready();
+  const dailyData = UserDailyData.find({}, { sort: { inputDate: -1 } }).fetch();
+  const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyData,
     vehicles,

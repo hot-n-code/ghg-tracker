@@ -3,14 +3,40 @@ import PropTypes from 'prop-types';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
 import { Header, Button } from 'semantic-ui-react';
+import swal from 'sweetalert';
+import { withTracker } from 'meteor/react-meteor-data';
 import {
   getVehicleYearsList,
   getVehicle,
 } from '../../utilities/vehicleDropdown';
 import { sampleVehicles } from '../../utilities/sampleData';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import { userVehicleRemoveItMethod } from '../../../api/user/UserVehicleCollection.methods';
 
 /** Renders a single vehicle card. */
 const VehicleCard = ({ vehicle }) => {
+  // Destructure the 'vehicle' prop.
+  const {
+    _id,
+    name,
+    year,
+    make,
+    model,
+    logo,
+    price,
+    MPG,
+    fuelSpending,
+    type,
+  } = vehicle;
+
+  // Extract 'make' and 'year' property names
+  const makeProperty = Object.keys(vehicle).find(
+    property => property === 'make',
+  );
+  const yearProperty = Object.keys(vehicle).find(
+    property => property === 'year',
+  );
+
   // Populate vehicle comparator's dropdown values and comparator vehicle values.
   const initDropdownValues = property => {
     const sortedVehicles = _.sortBy(sampleVehicles, 'make');
@@ -34,7 +60,7 @@ const VehicleCard = ({ vehicle }) => {
     return uniqueList;
   };
 
-  const populateDropdownModel = currentMake => {
+  const getModelList = currentMake => {
     const filteredMakeList = _.filter(
       sampleVehicles,
       sampleVehicle => sampleVehicle.make === currentMake,
@@ -44,11 +70,14 @@ const VehicleCard = ({ vehicle }) => {
     return uniqueModels;
   };
 
-  const getInitComparatorVehicle = (year, model) => {
-    const yearAsInt = parseInt(year, 10);
+  const getInitComparatorVehicle = () => {
+    const initMakeList = initDropdownValues(makeProperty);
+    const initModel = getModelList(initMakeList[0]);
+    const initYear = initDropdownValues(yearProperty);
+    const yearAsInt = parseInt(initYear[0], 10);
     const listModel = _.filter(
       sampleVehicles,
-      sampleVehicle => sampleVehicle.model === model,
+      sampleVehicle => sampleVehicle.model === initModel[0],
     );
     const defaultVehicle = listModel.find(
       vehicleModel => vehicleModel.year === yearAsInt,
@@ -56,35 +85,43 @@ const VehicleCard = ({ vehicle }) => {
     return defaultVehicle;
   };
 
-  // Destructure the 'vehicle' prop.
-  const {
-    _id,
-    name,
-    year,
-    make,
-    model,
-    logo,
-    price,
-    MPG,
-    fuelSpending,
-    type,
-  } = vehicle;
-
-  // Get list of vehicle makes.
-  const makeList = initDropdownValues(Object.keys(vehicle)[1]);
-
   // State
   const [selectedId, setSelectedId] = useState(null);
-  const [dropdownYear, setDropdownYear] = useState(
-    initDropdownValues(Object.keys(vehicle)[5]),
-  );
-  const [dropdownModel, setDropdownModel] = useState(
-    populateDropdownModel(makeList[0]),
-  );
-  const [comparatorVehicle, setComparatorVehicle] = useState(
-    getInitComparatorVehicle(dropdownYear[0], dropdownModel[0]),
-  );
-  const [selectModel, setSelectModel] = useState(dropdownModel[0]);
+  const [makeList, setMakeList] = useState([]);
+  const [dropdownYear, setDropdownYear] = useState([]);
+  const [dropdownModel, setDropdownModel] = useState([]);
+  const [comparatorVehicle, setComparatorVehicle] = useState(null);
+  const [selectModel, setSelectModel] = useState(null);
+
+  // Vehicle card handler
+  const vehicleCardHandler = status => {
+    if (status === true) {
+      const initMakeList = initDropdownValues(makeProperty);
+      setSelectedId(_id);
+      setMakeList(initMakeList);
+      setDropdownYear(initDropdownValues(yearProperty));
+      setDropdownModel(getModelList(initMakeList[0]));
+      setComparatorVehicle(getInitComparatorVehicle);
+      setSelectModel(dropdownModel[0]);
+    } else {
+      setSelectedId(null);
+      setMakeList([]);
+      setDropdownYear([]);
+      setDropdownModel([]);
+      setComparatorVehicle(null);
+      setSelectModel(null);
+    }
+  };
+
+  // Edit and delete button handlers
+  // const onClickEditHandler = () => {
+  //   userVehicleUpdateMethod.call(vehicle._id);
+  // };
+
+  const onClickDeleteHandler = () => {
+    swal('Success', 'Vehicle deleted successfully', 'success');
+    userVehicleRemoveItMethod.call(vehicle._id);
+  };
 
   // Dropdown handlers
   const dropdownYearHandler = e => {
@@ -95,7 +132,7 @@ const VehicleCard = ({ vehicle }) => {
   };
 
   const dropdownMakeHandler = e => {
-    const modelList = populateDropdownModel(e.target.value);
+    const modelList = getModelList(e.target.value);
     const yearList = getVehicleYearsList(modelList[0], sampleVehicles);
     const newVehicle = getVehicle(
       parseInt(yearList[0], 10),
@@ -124,12 +161,25 @@ const VehicleCard = ({ vehicle }) => {
         className='vehicle-card'
         layoutId={_id}
         whileHover={{
-          scale: 1.04,
+          scale: 1.02,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
-        onClick={() => setSelectedId(_id)}
       >
-        <div className='vehicle-card-container'>
+        <motion.div
+          className='vehicle-card-btn-container'
+          layoutId={`vehicle-card-btn-container-${_id}`}
+        >
+          <button
+            className='vehicle-card-btn-del'
+            onClick={onClickDeleteHandler}
+          >
+            Delete
+          </button>
+        </motion.div>
+        <div
+          className='vehicle-card-container'
+          onClick={() => vehicleCardHandler(true)}
+        >
           <motion.div
             className='vehicle-card-content'
             layoutId={`vehicle-card-container-${_id}`}
@@ -144,7 +194,20 @@ const VehicleCard = ({ vehicle }) => {
               className='vehicle-card-header'
               layoutId={`vehicle-card-header-${_id}`}
             >
-              <Header as='h1'>{`${name}`}</Header>
+              {name === `${year} ${make} ${model}` ? (
+                <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+              ) : (
+                <>
+                  <Header
+                    as='h1'
+                    className='vehicle-card-header-name'
+                  >{`${name}'s`}</Header>
+                  <Header
+                    as='h1'
+                    className='vehicle-card-header-vehicle'
+                  >{`${year} ${make} ${model}`}</Header>
+                </>
+              )}
             </motion.div>
             <motion.div
               className='vehicle-card-description'
@@ -191,7 +254,7 @@ const VehicleCard = ({ vehicle }) => {
             <motion.div className='vehicle-card-expand' layoutId={selectedId}>
               <motion.p
                 className='vehicle-card-expand-close-btn'
-                onClick={() => setSelectedId(null)}
+                onClick={() => vehicleCardHandler(false)}
               >
                 &#10005;
               </motion.p>
@@ -338,6 +401,15 @@ const VehicleCard = ({ vehicle }) => {
 /** Individual vehicle data is passed in as an object in props. */
 VehicleCard.propTypes = {
   vehicle: PropTypes.object.isRequired,
+  allUserVehicles: PropTypes.array.isRequired,
 };
 
-export default VehicleCard;
+/** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
+export default withTracker(() => {
+  // Ensure that minimongo is populated with all collections prior to running render().
+  const sub1 = UserVehicles.subscribeUserVehicle();
+  return {
+    allUserVehicles: UserVehicles.find({}).fetch(),
+    ready: sub1.ready(),
+  };
+})(VehicleCard);

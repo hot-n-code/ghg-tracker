@@ -5,11 +5,11 @@ import { altNoEVWalking, altNoEVWalkingBiking, altSelectFieldOptions } from '../
 
 /**
  * Defines the max amount of elements per collection
- * @type {{vehiclesPerUser: number, dailyUserDataPerUser: number, users: number}}
+ * @type {{vehiclesPerUser: number, userDailyDataPerUser: number, users: number}}
  */
 const maxQuantity = {
-  users: 0,
-  dailyUserDataPerUser: 100,
+  users: 20,
+  userDailyDataPerUser: 100,
   vehiclesPerUser: 3,
 };
 
@@ -133,19 +133,19 @@ const createSavedDistances = (accounts) => {
 };
 
 /**
- * Creates (maxQuantity.dailyUserData) number of fake daily user data per user
+ * Creates (maxQuantity.userDailyData) number of fake daily user data per user
  * @param accounts
  * @param savedDistances
  * @param userVehicles
  * @returns array with objects containing:
  *    { inputDate, modeOfTransportation, modeType, milesTraveled, owner }
  */
-const createDailyUserData = (accounts, savedDistances, userVehicles) => {
-  const dailyUserData = [];
+const createUserDailyData = (accounts, savedDistances, userVehicles) => {
+  const userDailyData = [];
   const today = getDateToday();
 
   accounts.forEach(function (account) {
-    const tempDate = today;
+    const tempDate = new Date(today.getTime());
 
     // get the type of regular trip based on saved distances
     const regularTripName = faker.helpers.randomize(['work', 'school']);
@@ -175,12 +175,12 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
       });
     };
 
-    for (let iter = 0; iter < maxQuantity.dailyUserDataPerUser; iter++) {
+    for (let iter = 0; iter < maxQuantity.userDailyDataPerUser; iter++) {
       tempDate.setDate(tempDate.getDate() - 1);
       // on Sundays, periodic trip
       if (tempDate.getDay() === 0) {
         const modeAndType = getModeAndType(periodicTrip.distanceMiles);
-        dailyUserData.push({
+        userDailyData.push({
           inputDate: tempDate.toISOString().slice(0, 10),
           modeOfTransportation: modeAndType.name,
           modeType: modeAndType.type,
@@ -193,7 +193,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
         const randomMiles = faker.datatype.float({ min: 0.5, max: 50 });
         const modeAndType = getModeAndType(randomMiles);
         if (goOnTrip) {
-          dailyUserData.push({
+          userDailyData.push({
             inputDate: tempDate.toISOString().slice(0, 10),
             modeOfTransportation: modeAndType.name,
             modeType: modeAndType.type,
@@ -204,7 +204,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
       // on weekdays, go to regular trip
       } else {
         const modeAndType = getModeAndType(regularTrip.distanceMiles);
-        dailyUserData.push({
+        userDailyData.push({
           inputDate: tempDate.toISOString().slice(0, 10),
           modeOfTransportation: modeAndType.name,
           modeType: modeAndType.type,
@@ -214,7 +214,7 @@ const createDailyUserData = (accounts, savedDistances, userVehicles) => {
       }
     }
   });
-  return dailyUserData;
+  return userDailyData;
 };
 
 /**
@@ -239,7 +239,7 @@ const writeJSON = () => {
 
   data.defaultUserVehicles = createUserVehicles(accounts.defaultAccounts);
   data.defaultSavedDistances = createSavedDistances(accounts.defaultAccounts);
-  data.defaultDailyUserData = createDailyUserData(
+  data.defaultUserDailyData = createUserDailyData(
       accounts.defaultAccounts,
       data.defaultSavedDistances,
       data.defaultUserVehicles,

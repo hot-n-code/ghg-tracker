@@ -1,6 +1,5 @@
 import React from 'react';
 import { Loader, Modal, Button } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -13,8 +12,9 @@ import {
     TextField,
 } from 'uniforms-semantic';
 import { Users } from '../../../api/user/UserCollection';
+import { userUpdateMethod } from '../../../api/user/UserCollection.methods';
 
-const bridge = new SimpleSchema2Bridge(Users.schema);
+const bridge = new SimpleSchema2Bridge(Users.getSchema());
 
 // Modal for editing user's profile data
 class EditProfile extends React.Component {
@@ -33,14 +33,12 @@ class EditProfile extends React.Component {
     // On successful submit, update data.
     submit(data) {
         const { name, image, goal, _id } = data;
-        Users.collection.update(_id, { $set: { name, image, goal } }, (error) => {
+        userUpdateMethod.call(_id, { $set: { name, image, goal } }, (error) => {
             if (error) {
                 swal('Error', error.message, 'error');
             } else {
                 swal('Success', 'Profile edited successfully!', 'success').then(() => {
                     this.handleModalClose();
-                    // eslint-disable-next-line no-undef
-                    window.location.reload();
                 });
             }
         });
@@ -60,7 +58,7 @@ class EditProfile extends React.Component {
                    open={this.state.modalOpen}
                    onClose={this.handleModalClose}
                    onOpen={this.handleModalOpen}
-                   trigger={<Button >Edit Profile</Button>}
+                   trigger={<Button color='black'>Edit Profile</Button>}
             >
                 <Modal.Header>Edit My Profile</Modal.Header>
                 <Modal.Content>
@@ -89,9 +87,9 @@ EditProfile.propTypes = {
 
 // withTracker connects Meteor data to React components.
 export default withTracker(() => {
-    const subscription = Meteor.subscribe(Users.userPublicationName);
+    const subscription = Users.subscribeUser();
     return {
-        users: Users.collection.find({}).fetch(),
+        users: Users.find({}).fetch(),
         ready: subscription.ready(),
     };
 })(EditProfile);

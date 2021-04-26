@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/underscore';
 import { Users } from '../../../api/user/UserCollection';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import ComparisonGraph from '../../components/ComparisonGraph';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: 20 };
 const rideStyle = { height: '200px', width: '300px' };
@@ -33,7 +33,7 @@ class UserVSCumulative extends React.Component {
             result = 'Uh-oh. It looks like you are producing more emissions rather than reducing them.' +
                 ' Maybe consider a form of alternative transportation?';
         } else if (thisMonthCO2Reduced > thisMonthCO2Produced) {
-            result = `Your CO2 reduction efforts are paying off! You have reduced ${thisMonthCO2Reduced
+            result = `Your CO2 reduction efforts are paying off! You have reduced ${thisMonthCO2Reduced.toFixed(2)
                 } lbs of CO2. Keep up the good work!`;
         } else {
             result = 'No pounds of CO2 reduced available for this month. Start adding in your trips!';
@@ -151,7 +151,7 @@ class UserVSCumulative extends React.Component {
 
 UserVSCumulative.propTypes = {
     users: PropTypes.array,
-    dailyData: PropTypes.array,
+    dailyData: PropTypes.array.isRequired,
     dailyDataAll: PropTypes.array.isRequired,
     vehicles: PropTypes.array.isRequired,
     allVehicles: PropTypes.array.isRequired,
@@ -159,19 +159,16 @@ UserVSCumulative.propTypes = {
 };
 
 export default withTracker(() => {
-    const subscription1 = Meteor.subscribe(Users.adminPublicationName);
-    const subscription2 = Meteor.subscribe(DailyUserData.cumulativePublicationName);
-    const subscription3 = Meteor.subscribe(DailyUserData.userPublicationName);
-    const subscription4 = Meteor.subscribe(UserVehicle.userPublicationName);
-    const subscription5 = Meteor.subscribe(UserVehicle.adminPublicationName);
+    const subscription1 = Users.subscribeUserCumulative();
+    const subscription2 = UserDailyData.subscribeUserDailyDataCumulative();
+    const subscription3 = UserVehicles.subscribeUserVehicleCumulative();
     const currentUser = Meteor.user() ? Meteor.user().username : '';
     return {
-        users: Users.collection.find({}).fetch(),
-        dailyData: DailyUserData.collection.find({ owner: currentUser }).fetch(),
-        dailyDataAll: DailyUserData.collection.find({}).fetch(),
-        vehicles: UserVehicle.collection.find({ owner: currentUser }).fetch(),
-        allVehicles: UserVehicle.collection.find({}).fetch({}),
-        ready: subscription1.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready()
-            && subscription5.ready(),
+        users: Users.find({}).fetch(),
+        dailyData: UserDailyData.find({ owner: currentUser }).fetch(),
+        dailyDataAll: UserDailyData.find({}).fetch(),
+        vehicles: UserVehicles.find({ owner: currentUser }).fetch(),
+        allVehicles: UserVehicles.find({}).fetch({}),
+        ready: subscription1.ready() && subscription2.ready() && subscription3.ready(),
     };
 })(UserVSCumulative);

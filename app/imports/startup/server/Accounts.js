@@ -22,7 +22,6 @@ function createUser(email, password, role) {
 if (Meteor.users.find().count() === 0) {
   if (Meteor.isServer) {
     console.log('Initializing database!');
-    console.log(randomAccounts);
     randomAccounts.defaultAccounts.map(({ email, password, role }) => createUser(email, password, role));
     console.log(`   users: ${Meteor.users.find().count()} accounts`);
   } else {

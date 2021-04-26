@@ -1,6 +1,6 @@
 /* NAVBAR */
 .ui.attached.menu {
-  background: #FC4A1A;
+  background: #fc4a1a;
   margin-bottom: 0px;
   padding: 0px;
 }
@@ -19,17 +19,38 @@
   background-repeat: no-repeat;
   height: 500px;
 }
-.cloud-box #cloud-carbon {
-  position: absolute;
-  font-size: 60px;
-  transform: translate(40%, -310%);
+#cloud-carbon {
+  padding-top: 40px;
   color: aliceblue;
-  z-index: 5;
+  font-size: 40px;
+}
+
+.cloud-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cloud-box-container {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  background-image: url('images/landing-page/cloud-trans-5.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 0;
+  margin: 0;
+}
+
+.cloud-box-text {
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0px;
-  text-size-adjust: none;
+  text-align: center;
 }
+
 .background-total-user-data {
   background-color: white;
   border: thin solid lightgray;
@@ -164,13 +185,13 @@ h6 {
 
 /* MY VEHICLES PAGE */
 #root
-> div
-> div.vehicle-list-container.background-all
-> div
-> div:nth-child(2)
-> div
-> div.ui.stackable.three.column.grid
-> div {
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(2)
+  > div
+  > div.ui.stackable.three.column.grid
+  > div {
   display: flex;
   justify-content: center;
 }
@@ -190,9 +211,53 @@ h6 {
   justify-content: space-around;
 }
 
+.vehicle-card-btn-del {
+  background-color: inherit;
+  border: none;
+  margin: 0 5px;
+  padding: 3px 2px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease-out;
+}
+
+.vehicle-card-btn-edit {
+  color: rgb(150, 150, 150);
+}
+
+.vehicle-card-btn-edit:hover {
+  color: rgb(95, 95, 95);
+}
+
+.vehicle-card-btn-edit:focus,
+.vehicle-card-btn-edit:active {
+  color: rgb(70, 70, 70);
+}
+
+.vehicle-card-btn-del {
+  color: rgb(255, 112, 112);
+}
+
+.vehicle-card-btn-del:hover {
+  color: rgb(247, 57, 57);
+}
+
+.vehicle-card-btn-del:focus,
+.vehicle-card-btn-del:active {
+  color: rgb(201, 54, 54);
+}
+
 .vehicle-card-header {
   margin-top: 20px;
-  align-self: center;
+  align-self: flex-start;
+}
+
+.ui.header.vehicle-card-header-name {
+  margin-bottom: 5px;
+}
+
+.ui.header.vehicle-card-header-vehicle {
+  margin-top: 5px;
 }
 
 .vehicle-card-expand-header {
@@ -249,8 +314,8 @@ div.vehicle-card-logo > img {
   display: flex;
   flex-direction: column;
   padding: 1rem 3rem;
-  margin: 10% 30%;
-  width: 40%;
+  margin: 10% 27%;
+  width: 45%;
   height: 60%;
   max-width: 100%;
 }
@@ -266,6 +331,7 @@ div.vehicle-card-logo > img {
   display: flex;
   flex-direction: column;
   padding: 0 30px;
+  width: 50%;
 }
 
 .vehicle-card-expand-content-wrapper {
@@ -384,16 +450,16 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 }
 
 #root
-> div
-> div.vehicle-list-container.background-all
-> div
-> div:nth-child(3)
-> div
-> div.add-vehicle-overlay
-> div
-> div.add-vehicle-form
-> form
-> div {
+  > div
+  > div.vehicle-list-container.background-all
+  > div
+  > div:nth-child(3)
+  > div
+  > div.add-vehicle-overlay
+  > div
+  > div.add-vehicle-form
+  > form
+  > div {
   border: none;
   box-shadow: none;
 }
@@ -450,4 +516,107 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .alt-vehicle-card-label {
   font-weight: 700;
+}
+
+.vehicle-loader-container {
+  top: 20px;
+  right: 0px;
+  position: absolute;
+  width: 100%;
+}
+
+.vehicle-loader {
+  top: 0px;
+  right: 0px;
+  position: absolute;
+}
+
+/* Leaf Widget */
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  outline: none;
+}
+
+.ui.centered.card.leaf-card {
+  text-align: center;
+  width: 300px;
+  height: 400px;
+  transition: 0.2s all ease-in;
+  border-radius: 20px;
+}
+
+.ui.centered.card.leaf-card:hover {
+  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+.leaf-box {
+  height: 187px;
+  width: 187px;
+  position: relative;
+  left: 50%;
+  top: 25%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  background: #020438;
+  border-radius: 250px 0;
+  overflow: hidden;
+}
+
+.leaf-box .leaf-percent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 32px;
+}
+
+.leaf-box .leaf-water {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  transform: translate(0, 100%);
+  background: #228b22;
+}
+
+.leaf-box .leaf-water_wave {
+  width: 200%;
+  position: absolute;
+  bottom: 100%;
+}
+
+.leaf-box .leaf-water_wave_back {
+  right: 0;
+  fill: #006400;
+  animation: wave-back 1.4s infinite linear;
+}
+
+.leaf-box .leaf-water_wave_front {
+  left: 0;
+  fill: #228b22;
+  margin-bottom: -1px;
+  animation: wave-front 0.7s infinite linear;
+}
+
+@keyframes wave-front {
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes wave-back {
+  100% {
+    transform: translate(50%, 0);
+  }
 }

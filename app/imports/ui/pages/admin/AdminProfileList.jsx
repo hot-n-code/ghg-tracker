@@ -1,14 +1,11 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Loader, Table, Container, Input, Header, Divider } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
-import { Redirect } from 'react-router-dom';
-// Collection that we are accessing
 import { Users } from '../../../api/user/UserCollection';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
+import DeleteUser from '../../components/admin-users-page/DeleteUser';
 
 /** Renders a table containing all of the users profiles. Use <User> to render each row. */
 class AdminProfileList extends React.Component {
@@ -17,11 +14,8 @@ class AdminProfileList extends React.Component {
 
     this.state = {
       filterValue: '',
-      redirectToProfile: false,
-      profileId: undefined,
     };
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.onRowClick = this.onRowClick.bind(this);
   }
 
   /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
@@ -29,8 +23,9 @@ class AdminProfileList extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
+  // vehicles: users.vehicles
   getColumns(users) {
-    return { user: users.image, name: users.name, email: users.email, goal: users.goal, vehicles: users.vehicles };
+    return { _id: users._id, user: users.image, name: users.name, email: users.email, goal: users.goal };
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -46,19 +41,23 @@ class AdminProfileList extends React.Component {
     });
   }
 
-  onRowClick = (event, { rowData }) => {
-    const profileId = Users.collection.findOne({ username: rowData.email })._id;
-    this.setState({ profileId: profileId, redirectToProfile: true });
-  }
-
   renderPage() {
-    // if row has been clicked, redirect to user page
-    if (this.state.redirectToProfile) {
-      return <Redirect to={`/admin-profile/${this.state.profileId}/`}/>;
-    }
     const {
       filterValue,
     } = this.state;
+    const otherHeaders = {
+      _id: {
+        invisible: true,
+      },
+      delete: {
+        text: ' ',
+        sortable: false,
+        filterable: false,
+        transform: (value, index, row) => <div>
+          <DeleteUser userID={row._id}/>
+        </div>,
+      },
+    };
    return (
        <Container id="profileList-page">
          <Divider hidden/>
@@ -83,12 +82,12 @@ class AdminProfileList extends React.Component {
          <SmartDataTable
              data={this.props.users.map(this.getColumns) }
              name="profile-list"
-             className="ui compact selectable table"
+             className="ui compact table"
              sortable
-             onRowClick={this.onRowClick}
              withToggles
-             perPage={25}
+             perPage={10}
              filterValue={filterValue}
+             headers={otherHeaders}
              parseImg={{
                style: {
                  border: '1px solid #ddd',
@@ -107,14 +106,12 @@ class AdminProfileList extends React.Component {
 }
 
 AdminProfileList.propTypes = {
-  // KEEP FOR REFERENCE: stuffs: PropTypes.array.isRequired,
   users: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
-  const ready = Meteor.subscribe(Users.adminPublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
-  const users = Users.collection.find({}, { sort: { lastName: 1 } }).fetch();
+  const ready = Users.subscribeUserAdmin().ready();
+  const users = Users.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     users,
     ready,

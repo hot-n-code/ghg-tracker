@@ -1,12 +1,11 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
 import { Grid, Header, Loader } from 'semantic-ui-react';
 import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Pie } from 'react-chartjs-2';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 
-// Displaying a pie chart of the mode of transportation from DailyUserData collection
+// Displaying a pie chart of the mode of transportation from UserDailyData collection
 class CumulativeDataChart extends React.Component {
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting your data...</Loader>;
@@ -14,9 +13,9 @@ class CumulativeDataChart extends React.Component {
 
   renderPage() {
     // Calculating the sum of individual modes of transportation between all users
-    const transportationData = (dailyUser) => {
+    const transportationData = (userDaily) => {
       const otherAltTransportation = ['Biking', 'Public Transportation', 'Walking'];
-      const allUserData = dailyUser;
+      const allUserData = userDaily;
       const altData = {
         Telework: 0,
         Carpool: 0,
@@ -41,12 +40,12 @@ class CumulativeDataChart extends React.Component {
       return [altData.Telework, altData.Carpool, altData.Other, altData.EVHybrid, altData.GasVehicle];
     };
     // Forming the layout for pie chart
-    const pieDataSet = (dailyUser) => {
+    const pieDataSet = (userDaily) => {
       const dataSets = {
         labels: ['Telework', 'Carpool', 'Other', 'EV/Hybrid Vehicle', 'Gas Vehicle'],
         datasets: [
           {
-            data: transportationData(dailyUser),
+            data: transportationData(userDaily),
             backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391', '#FF69B4'],
           }],
       };
@@ -68,10 +67,10 @@ CumulativeDataChart.propTypes = {
 };
 
 export default withTracker(() => {
-  const subscriptionDailyUser = Meteor.subscribe(DailyUserData.cumulativePublicationName);
+  const subscriptionUserDaily = UserDailyData.subscribeUserDailyDataCumulative();
 
   return {
-    userData: DailyUserData.collection.find({}).fetch(),
-    ready: subscriptionDailyUser.ready(),
+    userData: UserDailyData.find({}).fetch(),
+    ready: subscriptionUserDaily.ready(),
   };
 })(CumulativeDataChart);

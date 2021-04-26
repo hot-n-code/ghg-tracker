@@ -1,15 +1,13 @@
 import React from 'react';
-import { Meteor } from 'meteor/meteor';
-import { Header, Button, Image, Grid, Loader } from 'semantic-ui-react';
+import { Header, Button, Grid, Loader } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withTracker } from 'meteor/react-meteor-data';
-import { DailyUserData } from '../../../api/user/DailyUserDataCollection';
+import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import { getCumulativeGHG } from '../../utilities/CumulativeGHGData';
-import { UserVehicle } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 
 const paddingStyle = { padding: '20px' };
-const cloud = '../images/landing-page/cloud-trans-5.png';
 
 class LandingCumulativeData extends React.Component {
   render() {
@@ -29,19 +27,20 @@ class LandingCumulativeData extends React.Component {
           <Grid columns={3}>
             <Grid.Column>
             </Grid.Column>
-            <Grid.Column>
               <div className='cloud-box'>
-                <Image src={cloud}/>
-                <Header as='h2' id='cloud-carbon'> {totalCO2Reduced} LBS.</Header>
+                <div className='cloud-box-container'>
+                  <div className='cloud-box-text'>
+                    <Header as='h2' id='cloud-carbon'> {totalCO2Reduced} LBS.</Header>
+                  </div>
+                </div>
               </div>
-            </Grid.Column>
             <Grid.Column>
             </Grid.Column>
           </Grid>
           <br/>
           <Header as='h2' textAlign='center'> Make A Difference Today.
             <br/>
-            <div style={{ paddingTop: '16px' }}></div>
+            <div style={{ paddingTop: '16px' }}/>
             <Button className="ui massive blue button" position='centered' as={NavLink} activeClassName="active" exact
                     to="/signup">Sign Up</Button>
           </Header>
@@ -56,10 +55,10 @@ LandingCumulativeData.propTypes = {
 };
 
 export default withTracker(() => {
-  const ready = Meteor.subscribe(DailyUserData.cumulativePublicationName).ready() &&
-      Meteor.subscribe(UserVehicle.adminPublicationName).ready();
-  const dailyData = DailyUserData.collection.find({}).fetch();
-  const vehicles = UserVehicle.collection.find({}).fetch();
+  const ready = UserDailyData.subscribeUserDailyDataCumulative().ready() &&
+      UserVehicles.subscribeUserVehicleCumulative().ready();
+  const dailyData = UserDailyData.find({}).fetch();
+  const vehicles = UserVehicles.find({}).fetch();
   return {
     dailyData,
     vehicles,

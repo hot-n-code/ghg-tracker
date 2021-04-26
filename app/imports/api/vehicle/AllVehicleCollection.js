@@ -1,30 +1,63 @@
-import { Mongo } from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
-import { Tracker } from 'meteor/tracker';
+import { _ } from 'meteor/underscore';
+import BaseCollection from '../base/BaseCollection';
 
-/** Encapsulates state and variable values for this collection. */
-class AllVehicleCollection {
+class AllVehicleCollection extends BaseCollection {
   constructor() {
-    // The name of this collection.
-    this.name = 'AllVehicleCollection';
-    // Define the Mongo collection.
-    this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
-    this.schema = new SimpleSchema(
-      {
-        Year: Number,
-        Make: String,
-        Model: String,
-        Mpg: Number,
-      },
-      { tracker: Tracker },
-    );
-    // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
-    this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
-    this.userPublicationName = `${this.name}.publication.user`;
-    this.adminPublicationName = `${this.name}.publication.admin`;
+    super('AllVehicle', new SimpleSchema({
+      Year: Number,
+      Make: String,
+      Model: String,
+      Mpg: Number,
+    }));
+  }
+
+  define({ Year, Make, Model, Mpg }) {
+    const docID = this._collection.insert({
+      Year,
+      Make,
+      Model,
+      Mpg,
+    });
+    return docID;
+  }
+
+  update(docID, { Year, Make, Model, Mpg }) {
+    const updateData = {};
+    if (_.isNumber(Year)) {
+      updateData.Year = Year;
+    }
+    if (Make) {
+      updateData.Make = Make;
+    }
+    if (Model) {
+      updateData.Make = Model;
+    }
+    if (_.isNumber(Mpg)) {
+      updateData.Mpg = Mpg;
+    }
+    this._collection.update(docID, { $set: updateData });
+  }
+
+  publish() {
+    if (Meteor.isServer) {
+      const instance = this;
+      Meteor.publish('AllVehicle', function publish() {
+        if (this.userId) {
+          return instance._collection.find();
+        }
+        return this.ready();
+      });
+    }
+  }
+
+  subscribeAllVehicle() {
+    if (Meteor.isClient) {
+      return Meteor.subscribe('AllVehicle');
+    }
+    return null;
   }
 }
 
-export const AllVehicle = new AllVehicleCollection();
+export const AllVehicles = new AllVehicleCollection();
