@@ -4,7 +4,8 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { Users } from '../../../api/user/UserCollection';
-// import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+// import { getVehicle } from '../.../utilities/vehicleDropdown.js';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import DeleteUser from '../../components/admin-users-page/DeleteUser';
 
@@ -26,7 +27,14 @@ class AdminProfileList extends React.Component {
 
   // vehicles: users.vehicles
   getColumns(users) {
-    return { _id: users._id, user: users.image, name: users.name, email: users.email, goal: users.goal };
+    const data = {};
+    data._id = users._id;
+    data.user_image = users.image;
+    data.name = users.name;
+    data.email = users.email;
+    data.goal = users.goal;
+    // data.make = getVehicle(vehicles.make);
+    return data;
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -81,11 +89,10 @@ class AdminProfileList extends React.Component {
            </Table.Header>
          </Table>
          <SmartDataTable
-             data={this.props.users.map(this.getColumns) }
+             data={this.props.users.map(data => this.getColumns(data, this.props.vehicles)) }
              name="profile-list"
              className="ui compact table"
              sortable
-             withToggles
              perPage={10}
              filterValue={filterValue}
              headers={otherHeaders}
@@ -108,13 +115,16 @@ class AdminProfileList extends React.Component {
 
 AdminProfileList.propTypes = {
   users: PropTypes.array.isRequired,
+  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
   const ready = Users.subscribeUserAdmin().ready();
   const users = Users.find({}, { sort: { lastName: 1 } }).fetch();
+  const vehicles = UserVehicles.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     users,
+    vehicles,
     ready,
   };
 })(AdminProfileList);
