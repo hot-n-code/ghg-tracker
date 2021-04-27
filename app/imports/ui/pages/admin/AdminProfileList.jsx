@@ -4,8 +4,6 @@ import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { Users } from '../../../api/user/UserCollection';
-import { UserVehicles } from '../../../api/user/UserVehicleCollection';
-// import { getVehicle } from '../.../utilities/vehicleDropdown.js';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import DeleteUser from '../../components/admin-users-page/DeleteUser';
 
