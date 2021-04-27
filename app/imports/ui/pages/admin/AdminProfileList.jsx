@@ -23,9 +23,14 @@ class AdminProfileList extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  // vehicles: users.vehicles
   getColumns(users) {
-    return { _id: users._id, user: users.image, name: users.name, email: users.email, goal: users.goal };
+    const data = {};
+    data._id = users._id;
+    data.user_image = users.image;
+    data.name = users.name;
+    data.email = users.email;
+    data.goal = users.goal;
+    return data;
   }
 
   handleOnChange({ target: { name, value } }) {
@@ -80,11 +85,10 @@ class AdminProfileList extends React.Component {
            </Table.Header>
          </Table>
          <SmartDataTable
-             data={this.props.users.map(this.getColumns) }
+             data={this.props.users.map(data => this.getColumns(data, this.props.vehicles)) }
              name="profile-list"
              className="ui compact table"
              sortable
-             withToggles
              perPage={10}
              filterValue={filterValue}
              headers={otherHeaders}

@@ -89,9 +89,9 @@ export default withTracker(() => {
     const ready = UserDailyData.subscribeUserDailyData().ready() &&
         Users.subscribeUser().ready() &&
         UserVehicles.subscribeUserVehicle().ready();
-    const dailyData = UserDailyData.find({}).fetch();
-    const users = Users.findOne({});
-    const vehicles = UserVehicles.find({}).fetch();
+    const dailyData = UserDailyData.find({}, {}).fetch();
+    const users = Users.findOne({}, {});
+    const vehicles = UserVehicles.find({}, {}).fetch();
     return {
         dailyData,
         users,
