@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Image } from 'semantic-ui-react';
+import { Button, Card, Header, Image } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getCumulativePerMode } from '../../utilities/CumulativeGHGData';
 
@@ -35,21 +35,23 @@ class AltVehicleCard extends React.Component {
     const transportationData = getCumulativePerMode(this.props.userData, transportation[state], this.props.userVehicles);
 
     return (
-        <Card centered link className={'alt-vehicle-card'}>
-          <Card.Content>
+        <Card className={'alt-vehicle-card'} fluid>
+          <Card.Content textAlign='center'>
             <Image className={'alt-vehicle-image'} src={images[state]}/>
             <Card.Header className={'alt-vehicle-card-header'}>
-              {transportation[state]}
+              <Header as='h1'>
+                {transportation[state]}
+              </Header>
             </Card.Header>
             <Card.Description>
               <span className={'alt-vehicle-card-label'}>Total Miles: </span>
-              {transportationData.VMTReduced.toFixed(2)}
+              {transportationData.VMTReduced.toFixed(2)} mi
               <br/>
               <span className={'alt-vehicle-card-label'}>CO2 Reduced: </span>
-              {transportationData.cO2Reduced.toFixed(2)}
+              {transportationData.cO2Reduced.toFixed(2)} lbs
               <br/>
               <span className={'alt-vehicle-card-label'}>Fuel Saved: </span>
-              {transportationData.fuelSaved.toFixed(2)}
+              {transportationData.fuelSaved.toFixed(2)} gal
             </Card.Description>
             <br/>
             <Button color='black' onClick={() => { this.nextState(state -= 1); }}>
