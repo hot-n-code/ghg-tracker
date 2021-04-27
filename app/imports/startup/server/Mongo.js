@@ -1,6 +1,4 @@
-import { Meteor } from 'meteor/meteor';
 import { readFileSync } from 'fs';
-import { Stuffs } from '../../api/stuff-to-delete/Stuff.js';
 import { UserVehicles } from '../../api/user/UserVehicleCollection';
 import { Users } from '../../api/user/UserCollection';
 import { VehicleMakes } from '../../api/vehicle/VehicleMakeCollection';
@@ -49,22 +47,5 @@ if (UserDailyData.count() === 0) {
   if (randomData.defaultUserDailyData) {
     randomData.defaultUserDailyData.map(dailyData => UserDailyData.define(dailyData));
     console.log(`   DailyUserDataCollection: ${UserDailyData.count()} daily user data`);
-  }
-}
-
-// ------------ TO DELETE ------------ //
-/** Initialize the database with a default data document. */
-// StuffsCollection
-function addData(data) {
-  // console.log(`  Adding: ${data.name} (${data.owner})`);
-  Stuffs.collection.insert(data);
-}
-
-/** Initialize the collection if empty. */
-// StuffsCollection
-if (Stuffs.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
-    // console.log('Creating default data.');
-    Meteor.settings.defaultData.map(data => addData(data));
   }
 }
