@@ -39,13 +39,6 @@ class AdminProfileList extends React.Component {
     });
   }
 
-  setNewData() {
-    const { data } = this.state;
-    this.setState({
-      data: data,
-    });
-  }
-
   renderPage() {
     const {
       filterValue,
