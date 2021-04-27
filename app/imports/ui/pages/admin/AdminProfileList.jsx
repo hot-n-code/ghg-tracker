@@ -25,7 +25,6 @@ class AdminProfileList extends React.Component {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  // vehicles: users.vehicles
   getColumns(users) {
     const data = {};
     data._id = users._id;
@@ -33,7 +32,6 @@ class AdminProfileList extends React.Component {
     data.name = users.name;
     data.email = users.email;
     data.goal = users.goal;
-    // data.make = getVehicle(vehicles.make);
     return data;
   }
 
@@ -121,10 +119,8 @@ AdminProfileList.propTypes = {
 export default withTracker(() => {
   const ready = Users.subscribeUserAdmin().ready();
   const users = Users.find({}, { sort: { lastName: 1 } }).fetch();
-  const vehicles = UserVehicles.find({}, { sort: { lastName: 1 } }).fetch();
   return {
     users,
-    vehicles,
     ready,
   };
 })(AdminProfileList);
