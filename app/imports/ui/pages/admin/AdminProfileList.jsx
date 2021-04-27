@@ -111,7 +111,6 @@ class AdminProfileList extends React.Component {
 
 AdminProfileList.propTypes = {
   users: PropTypes.array.isRequired,
-  vehicles: PropTypes.array.isRequired,
   ready: PropTypes.bool.isRequired,
 };
 export default withTracker(() => {
