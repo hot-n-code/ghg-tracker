@@ -9,7 +9,7 @@ const TransportationOptions = () => (
   <div style={paddingStyle}>
       <Header as='h1' textAlign='center'>Oahu</Header>
       <Card.Group style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px',
-          paddingBottom: '20px' }}>
+          paddingBottom: '20px' }} itemsPerRow={4}>
           <Card>
               <Card.Content>
                   <Card.Header>Biki</Card.Header>
@@ -49,9 +49,23 @@ const TransportationOptions = () => (
                   </Button>
               </Card.Content>
           </Card>
+          <Card>
+              <Card.Content>
+                  <Card.Header>Trolleys, Taxis, and More</Card.Header>
+                  <Card size='medium' color='teal'>
+                      <Image style={rideStyle}
+                      src='https://media-cdn.tripadvisor.com/media/photo-s/17/89/48/06/blue-line-trolley-views.jpg'
+                      />
+                  </Card>
+                  <Button href='https://www.gohawaii.com/islands/oahu/travel-info/transportation'
+                          target='_blank'>
+                      Learn More
+                  </Button>
+              </Card.Content>
+          </Card>
       </Card.Group>
       <Header as='h1' textAlign='center'>Neighbor Islands</Header>
-      <Card.Group style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }}>
+      <Card.Group style={{ display: 'flex', justifyContent: 'center', paddingTop: '20px' }} itemsPerRow={4}>
           <Card>
               <Card.Content>
                   <Card.Header>Hele-On (Big Island)</Card.Header>
@@ -89,6 +103,20 @@ const TransportationOptions = () => (
                    />
                   </Card>
                   <Button href='https://www.kauai.com/kauai-bus'
+                          target='_blank'>
+                      Learn More
+                  </Button>
+              </Card.Content>
+          </Card>
+          <Card>
+              <Card.Content>
+                  <Card.Header>Trolleys, Taxis, and More</Card.Header>
+                  <Card size='medium' color='teal'>
+                      <Image style={rideStyle}
+                             src='https://www.explore-the-big-island.com/images/keauhou-honu-express-shuttle.jpg'
+                      />
+                  </Card>
+                  <Button href='https://www.gohawaii.com/search/site/transportation'
                           target='_blank'>
                       Learn More
                   </Button>
