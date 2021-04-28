@@ -9,12 +9,11 @@ import {
   getVehicleYearsList,
   getVehicle,
 } from '../../utilities/vehicleDropdown';
-import { sampleVehicles } from '../../utilities/sampleData';
-import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 import { userVehicleRemoveItMethod } from '../../../api/user/UserVehicleCollection.methods';
+import { VehicleMakes } from '../../../api/vehicle/VehicleMakeCollection';
 
 /** Renders a single vehicle card. */
-const VehicleCard = ({ vehicle }) => {
+const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
   // Destructure the 'vehicle' prop.
   const {
     _id,
@@ -39,17 +38,16 @@ const VehicleCard = ({ vehicle }) => {
 
   // Populate vehicle comparator's dropdown values and comparator vehicle values.
   const initDropdownValues = property => {
-    const sortedVehicles = _.sortBy(sampleVehicles, 'make');
     let uniqueList;
 
     if (property === 'make') {
-      const listByMake = _.pluck(sortedVehicles, property);
+      const listByMake = _.pluck(allEVHybridVehicles, 'Make');
       uniqueList = _.uniq(listByMake);
     } else if (property === 'year') {
-      const findByModel = sortedVehicles.filter(
-        vehicleObj => vehicleObj.model === sortedVehicles[0].model,
+      const findByModel = allEVHybridVehicles.filter(
+        vehicleObj => vehicleObj.Model === allEVHybridVehicles[0].Model,
       );
-      const listByYear = _.pluck(findByModel, property);
+      const listByYear = _.pluck(findByModel, 'Year');
       uniqueList = _.uniq(listByYear);
       uniqueList.reverse();
       for (let i = 0; i < uniqueList.length; i++) {
@@ -61,11 +59,8 @@ const VehicleCard = ({ vehicle }) => {
   };
 
   const getModelList = currentMake => {
-    const filteredMakeList = _.filter(
-      sampleVehicles,
-      sampleVehicle => sampleVehicle.make === currentMake,
-    );
-    const listModel = _.pluck(filteredMakeList, 'model');
+    const filteredMakeList = allEVHybridVehicles.filter(obj => obj.Make === currentMake);
+    const listModel = _.pluck(filteredMakeList, 'Model');
     const uniqueModels = _.uniq(listModel);
     return uniqueModels;
   };
@@ -75,13 +70,12 @@ const VehicleCard = ({ vehicle }) => {
     const initModel = getModelList(initMakeList[0]);
     const initYear = initDropdownValues(yearProperty);
     const yearAsInt = parseInt(initYear[0], 10);
-    const listModel = _.filter(
-      sampleVehicles,
-      sampleVehicle => sampleVehicle.model === initModel[0],
-    );
+    const listModel = allEVHybridVehicles.filter(obj => obj.Model === initModel[0]);
     const defaultVehicle = listModel.find(
-      vehicleModel => vehicleModel.year === yearAsInt,
+      vehicleModel => vehicleModel.Year === yearAsInt,
     );
+    defaultVehicle.type = defaultVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
+    defaultVehicle.logo = vehicleMakes.find(obj => obj.make === defaultVehicle.Make).logo;
     return defaultVehicle;
   };
 
@@ -126,19 +120,23 @@ const VehicleCard = ({ vehicle }) => {
   // Dropdown handlers
   const dropdownYearHandler = e => {
     const yearAsInt = parseInt(e.target.value, 10);
-    const newVehicle = getVehicle(yearAsInt, selectModel, sampleVehicles);
+    const newVehicle = getVehicle(yearAsInt, selectModel, allEVHybridVehicles);
+    newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
+    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
 
     setComparatorVehicle(newVehicle);
   };
 
   const dropdownMakeHandler = e => {
     const modelList = getModelList(e.target.value);
-    const yearList = getVehicleYearsList(modelList[0], sampleVehicles);
+    const yearList = getVehicleYearsList(modelList[0], allEVHybridVehicles);
     const newVehicle = getVehicle(
       parseInt(yearList[0], 10),
       modelList[0],
-      sampleVehicles,
+        allEVHybridVehicles,
     );
+    newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
+    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
 
     setComparatorVehicle(newVehicle);
     setDropdownYear(yearList);
@@ -147,9 +145,12 @@ const VehicleCard = ({ vehicle }) => {
   };
 
   const dropdownModelHandler = e => {
-    const yearList = getVehicleYearsList(e.target.value, sampleVehicles);
+    const yearList = getVehicleYearsList(e.target.value, allEVHybridVehicles);
     const yearAsInt = parseInt(yearList[0], 10);
-    const newVehicle = getVehicle(yearAsInt, e.target.value, sampleVehicles);
+    const newVehicle = getVehicle(yearAsInt, e.target.value, allEVHybridVehicles);
+    newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
+    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
+
     setSelectModel(e.target.value);
     setDropdownYear(yearList);
     setComparatorVehicle(newVehicle);
@@ -401,15 +402,16 @@ const VehicleCard = ({ vehicle }) => {
 /** Individual vehicle data is passed in as an object in props. */
 VehicleCard.propTypes = {
   vehicle: PropTypes.object.isRequired,
-  allUserVehicles: PropTypes.array.isRequired,
+  allEVHybridVehicles: PropTypes.array.isRequired,
+  vehicleMakes: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
-  // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = UserVehicles.subscribeUserVehicle();
+  const ready = VehicleMakes.subscribeVehicleMake().ready();
+  const vehicleMakes = VehicleMakes.find({}).fetch();
   return {
-    allUserVehicles: UserVehicles.find({}).fetch(),
-    ready: sub1.ready(),
+    ready,
+    vehicleMakes,
   };
 })(VehicleCard);

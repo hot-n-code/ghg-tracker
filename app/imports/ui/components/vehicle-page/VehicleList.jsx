@@ -7,6 +7,7 @@ import { _ } from 'meteor/underscore';
 import VehicleCard from './VehicleCard';
 import AddVehicleModal from './AddVehicleModal';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
 
 /** Renders a feed containing all of the Vehicle documents. Use <VehicleCard> to render each card. */
 class VehicleList extends React.Component {
@@ -28,11 +29,11 @@ class VehicleList extends React.Component {
         <Grid stackable columns={3}>
           {userVehicles.map((vehicle, index) => (
             <Grid.Column key={index} className='vehicle-list-item'>
-              <VehicleCard key={vehicle._id} vehicle={vehicle} />
+              <VehicleCard key={vehicle._id} vehicle={vehicle} allEVHybridVehicles={this.props.allEVHybridVehicles} />
             </Grid.Column>
           ))}
         </Grid>
-        <AddVehicleModal />
+        <AddVehicleModal allVehicles={this.props.allVehicles}/>
       </div>
     );
   }
@@ -42,13 +43,18 @@ class VehicleList extends React.Component {
 VehicleList.propTypes = {
   ready: PropTypes.bool.isRequired,
   vehicles: PropTypes.array.isRequired,
+  allVehicles: PropTypes.array.isRequired,
+  allEVHybridVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
 export default withTracker(() => {
   const sub1 = UserVehicles.subscribeUserVehicle();
+  const sub2 = AllVehicles.subscribeAllVehicle();
   return {
-    ready: sub1.ready(),
+    ready: sub1.ready() && sub2.ready(),
     vehicles: UserVehicles.find({}).fetch(),
+    allVehicles: AllVehicles.find({}).fetch(),
+    allEVHybridVehicles: AllVehicles.find({ Mpg: { $lt: 0 } }, { sort: [['Make', 'asc']] }).fetch(),
   };
 })(VehicleList);
