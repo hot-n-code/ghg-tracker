@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Divider, Loader, Header, Input, Grid } from 'semantic-ui-react';
+import { Container, Divider, Loader, Header, Input, Grid, Form } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import SmartDataTable from 'react-smart-data-table';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -7,7 +7,7 @@ import AddDailyData from '../../components/user-data-page/AddDailyData';
 import { UserDailyData } from '../../../api/user/UserDailyDataCollection';
 import WhatIf from '../../components/user-data-page/WhatIf';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
-import { getDailyGHG } from '../../utilities/DailyGHGData';
+import { getDailyGHG, getKilometersTraveled } from '../../utilities/DailyGHGData';
 import DeleteDailyData from '../../components/user-data-page/DeleteDailyData';
 import EditDailyData from '../../components/user-data-page/EditDailyData';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
@@ -19,12 +19,9 @@ class UserDataReactTable extends React.Component {
 
     this.state = {
       filterValue: '',
+      inKilometers: false,
     };
     this.handleOnChange = this.handleOnChange.bind(this);
-  }
-
-  render() {
-    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
   getColumns(dailyData, vehicles) {
@@ -32,8 +29,12 @@ class UserDataReactTable extends React.Component {
     data._id = dailyData._id;
     data.date = dailyData.inputDate.toLocaleDateString();
     data.modeOfTransportation = dailyData.modeOfTransportation;
-    data.milesTraveled = dailyData.milesTraveled;
-    const eImpactDaily = getDailyGHG(data.milesTraveled, data.modeOfTransportation, vehicles);
+    if (this.state.inKilometers) {
+      data.kilometersTraveled = getKilometersTraveled(dailyData.milesTraveled, 'mi').toFixed(2);
+    } else {
+      data.milesTraveled = dailyData.milesTraveled;
+    }
+    const eImpactDaily = getDailyGHG(dailyData.milesTraveled, data.modeOfTransportation, vehicles);
     data.cO2Reduced = eImpactDaily.cO2Reduced;
     data.fuelSaved = eImpactDaily.fuelSaved;
     return data;
@@ -58,7 +59,11 @@ class UserDataReactTable extends React.Component {
     });
   }
 
-   renderPage() {
+  render() {
+    return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
+  }
+
+  renderPage() {
      const { filterValue } = this.state;
 
      const otherHeaders = {
@@ -77,10 +82,22 @@ class UserDataReactTable extends React.Component {
      };
 
      return (
-         <Container id="profileList-page">
+         <Container id="user-react-page">
            <Divider hidden vertical/>
-           <Header as='h1' textAlign='center'>My Transportation History</Header>
-           <Grid container columns={2}>
+           <Header as='h1' textAlign='center'>
+             My Transportation History
+             <Header.Subheader>
+               <Form.Radio
+                   toggle
+                   label='See distance traveled in km'
+                   checked={this.state.inKilometers}
+                   onChange={() => {
+                     this.setState((prevState) => ({ inKilometers: !prevState.inKilometers }));
+                   }}
+               />
+             </Header.Subheader>
+           </Header>
+           <Grid container columns={2} style={{ marginTop: 5 }}>
              <Grid.Column verticalAlign='middle'>
                <AddDailyData vehicles={this.props.vehicles}/>
                <WhatIf/>
