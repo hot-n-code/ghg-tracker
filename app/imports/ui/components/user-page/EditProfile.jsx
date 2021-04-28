@@ -32,8 +32,12 @@ class EditProfile extends React.Component {
 
     // On successful submit, update data.
     submit(data) {
-        const { name, image, goal, _id } = data;
-        userUpdateMethod.call(_id, { $set: { name, image, goal } }, (error) => {
+        const updateData = {};
+        updateData.name = data.name;
+        updateData.image = data.image;
+        updateData.goal = data.goal;
+        updateData._id = data._id;
+        userUpdateMethod.call(updateData, (error) => {
             if (error) {
                 swal('Error', error.message, 'error');
             } else {
