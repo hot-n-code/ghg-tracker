@@ -9,6 +9,8 @@ import ProfileCard from '../../components/user-page/ProfileCard';
 import MyDataChart from '../../components/user-page/MyDataChart';
 import MyNumbers from '../../components/user-page/MyNumbers';
 import { UserVehicles } from '../../../api/user/UserVehicleCollection';
+import AltVehicleCard from '../../components/user-page/AltVehicleCard';
+import LeafWidget from '../../components/user-page/LeafWidget';
 
 const paddingStyle = { padding: 20 };
 /** Renders the Page for displaying the user's data: Their numbers for the day, overview of their carbon footprint, and
@@ -40,13 +42,21 @@ class UserPage extends React.Component {
                     <Grid.Column>
                         <Card fluid>
                             <Card.Content>
-                                <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month&apos;s
-                                    Mileage Summary</Header>
-                                <MyDataChart userData={this.props.dailyData} vehicles={this.props.vehicles}/>
+                              <Header as='h1' textAlign='center' style={{ margin: '10px' }}>This Month&apos;s
+                                Mileage Summary</Header>
+                              <MyDataChart userData={this.props.dailyData} vehicles={this.props.vehicles}/>
                             </Card.Content>
                         </Card>
                     </Grid.Column>
                 </Grid>
+              <Grid stackable columns={2}>
+                <Grid.Column>
+                  <AltVehicleCard userData={this.props.dailyData} userVehicles={this.props.vehicles}/>
+                </Grid.Column>
+                <Grid.Column>
+                  <LeafWidget userData={this.props.dailyData} userVehicles={this.props.vehicles}/>
+                </Grid.Column>
+              </Grid>
               <div style={{ paddingTop: '30px' }}/>
               <MyNumbers dailyData={this.props.dailyData} vehicles={this.props.vehicles}/>
                 <div style={{ paddingTop: '30px' }}/>
