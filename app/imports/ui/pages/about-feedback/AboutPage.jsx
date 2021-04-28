@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Image, Header, Container, Button } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import FeedBack from './FeedBack';
+import FeedbackWidget from '../../components/about-feedback-pages/FeedbackWidget';
 
 const menuStyle = { height: '350px' };
 const paddingStyle = { padding: '20px', paddingTop: '100px' };
@@ -49,7 +49,7 @@ class AboutPage extends React.Component {
             </Container>
             <div style={infoStyleBottom}>
             </div>
-            <FeedBack/>
+            <FeedbackWidget/>
             <div style={{ paddingBottom: '220px' }}>
             </div>
             <Grid columns={3} padded>

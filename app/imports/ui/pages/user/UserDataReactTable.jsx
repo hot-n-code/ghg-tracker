@@ -34,7 +34,7 @@ class UserDataReactTable extends React.Component {
     data.modeOfTransportation = dailyData.modeOfTransportation;
     data.milesTraveled = dailyData.milesTraveled;
     const eImpactDaily = getDailyGHG(data.milesTraveled, data.modeOfTransportation, vehicles);
-    data.cO2Redcued = eImpactDaily.cO2Reduced;
+    data.cO2Reduced = eImpactDaily.cO2Reduced;
     data.fuelSaved = eImpactDaily.fuelSaved;
     return data;
   }

@@ -14,7 +14,6 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import MyVehicles from '../pages/vehicle/MyVehicles';
 import AboutPage from '../pages/about-feedback/AboutPage';
-import FeedBack from '../pages/about-feedback/FeedBack';
 import UsersCumulativePage from '../pages/cumulative/UsersCumulativePage';
 import NotFound from '../pages/NotFound';
 import Signin from '../pages/sign-in-sign-up/Signin';
@@ -22,11 +21,9 @@ import Signup from '../pages/sign-in-sign-up/Signup';
 import Signout from '../pages/sign-in-sign-up/Signout';
 import CreateUser from '../pages/sign-in-sign-up/CreateUser';
 import UserPage from '../pages/user/UserPage';
-import AltTransportation from '../pages/stuff-to-delete/AltTransportation';
 import HEmore from '../pages/about-feedback/HEmore';
 import Asbmore from '../pages/about-feedback/Asbmore';
 import Pcmore from '../pages/about-feedback/Pcmore';
-import WhatIf from '../components/user-data-page/WhatIf';
 import AdminProfileList from '../pages/admin/AdminProfileList';
 import UserDataReactTable from '../pages/user/UserDataReactTable';
 import UserVSCumulative from '../pages/user/UserVSCumulative';
@@ -49,13 +46,10 @@ class App extends React.Component {
             <Route path='/pcmore' component={Pcmore} />
             <AdminProtectedRoute path='/admin' component={AdminProfileList} />
             <Route path='/cumulative' component={UsersCumulativePage} />
-            <ProtectedRoute path='/user-page/' component={UserPage} />
-            <ProtectedRoute path='/user-react-page/' component={UserDataReactTable} />
-            <ProtectedRoute path='/what-if/' component={WhatIf} />
-            <ProtectedRoute path='/alt' component={AltTransportation} />
+            <ProtectedRoute path='/user-page' component={UserPage} />
+            <ProtectedRoute path='/user-react-page' component={UserDataReactTable} />
             <ProtectedRoute path='/my-vehicles' component={MyVehicles} />
             <ProtectedRoute path='/create-user' component={CreateUser} />
-            <ProtectedRoute path='/feedback' component={FeedBack} />
             <ProtectedRoute path='/comparison' component={UserVSCumulative} />
             <Route component={NotFound} />
           </Switch>

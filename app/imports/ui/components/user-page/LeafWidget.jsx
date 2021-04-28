@@ -82,8 +82,8 @@ class LeafWidget extends React.Component {
             </div>
             <Card.Description className={'alt-vehicle-card-label'}>
             <span className={'alt-vehicle-card-label'}>
-              You&apos;ve saved {this.data.cO2Reduced.toFixed(1)}lb of CO2 gas so far,
-              which would&apos;ve took ~{(this.data.cO2Reduced / 48).toFixed(0)} tree to absorb that much CO2 in a year!
+              You&apos;ve saved {this.data.cO2Reduced.toFixed(1)} lb(s) of CO2 gas so far,
+              which would&apos;ve taken ~{(this.data.cO2Reduced / 48).toFixed(0)} tree(s) to absorb that much CO2 in a year!
             </span>
             </Card.Description>
           </Card.Content>
