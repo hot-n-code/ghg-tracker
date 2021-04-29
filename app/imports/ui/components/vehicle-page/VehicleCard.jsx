@@ -381,7 +381,11 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                           <td className='vehicle-card-expand-label'>
                             Purchase Price:
                           </td>
-                          <td>${`${comparatorVehicle.price}`}</td>
+                          {comparatorVehicle.price ? (
+                            <td>${`${comparatorVehicle.price}`}</td>
+                          ) : (
+                            <td>No current owners.</td>
+                          )}
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
@@ -393,7 +397,11 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                           <td className='vehicle-card-expand-label'>
                             Yearly Fuel Spending:
                           </td>
-                          <td>${`${comparatorVehicle.fuelSpending}`}</td>
+                          {comparatorVehicle.fuelSpending ? (
+                            <td>${`${comparatorVehicle.fuelSpending}`}</td>
+                          ) : (
+                            <td>No current owners.</td>
+                          )}
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
