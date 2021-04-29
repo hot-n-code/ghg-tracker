@@ -46,7 +46,7 @@ class CumulativeDataChart extends React.Component {
         datasets: [
           {
             data: transportationData(userDaily),
-            backgroundColor: ['#4f7fa0', '#4b8796', '#6872a0', '#846391', '#FF69B4'],
+            backgroundColor: ['#5c8d89', '#846391', '#C0C0C0', '#F7B733', '#FC4A1A'],
           }],
       };
       return dataSets;

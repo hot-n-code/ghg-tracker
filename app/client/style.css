@@ -491,18 +491,11 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .ui.centered.card.alt-vehicle-card {
   text-align: center;
-  width: 300px;
-  transition: 0.2s all ease-in;
-  border-radius: 20px;
-}
-
-.ui.centered.card.alt-vehicle-card:hover {
-  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
 .ui.card .content .alt-vehicle-image {
-  height: 187px;
-  width: 187px;
+  height: 257px;
+  width: 267px;
 }
 
 .ui.card > .content > .header:not(.ui).alt-vehicle-card-header {
@@ -541,22 +534,15 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .ui.centered.card.leaf-card {
   text-align: center;
-  width: 300px;
-  height: 400px;
-  transition: 0.2s all ease-in;
-  border-radius: 20px;
-}
-
-.ui.centered.card.leaf-card:hover {
-  box-shadow: 3px 10px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 .leaf-box {
-  height: 187px;
-  width: 187px;
+  height: 300px;
+  width: 300px;
   position: relative;
   left: 50%;
-  top: 25%;
+  top: 150px;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   background: #020438;
@@ -576,7 +562,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 32px;
+  font-size: 64px;
 }
 
 .leaf-box .leaf-water {
@@ -599,14 +585,14 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 .leaf-box .leaf-water_wave_back {
   right: 0;
   fill: #006400;
-  animation: wave-back 1.4s infinite linear;
+  animation: wave-back 2.8s infinite linear;
 }
 
 .leaf-box .leaf-water_wave_front {
   left: 0;
   fill: #228b22;
   margin-bottom: -1px;
-  animation: wave-front 0.7s infinite linear;
+  animation: wave-front 1.4s infinite linear;
 }
 
 @keyframes wave-front {

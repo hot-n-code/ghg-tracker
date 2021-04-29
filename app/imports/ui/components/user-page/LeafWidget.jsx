@@ -28,7 +28,7 @@ class LeafWidget extends React.Component {
   fill() {
     if (this.startPer.toFixed(1) === this.endPer.toFixed(1)) {
       clearInterval(this.elementID);
-    } else if (this.endPer - this.startPer <= this.endPer * 0.03) {
+    } else if (this.endPer - this.startPer <= 1) {
       this.setState({
         percent: this.startPer += 0.1,
       });
@@ -41,7 +41,7 @@ class LeafWidget extends React.Component {
 
   render() {
     return (
-        <Card centered link className={'leaf-card'}>
+        <Card className={'leaf-card'} fluid>
           <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                style={{ display: 'none' }}>
             <use xlinkHref={'http://www.w3.org/1999/xlink'}/>
@@ -56,11 +56,14 @@ class LeafWidget extends React.Component {
                   d="M140,20c-21.5-0.4-38.8-2.5-51.1-4.5c-13.4-2.2-26.5-5.2-27.3-5.4C46,6.5,42,4.7,31.5,2.7C24.3,1.4,13.6-0.1,0,0c0,0,0,0,0,0l0,20H140z"/>
             </symbol>
           </svg>
-          <Card.Content>
+          <Card.Content textAlign='center'>
             <Card.Description>
               <span className={'alt-vehicle-card-label'}>
-                You are {this.endPer.toFixed(1)}% to saving another 48 lbs of CO2
-                It will take a tree one year to absorb more than 48 pounds of CO2!
+                You are {this.endPer.toFixed(1)}% to saving another 48 lbs of CO2.
+              </span>
+              <br/>
+              <span className={'alt-vehicle-card-label'}>
+                It would take a tree one year to absorb more than 48 pounds of CO2!
               </span>
             </Card.Description>
             <div className="leaf-box">
@@ -79,8 +82,8 @@ class LeafWidget extends React.Component {
             </div>
             <Card.Description className={'alt-vehicle-card-label'}>
             <span className={'alt-vehicle-card-label'}>
-              You&apos;ve saved {this.data.cO2Reduced.toFixed(1)}lb of CO2 gas so far,
-              It would&apos;ve took ~{(this.data.cO2Reduced / 48).toFixed(0)} tree to absorb that much CO2 in a year!
+              You&apos;ve saved {this.data.cO2Reduced.toFixed(1)} lb(s) of CO2 gas so far,
+              which would&apos;ve taken ~{(this.data.cO2Reduced / 48).toFixed(0)} tree(s) to absorb that much CO2 in a year!
             </span>
             </Card.Description>
           </Card.Content>

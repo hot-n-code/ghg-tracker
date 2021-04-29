@@ -1,15 +1,12 @@
 import React, { useState, useRef } from 'react';
 import Select from 'react-select';
-import { Button, Header, Input, Loader } from 'semantic-ui-react';
+import { Button, Header, Input } from 'semantic-ui-react';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
 import { _ } from 'meteor/underscore';
-import { withTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { VehicleMakes } from '../../../api/vehicle/VehicleMakeCollection';
-import { AllVehicles } from '../../../api/vehicle/AllVehicleCollection';
-import { UserVehicles } from '../../../api/user/UserVehicleCollection';
 import { userVehicleDefineMethod } from '../../../api/user/UserVehicleCollection.methods';
 
 const AddVehicleModal = (props) => {
@@ -168,7 +165,7 @@ const AddVehicleModal = (props) => {
         transition: { delay: 0.2 },
       },
     };
-  return props.ready ? (
+  return (
       <AnimateSharedLayout type='crossfade'>
         <motion.div className='add-vehicle-btn' layoutId='add-vehicle-toggle'>
           <Button
@@ -283,27 +280,13 @@ const AddVehicleModal = (props) => {
           )}
         </AnimatePresence>
       </AnimateSharedLayout>
-  ) : (
-      <div className='vehicle-loader-container'>
-        <Loader active className='vehicle-loader'>loading add vehicles button</Loader>
-      </div>
   );
 
 };
 
 AddVehicleModal.propTypes = {
-  ready: PropTypes.bool.isRequired,
   allVehicles: PropTypes.array.isRequired,
 };
 
 /** withTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker */
-export default withTracker(() => {
-  // Ensure that minimongo is populated with all collections prior to running render().
-  const sub1 = UserVehicles.subscribeUserVehicle();
-  const sub2 = VehicleMakes.subscribeVehicleMake();
-  const sub3 = AllVehicles.subscribeAllVehicle();
-  return {
-    allVehicles: AllVehicles.find({}).fetch(),
-    ready: sub1.ready() && sub2.ready() && sub3.ready(),
-  };
-})(AddVehicleModal);
+export default (AddVehicleModal);

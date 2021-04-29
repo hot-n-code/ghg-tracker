@@ -4,6 +4,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Grid, GridColumn, Image, List } from 'semantic-ui-react';
+import { Roles } from 'meteor/alanning:roles';
 
 const logo = '../images/hei.png';
 
@@ -16,8 +17,10 @@ class Footer extends React.Component {
             <footer>
               <div className="ui container">
                 <Grid columns={2}>
-                  <GridColumn className="inverted">
-                      {this.props.currentUser === '' ? (
+                  <GridColumn className="inverted" verticalAlign='middle'>
+                      {(this.props.currentUser === '' ||
+                          (this.props.currentUser
+                          && Roles.userIsInRole(Meteor.userId(), 'admin'))) ? (
                           <List inverted>
                             <List.Item as={NavLink} activeClassName='' exact to='/'>Home</List.Item>
                             <List.Item as={NavLink} activeClassName='active' exact to='/cumulative'>Cumulative Data</List.Item>
@@ -30,18 +33,15 @@ class Footer extends React.Component {
                             <List.Item as={NavLink} activeClassName='' exact to='/'>Home</List.Item>
                             <List.Item as={NavLink} activeClassName='active' exact to='/user-page' >My Data</List.Item>
                             <List.Item as={NavLink} activeClassName='active' exact to='/my-vehicles'>My Vehicles</List.Item>
-                            <List.Item as={NavLink} activeClassName='active' exact to='/alt'>Alternative</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/user-react-page'>Transportation History</List.Item>
                             <List.Item as={NavLink} activeClassName='active' exact to='/cumulative'>Cumulative Data</List.Item>
-                            <List.Item as={NavLink} activeClassName='active' exact to='/user-data-page'>Transportation History</List.Item>
-                            <List.Item as={NavLink} activeClassName='active' exact to='/feedback'>Submit Feedback</List.Item>
+                            <List.Item as={NavLink} activeClassName='active' exact to='/about'>About HEI</List.Item>
                           </List>
                       )}
                   </GridColumn>
-                  <GridColumn>
-                    <hr />
+                  <GridColumn verticalAlign='middle'>
                     <List inverted>
                       <List.Item className="footer-text"><Image src={logo} size="tiny" padding={0}/></List.Item>
-                      <List.Item className="footer-text"></List.Item>
                       <List.Item className="footer-text">CORPORATE HEADQUARTERS</List.Item>
                       <List.Item className="footer-text">1001 Bishop Street, Suite 2900
                         Honolulu, Hawaii 96813

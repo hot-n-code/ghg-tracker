@@ -6,7 +6,7 @@ const paddingStyle = { padding: '20px', paddingTop: '25px' };
 class Pcmore extends React.Component {
   render() {
     return (
-        <div className='background-all-about'>
+        <div className='background-all-about' id='pcmore'>
         <Container>
             <Header style={paddingStyle} size='large' textAlign='center'>Pacific Current builds local partnerships and invests in clean energy
               and sustainability projects as part of HEI’s strategy to be a catalyst for a better Hawaii.</Header>

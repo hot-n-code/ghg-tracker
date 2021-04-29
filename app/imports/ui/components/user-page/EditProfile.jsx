@@ -32,8 +32,12 @@ class EditProfile extends React.Component {
 
     // On successful submit, update data.
     submit(data) {
-        const { name, image, goal, _id } = data;
-        userUpdateMethod.call(_id, { $set: { name, image, goal } }, (error) => {
+        const updateData = {};
+        updateData.name = data.name;
+        updateData.image = data.image;
+        updateData.goal = data.goal;
+        updateData._id = data._id;
+        userUpdateMethod.call(updateData, (error) => {
             if (error) {
                 swal('Error', error.message, 'error');
             } else {
@@ -58,17 +62,17 @@ class EditProfile extends React.Component {
                    open={this.state.modalOpen}
                    onClose={this.handleModalClose}
                    onOpen={this.handleModalOpen}
-                   trigger={<Button color='black'>Edit Profile</Button>}
+                   trigger={<Button id='edit-profile' color='black'>Edit Profile</Button>}
             >
                 <Modal.Header>Edit My Profile</Modal.Header>
                 <Modal.Content>
                     <AutoForm schema={bridge}
                               onSubmit={data => this.submit(data)}
                               model={doc}>
-                    <TextField name='name' placeholder={'Name'}/>
+                    <TextField id='edit-name' name='name' placeholder={'Name'}/>
                      <TextField name='goal' placeholder={'My Goal'}/>
                      <TextField name='image' placeholder={'Link to Image'}/>
-                     <SubmitField value='Submit'/>
+                     <SubmitField id='edit-submit' value='Submit'/>
                      <ErrorsField/>
                      <HiddenField name='email'/>
                     </AutoForm>

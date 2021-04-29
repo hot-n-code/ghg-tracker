@@ -2,9 +2,9 @@ import { _ } from 'meteor/underscore';
 
 export function getVehicleYearsList(model, vehicleList) {
   const filteredVehicles = vehicleList.filter(
-    vehicle => vehicle.model === model,
+    vehicle => vehicle.Model === model,
   );
-  const listYear = _.pluck(filteredVehicles, 'year');
+  const listYear = _.pluck(filteredVehicles, 'Year');
   const listUniqueYear = _.uniq(listYear);
   const reverseList = _.sortBy(listUniqueYear, year => year * -1);
 
@@ -16,9 +16,9 @@ export function getVehicleYearsList(model, vehicleList) {
 }
 
 export function getVehicle(year, model, vehicleList) {
-  const filterByModel = vehicleList.filter(vehicle => vehicle.model === model);
+  const filterByModel = vehicleList.filter(vehicle => vehicle.Model === model);
   const vehicle = filterByModel.find(
-    selectVehicle => selectVehicle.year === year,
+    selectVehicle => selectVehicle.Year === year,
   );
   return vehicle;
 }
