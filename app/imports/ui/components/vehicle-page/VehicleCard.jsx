@@ -59,7 +59,9 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
   };
 
   const getModelList = currentMake => {
-    const filteredMakeList = allEVHybridVehicles.filter(obj => obj.Make === currentMake);
+    const filteredMakeList = allEVHybridVehicles.filter(
+      obj => obj.Make === currentMake,
+    );
     const listModel = _.pluck(filteredMakeList, 'Model');
     const uniqueModels = _.uniq(listModel);
     return uniqueModels;
@@ -70,12 +72,16 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
     const initModel = getModelList(initMakeList[0]);
     const initYear = initDropdownValues(yearProperty);
     const yearAsInt = parseInt(initYear[0], 10);
-    const listModel = allEVHybridVehicles.filter(obj => obj.Model === initModel[0]);
+    const listModel = allEVHybridVehicles.filter(
+      obj => obj.Model === initModel[0],
+    );
     const defaultVehicle = listModel.find(
       vehicleModel => vehicleModel.Year === yearAsInt,
     );
     defaultVehicle.type = defaultVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
-    defaultVehicle.logo = vehicleMakes.find(obj => obj.make === defaultVehicle.Make).logo;
+    defaultVehicle.logo = vehicleMakes.find(
+      obj => obj.make === defaultVehicle.Make,
+    ).logo;
     return defaultVehicle;
   };
 
@@ -107,11 +113,7 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
     }
   };
 
-  // Edit and delete button handlers
-  // const onClickEditHandler = () => {
-  //   userVehicleUpdateMethod.call(vehicle._id);
-  // };
-
+  // Delete button handler
   const onClickDeleteHandler = () => {
     swal('Success', 'Vehicle deleted successfully', 'success');
     userVehicleRemoveItMethod.call(vehicle._id);
@@ -122,7 +124,9 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
     const yearAsInt = parseInt(e.target.value, 10);
     const newVehicle = getVehicle(yearAsInt, selectModel, allEVHybridVehicles);
     newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
-    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
+    newVehicle.logo = vehicleMakes.find(
+      obj => obj.make === newVehicle.Make,
+    ).logo;
 
     setComparatorVehicle(newVehicle);
   };
@@ -133,10 +137,12 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
     const newVehicle = getVehicle(
       parseInt(yearList[0], 10),
       modelList[0],
-        allEVHybridVehicles,
+      allEVHybridVehicles,
     );
     newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
-    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
+    newVehicle.logo = vehicleMakes.find(
+      obj => obj.make === newVehicle.Make,
+    ).logo;
 
     setComparatorVehicle(newVehicle);
     setDropdownYear(yearList);
@@ -147,9 +153,15 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
   const dropdownModelHandler = e => {
     const yearList = getVehicleYearsList(e.target.value, allEVHybridVehicles);
     const yearAsInt = parseInt(yearList[0], 10);
-    const newVehicle = getVehicle(yearAsInt, e.target.value, allEVHybridVehicles);
+    const newVehicle = getVehicle(
+      yearAsInt,
+      e.target.value,
+      allEVHybridVehicles,
+    );
     newVehicle.type = newVehicle.Mpg < 0 ? 'EV/Hybrid' : 'Gas';
-    newVehicle.logo = vehicleMakes.find(obj => obj.make === newVehicle.Make).logo;
+    newVehicle.logo = vehicleMakes.find(
+      obj => obj.make === newVehicle.Make,
+    ).logo;
 
     setSelectModel(e.target.value);
     setDropdownYear(yearList);
