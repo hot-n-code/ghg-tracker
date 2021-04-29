@@ -70,13 +70,13 @@
   { "make": "Scion", "logo": "../images/make/Scion.png" },
   { "make": "Shelby", "logo": "../images/make/Shelby.png" },
   { "make": "Spyker", "logo": "../images/make/Spyker.png" },
-  { "make": "Subaru", "logo": "../images/default/default-car.png" },
-  { "make": "Suzuki", "logo": "https://www.freepnglogos.com/uploads/suzuki-png-logo/suzuki-motorcycle-brands-logo-specs-history-png-logo-13.png" },
-  { "make": "Tecstar,", "logo": "../images/default/default-car.png" },
-  { "make": "Tesla", "logo": "https://www.freepnglogos.com/uploads/tesla-logo-png-black-1.png" },
-  { "make": "Toyota", "logo": "https://www.freepnglogos.com/uploads/toyota-logo-png/toyota-logos-download-image-15.png" },
-  { "make": "VPG", "logo": "../images/default/default-car.png" },
-  { "make": "Volkswagen", "logo": "https://www.freepnglogos.com/uploads/vw-png-logo/volkswagen-auto-eps-png-logo-vector-22.png" },
-  { "make": "Volvo", "logo": "https://www.freepnglogos.com/uploads/volvo-car-logo-png-brand-image-20.png" },
-  { "make": "smart", "logo": "../images/default/default-car.png" }
+  { "make": "Subaru", "logo": "../images/make/Subaru.png" },
+  { "make": "Suzuki", "logo": "../images/make/Suzuki.png" },
+  { "make": "Tecstar,", "logo": "../images/make/Tecstar.png" },
+  { "make": "Tesla", "logo": "../images/make/Tesla.png" },
+  { "make": "Toyota", "logo": "../images/make/Toyota.png" },
+  { "make": "VPG", "logo": "../images/make/VPG.png" },
+  { "make": "Volkswagen", "logo": "../images/make/Volkswagen.png" },
+  { "make": "Volvo", "logo": "../images/make/Volvo.png" },
+  { "make": "smart", "logo": "../images/make/Smart.png" }
 ]
