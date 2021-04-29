@@ -7,7 +7,7 @@ import { Users } from '../../../api/user/UserCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import DeleteUser from '../../components/admin-users-page/DeleteUser';
 
-/** Renders a table containing all of the users profiles. Use <User> to render each row. */
+// Renders a table containing all of the users profiles. Use <User> to render each row.
 class AdminProfileList extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ class AdminProfileList extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
+  // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
@@ -78,7 +78,7 @@ class AdminProfileList extends React.Component {
            </Table.Header>
          </Table>
          <SmartDataTable
-             data={this.props.users.map(data => this.getColumns(data, this.props.vehicles)) }
+             data={this.props.users.map(data => this.getColumns(data)) }
              name="profile-list"
              className="ui compact table"
              sortable
