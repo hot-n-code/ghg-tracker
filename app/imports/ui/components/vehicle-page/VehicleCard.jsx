@@ -177,6 +177,9 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
           scale: 1.02,
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
+        whileTap={{
+          backgroundColor: 'rgb(220, 220, 220)',
+        }}
       >
         <motion.div
           className='vehicle-card-btn-container'
@@ -208,15 +211,15 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
               layoutId={`vehicle-card-header-${_id}`}
             >
               {name === `${year} ${make} ${model}` ? (
-                <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                <Header as='h2'>{`${year} ${make} ${model}`}</Header>
               ) : (
                 <>
                   <Header
-                    as='h1'
+                    as='h2'
                     className='vehicle-card-header-name'
                   >{`${name}'s`}</Header>
                   <Header
-                    as='h1'
+                    as='h2'
                     className='vehicle-card-header-vehicle'
                   >{`${year} ${make} ${model}`}</Header>
                 </>
@@ -279,7 +282,7 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                         <img src={logo} alt={`${make} Logo`} />
                       </motion.div>
                       <motion.div className='vehicle-card-expand-header'>
-                        <Header as='h1'>{`${year} ${make} ${model}`}</Header>
+                        <Header as='h2'>{`${year} ${make} ${model}`}</Header>
                       </motion.div>
                     </div>
                     <motion.table className='vehicle-card-expand-stats'>
@@ -326,7 +329,7 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                         />
                       </motion.div>
                       <motion.div className='vehicle-card-expand-header'>
-                        <Header as='h1'>
+                        <Header as='h2'>
                           <select
                             className='vehicle-card-dropdown'
                             onChange={dropdownYearHandler}
@@ -378,7 +381,11 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                           <td className='vehicle-card-expand-label'>
                             Purchase Price:
                           </td>
-                          <td>${`${comparatorVehicle.price}`}</td>
+                          {comparatorVehicle.price ? (
+                            <td>${`${comparatorVehicle.price}`}</td>
+                          ) : (
+                            <td>No current owners.</td>
+                          )}
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>
@@ -390,7 +397,11 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
                           <td className='vehicle-card-expand-label'>
                             Yearly Fuel Spending:
                           </td>
-                          <td>${`${comparatorVehicle.fuelSpending}`}</td>
+                          {comparatorVehicle.fuelSpending ? (
+                            <td>${`${comparatorVehicle.fuelSpending}`}</td>
+                          ) : (
+                            <td>No current owners.</td>
+                          )}
                         </motion.tr>
                         <motion.tr>
                           <td className='vehicle-card-expand-label'>

@@ -214,7 +214,7 @@ h6 {
 .vehicle-card-btn-del {
   background-color: inherit;
   border: none;
-  margin: 0 5px;
+  margin: 0 5px 12px 3px;
   padding: 3px 2px;
   cursor: pointer;
   font-size: 16px;
@@ -354,7 +354,7 @@ td {
 }
 
 .vehicle-card-expand-stats td {
-  padding-right: 20px;
+  padding-right: 10px;
 }
 
 .vehicle-card-expand-label {
@@ -380,7 +380,7 @@ td {
   background-color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 2rem;
+  font-size: 1.71428571rem;
   padding-right: 8px;
   width: 33%;
   outline: none;
