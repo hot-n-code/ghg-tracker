@@ -178,7 +178,7 @@ const VehicleCard = ({ vehicle, allEVHybridVehicles, vehicleMakes }) => {
           boxShadow: '-4px 7px 2px rgba(0, 0, 0, 0.2)',
         }}
         whileTap={{
-          backgroundColor: 'rgb(235, 235, 235)',
+          backgroundColor: 'rgb(220, 220, 220)',
         }}
       >
         <motion.div
