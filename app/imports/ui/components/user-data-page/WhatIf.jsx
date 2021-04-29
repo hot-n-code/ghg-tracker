@@ -203,11 +203,11 @@ const WhatIf = (props) => {
         >
 
           <Modal.Content>
-            <SelectField name='modeOfTransportation'
+            <SelectField id='transportation-selector' name='modeOfTransportation'
                          allowedValues={props.vehicles.map((vehicle) => `${vehicle.name}`).concat(altSelectFieldOptions)}
             />
             <Form.Group inline>
-              <Form.Select label='Destination'
+              <Form.Select id='miles-field' label='Destination'
                            options={getSavedDistances()}
                            onChange={handleSavedDistance}
                            placeholder='Destination'

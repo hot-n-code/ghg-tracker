@@ -7,7 +7,7 @@ const pageStyle = { paddingLeft: '50px', paddingRight: '50px', paddingBottom: '6
 class HEmore extends React.Component {
   render() {
     return (
-        <div className='background-all-about'>
+        <div className='background-all-about' id='hemore'>
         <Container>
             <Header style={paddingStyle} size='large' textAlign='center'>Hawaiian Electric strives to be one of the most progressive and highest performing companies in the world
               , serving the energy needs of each person in Hawaii with purpose, compassion, empathy
