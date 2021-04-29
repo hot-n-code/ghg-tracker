@@ -27,7 +27,7 @@ class UserPage extends React.Component {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
             'October', 'November', 'December'];
         return (
-            <div className='background-all'>
+            <div className='background-all' id='profile-page'>
             <Container style={paddingStyle}>
                 <Grid>
                     <Grid.Column width={16} textAlign='center'>
@@ -66,7 +66,7 @@ class UserPage extends React.Component {
                           <Card.Content>
                               <Header as='h1'>Compare your numbers to the community!
                               </Header>
-                              <Button color='black' size='medium' as={ NavLink } activeClassName='active' exact
+                              <Button id='link-to-compare-page' color='black' size='medium' as={ NavLink } activeClassName='active' exact
                                       to='/comparison'>Compare</Button>
                           </Card.Content>
                       </Card>

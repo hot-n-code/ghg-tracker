@@ -3,7 +3,7 @@ import { navBar } from './navbar.component';
 
 class SigninPage {
   constructor() {
-    this.pageId = '#signin-page';
+    this.pageId = '#login-dropdown-sign-in';
     this.pageSelector = Selector(this.pageId);
   }
 
@@ -15,9 +15,9 @@ class SigninPage {
   /** Fills out and submits the form to signin, then checks to see that login was successful. */
   async signin(testController, username, password) {
     await this.isDisplayed(testController);
-    await testController.typeText('#signin-form-email', username);
-    await testController.typeText('#signin-form-password', password);
-    await testController.click('#signin-form-submit');
+    await testController.typeText('#root > div > div.background-all > div > div > div > div.ui.grey.padded.segment > form > div:nth-child(1) > div > input[type=email]', username);
+    await testController.typeText('#root > div > div.background-all > div > div > div > div.ui.grey.padded.segment > form > div:nth-child(2) > div > input[type=password]', password);
+    await testController.click('#root > div > div.background-all > div > div > div > div.ui.grey.padded.segment > form > div:nth-child(3) > button');
     await navBar.isLoggedIn(testController, username);
   }
 }

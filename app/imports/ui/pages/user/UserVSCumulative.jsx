@@ -39,7 +39,7 @@ class UserVSCumulative extends React.Component {
             result = 'No pounds of CO2 reduced available for this month. Start adding in your trips!';
         }
     return (
-        <div className='background-all'>
+        <div className='background-all' id='compare-page'>
         <Container style={paddingStyle}>
             <Grid stackable>
                 <Grid.Column textAlign='center' width={16}>
