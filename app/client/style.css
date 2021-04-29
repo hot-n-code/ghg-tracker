@@ -376,6 +376,27 @@ td {
   transition: 0.3s all ease-in;
 }
 
+.vehicle-card-dropdown {
+  background-color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 5px;
+  font-size: 2rem;
+  padding-right: 8px;
+  width: 33%;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+}
+
+.vehicle-card-dropdown:focus,
+.vehicle-card-dropdown:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.vehicle-card-dropdown:active {
+  background-color: rgb(247, 247, 247);
+}
+
 .vehicle-card-expand-close-btn:hover {
   background-color: rgba(167, 215, 197, 0.8);
   color: rgb(255, 255, 255);
@@ -534,7 +555,7 @@ div.add-vehicle-overlay > div > div.add-vehicle-header > h2 {
 
 .ui.centered.card.leaf-card {
   text-align: center;
-    position: relative;
+  position: relative;
 }
 
 .leaf-box {
