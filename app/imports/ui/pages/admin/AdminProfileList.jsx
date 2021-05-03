@@ -7,7 +7,7 @@ import { Users } from '../../../api/user/UserCollection';
 import 'react-smart-data-table/dist/react-smart-data-table.css';
 import DeleteUser from '../../components/admin-users-page/DeleteUser';
 
-/** Renders a table containing all of the users profiles. Use <User> to render each row. */
+// Renders a table containing all of the users profiles. Use <User> to render each row.
 class AdminProfileList extends React.Component {
   constructor(props) {
     super(props);
@@ -18,26 +18,24 @@ class AdminProfileList extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
   }
 
-  /** If the subscription(s) have been received, render the page, otherwise show a loading icon. */
+  // If the subscription(s) have been received, render the page, otherwise show a loading icon.
   render() {
     return (this.props.ready) ? this.renderPage() : <Loader active>Getting data</Loader>;
   }
 
-  // vehicles: users.vehicles
   getColumns(users) {
-    return { _id: users._id, user: users.image, name: users.name, email: users.email, goal: users.goal };
+    const data = {};
+    data._id = users._id;
+    data.user_image = users.image;
+    data.name = users.name;
+    data.email = users.email;
+    data.goal = users.goal;
+    return data;
   }
 
   handleOnChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => {
       if (name === 'numResults') this.setNewData();
-    });
-  }
-
-  setNewData() {
-    const { data } = this.state;
-    this.setState({
-      data: data,
     });
   }
 
@@ -80,11 +78,10 @@ class AdminProfileList extends React.Component {
            </Table.Header>
          </Table>
          <SmartDataTable
-             data={this.props.users.map(this.getColumns) }
+             data={this.props.users.map(data => this.getColumns(data)) }
              name="profile-list"
              className="ui compact table"
              sortable
-             withToggles
              perPage={10}
              filterValue={filterValue}
              headers={otherHeaders}

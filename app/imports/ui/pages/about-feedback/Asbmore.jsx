@@ -7,7 +7,7 @@ const pageStyle = { paddingLeft: '50px', paddingRight: '50px', paddingBottom: '6
 class Asbmore extends React.Component {
   render() {
     return (
-        <div className='background-all-about'>
+        <div className='background-all-about' id='asbmore'>
         <Container>
             <Header style={paddingStyle} size='large' textAlign='center'>American Savings Bank strives to make banking easy for customers,
               deliver high performance, create a great place to work

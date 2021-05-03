@@ -8,7 +8,7 @@ class MyVehicles extends React.Component {
   /** Render the page of the user's vehicles. */
   render() {
     return (
-      <div className='vehicle-list-container background-all'>
+      <div className='vehicle-list-container background-all' id='my-vehicles-page'>
         <Grid centered stackable columns={1} className={'my-vehicles-grid'}>
           <Grid.Column>
             <Header as='h1' textAlign='center'>
