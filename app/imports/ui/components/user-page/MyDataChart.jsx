@@ -55,8 +55,6 @@ const MyDataChart = (props) => {
   total += parseFloat(totalTelework);
   total += parseFloat(totalBiking);
   total += parseFloat(totalAV);
-
-  console.log(parseFloat(total));
   return (
     total !== 0 ?
         <Grid>
