@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
 import WhatIf from '../user-data-page/WhatIf';
 import EditProfile from './EditProfile';
+import AddDailyData from '../user-data-page/AddDailyData';
 
 // Renders the profile card component containing the user's data
 const ProfileCard = ({ profile }) => (

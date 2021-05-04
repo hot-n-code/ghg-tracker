@@ -50,7 +50,7 @@ class AboutPage extends React.Component {
             <div style={infoStyleBottom}>
             </div>
             <FeedbackWidget/>
-            <div style={{ paddingBottom: '220px' }}>
+            <div style={{ paddingBottom: '100px' }}>
             </div>
             <Grid columns={3} padded>
               <Grid.Column>

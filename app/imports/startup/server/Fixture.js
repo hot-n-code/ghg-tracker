@@ -144,76 +144,84 @@ const createUserDailyData = (accounts, savedDistances, userVehicles) => {
   const userDailyData = [];
   const today = getDateToday();
 
-  accounts.forEach(function (account) {
-    const tempDate = new Date(today.getTime());
+  for (let i = 0; i < 2; i++) {
+    accounts.forEach(function (account) {
+      const tempDate = new Date(today.getTime());
 
-    // get the type of regular trip based on saved distances
-    const regularTripName = faker.helpers.randomize(['work', 'school']);
-    const regularTrip = savedDistances.find(({ location }) => location === regularTripName);
+      // get the type of regular trip based on saved distances
+      const regularTripName = faker.helpers.randomize(['work', 'school']);
+      const regularTrip = savedDistances.find(({ location }) => location === regularTripName);
 
-    // get periodic trip
-    const periodicTrip = savedDistances.find(({ location }) => location === 'grocery');
+      // get periodic trip
+      const periodicTrip = savedDistances.find(({ location }) => location === 'grocery');
 
-    const getModeAndType = (distance) => {
-      let reasonableAlt;
-      if (distance < 1) {
-        reasonableAlt = altSelectFieldOptions;
-      } else if (distance <= 15) {
-        reasonableAlt = altNoEVWalking;
-      } else {
-        reasonableAlt = altNoEVWalkingBiking;
-      }
+      const getModeAndType = (distance) => {
+        let reasonableAlt;
+        if (distance < 1) {
+          reasonableAlt = altSelectFieldOptions;
+        } else
+          if (distance <= 15) {
+            reasonableAlt = altNoEVWalking;
+          } else {
+            reasonableAlt = altNoEVWalkingBiking;
+          }
 
-      // get user's vehicles, concatenate array with alt transportation
-      const vehicles = userVehicles.filter(({ owner }) => owner === account.email);
-      const modesOfTransportation = vehicles.map((vehicle) => `${vehicle.year} ${vehicle.make} ${vehicle.model}`).concat(reasonableAlt);
-      const mode = faker.helpers.randomize(modesOfTransportation);
+        // get user's vehicles, concatenate array with alt transportation
+        const vehicles = userVehicles.filter(({ owner }) => owner === account.email);
+        const modesOfTransportation = vehicles.map((vehicle) => `${vehicle.year} ${vehicle.make} ${vehicle.model}`)
+            .concat(reasonableAlt);
+        const mode = faker.helpers.randomize(modesOfTransportation);
 
-      return ({
-        name: mode,
-        type: getModeType(mode, userVehicles),
-      });
-    };
-
-    for (let iter = 0; iter < maxQuantity.userDailyDataPerUser; iter++) {
-      tempDate.setDate(tempDate.getDate() - 1);
-      // on Sundays, periodic trip
-      if (tempDate.getDay() === 0) {
-        const modeAndType = getModeAndType(periodicTrip.distanceMiles);
-        userDailyData.push({
-          inputDate: tempDate.toISOString().slice(0, 10),
-          modeOfTransportation: modeAndType.name,
-          modeType: modeAndType.type,
-          milesTraveled: periodicTrip.distanceMiles,
-          owner: account.email,
+        return ({
+          name: mode,
+          type: getModeType(mode, userVehicles),
         });
-      // on Saturdays, either go on trip or stay at home
-      } else if (tempDate.getDay() === 6) {
-        const goOnTrip = faker.datatype.boolean();
-        const randomMiles = faker.datatype.float({ min: 0.5, max: 50 });
-        const modeAndType = getModeAndType(randomMiles);
-        if (goOnTrip) {
+      };
+
+      for (let iter = 0; iter < maxQuantity.userDailyDataPerUser; iter++) {
+        tempDate.setDate(tempDate.getDate() - 1);
+        // on Sundays, periodic trip
+        if (tempDate.getDay() === 0) {
+          const modeAndType = getModeAndType(periodicTrip.distanceMiles);
           userDailyData.push({
-            inputDate: tempDate.toISOString().slice(0, 10),
+            inputDate: tempDate.toISOString()
+                .slice(0, 10),
             modeOfTransportation: modeAndType.name,
             modeType: modeAndType.type,
-            milesTraveled: randomMiles,
+            milesTraveled: periodicTrip.distanceMiles,
             owner: account.email,
           });
-        }
-      // on weekdays, go to regular trip
-      } else {
-        const modeAndType = getModeAndType(regularTrip.distanceMiles);
-        userDailyData.push({
-          inputDate: tempDate.toISOString().slice(0, 10),
-          modeOfTransportation: modeAndType.name,
-          modeType: modeAndType.type,
-          milesTraveled: regularTrip.distanceMiles,
-          owner: account.email,
-        });
+          // on Saturdays, either go on trip or stay at home
+        // } else
+        //   if (tempDate.getDay() === 6) {
+        //     const goOnTrip = faker.datatype.boolean();
+        //     const randomMiles = faker.datatype.float({ min: 0.5, max: 50 });
+        //     const modeAndType = getModeAndType(randomMiles);
+        //     if (goOnTrip) {
+        //       userDailyData.push({
+        //         inputDate: tempDate.toISOString()
+        //             .slice(0, 10),
+        //         modeOfTransportation: modeAndType.name,
+        //         modeType: modeAndType.type,
+        //         milesTraveled: randomMiles,
+        //         owner: account.email,
+        //       });
+        //     }
+            // on weekdays, go to regular trip
+          } else {
+            const modeAndType = getModeAndType(regularTrip.distanceMiles);
+            userDailyData.push({
+              inputDate: tempDate.toISOString()
+                  .slice(0, 10),
+              modeOfTransportation: modeAndType.name,
+              modeType: modeAndType.type,
+              milesTraveled: regularTrip.distanceMiles,
+              owner: account.email,
+            });
+          }
       }
-    }
-  });
+    });
+  }
   return userDailyData;
 };
 

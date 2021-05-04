@@ -11,6 +11,7 @@ const FeedbackWidget = () => {
   };
 
   return (
+      <div className='feedback-widget'>
       <Container>
         <Container>
           <Header as='h1' className='centered'>Feedback</Header>
@@ -53,6 +54,7 @@ const FeedbackWidget = () => {
           </Form>
         </Container>
       </Container>
+      </div>
   );
 };
 
