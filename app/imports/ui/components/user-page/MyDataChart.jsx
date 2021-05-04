@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Header } from 'semantic-ui-react';
 import { Pie } from 'react-chartjs-2';
 import PropTypes from 'prop-types';
 import { _ } from 'meteor/underscore';
@@ -48,12 +48,27 @@ const MyDataChart = (props) => {
       }],
   };
 
+  let total = parseFloat(gasTotal);
+  total += parseFloat(totalCarpool);
+  total += parseFloat(totalWalking);
+  total += parseFloat(totalPT);
+  total += parseFloat(totalTelework);
+  total += parseFloat(totalBiking);
+  total += parseFloat(totalAV);
   return (
-      <Grid>
-          <Grid.Column>
-              <Pie data={stateAll} height={250}/>
-          </Grid.Column>
-      </Grid>
+    total !== 0 ?
+        <Grid>
+            <Grid.Column>
+                <Pie data={stateAll} height={250}/>
+            </Grid.Column>
+        </Grid>
+    :
+        <Grid>
+            <Grid.Column>
+                <Header style={{ margin: '0 auto' }}
+                     textAlign='center'>Seems like you don&apos;t have any trips logged down. Try adding some!</Header>
+            </Grid.Column>
+        </Grid>
   );
 };
 
