@@ -66,7 +66,7 @@ const MyDataChart = (props) => {
         <Grid>
             <Grid.Column>
                 <Header style={{ margin: '0 auto' }}
-                        textAlign='center'>Seems like you don&apos;t have any trips logged down. Try adding some!</Header>
+                     textAlign='center'>Seems like you don&apos;t have any trips logged down. Try adding some!</Header>
             </Grid.Column>
         </Grid>
   );
