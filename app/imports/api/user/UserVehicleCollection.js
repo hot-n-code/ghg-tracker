@@ -33,6 +33,7 @@ class UserVehicleCollection extends BaseCollection {
     const type = MPG < 0 ? 'EV/Hybrid' : 'Gas';
     const docID = this._collection.insert({
       name,
+
       make,
       model,
       owner,
