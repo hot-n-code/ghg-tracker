@@ -104,6 +104,6 @@ meteor npm run lint
 ```
 ---
 
-![ci-badge](https://github.com/hot-n-code/ghg-tracker/workflows/hot-n-code-ghg-tracker/badge.svg)
+[![eco-camino](https://github.com/HACC-Camino/eco-camino/actions/workflows/cli.yml/badge.svg)](https://github.com/HACC-Camino/eco-camino/actions/workflows/cli.yml)
 
 For details, please see http://ics-software-engineering.github.io/meteor-application-template-react/
